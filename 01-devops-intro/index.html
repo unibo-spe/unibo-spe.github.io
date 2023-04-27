@@ -1,0 +1,1061 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+<title>Development + Operations</title>
+<meta name="description" content="No silos">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/css/custom-theme.min.039d4fc68d969e2925568e1aa7cc960bbfd481c396410a31508d9131455be55f.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="development--operations">Development + Operations</h1>
+<!-- this file includes generated content. Do not edit. Edit content/01-devops-intro/_generator.md, instead. -->
+<h2 id="hahahugoshortcodes0hbhb">Software Process Engineering</h2>
+<br>
+<h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
+<br>
+<p>Compiled on: 2023-04-27
+ — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
+<p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
+</section><section>
+<!-- this file includes generated content. Do not edit. Edit content/01-devops-intro/_generator.md, instead. -->
+<h1 id="development">Development</h1>
+<ul>
+<li>Analysis of a domain</li>
+<li>Design of a solution</li>
+<li>Implementation</li>
+<li>Testing</li>
+</ul>
+</section><section>
+<h1 id="operations">Operations</h1>
+<ul>
+<li>IT infrastructure</li>
+<li>Deployment</li>
+<li>Maintenance</li>
+</ul>
+</section><section>
+<h1 id="silo-mentality">Silo mentality</h1>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/devops/silos.svg" alt="silos"></p>
+</section><section>
+<h1 id="no-silos"><strong>No</strong> silos</h1>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/devops/no-silos.svg" alt="silos"></p>
+</section><section>
+<h1 id="devops-culture">DevOps culture</h1>
+<ul>
+<li>
+<p><strong>Increased collaboration</strong></p>
+<ul>
+<li>Dev and Ops should <em>exchange information</em> and <em>work together</em></li>
+</ul>
+</li>
+<li>
+<p><strong>Shared responsibility</strong></p>
+<ul>
+<li>A team is responsible for the (sub) product for its <em>whole lifetime</em></li>
+<li><em>No handing over</em> projects from devs to ops</li>
+</ul>
+</li>
+<li>
+<p><strong>Autonomous teams</strong></p>
+<ul>
+<li><em>Lightweight decision making</em> process</li>
+</ul>
+</li>
+<li>
+<p><strong>Focus on the process, not just the product</strong></p>
+<ul>
+<li>Promote small, <em>incremental changes</em></li>
+<li><em>Automate</em> as much as possible</li>
+<li>Leverage the right <em>tool</em> for the job at hand</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="why-bother">Why bother?</h1>
+<ol>
+<li>
+<p><strong>Risk management</strong></p>
+<ul>
+<li>Reduce the probability of <em>failure</em></li>
+<li>Detect <em>defects</em> before hitting the market</li>
+<li>Quickly <em>react</em> to problems</li>
+</ul>
+</li>
+<li>
+<p><strong>Resource exploitation</strong></p>
+<ul>
+<li>Use <em>human resources</em> for human-y work</li>
+<li>Reduce <em>time to market</em></li>
+<li>Embrace <em>innovation</em></li>
+<li>Exploit <em>emerging technologies</em></li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h1 id="devops">DevOps</h1>
+<ol>
+<li><strong>Principles</strong></li>
+<li><strong>Practices</strong></li>
+<li><strong>Tools</strong></li>
+</ol>
+<p><strong>Principles</strong> <em>inspire</em> <strong>practices</strong></p>
+<p><strong>Practices</strong> <em>require</em> <strong>tools</strong></p>
+</section><section>
+<h1 id="devops-principles">DevOps principles</h1>
+<h3 id="not-exhaustive">(not exhaustive)</h3>
+<ul>
+<li>Collaboration</li>
+<li>Reproducibility</li>
+<li>Automation</li>
+<li>Incrementality</li>
+<li>Robustness</li>
+</ul>
+</section><section>
+<h1 id="devops-practices">DevOps practices</h1>
+<ul>
+<li>Workflow organization</li>
+<li>Build automation</li>
+<li>Self-testing code</li>
+<li>Code quality control</li>
+<li>Continuous Integration</li>
+<li>Continuous Delivery</li>
+<li>Continuous Deployment</li>
+<li>Continuous Monitoring</li>
+</ul>
+</section><section>
+<!-- this file includes generated content. Do not edit. Edit content/01-devops-intro/_generator.md, instead. -->
+<h1 id="a-real-world-test-case">A real-world test case</h1>
+<p>We applied DevOps (and microservice-ification) to an existing software project,
+measuring some metrics <em>before</em> and <em>after</em> the operation.</p>
+<ul>
+<li>The detailed <em>experience report</em> has been presented at the 37th International Conference on Software Maintenance and Evolution (<a href="https://icsme2021.github.io/">ICSME 2021</a>)
+<ul>
+<li><a href="https://doi.org/10.1109/ICSME52107.2021.00051">Scientific paper</a></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/6qd6GG3XQXA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen="" title="YouTube Video"></iframe>
+</div>
+</section><section>
+<h2 id="the-target">The target</h2>
+<h3 id="maggioli-spa">Maggioli S.p.A</h3>
+<ul>
+<li><em>Multinational</em>, based in Italy</li>
+<li><em>~2000 collaborators</em> at the time of writing</li>
+<li>An <em>internal IT/Operations</em> team</li>
+<li>Our target team was composed of <strong>five people</strong></li>
+</ul>
+<h3 id="sisred-before-intervention">sisred (before intervention)</h3>
+<ul>
+<li><em>Client-server</em> stand-alone application</li>
+<li><em>Delphi</em> front-end, <em>Microsoft SQL Server</em> backend</li>
+<li>Editors (paid by Maggioli) are <em>experts in law entering information on the client</em></li>
+<li>The information is then exposed into a (paid access) <em>portal</em> with up-to-date legal information</li>
+</ul>
+</section><section>
+<h2 id="previous-architecture">Previous architecture</h2>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/devops/sisred-old-arch.svg" alt="old-arch"></p>
+</section><section>
+<h1 id="heading"></h1>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<h2 id="microservice-ified-architecture">Microservice-ified architecture</h2>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/devops/sisred-new-arch.svg" alt="new-arch"></p>
+</section><section>
+<h2 id="ci-pipeline">CI Pipeline</h2>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/devops/docker-publish.svg" alt="pipeline"></p>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td style="text-align:center"><em>0.5</em></td>
+<td style="text-align:right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td style="text-align:center"><em>0.5</em></td>
+<td style="text-align:right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td style="text-align:center"><em>0.35</em></td>
+<td style="text-align:right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td style="text-align:center"><em>0.5</em></td>
+<td style="text-align:right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td style="text-align:center"><em>0.35</em></td>
+<td style="text-align:right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td style="text-align:center"><em>9</em></td>
+<td style="text-align:right"><strong>-92.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td style="text-align:center"><em>0.5</em></td>
+<td style="text-align:right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td style="text-align:center"><em>0.35</em></td>
+<td style="text-align:right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td style="text-align:center"><em>9</em></td>
+<td style="text-align:right"><strong>-92.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td style="text-align:center"><em>0</em></td>
+<td style="text-align:right"><strong>-100%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td style="text-align:center"><em>0.5</em></td>
+<td style="text-align:right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td style="text-align:center"><em>0.35</em></td>
+<td style="text-align:right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td style="text-align:center"><em>9</em></td>
+<td style="text-align:right"><strong>-92.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td style="text-align:center"><em>0</em></td>
+<td style="text-align:right"><strong>-100%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td style="text-align:center"><em>19</em></td>
+<td style="text-align:right"><strong>-52.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" data-transition="none">
+  
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:center">Prev.</th>
+<th style="text-align:center">Now</th>
+<th style="text-align:right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Release frequency ($\frac{releases}{day}$)</td>
+<td style="text-align:center"><a href="">0.071</a></td>
+<td style="text-align:center"><em>2.7</em></td>
+<td style="text-align:right"><strong>+3700%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commit to release time (hours)</td>
+<td style="text-align:center"><a href="">8 to 24</a></td>
+<td style="text-align:center"><em>0.19</em></td>
+<td style="text-align:right"><strong>~ -98.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Commits per day ($\frac{commits}{day}$)</td>
+<td style="text-align:center"><a href="">2</a></td>
+<td style="text-align:center"><em>7.1</em></td>
+<td style="text-align:right"><strong>+255%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">MTTR (hours)</td>
+<td style="text-align:center"><a href="">36</a></td>
+<td style="text-align:center"><em>0.5</em></td>
+<td style="text-align:right"><strong>-98.6%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Prod. env. setup (working hours)</td>
+<td style="text-align:center"><a href="">16</a></td>
+<td style="text-align:center"><em>0.35</em></td>
+<td style="text-align:right"><strong>-97.8%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Dev. env. setup (minutes)</td>
+<td style="text-align:center"><a href="">120</a></td>
+<td style="text-align:center"><em>9</em></td>
+<td style="text-align:right"><strong>-92.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Nightly downtime ($\frac{minutes}{night}$)</td>
+<td style="text-align:center"><a href="">30</a></td>
+<td style="text-align:center"><em>0</em></td>
+<td style="text-align:right"><strong>-100%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Support ticket frequency ($\frac{tickets}{month}$)</td>
+<td style="text-align:center"><a href="">40</a></td>
+<td style="text-align:center"><em>19</em></td>
+<td style="text-align:right"><strong>-52.5%</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Issue resolution time (days)</td>
+<td style="text-align:center"><a href="">4</a></td>
+<td style="text-align:center"><em>3</em></td>
+<td style="text-align:right"><strong>-25%</strong></td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<h2 id="benefits">Benefits</h2>
+<ul>
+<li>Much less <strong>maintenance</strong> in the traditional meaning: <em>“Time spent to keep the system in nominal conditions”</em>
+<ul>
+<li>No more issues with Windows updates</li>
+<li>No more downtimes related to internal network / electricity / public infrastructure maintenance</li>
+<li>Improved security</li>
+<li>No more critical failures caused by testing stored procedures directly in production by mistake</li>
+</ul>
+</li>
+<li>Much more maintenance in terms of <em>software evolution</em>
+<ul>
+<li>Application (or verification of automatic application) of updates</li>
+<li>Security audits</li>
+<li>Maintenance and update of the pipeline</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="lessons-learned">Lessons learned</h2>
+<ul>
+<li>The teams must be <strong>autonomous</strong></li>
+<li>Practices must be <em>tailored</em> to the team</li>
+<li>Time-consuming, repetitive, and cumbersome procedures must be <em>automated</em></li>
+<li>Obsolete practices must be <em>removed</em></li>
+<li><strong>Communication</strong> is key, awareness must be shed across the team of the expected benefits</li>
+</ul>
+</section><section>
+<h2 id="timeline">Timeline</h2>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/devops/timeline.svg" alt="timeline"></p>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src="/reveal-hugo/object-assign.js"></script>
+
+<a href="/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"height":"1080","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false}],"pdfseparatefragments":false,"slide_number":true,"theme":"white","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"}}</script>
+
+<script src="/reveal-js/dist/reveal.js"></script>
+
+
+  
+  
+  <script type="text/javascript" src="/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/zoom/zoom.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/notes/notes.js"></script>
+  
+  
+  <script type="text/javascript" src="/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+
+  var revealHugoPlugins = { 
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
+   };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
+  Reveal.initialize(options);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false});
+
+    let render = (event) => {
+      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+      if (!mermaidElems.length){
+          return
+      }
+      mermaidElems.forEach(mermaidElem => {
+          let processed = mermaidElem.getAttribute('data-processed');
+          if (!processed){
+              
+              mermaid.init(undefined, mermaidElem);
+          }
+      });
+    };
+    Reveal.addEventListener('slidechanged', render);
+    Reveal.addEventListener('ready', render);
+  </script>
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+<script>
+  if (/.*?(\?|&)print-pdf/.test(window.location.toString())) {
+      var ytVideos = document.getElementsByTagName("iframe")
+      for (let i = 0; i < ytVideos.length; i++) {
+          var videoFrame = ytVideos[i]
+          var isYouTube = /^https?:\/\/(www.)youtube\.com\/.*/.test(videoFrame.src)
+          if (isYouTube) {
+              console.log(`Removing ${videoFrame.src}`)
+              var parent = videoFrame.parentElement
+              videoFrame.remove()
+              var p = document.createElement('p')
+              p.append(
+                  document.createTextNode(
+                      "There was an embedded video here, but it is disabled in the printed version of the slides."
+                  )
+              )
+              p.append(document.createElement('br'))
+              p.append(
+                  document.createTextNode(
+                      `Visit instead ${
+                          videoFrame.src
+                      } or ${
+                          videoFrame.src.replace(
+                              /(^https?:\/\/(www.)youtube\.com)\/(embed\/)(\w+).*/,
+                              "https://www.youtube.com/watch?v=$4"
+                          )
+                      }`
+                  )
+              )
+              parent.appendChild(p)
+          }
+      }
+  }
+</script>
+
+    
+  
+
+</body></html>

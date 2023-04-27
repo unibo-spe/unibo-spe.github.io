@@ -1,0 +1,2265 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+<title>Build Automation</title>
+<meta name="description" content="The art of letting machines do the job for you, with Gradle as example">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/css/custom-theme.min.039d4fc68d969e2925568e1aa7cc960bbfd481c396410a31508d9131455be55f.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="build-automation">Build Automation</h1>
+<h2 id="hahahugoshortcodes0hbhb">Software Process Engineering</h2>
+<br>
+<h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
+<br>
+<p>Compiled on: 2023-04-27
+ — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
+<p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
+</section><section>
+<h1 id="overview">Overview</h1>
+<ul>
+<li>Build automation:
+<ul>
+<li>The software lifecycle</li>
+<li>Automation styles</li>
+</ul>
+</li>
+<li>Gradle as paradigmatic build automator
+<ul>
+<li>Core concepts and basics</li>
+<li>Dependency management and configurations</li>
+<li>The build system as a dependency</li>
+<li>Hierarchial organization</li>
+<li>Isolation of imperativity</li>
+<li>Declarativity via DSLs</li>
+<li>Reuse via plug-ins</li>
+<li>Testing plug-ins</li>
+<li>Existing plugins</li>
+</ul>
+</li>
+</ul>
+</section>
+<section data-noprocess="" data-shortcode-slide="">
+  <h1 id="the-build-life-cycle">The build “life cycle”</h1>
+<h4 id="not-to-be-confused-with-the-system-development-life-cycle-sdlc">(Not to be confused with the system development life cycle (SDLC))</h4>
+<p>The process of creating <em>tested deployable software artifacts</em>
+<br>
+from <em>source</em> code</p>
+<p>May include, depending on the system specifics:</p>
+<ul>
+<li><em>Source code manipulation</em> and generation</li>
+<li>Source code <em>quality assurance</em></li>
+<li><em>Dependency management</em></li>
+<li><em>Compilation</em>, linking</li>
+<li><em>Binary manipulation</em></li>
+<li><em>Test execution</em></li>
+<li>Test <em>quality assurance</em> (e.g., coverage)</li>
+<li>API <em>documentation</em></li>
+<li><em>Packaging</em></li>
+<li><em>Delivery</em></li>
+</ul>
+</section>
+<section data-noprocess="" data-shortcode-slide="">
+<h1 id="lifecycle-styles">Lifecycle styles</h1>
+<ul>
+<li>
+<p><strong>Custom</strong>: select some phases that the product needs and perform them.</p>
+<ul>
+<li><em>Flexible and configurable</em>: tailored on each project’s needs</li>
+<li><em>Hard to adapt and port</em></li>
+</ul>
+</li>
+<li>
+<p><strong>Standard</strong>: run a sequence of pre-defined actions/phases.</p>
+<ul>
+<li><em>Portable and easy to understand</em>: replicated on every product</li>
+<li><em>Limited configuration options</em></li>
+</ul>
+</li>
+</ul>
+</section>
+<section data-noprocess="" data-shortcode-slide="">
+<h1 id="build-automation">Build automation</h1>
+<p>Automation of the build lifecycle</p>
+<ul>
+<li>In principle, the lifecycle could be executed manually</li>
+<li>In reality <em>time is precious</em> and <em>repetitivy is boring</em></li>
+</ul>
+<p>$\Rightarrow$ Create software that automates the building of some software!</p>
+<ul>
+<li>All those concerns that hold for sofware creation hold for build systems creation…</li>
+</ul>
+</section>
+<section data-noprocess="" data-shortcode-slide="">
+<h2 id="build-automation-basics-and-styles">Build automation: basics and styles</h2>
+<p>Different lifecycle types generate different build automation <strong>styles</strong></p>
+<p><strong>Imperative</strong>: write a script that tells the system what to do to get
+from code to artifacts</p>
+<ul>
+<li><em>Examples</em>: make, cmake, Apache Ant</li>
+<li><em>Abstraction gap</em>: verbose, repetitive</li>
+<li>Configuration (<em>declarative</em>) and actionable (<em>imperative</em>) logics <em>mixed</em> together</li>
+<li>Highly <em>configurable</em></li>
+</ul>
+<p><strong>Declarative</strong>: adhere to some convention, customizing some settings</p>
+<ul>
+<li><em>Examples</em>: Apache Maven</li>
+<li>Separation between <em>what</em> to do and <em>how</em> to do it
+<ul>
+<li>The build system decides how to do the stuff</li>
+</ul>
+</li>
+<li><em>Configuration limited</em> by the provided options</li>
+</ul>
+</section>
+<section data-noprocess="" data-shortcode-slide="">
+<h2 id="hybrid-automators">Hybrid automators</h2>
+<p>Create a <em>declarative infrastructure</em> upon an <em>imperative basis</em>, and
+<em>allow easy access to the underlying machinery</em></p>
+<p><strong>DSL</strong>s are helpful in this context: they can “hide” imperativity without ruling it out</p>
+<p>Still, many challenges remain open:</p>
+<ul>
+<li>How to reuse the build logic?
+<ul>
+<li>within a project, and among projects</li>
+</ul>
+</li>
+<li>How to structure multiple logical and interdependent parts?</li>
+</ul>
+</section><section>
+<h2 id="the-apache-maven-build-lifecycle">The Apache Maven build lifecycle</h2>
+<ol>
+<li><code>validate</code> - validate the project is correct and all necessary information is available</li>
+<li><code>compile</code> - compile the source code of the project</li>
+<li><code>test</code> - test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed</li>
+<li><code>package</code> - take the compiled code and package it in its distributable format, such as a JAR.</li>
+<li><code>verify</code> - run any checks on results of integration tests to ensure quality criteria are met</li>
+<li><code>install</code> - install the package into the local repository, for use as a dependency in other projects locally</li>
+<li><code>deploy</code> - done in the build environment, copies the final package to the remote repository for sharing with other developers and projects.</li>
+</ol>
+<ul>
+<li>Phases are made of <em>plugin goals</em></li>
+<li><strong>Execution</strong> requires the name of a <em>phase</em> or <em>goal</em> (dependent goals will get executed)</li>
+<li><strong>Convention over configuration</strong>: <em>sensible defaults</em></li>
+</ul>
+<p>What if there is no plugin for something peculiar of the project?</p>
+</section><section>
+<h2 id="a-lifecycle-for-build-lifecycles">A lifecycle for build lifecycles</h2>
+<ol>
+<li><strong>Initialization</strong>: understand what is part of a build</li>
+<li><strong>Configuration</strong>: create the necessary phases / goals and configure them
+<ul>
+<li>Define the <em>goals</em> (or <em>tasks</em>)</li>
+<li>Configure the <em>options</em></li>
+<li>Define <em>dependencies</em> among tasks
+<ul>
+<li>Forming a <em>directed acyclic graph</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Execution</strong>: run the tasks necessary to achieve the build goal</li>
+</ol>
+<p>Rather than declaratively fit the build into a predefined lifecycle, declaratively define a build lifecycle</p>
+<p>$\Rightarrow$ Typical of <em>hybrid automators</em></p>
+</section><section>
+<h2 id="gradle">Gradle</h2>
+<p>A paradigmatic example of a hybrid automator:</p>
+<ul>
+<li>Written mostly in Java</li>
+<li>with an outer Groovy DSL</li>
+<li>…and, more recently, a Kotlin DSL</li>
+</ul>
+<h3 id="our-approach-to-gradle">Our approach to Gradle</h3>
+<ul>
+<li>We are <strong>not</strong> going to learn “how to <em>use</em> Gradle”</li>
+<li>We are going to <em>learn how to Gradle</em>
+<ul>
+<li>Other automation systems can be driven similarly once the basics are understood</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="gradle-main-concepts">Gradle: main concepts</h2>
+<ul>
+<li><strong>Project</strong> – A collection of files composing the software
+<ul>
+<li>The <em>root</em> project can contain <em>subprojects</em></li>
+</ul>
+</li>
+<li><strong>Build file</strong> – A special file, with the build information
+<ul>
+<li>situated in the root directory of a project</li>
+<li>instructs Gradle on the organization of the project</li>
+</ul>
+</li>
+<li><strong>Dependency</strong> – A resource required by some operation.
+<ul>
+<li>May have dependencies itself</li>
+<li>Dependencies of dependencies are called <em>transitive</em> dependencies</li>
+</ul>
+</li>
+<li><strong>Configuration</strong> – A group of dependencies with <em>three roles</em>:
+<ol>
+<li><em>Declare</em> dependencies</li>
+<li><em>Resolve</em> dependency declarations to actual artifacts/resources</li>
+<li><em>Present</em> the dependencies to consumers in a suitable format</li>
+</ol>
+</li>
+<li><strong>Task</strong> – An atomic operation on the project, which can
+<ul>
+<li>have input and output files</li>
+<li>depend on other tasks (can be executed only if those are completed)</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="gradle-from-scratch-empty-project">Gradle from scratch: empty project</h2>
+<p>Let’s start as empty as possible, just point your terminal to an empty folder and:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>touch build.gradle.kts
+</span></span><span style="display:flex;"><span>gradle tasks
+</span></span></code></pre></div><p>Stuff happens: if nothing is specified,
+<br>
+<em>Gradle considers the folder where it is invoked as a project</em>
+<br>
+<em>The project name matches the folder name</em></p>
+<p>Let’s understand what:
+<br></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Welcome to Gradle &lt;version&gt;!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Here are the highlights of this release:
+</span></span><span style="display:flex;"><span> - Blah blah blah
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Starting a Gradle Daemon (subsequent builds will be faster)
+</span></span></code></pre></div><p>Up to there, it’s just performance stuff:
+Gradle uses a background service to speed up cacheable operations</p>
+</section><section>
+<h2 id="gradle-from-scratch-empty-project-1">Gradle from scratch: empty project</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>&gt; Task :tasks
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>------------------------------------------------------------
+</span></span><span style="display:flex;"><span>Tasks runnable from root project
+</span></span><span style="display:flex;"><span>------------------------------------------------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Build Setup tasks
+</span></span><span style="display:flex;"><span>-----------------
+</span></span><span style="display:flex;"><span>init - Initializes a new Gradle build.
+</span></span><span style="display:flex;"><span>wrapper - Generates Gradle wrapper files.
+</span></span></code></pre></div><p>Some tasks exist already!
+They are built-in.
+Let’s ignore them for now.</p>
+</section><section>
+<h2 id="gradle-from-scratch-empty-project-2">Gradle from scratch: empty project</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Help tasks
+</span></span><span style="display:flex;"><span>----------
+</span></span><span style="display:flex;"><span>buildEnvironment - Displays all buildscript dependencies declared in root project <span style="color:#d20;background-color:#fff0f0">'00-empty'</span>.
+</span></span><span style="display:flex;"><span>components - Displays the components produced by root project <span style="color:#d20;background-color:#fff0f0">'00-empty'</span>. [incubating]
+</span></span><span style="display:flex;"><span>dependencies - Displays all dependencies declared in root project <span style="color:#d20;background-color:#fff0f0">'00-empty'</span>.
+</span></span><span style="display:flex;"><span>dependencyInsight - Displays the insight into a specific dependency in root project <span style="color:#d20;background-color:#fff0f0">'00-empty'</span>.
+</span></span><span style="display:flex;"><span>dependentComponents - Displays the dependent components of components in root project <span style="color:#d20;background-color:#fff0f0">'00-empty'</span>. [incubating]
+</span></span><span style="display:flex;"><span><span style="color:#038">help</span> - Displays a <span style="color:#038">help</span> message.
+</span></span><span style="display:flex;"><span>model - Displays the configuration model of root project <span style="color:#d20;background-color:#fff0f0">'00-empty'</span>. [incubating]
+</span></span><span style="display:flex;"><span>outgoingVariants - Displays the outgoing variants of root project <span style="color:#d20;background-color:#fff0f0">'00-empty'</span>.
+</span></span><span style="display:flex;"><span>projects - Displays the sub-projects of root project <span style="color:#d20;background-color:#fff0f0">'00-empty'</span>.
+</span></span><span style="display:flex;"><span>properties - Displays the properties of root project <span style="color:#d20;background-color:#fff0f0">'00-empty'</span>.
+</span></span><span style="display:flex;"><span>tasks - Displays the tasks runnable from root project <span style="color:#d20;background-color:#fff0f0">'00-empty'</span>.
+</span></span></code></pre></div><p>Informational tasks. Among them, the <code>tasks</code> task we just invoked</p>
+</section><section>
+<h2 id="gradle-configuration-vs-execution">Gradle: configuration vs execution</h2>
+<p>It is time to create our first <em>task</em>
+<br>
+Create a <code>build.gradle.kts</code> file as follows:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"brokenTask"</span>) { <span style="color:#888">// creates a new task
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    println(<span style="color:#d20;background-color:#fff0f0">"this is executed at CONFIGURATION time!"</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Now launch gradle with <code>gradle brokenTask</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle broken
+</span></span><span style="display:flex;"><span>this is executed at CONFIGURATION time!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>BUILD SUCCESSFUL in 378ms
+</span></span></code></pre></div><p>Looks ok, but it’s <strong>utterly broken</strong></p>
+</section><section>
+<h2 id="gradle-configuration-vs-execution-1">Gradle: configuration vs execution</h2>
+<p>Try launching <code>gradle tasks</code></p>
+<ul>
+<li>We do not expect our task to run, we are launching something else</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>❯ gradle tasks
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt; Task :tasks
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>------------------------------------------------------------
+</span></span><span style="display:flex;"><span>Tasks runnable from root project
+</span></span><span style="display:flex;"><span>------------------------------------------------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>this is executed at CONFIGURATION time!
+</span></span><span style="display:flex;"><span>Build Setup tasks
+</span></span></code></pre></div><p><strong>Ouch!</strong></p>
+<p><strong>Reason</strong>: the build script executes when Gradle is invoked, and <em>configures</em> tasks and dependencies.
+<br>
+Only later, when a task is invoked, the block gets <em>actually executed</em></p>
+</section><section>
+<h2 id="gradle-configuration-vs-execution-2">Gradle: configuration vs execution</h2>
+<p>Let’s write a <em>correct</em> task</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"helloWorld"</span>) {
+</span></span><span style="display:flex;"><span>    doLast { <span style="color:#888">// This method takes as argument a Task.() -&gt; Unit
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        println(<span style="color:#d20;background-color:#fff0f0">"Hello, World!"</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Execution with <code>gradle helloWorld</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle helloWorld
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt; Task :helloWorld
+</span></span><span style="display:flex;"><span>Hello, World!
+</span></span></code></pre></div></section><section>
+<h2 id="gradle-configuration-vs-execution-3">Gradle: configuration vs execution</h2>
+<ul>
+<li>The <em>build configuration</em> happens <strong>first</strong>
+<ul>
+<li>Tasks and their dependencies are a <strong>result of the configuration</strong></li>
+</ul>
+</li>
+<li>The <em>task execution</em> happens <strong>later</strong>
+<ul>
+<li>As per the “meta-lifecycle” discussed before</li>
+</ul>
+</li>
+</ul>
+<p>Delaying the execution allows for <em>more flexible configuration</em></p>
+<p>This will be especially useful when <em>modifying existing behavior</em></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"helloWorld"</span>) {
+</span></span><span style="display:flex;"><span>    doLast { println(<span style="color:#d20;background-color:#fff0f0">"Hello, World!"</span>) }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tasks.<span style="color:#369">getByName</span>(<span style="color:#d20;background-color:#fff0f0">"helloWorld"</span>) { <span style="color:#888">// let's find an existing task 
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    doFirst { <span style="color:#888">// Similar to doLast, but adds operations in head
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        println(<span style="color:#d20;background-color:#fff0f0">"Configured later, executed first."</span>)
+</span></span><span style="display:flex;"><span>    }  
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle helloWorld
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt; Task :helloWorld
+</span></span><span style="display:flex;"><span>Configured later, executed first.
+</span></span><span style="display:flex;"><span>Hello, World!
+</span></span></code></pre></div></section><section>
+<h2 id="gradle-task-types">Gradle: task types</h2>
+<p>Gradle offers some facilities to make writing new tasks easier
+<br>
+An example is the <a href="https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/Exec.html"><code>org.gradle.api.Exec</code></a> task type, representing a command to be executed on the underlying command line</p>
+<p>At task registration time, it is possible to specify the task type.
+<br>
+Any <code>open class</code> implementing <a href="https://docs.gradle.org/current/javadoc/org/gradle/api/Task.html"><code>org.gradle.api.Task</code></a> can be instanced</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span> <span style="color:#888">// Jvm is part of the Gradle API
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"printJavaVersion"</span>) { <span style="color:#888">// Do you Recognize this? inline function with reified type!
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#888">// Configuration action is of type T.() -&gt; Unit, in this case Exec.T() -&gt; Unit
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    val javaExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>.<span style="color:#369">absolutePath</span> 
+</span></span><span style="display:flex;"><span>    commandLine( <span style="color:#888">// this is a method of class org.gradle.api.Exec
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        javaExecutable, <span style="color:#d20;background-color:#fff0f0">"-version"</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// There is no need of doLast / doFirst, actions are already configured
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#888">// Still, we may want to do something before or after the task has been executed
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    doLast { println(<span style="color:#d20;background-color:#fff0f0">"$javaExecutable invocation complete"</span>) }
+</span></span><span style="display:flex;"><span>    doFirst { println(<span style="color:#d20;background-color:#fff0f0">"Ready to invoke $javaExecutable"</span>) }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>&gt; Task :printJavaVersion
+</span></span><span style="display:flex;"><span>Ready to invoke /usr/lib/jvm/java-11-openjdk/bin/java
+</span></span><span style="display:flex;"><span>openjdk version <span style="color:#d20;background-color:#fff0f0">"11.0.8"</span> 2020-07-14
+</span></span><span style="display:flex;"><span>OpenJDK Runtime Environment (build 11.0.8+10)
+</span></span><span style="display:flex;"><span>OpenJDK 64-Bit Server VM (build 11.0.8+10, mixed mode)
+</span></span><span style="display:flex;"><span>/usr/lib/jvm/java-11-openjdk/bin/java invocation <span style="color:#038">complete</span>
+</span></span></code></pre></div></section><section>
+<h2 id="gradle-principle-of-automation">Gradle: principle of automation</h2>
+<p>Let’s try something more involved: compiling some Java source located in <code>src</code>.
+<br></p>
+<h4 id="principle"><strong>PRINCIPLE</strong></h4>
+<blockquote>
+<p><em>If you know how to do it, then you can instruct a machine to do it</em></p>
+</blockquote>
+<p>Compiling a Java source is just matter of invoking the <code>javac</code> compiler:</p>
+<ul>
+<li>Passing the files to be compiled</li>
+<li>Passing an appropriate classpath where to look for dependencies</li>
+<li>Passing where to put generated files</li>
+</ul>
+<p><em>Once you learn how some product is built, and you know how to build it by hand</em>
+<br>
+<strong>you have all the knowledge required to automate its construction</strong></p>
+</section><section>
+<h2 id="gradle-compiling-from-scratch">Gradle: compiling from scratch</h2>
+<p>Let’s compile a simple <code>src/HelloWorld.java</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String... args) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">"Hello, World!"</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Build logic:</p>
+<ol>
+<li>Find the sources to be compiled</li>
+<li>If any, find <code>javac</code></li>
+<li>Invoke <code>javac -d destination &lt;files&gt;</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
+</span></span><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) {
+</span></span><span style="display:flex;"><span>    val sources = findSources() <span style="color:#888">// 
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">if</span> (sources.<span style="color:#369">isNotEmpty</span>())  { <span style="color:#888">// If the folder exists and there are files
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        val javacExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javacExecutable</span>.<span style="color:#369">absolutePath</span> <span style="color:#888">// Use the current JVM's javac
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        commandLine(
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"$javacExecutable"</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"-d"</span>, <span style="color:#d20;background-color:#fff0f0">"$buildDir/bin"</span>, <span style="color:#888">// destination folder: the output directory of Gradle, inside "bin"
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            *sources
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// the task's doLast is inherited from Exec
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></code></pre></div></section><section>
+<h2 id="gradle-compiling-from-scratch-1">Gradle: compiling from scratch</h2>
+<p>Here is the <code>findSources()</code> function:</p>
+<ul>
+<li>Pure Kotlin</li>
+<li>Single expression</li>
+<li>Fluent safe call chaining</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>(): Array&lt;String&gt; = projectDir <span style="color:#888">// From the project
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    .listFiles { <span style="color:#080;font-weight:bold">it</span>: File -&gt; <span style="color:#080;font-weight:bold">it</span>.isDirectory &amp;&amp; <span style="color:#080;font-weight:bold">it</span>.name == <span style="color:#d20;background-color:#fff0f0">"src"</span> } <span style="color:#888">// Find a folder named 'src'
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?.firstOrNull() <span style="color:#888">// If it's not there we're done
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?.walk() <span style="color:#888">// If it's there, iterate all its content (returns a Sequence&lt;File&gt;)
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?.filter { <span style="color:#080;font-weight:bold">it</span>.extension == <span style="color:#d20;background-color:#fff0f0">"java"</span> } <span style="color:#888">// Pick all Java files
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?.map { <span style="color:#080;font-weight:bold">it</span>.absolutePath } <span style="color:#888">// Map them to their absolute path
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?.toList() <span style="color:#888">// Sequences can't get converted to arrays, we must go through lists
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?.toTypedArray() <span style="color:#888">// Convert to Array&lt;String&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?: emptyArray() <span style="color:#888">// Yeah if anything's missing there are no sources
+</span></span></span></code></pre></div><p>Execution:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle compileJava
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>BUILD SUCCESSFUL in 693ms
+</span></span></code></pre></div><p>Compiled files are in <code>build/bin</code>!</p>
+</section><section>
+<h2 id="gradle-dependency-management">Gradle: dependency management</h2>
+<p>Dependency management in Gradle depends from two fundamental concepts:</p>
+<ul>
+<li><strong>Dependency</strong>, a resource of some kind, possibly having other (<em>transitive</em>) dependencies</li>
+<li><strong>Configuration</strong>, a <em>resolvable</em> (mappable to actual resources) set of dependencies
+<ul>
+<li>$\Rightarrow$ Not to be confused with the configuration <strong>phase</strong>!</li>
+</ul>
+</li>
+</ul>
+<p>Let’s see a use case: compiling a Java source with a dependency</p>
+<ul>
+<li>In <code>javac</code> terms, we need to feed some jars to the <code>-cp</code> flag of the compiler</li>
+<li>In Gradle (automation) terms, we need:
+<ul>
+<li>a <em>configuration</em> representing the compile classpath</li>
+<li>one <em>dependency</em> for each library we need to compile</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="gradle-dependency-management-1">Gradle: dependency management</h2>
+<p>Conceptually, we want something like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Gradle way to create a configuration
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating <span style="color:#888">// Delegation!
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>dependencies {
+</span></span><span style="display:flex;"><span>    forEachLibrary { <span style="color:#888">// this function does not exist, unfortunate...
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        compileClasspath(files(<span style="color:#080;font-weight:bold">it</span>))
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>To be consumed by our improved compile task:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Resolve the classpath configuration (in general, files could be remote and need fetching)
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">classpathFiles</span> = compileClasspath.resolve()
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">sources</span> = findSources() <span style="color:#888">// Find sources
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">if</span> (sources != <span style="color:#080;font-weight:bold">null</span>)  {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">javacExecutable</span> = <span style="color:#b06;font-weight:bold">Jvm</span>.current().javacExecutable.absolutePath
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">separator</span> = <span style="color:#080;font-weight:bold">if</span> (<span style="color:#b06;font-weight:bold">Os</span>.isFamily(<span style="color:#b06;font-weight:bold">Os</span>.FAMILY_WINDOWS)) <span style="color:#d20;background-color:#fff0f0">";"</span> <span style="color:#080;font-weight:bold">else</span> <span style="color:#d20;background-color:#fff0f0">":"</span> <span style="color:#888">// Deal with Windows conventions
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        commandLine(
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$javacExecutable</span><span style="color:#d20;background-color:#fff0f0">"</span>, <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, classpathFiles.joinToString(separator = separator),
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"-d"</span>, <span style="color:#d20;background-color:#fff0f0">"bin"</span>, *sources
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We just need to write <code>forEachLibrary</code>, but that is just a Kotlin exercise…</p>
+</section><section>
+<h2 id="micro-exercise-in-kotlin">Micro exercise in Kotlin</h2>
+<p>…not particularly difficult to solve:</p>
+<ol>
+<li>It’s just something we need to do for each library</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">forEachLibrary</span>(todo: (String) -&gt; Unit) {
+</span></span><span style="display:flex;"><span>    findLibraries().forEach {
+</span></span><span style="display:flex;"><span>        todo(<span style="color:#080;font-weight:bold">it</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
+<li><code>findLibraries()</code> is similar to <code>findSources()</code>, let’s refactor:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"src"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"java"</span>) <span style="color:#888">// OK now we need findFiles()
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findLibraries</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"lib"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"jar"</span>) <span style="color:#888">// And we also need a way to invoke withExtension
+</span></span></span></code></pre></div><ol start="3">
+<li>Let’s use an intermediate class representing a search on a folder:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findFilesIn</span>(directory: String) = FinderInFolder(directory)
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FinderInFolder</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">directory</span>: String) {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">withExtension</span>(extension: String): Array&lt;String&gt; = TODO()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#888">// Now it compiles! We just need to write the actual method, but that's easy
+</span></span></span></code></pre></div></section><section>
+<h2 id="micro-exercise-in-kotlin-1">Micro exercise in Kotlin</h2>
+<p>Complete solution:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FinderInFolder</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">directory</span>: String) {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">withExtension</span>(extension: String): Array&lt;String&gt; = projectDir
+</span></span><span style="display:flex;"><span>        .listFiles { <span style="color:#080;font-weight:bold">it</span>: File -&gt; <span style="color:#080;font-weight:bold">it</span>.isDirectory &amp;&amp; <span style="color:#080;font-weight:bold">it</span>.name == directory }
+</span></span><span style="display:flex;"><span>        ?.firstOrNull()
+</span></span><span style="display:flex;"><span>        ?.walk()
+</span></span><span style="display:flex;"><span>        ?.filter { <span style="color:#080;font-weight:bold">it</span>.extension == extension }
+</span></span><span style="display:flex;"><span>        ?.map { <span style="color:#080;font-weight:bold">it</span>.absolutePath }
+</span></span><span style="display:flex;"><span>        ?.toList()
+</span></span><span style="display:flex;"><span>        ?.toTypedArray()
+</span></span><span style="display:flex;"><span>        ?: emptyArray()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findFilesIn</span>(directory: String) = FinderInFolder(directory)
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"src"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findLibraries</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"lib"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"jar"</span>)
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">DependencyHandlerScope</span>.forEachLibrary(todo: <span style="color:#b06;font-weight:bold">DependencyHandlerScope</span>.(String) -&gt; Unit) {
+</span></span><span style="display:flex;"><span>    findLibraries().forEach { todo(<span style="color:#080;font-weight:bold">it</span>) }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="gradle-task-dependencies">Gradle: task dependencies</h2>
+<p>Next step: we can compile, why not executing the program as well?</p>
+<ol>
+<li>Let’s define a <code>runtimeClasspath</code> configuration
+<ul>
+<li>“inherits” from <code>compileClasspath</code></li>
+<li>includes the output folder</li>
+<li>In general we may need stuff at runtime that we don’t need at compile time
+<ul>
+<li>E.g. stuff loaded via reflection</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runtimeClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating {
+</span></span><span style="display:flex;"><span>    extendsFrom(compileClasspath) <span style="color:#888">// Built-in machinery to say that one configuration is another "plus stuff"
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    runtimeClasspath(files(<span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$buildDir</span><span style="color:#d20;background-color:#fff0f0">/bin"</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
+<li>Let’s write the task</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"runJava"</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">classpathFiles</span> = runtimeClasspath.resolve()
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">mainClass</span> = <span style="color:#d20;background-color:#fff0f0">"PrintException"</span> <span style="color:#888">// Horribly hardcoded, we must do something
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">javaExecutable</span> = <span style="color:#b06;font-weight:bold">Jvm</span>.current().javaExecutable.absolutePath
+</span></span><span style="display:flex;"><span>    commandLine(javaExecutable, <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, classpathFiles.joinToString(separator = separator), mainClass)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="gradle-task-dependencies-1">Gradle: task dependencies</h2>
+<p>Let’s run it!</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>❯ gradle runJava
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt; Task :runJava FAILED
+</span></span><span style="display:flex;"><span>Error: Could not find or load main class PrintException
+</span></span><span style="display:flex;"><span>Caused by: java.lang.ClassNotFoundException: PrintException
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>FAILURE: Build failed with an exception.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>* What went wrong:
+</span></span><span style="display:flex;"><span>Execution failed <span style="color:#080;font-weight:bold">for</span> task <span style="color:#d20;background-color:#fff0f0">':runJava'</span>.
+</span></span><span style="display:flex;"><span>&gt; Process <span style="color:#d20;background-color:#fff0f0">'command '</span>/usr/lib/jvm/java-11-openjdk/bin/java<span style="color:#d20;background-color:#fff0f0">''</span> finished with non-zero <span style="color:#038">exit</span> value <span style="color:#00d;font-weight:bold">1</span>
+</span></span></code></pre></div><p>$\Rightarrow$ The code was not compiled!</p>
+<ul>
+<li>We need <code>runJava</code> to run after <code>compileJava</code></li>
+<li>One task depends on another!</li>
+</ul>
+</section><section>
+<h2 id="gradle-task-dependencies-2">Gradle: task dependencies</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Let's get a reference to the task
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileJava</span> = tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"runJava"</span>) {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    dependsOn(compileJava) <span style="color:#888">// runJava can run only if compileJava has been run
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></code></pre></div><p>Run now:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#369">TERM</span>=dumb gradle runJava
+</span></span><span style="display:flex;"><span>&gt; Task :compileJava
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt; Task :runJava
+</span></span><span style="display:flex;"><span>java.lang.IllegalStateException
+</span></span><span style="display:flex;"><span>        at PrintException.main(PrintException.java:5)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Just printed a stacktrace, I<span style="color:#a61717;background-color:#e3d2d2">'</span>m fine actually
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>BUILD SUCCESSFUL in 775ms
+</span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">2</span> actionable tasks: <span style="color:#00d;font-weight:bold">2</span> executed
+</span></span></code></pre></div></section><section>
+<h2 id="build-automation-dependencies-everywhere">Build automation: dependencies everywhere</h2>
+<p>Dependencies permeate the world of build automation.</p>
+<ul>
+<li>At the <em>“task”</em> level
+<ul>
+<li>Compile dependencies</li>
+<li>Runtime dependencies</li>
+</ul>
+</li>
+<li>At the <em>“build”</em> level
+<ul>
+<li>Phases of the lifecycle (<em>configurations</em> in Gradle) depend on other phases</li>
+<li><em>Tasks</em> depend on other tasks</li>
+</ul>
+</li>
+</ul>
+<p>$\Rightarrow$ <em>at the <strong>global</strong> level as well!</em></p>
+<p><em>no guarantee</em>  that automation written with some tool at version <code>X</code>, will work at version <code>Y</code>!</p>
+</section><section>
+<h2 id="the-gradle-wrapper">The Gradle wrapper</h2>
+<ul>
+<li>A global dependency on the build tool is <strong>hard to capture</strong></li>
+<li>Often, it becomes a <em>prerequisite expressed in natural language</em>
+<ul>
+<li>e.g., “you need Maven 3.6.1 to build this software”</li>
+</ul>
+</li>
+<li><em>Critical</em> issues when different pieces of the same system depend on different build tool versions</li>
+</ul>
+<p>Gradle proposes a (partial) solution with the so-called <em>Gradle wrapper</em></p>
+<ul>
+<li><em>A minimal program</em> that simply downloads the version of gradle written in a configuration file</li>
+<li><em>Generable</em> with the built-in task <code>wrapper</code>
+<ul>
+<li><code>gradle wrapper --gradle-version=&lt;VERSION&gt;</code></li>
+</ul>
+</li>
+<li>Prepares scripts for bash and cmd to run Gradle at the specified version
+<ul>
+<li><code>gradlew</code></li>
+<li><code>gradlew.bat</code></li>
+</ul>
+</li>
+</ul>
+<p>The Gradle wrapper is <em><strong>the</strong> correct way</em> to use gradle, and we’ll be using it from now on.</p>
+</section><section>
+<h2 id="cleaning-up">Cleaning up</h2>
+<p>A source of failures when building is <em>dirty status</em>.
+<br>
+For istance, in the previous example, before we introduced a dependency between tasks:</p>
+<ul>
+<li>clean execution fails</li>
+<li>execution after a <em>manual</em> execution of compile works
+<ul>
+<li><strong>false positive!</strong></li>
+</ul>
+</li>
+</ul>
+<p>We need a way to start clean.
+<br>
+This usually involves cleaning up the build directory - not so hard in our example</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.register(<span style="color:#d20;background-color:#fff0f0">"clean"</span>) { <span style="color:#888">// A generic task is fine
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    doLast {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (!buildDir.deleteRecursively()) {
+</span></span><span style="display:flex;"><span>            error(<span style="color:#d20;background-color:#fff0f0">"Cannot delete </span><span style="color:#33b;background-color:#fff0f0">$buildDir</span><span style="color:#d20;background-color:#fff0f0">"</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="build-hierarchies">Build hierarchies</h2>
+<p>Sometimes projects are <em>modular</em>
+<br>
+Where a module is a sub-project with a clear identity, possibly reusable elsewhere</p>
+<p>Examples:</p>
+<ul>
+<li>A smartphone application with:
+<ul>
+<li>A common library</li>
+<li>A software that uses such library for the actual app</li>
+</ul>
+</li>
+<li>Bluetooth control software comprising:
+<ul>
+<li>Platform-specific drivers</li>
+<li>A platform-agnostic bluetooth API and service</li>
+<li>A CLI interface to the library</li>
+<li>A Graphical interface</li>
+</ul>
+</li>
+</ul>
+<p>Modular software <em>simplifies maintenance</em> and <em>improves understandability</em>
+<br>
+Modules may <strong>depend</strong> on other modules
+<br>
+Some build tasks of some module may require build tasks <em>of other modules</em> to be complete before execution</p>
+</section><section>
+<h2 id="hierarchial-project">Hierarchial project</h2>
+<p>Let us split our project into two components:</p>
+<ul>
+<li>A base library</li>
+<li>A stand-alone application using the library</li>
+</ul>
+<p>We need to reorganize the build logic to something similar to</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>hierarchial-project
+</span></span><span style="display:flex;"><span>|__:library
+</span></span><span style="display:flex;"><span>\__:app
+</span></span></code></pre></div><p>Desiderata:</p>
+<ul>
+<li>We can compile any of the two projects from the root</li>
+<li>We can run the app from the root</li>
+<li>Calling a run of the app implies a compilation of the library</li>
+<li>We can clean both projects</li>
+</ul>
+</section><section>
+<h2 id="authoring-subprojects-in-gradle">Authoring subprojects in Gradle</h2>
+<p>Gradle (as many other build automators)
+offers built-in support for <em>hierarchial projects</em>.
+<br>
+Gradle is limited to <em>two levels</em>, other products such as Maven have no limitation</p>
+<p>Subprojects are listed in a <code>settings.gradle.kts</code> file
+<br>
+Incidentally, it’s the same place where the project name can be specified</p>
+<p>Subprojects <em>must have their own</em> <code>build.gradle.kts</code>
+<br>
+They can also have their own <code>settings.gradle.kts</code>, e.g. for selecting a name different than their folder</p>
+</section><section>
+<h2 id="authoring-subprojects-in-gradle-1">Authoring subprojects in Gradle</h2>
+<ol>
+<li>Create a settings.gradle.kts and declare your modules:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>rootProject.<span style="color:#369">name</span> = <span style="color:#d20;background-color:#fff0f0">"project-with-hierarchy"</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include(<span style="color:#d20;background-color:#fff0f0">":library"</span>) <span style="color:#888">// There must be a folder named "library"
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>include(<span style="color:#d20;background-color:#fff0f0">":app"</span>) <span style="color:#888">// There must be a folder named "app"
+</span></span></span></code></pre></div><ol start="2">
+<li>In the root project, configure the part common to <strong>all</strong> projects in a <code>allprojects</code> block
+<ul>
+<li>e.g., in our case, the <code>clean</code> task should be available for each project</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>allprojects {
+</span></span><span style="display:flex;"><span>    tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"clean"</span>) { <span style="color:#888">// A generic task is fine
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">if</span> (!buildDir.<span style="color:#369">deleteRecursively</span>()) {
+</span></span><span style="display:flex;"><span>            error(<span style="color:#d20;background-color:#fff0f0">"Cannot delete $buildDir"</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="authoring-subprojects-in-gradle-2">Authoring subprojects in Gradle</h2>
+<ol start="3">
+<li>Put the part shared by <em>solely the sub-projects</em> into a <code>subprojects</code> block
+<ul>
+<li>e.g., in our case, the <code>compileJava</code> task and the related utilities</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>subprojects {
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// This must be there, as projectDir must refer to the *current* project
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FinderInFolder</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">directory</span>: String) ...
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findFilesIn</span>(directory: String) = FinderInFolder(directory)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"src"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findLibraries</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"lib"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"jar"</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">DependencyHandlerScope</span>.forEachLibrary(todo: <span style="color:#b06;font-weight:bold">DependencyHandlerScope</span>.(String) -&gt; Unit) ...
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runtimeClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating { extendsFrom(compileClasspath) }
+</span></span><span style="display:flex;"><span>    dependencies { ... }
+</span></span><span style="display:flex;"><span>    tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) { ... }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="authoring-subprojects-in-gradle-3">Authoring subprojects in Gradle</h2>
+<ol start="4">
+<li>In each subproject’s <code>build.gradle.kts</code>, add further customization as necessary
+<ul>
+<li>e.g., in our case, the <code>runJava</code> task can live in the <code>:app</code> subroject</li>
+</ul>
+</li>
+<li>Connect configurations to each other using dependencies
+<ul>
+<li>in <code>app</code>’s <code>build.gradle.kts</code>, for instance:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    compileClasspath(project(<span style="color:#d20;background-color:#fff0f0">":library"</span>)) { <span style="color:#888">// My compileClasspath configuration depends on project library
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        targetConfiguration = <span style="color:#d20;background-color:#fff0f0">"runtimeClasspath"</span> <span style="color:#888">// Specifically, from its runtime
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="6">
+<li>Declare inter-subproject task dependencies
+<ul>
+<li>Tasks may fail if ran out of order!</li>
+<li>Compiling <code>app</code> requires <code>library</code> to be compiled!</li>
+<li>inside <code>app</code>’s <code>build.gradle.kts</code>:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">compileJava</span> { dependsOn(project(<span style="color:#d20;background-color:#fff0f0">":library"</span>).<span style="color:#369">tasks</span>.<span style="color:#369">compileJava</span>) }
+</span></span></code></pre></div><p><em>Note</em>: <code>library</code>’s <code>build.gradle.kts</code> is actually empty at the end of the process</p>
+</section><section>
+<h2 id="mixed-imperativity-and-declarativity">Mixed imperativity and declarativity</h2>
+<p>At the moment, we have part of the project that’s declarative, and part that’s imperative:</p>
+<ul>
+<li><strong>Declarative</strong>
+<ul>
+<li>configurations and their relationships</li>
+<li>dependencies</li>
+<li>task dependencies</li>
+<li>project hierarchy definition</li>
+<li>some parts of the task configuration</li>
+</ul>
+</li>
+<li><strong>Imperative</strong>
+<ul>
+<li>Operations on the file system</li>
+<li>some of the actual task logics</li>
+<li>resolution of configurations</li>
+</ul>
+</li>
+</ul>
+<p>The <em>declarative</em> part is the one <em>for which we had a built-in API for</em>!</p>
+</section><section>
+<h2 id="unavoidability-of-imperativity">Unavoidability of imperativity</h2>
+<h3 id="and-its-isolation">(and its isolation)</h3>
+<p>The base mechanism at work here is <em>hiding imperativity under a clean, declarative API</em>.</p>
+<p>Also <em>“purely declarative”</em> build systems, such as Maven, which are driven with markup files, <em>hide</em> their imperativity behind a curtain (in the case of Maven, plugins that are configured in the <code>pom.xml</code>, but implemented elsewhere).</p>
+<p><em>Usability</em>, <em>understandability</em>, and, ultimately, <em>maintability</em>, get increased when:</p>
+<ul>
+<li><em>Imperativity</em> gets <em>hidden</em> under the hood</li>
+<li>Most (if not all) the operations can be <em>configured</em> rather than <em>written</em></li>
+<li>Configuration can be <em>minimal for common tasks</em>
+<ul>
+<li><strong>Convention over configuration</strong>, we’ll get back to this</li>
+</ul>
+</li>
+<li>Users can <em>resort to imperativity</em> in case of need</li>
+</ul>
+</section><section>
+<h2 id="isolation-of-imperativity">Isolation of imperativity</h2>
+<h3 id="task-type-definition">Task type definition</h3>
+<p>Let’s begin our operation of isolation of imperativity by refactoring our hierarchy of operations.</p>
+<ul>
+<li>We have a number of “Java-related” tasks.</li>
+<li>All of them have a classpath</li>
+<li>One has an output directory</li>
+<li>One has a “main class”</li>
+</ul>
+<div class="mermaid" data-processed="true" pre-rendered="true"><svg aria-labelledby="chart-title-mermaid-1682602618813 chart-desc-mermaid-1682602618813" role="img" viewBox="0 0 355.65625 353" style="max-width: 355.65625px;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="100%" id="mermaid-1682602618813"><title id="chart-title-mermaid-1682602618813"></title><desc id="chart-desc-mermaid-1682602618813"></desc><style>#mermaid-1682602618813 {font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1682602618813 .error-icon{fill:#552222;}#mermaid-1682602618813 .error-text{fill:#552222;stroke:#552222;}#mermaid-1682602618813 .edge-thickness-normal{stroke-width:2px;}#mermaid-1682602618813 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1682602618813 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1682602618813 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1682602618813 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1682602618813 .marker{fill:#333333;stroke:#333333;}#mermaid-1682602618813 .marker.cross{stroke:#333333;}#mermaid-1682602618813 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1682602618813 g.classGroup text{fill:#9370DB;fill:#131300;stroke:none;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:10px;}#mermaid-1682602618813 g.classGroup text .title{font-weight:bolder;}#mermaid-1682602618813 .nodeLabel,#mermaid-1682602618813 .edgeLabel{color:#131300;}#mermaid-1682602618813 .edgeLabel .label rect{fill:#ECECFF;}#mermaid-1682602618813 .label text{fill:#131300;}#mermaid-1682602618813 .edgeLabel .label span{background:#ECECFF;}#mermaid-1682602618813 .classTitle{font-weight:bolder;}#mermaid-1682602618813 .node rect,#mermaid-1682602618813 .node circle,#mermaid-1682602618813 .node ellipse,#mermaid-1682602618813 .node polygon,#mermaid-1682602618813 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-1682602618813 .divider{stroke:#9370DB;stroke:1;}#mermaid-1682602618813 g.clickable{cursor:pointer;}#mermaid-1682602618813 g.classGroup rect{fill:#ECECFF;stroke:#9370DB;}#mermaid-1682602618813 g.classGroup line{stroke:#9370DB;stroke-width:1;}#mermaid-1682602618813 .classLabel .box{stroke:none;stroke-width:0;fill:#ECECFF;opacity:0.5;}#mermaid-1682602618813 .classLabel .label{fill:#9370DB;font-size:10px;}#mermaid-1682602618813 .relation{stroke:#333333;stroke-width:1;fill:none;}#mermaid-1682602618813 .dashed-line{stroke-dasharray:3;}#mermaid-1682602618813 #compositionStart,#mermaid-1682602618813 .composition{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#mermaid-1682602618813 #compositionEnd,#mermaid-1682602618813 .composition{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#mermaid-1682602618813 #dependencyStart,#mermaid-1682602618813 .dependency{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#mermaid-1682602618813 #dependencyStart,#mermaid-1682602618813 .dependency{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#mermaid-1682602618813 #extensionStart,#mermaid-1682602618813 .extension{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#mermaid-1682602618813 #extensionEnd,#mermaid-1682602618813 .extension{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#mermaid-1682602618813 #aggregationStart,#mermaid-1682602618813 .aggregation{fill:#ECECFF!important;stroke:#333333!important;stroke-width:1;}#mermaid-1682602618813 #aggregationEnd,#mermaid-1682602618813 .aggregation{fill:#ECECFF!important;stroke:#333333!important;stroke-width:1;}#mermaid-1682602618813 #lollipopStart,#mermaid-1682602618813 .lollipop{fill:#ECECFF!important;stroke:#333333!important;stroke-width:1;}#mermaid-1682602618813 #lollipopEnd,#mermaid-1682602618813 .lollipop{fill:#ECECFF!important;stroke:#333333!important;stroke-width:1;}#mermaid-1682602618813 .edgeTerminals{font-size:11px;}#mermaid-1682602618813 :root{--mermaid-font-family:Inconsolata;}</style><g><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="0" class="marker aggregation classDiagram" id="classDiagram-aggregationStart"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="19" class="marker aggregation classDiagram" id="classDiagram-aggregationEnd"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="0" class="marker extension classDiagram" id="classDiagram-extensionStart"><path d="M 1,7 L18,13 V 1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="19" class="marker extension classDiagram" id="classDiagram-extensionEnd"><path d="M 1,1 V 13 L18,7 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="0" class="marker composition classDiagram" id="classDiagram-compositionStart"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="19" class="marker composition classDiagram" id="classDiagram-compositionEnd"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="0" class="marker dependency classDiagram" id="classDiagram-dependencyStart"><path d="M 5,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="19" class="marker dependency classDiagram" id="classDiagram-dependencyEnd"><path d="M 18,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="0" class="marker lollipop classDiagram" id="classDiagram-lollipopStart"><circle r="6" cy="7" cx="6" fill="white" stroke="black"></circle></marker></defs><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-start="url(#classDiagram-extensionStart)" style="fill:none" class="edge-pattern-solid relation" id="id1" d="M182.2734375,65L182.2734375,69.16666666666667C182.2734375,73.33333333333333,182.2734375,81.66666666666667,182.2734375,90C182.2734375,98.33333333333333,182.2734375,106.66666666666667,182.2734375,110.83333333333333L182.2734375,115"></path><path marker-start="url(#classDiagram-extensionStart)" style="fill:none" class="edge-pattern-solid relation" id="id2" d="M117.11568708609272,216L111.73963507174393,220.16666666666666C106.36358305739515,224.33333333333334,95.61147902869759,232.66666666666666,90.23542701434879,241C84.859375,249.33333333333334,84.859375,257.6666666666667,84.859375,261.8333333333333L84.859375,266"></path><path marker-start="url(#classDiagram-extensionStart)" style="fill:none" class="edge-pattern-solid relation" id="id3" d="M247.43118791390728,216L252.80723992825608,220.16666666666666C258.18329194260485,224.33333333333334,268.9353959713024,232.66666666666666,274.3114479856512,241C279.6875,249.33333333333334,279.6875,257.6666666666667,279.6875,261.8333333333333L279.6875,266"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(182.2734375, 36.5)" id="classid-Exec-0" class="node default"><rect height="57" width="52.375" y="-28.5" x="-26.1875" class="outer title-state"></rect><line y2="1.5" y1="1.5" x2="26.1875" x1="-26.1875" class="divider"></line><line y2="17.5" y1="17.5" x2="26.1875" x1="-26.1875" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -18.6875, -21)" height="18" width="37.375" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Exec</span></div></foreignObject></g></g><g transform="translate(182.2734375, 165.5)" id="classid-JavaTask-1" class="node default"><rect height="101" width="155.53125" y="-50.5" x="-77.765625" class="outer title-state"></rect><line y2="-20.5" y1="-20.5" x2="77.765625" x1="-77.765625" class="divider"></line><line y2="39.5" y1="39.5" x2="77.765625" x1="-77.765625" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -35.4375, -43)" height="18" width="70.875" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">JavaTask</span></div></foreignObject><foreignObject transform="translate( -70.265625, -9)" height="18" width="140.53125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Set&lt;File&gt; classpath</span></div></foreignObject><foreignObject transform="translate( -70.265625, 13)" height="18" width="138.75"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">File javaExecutable</span></div></foreignObject></g></g><g transform="translate(84.859375, 305.5)" id="classid-JavaCompile-2" class="node default"><rect height="79" width="153.71875" y="-39.5" x="-76.859375" class="outer title-state"></rect><line y2="-9.5" y1="-9.5" x2="76.859375" x1="-76.859375" class="divider"></line><line y2="28.5" y1="28.5" x2="76.859375" x1="-76.859375" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -49.359375, -32)" height="18" width="98.71875" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">JavaCompile</span></div></foreignObject><foreignObject transform="translate( -69.359375, 2)" height="18" width="138.71875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">File outputDirectory</span></div></foreignObject></g></g><g transform="translate(279.6875, 305.5)" id="classid-JavaExecute-3" class="node default"><rect height="79" width="135.9375" y="-39.5" x="-67.96875" class="outer title-state"></rect><line y2="-9.5" y1="-9.5" x2="67.96875" x1="-67.96875" class="divider"></line><line y2="28.5" y1="28.5" x2="67.96875" x1="-67.96875" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -48.484375, -32)" height="18" width="96.96875" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">JavaExecute</span></div></foreignObject><foreignObject transform="translate( -60.46875, 2)" height="18" width="120.9375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">String mainClass</span></div></foreignObject></g></g></g></g></g></svg></div>
+
+</section><section>
+<h2 id="creating-a-new-task-type-in-gradle">Creating a new Task type in Gradle</h2>
+<p>Gradle supports the definition of new task types:</p>
+<ul>
+<li>New tasks <em>must implement</em> the <code>Task</code> interface
+<ul>
+<li>They <em>usually inherit</em> from <code>DefaultTask</code></li>
+</ul>
+</li>
+<li>They must be <em>extensible</em> (<code>open</code>)
+<ul>
+<li>At runtime, Gradle creates subclasses on the fly</li>
+</ul>
+</li>
+<li>They must have <em>a parameterless constructor annotated</em> with <code>@Inject</code>
+<ul>
+<li>Costruction of tasks happens via dependency injection</li>
+</ul>
+</li>
+<li>A public method can be marked as <code>@TaskAction</code>, and will get invoked to execute the task</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Clean</span> <span style="color:#555">@Inject</span> <span style="color:#080;font-weight:bold">constructor</span>() : DefaultTask() {
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@TaskAction</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">clean</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (!project.buildDir.deleteRecursively()) {
+</span></span><span style="display:flex;"><span>            error(<span style="color:#d20;background-color:#fff0f0">"Cannot delete </span><span style="color:#33b;background-color:#fff0f0">${project.buildDir}</span><span style="color:#d20;background-color:#fff0f0">"</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h3 id="input-output-caching-and-continuous-build-mode">Input, output, caching, and continuous build mode</h3>
+<p>In general, it is a good practice (that will become mandatory in future gradle releases)
+to <em>annotate every public property</em> of a task with a marker annotation that determines whether it is an <em>input</em> or an <em>output</em>.</p>
+<ul>
+<li><code>@Input</code>, <code>@InputFile</code>, <code>@InputFiles</code>, <code>@InputDirectory</code>, <code>@InputDirectories</code></li>
+<li><code>@OutputFile</code>, <code>@OutputFiles</code>, <code>@OutputDirectory</code>, <code>@OutputDirectories</code>
+<ul>
+<li><code>@Internal</code> marks <em>internal</em> output properties (not reified on the file system)</li>
+</ul>
+</li>
+</ul>
+<h4 id="why">Why?</h4>
+<ol>
+<li><strong>Performance</strong>
+<ul>
+<li>Gradle caches intermediate build results, using input and output markers to undersand whether or not some task is <em>up to date</em></li>
+<li>This allows for <em>much</em> faster builds while working on large projects
+<ul>
+<li>Time to build completion can decrease a dozen minutes to seconds!</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Continuous build</strong>
+<ul>
+<li>Re run tasks upon changes with the <code>-t</code> option</li>
+<li>(In/Out)put markers are used to understand <em>what</em> to re-run</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="isolation-of-imperativity-1">Isolation of imperativity</h2>
+<h3 id="idea">Idea</h3>
+<p>In our main <code>build.gradle.kts</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Imperative part
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">JavaTask</span>(<span style="color:#369;font-style:italic">javaExecutable:</span> File = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>) : Exec() { ... }
+</span></span><span style="display:flex;"><span>open <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">CompileJava</span> <span style="color:#555">@javax.inject.Inject</span> constructor() : JavaTask(Jvm.<span style="color:#369">current</span>().<span style="color:#369">javacExecutable</span>) { ... }
+</span></span><span style="display:flex;"><span>open <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RunJava</span> <span style="color:#555">@javax.inject.Inject</span> constructor() : JavaTask() { ... }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888">// Declarative part
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>allprojects { tasks.<span style="color:#369">register</span>&lt;Clean&gt;(<span style="color:#d20;background-color:#fff0f0">"clean"</span>) }
+</span></span><span style="display:flex;"><span>subprojects {
+</span></span><span style="display:flex;"><span>    val compileClasspath by configurations.<span style="color:#369">creating</span>
+</span></span><span style="display:flex;"><span>    val runtimeClasspath by configurations.<span style="color:#369">creating</span> { extendsFrom(compileClasspath) }
+</span></span><span style="display:flex;"><span>    dependencies {
+</span></span><span style="display:flex;"><span>        findLibraries().<span style="color:#369">forEach</span> { compileClasspath(files(it)) }
+</span></span><span style="display:flex;"><span>        runtimeClasspath(files(<span style="color:#d20;background-color:#fff0f0">"$buildDir/bin"</span>))
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    tasks.<span style="color:#369">register</span>&lt;CompileJava&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In subprojects, only have the declarative part</p>
+<p>Unfortunately, <em>subprojects have no access to the root’s defined types</em></p>
+<ul>
+<li>Fragile access only via reflection</li>
+<li>Enormous <strong>code duplication</strong></li>
+</ul>
+</section><section>
+<h2 id="isolation-of-imperativity-2">Isolation of imperativity</h2>
+<h3 id="project-wise-api-extension-plugin">Project-wise API extension (plugin)</h3>
+<p>Gradle provides the functionality we need (project-global type definitions) using a special <code>buildSrc</code> folder</p>
+<ul>
+<li>Requires a Gradle configuration file
+<ul>
+<li>What it actually does will be clearer in future</li>
+</ul>
+</li>
+<li>Requires a peculiar directory structure</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>├── build.gradle.kts
+</span></span><span style="display:flex;"><span>├── buildSrc
+</span></span><span style="display:flex;"><span>│&nbsp;&nbsp; ├── build.gradle.kts
+</span></span><span style="display:flex;"><span>│&nbsp;&nbsp; └── src
+</span></span><span style="display:flex;"><span>│&nbsp;&nbsp;     └── main
+</span></span><span style="display:flex;"><span>│&nbsp;&nbsp;         └── kotlin
+</span></span><span style="display:flex;"><span>│&nbsp;&nbsp;             └── OurImperativeCode.kt
+</span></span><span style="display:flex;"><span>└── settings.gradle.kts
+</span></span></code></pre></div><ul>
+<li>Allows imperative code to get <em>isolated</em> and <em>shared</em> among subprojects!</li>
+</ul>
+</section><section>
+<h2 id="isolation-of-imperativity-3">Isolation of imperativity</h2>
+<h3 id="project-wise-api-extension-plugin-1">Project-wise API extension (plugin)</h3>
+<p>inside <code>buildSrc/build.gradle.kts</code> (clearer in future):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    <span style="color:#a61717;background-color:#e3d2d2">`</span>kotlin-dsl<span style="color:#a61717;background-color:#e3d2d2">`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>repositories {
+</span></span><span style="display:flex;"><span>    mavenCentral()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>excerpt of <code>buildSrc/src/main/kotlin/JavaOperations.kt</code> (full code in the repo)</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Clean</span> <span style="color:#555">@Inject</span> <span style="color:#080;font-weight:bold">constructor</span>() : DefaultTask() { ... }
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">JavaTask</span>(javaExecutable: File = <span style="color:#b06;font-weight:bold">Jvm</span>.current().javaExecutable) : Exec() { ... }
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">CompileJava</span> <span style="color:#555">@javax</span>.inject.Inject <span style="color:#080;font-weight:bold">constructor</span>() : JavaTask(<span style="color:#b06;font-weight:bold">Jvm</span>.current().javacExecutable) {
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@OutputDirectory</span> <span style="color:#888">// Marks this property as an output
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">outputFolder</span>: String = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${project.buildDir}</span><span style="color:#d20;background-color:#fff0f0">/bin/"</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RunJava</span> <span style="color:#555">@javax</span>.inject.Inject <span style="color:#080;font-weight:bold">constructor</span>() : JavaTask() {
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@Input</span> <span style="color:#888">// Marks this property as an Input
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">mainClass</span>: String = <span style="color:#d20;background-color:#fff0f0">"Main"</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="isolation-of-imperativity-4">Isolation of imperativity</h2>
+<h3 id="project-wise-api-extension-plugin-2">Project-wise API extension (plugin)</h3>
+<p>Our Project’s <code>build.gradle.kts</code> (full):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>allprojects {
+</span></span><span style="display:flex;"><span>    tasks.register(<span style="color:#d20;background-color:#fff0f0">"clean"</span>) { <span style="color:#888">// A generic task is fine
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        doLast {
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">if</span> (!buildDir.deleteRecursively()) {
+</span></span><span style="display:flex;"><span>                error(<span style="color:#d20;background-color:#fff0f0">"Cannot delete </span><span style="color:#33b;background-color:#fff0f0">$buildDir</span><span style="color:#d20;background-color:#fff0f0">"</span>)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>subprojects {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runtimeClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating { extendsFrom(compileClasspath) }
+</span></span><span style="display:flex;"><span>    dependencies {
+</span></span><span style="display:flex;"><span>        findLibraries().forEach { compileClasspath(files(<span style="color:#080;font-weight:bold">it</span>)) }
+</span></span><span style="display:flex;"><span>        runtimeClasspath(files(<span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$buildDir</span><span style="color:#d20;background-color:#fff0f0">/bin"</span>))
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    tasks.register&lt;CompileJava&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Purely declarative, yay!</strong></p>
+</section><section>
+<h2 id="isolation-of-imperativity-5">Isolation of imperativity</h2>
+<h3 id="project-wise-api-extension-plugin-3">Project-wise API extension (plugin)</h3>
+<p>Our <code>app</code> suproject’s <code>build.gradle.kts</code> (full):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    compileClasspath(project(<span style="color:#d20;background-color:#fff0f0">":library"</span>)) { targetConfiguration = <span style="color:#d20;background-color:#fff0f0">"runtimeClasspath"</span> }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>tasks.<span style="color:#369">compileJava</span> {
+</span></span><span style="display:flex;"><span>    dependsOn(project(<span style="color:#d20;background-color:#fff0f0">":library"</span>).<span style="color:#369">tasks</span>.<span style="color:#369">compileJava</span>)
+</span></span><span style="display:flex;"><span>    fromConfiguration(configurations.<span style="color:#369">compileClasspath</span>.<span style="color:#369">get</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;RunJava&gt;(<span style="color:#d20;background-color:#fff0f0">"runJava"</span>) {
+</span></span><span style="display:flex;"><span>    fromConfiguration(configurations.<span style="color:#369">runtimeClasspath</span>.<span style="color:#369">get</span>())
+</span></span><span style="display:flex;"><span>    mainClass = <span style="color:#d20;background-color:#fff0f0">"PrintException"</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Purely declarative, yay!</strong></p>
+</section><section>
+<h2 id="divide-conquer-encapsulate-adorn">Divide, conquer, encapsulate, adorn</h2>
+<p>General approach to a <em>new</em> build automation problem:</p>
+<p><strong>Divide</strong>: Identify the <em>base steps</em>, they could become your tasks</p>
+<ul>
+<li>Or any concept your build system exposes to model atomic operations</li>
+</ul>
+<p><strong>Conquer</strong>: Clearly express the <em>dependencies</em> among them</p>
+<ul>
+<li>Build a <em>pipeline</em></li>
+<li>Implement them Providing a <em>clean API</em></li>
+</ul>
+<p><strong>Encapsulate</strong>: confine imperative logic, make it an <em>implementation detail</em></p>
+<p><strong>Adorn</strong>: provide expressive, easy, immedate access to the API via <em>DSL</em>!</p>
+<p><em>Not very different than what’s usually done in (good) software development</em></p>
+</section><section>
+<h2 id="reusability-across-multiple-projects">Reusability across multiple projects</h2>
+<p>We now have a rudimental infrastructure for building and running Java projects
+<br>
+What if we want to reuse it?</p>
+<p>Of course, copy/pasting the same file across projects is to be avoided whenever possible</p>
+<h2 id="the-concept-of-plugin">The concept of plugin</h2>
+<p>Gradle (as many other build systems) allow extensibility via <em>plugins</em>
+<br>
+A <em>plugin</em> is a software component that <em>extends the API</em> of the base system
+<br>
+It usually includes:</p>
+<ul>
+<li>A set of <code>Task</code>s</li>
+<li>An <code>Extension</code> – An object incapsulating the global configuration options
+<ul>
+<li>leveraging an appropriate <em>DSL</em></li>
+</ul>
+</li>
+<li>A <code>Plugin</code> object, implementing an <code>apply(Project)</code> function
+<ul>
+<li>Application must create the extension, the tasks, and the rest of the imperative stuff</li>
+</ul>
+</li>
+<li>A <strong>manifest</strong> file declaring which of the classes implementing <code>Plugin</code> is the entry point of the declared plugin
+<ul>
+<li>located in <code>META-INF/gradle-plugins/&lt;plugin-name&gt;.properties</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="using-a-plugin">Using a plugin</h2>
+<ul>
+<li>Plugins are loaded from the <em>build environment</em>
+<ul>
+<li>the <em>classpath</em> used for such tasks can be explored with the built-in task <code>buildEnvironment</code></li>
+<li>if a plugin is not found, then if a version for it is available it’s <em>fetched from remote repositories</em>
+<ul>
+<li>by default the <a href="https://plugins.gradle.org/">Gradle plugin portal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Plugin need to be <strong>applied</strong>
+<ul>
+<li>Which actually translates to calling the <code>apply(Project)</code> function</li>
+<li>Application for <em>hierarchial</em> projects is <em>not automatic</em>
+<ul>
+<li>You might want your plugin to be applied only in some subprojects!</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Example code</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    pluginName <span style="color:#888">// Loads a plugin from the "buildEnvironment" classpath
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#a61717;background-color:#e3d2d2">`</span>plugin-name<span style="color:#a61717;background-color:#e3d2d2">`</span> <span style="color:#888">// Syntax for non Kotlin-compliant plugin names
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">"plugin2-name"</span>) <span style="color:#888">// Alternative to the former
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">"some-custom-plugin"</span>) version <span style="color:#d20;background-color:#fff0f0">"1.2.3"</span> <span style="color:#888">// if not found locally, gets fetched from the Gradle plugin portal
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span><span style="display:flex;"><span><span style="color:#888">// In case of non-hierarchial projects, plugins are also "applied"
+</span></span></span><span style="display:flex;"><span><span style="color:#888">// Otherwise, they need to get applied manually, e.g.:
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>allprojects {
+</span></span><span style="display:flex;"><span>    apply(plugin = <span style="color:#d20;background-color:#fff0f0">"pluginName"</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="built-in-gradle-plugins">Built-in Gradle plugins</h2>
+<p>The default Gradle distribution includes a large number of plugins, e.g.:</p>
+<ul>
+<li><code>java</code> plugin, for Java written applications
+<ul>
+<li>a full fledged version of the custom local plugin we created!</li>
+</ul>
+</li>
+<li><code>java-library</code> plugin, for Java libraries (with no main class)</li>
+<li><code>scala</code> plugin</li>
+<li><code>cpp</code> plugin, for C++</li>
+<li><code>kotlin</code> plugin, supporting Kotlin with multiple targets (JVM, Javascript, native)</li>
+</ul>
+<p>We are going to use the Kotlin JVM plugin to build our first standalone plugin!
+<br>
+(yes we already did write our first one: code in <code>buildSrc</code> is <em>project-local plugin code</em>)</p>
+</section><section>
+<h2 id="a-greeting-plugin">A Greeting plugin</h2>
+<p>A very simple plugin that greets the user</p>
+<p><strong>Desiderata</strong></p>
+<ul>
+<li>adds a <code>greet</code> task that prints a greeting</li>
+<li>the default output should be configurable with something like:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"it.unibo.lss.greetings"</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>greetings {
+</span></span><span style="display:flex;"><span>    greetWith { <span style="color:#d20;background-color:#fff0f0">"Ciao da"</span> }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="setting-up-a-kotlin-build">Setting up a Kotlin build</h2>
+<p>First step: we need to set up a Kotlin build, we’ll write our plugin in Kotlin</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// No magic: calls a method running behind the scenes the same of id("org.jetbrains.kotlin-$jvm")
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    kotlin(<span style="color:#d20;background-color:#fff0f0">"jvm"</span>) version <span style="color:#d20;background-color:#fff0f0">"1.5.31"</span> <span style="color:#888">// version is necessary
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></code></pre></div><p>The Kotlin <em>plugin</em> introduces:</p>
+<ul>
+<li>Maven repositories are a de-facto standard for shipping JVM libraries</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Configuration of software sources
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>repositories {
+</span></span><span style="display:flex;"><span>    mavenCentral() <span style="color:#888">// points to Maven Central
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>     <span style="color:#888">// "implementation" is a configuration created by by the Kotlin plugin
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">"stdlib-jdk8"</span>)) <span style="color:#888">// "kotlin" is an extension method of DependencyHandler
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#888">// The call to "kotlin" passing `module`, returns a String "org.jetbrains.kotlin:kotlin-$module:&lt;KotlinVersion&gt;"
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></code></pre></div></section><section>
+<h2 id="importing-the-gradle-api">Importing the Gradle API</h2>
+<p>In order to develop a plugin, we need the Gradle API</p>
+<ul>
+<li>Otherwise, we can’t manipulate any Gradle entity…</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    implementation(kotlin(<span style="color:#d20;background-color:#fff0f0">"stdlib-jdk8"</span>))
+</span></span><span style="display:flex;"><span>    implementation(gradleApi()) <span style="color:#888">// Built-in method, returns a `Dependency` to the current Gradle version
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></code></pre></div></section><section>
+<h2 id="plugin-name-and-entry-point">Plugin name and entry point</h2>
+<p>Gradle expects the plugin entry point (the class implementing the <code>Plugin</code> interface) to be specified in a <strong>manifest file</strong></p>
+<ul>
+<li>in a <em>property file</em></li>
+<li>located in <code>META-INF/gradle-plugins</code></li>
+<li>whose file name is <code>&lt;plugin-name&gt;.properties</code></li>
+</ul>
+<p>The name is usually a “reverse url”, similarly to Java packages.
+<br>
+e.g., <code>it.unibo.lss.greetings</code></p>
+<p>The file content is just a pointer to the class implementing <code>Plugin</code>, in our case:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#369">implementation-class</span>=<span style="color:#d20;background-color:#fff0f0">it.unibo.lss.firstplugin.GreetingPlugin</span>
+</span></span></code></pre></div></section><section>
+<h2 id="plugin-implementation">Plugin implementation</h2>
+<p>Usually, composed of:</p>
+<ul>
+<li>A <em>clean API</em>, if the controlled system is not trivial</li>
+<li>A set of <em>tasks</em> incapuslating the imperative logic</li>
+<li>An <em>extension</em> containing the DSL for configuring the plugin</li>
+<li>A <em>plugin</em>
+<ul>
+<li>Creates the extension</li>
+<li>Creates the tasks</li>
+<li>Links tasks and extension</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="lazy-configuration-in-gradle">Lazy configuration in Gradle</h2>
+<p>Some properties need to be <em>lazy</em>:</p>
+<ol>
+<li>Wire together Gradle components without worrying about values, just knowing their <em>provider</em>.
+<ul>
+<li>Configuration happens <em>before</em> execution, some values be unknown</li>
+<li>yet their provider is known at configuration time</li>
+</ul>
+</li>
+<li>Automatic dependency discovery:
+<ul>
+<li>if an output property is an input for another task, the dependency creation is automatic</li>
+</ul>
+</li>
+<li>Performance: resource intensive work is not in the configuration phase</li>
+</ol>
+<h4 id="in-the-gradle-api">In the gradle API</h4>
+<p><code>Provider</code> – a value that can only be queried and cannot be changed</p>
+<ul>
+<li>Transformable with a <code>map</code> method!</li>
+</ul>
+<p><code>Property</code> – a value that can be queried and also changed</p>
+<ul>
+<li>Subtype of Provider</li>
+<li>Allows to be directly <code>set</code> or to be <code>set</code> passing a <code>Provider</code> instance</li>
+</ul>
+</section><section>
+<h2 id="the-greetingtask-task-type">The <code>GreetingTask</code> task type</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">GreetingTask</span> : DefaultTask() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@Input</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">greeting</span>: Property&lt;String&gt; = project.objects.<span style="color:#080;font-weight:bold">property</span>&lt;String&gt;(String::<span style="color:#080;font-weight:bold">class</span>.java) <span style="color:#888">// Lazy property creation
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@Internal</span> <span style="color:#888">// Read-only property calculated from `greeting`
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">message</span>: Provider&lt;String&gt; = greeting.map { <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$it</span><span style="color:#d20;background-color:#fff0f0"> Gradle"</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@TaskAction</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">printMessage</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#888">// "logger" is a property of DefaultTask
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        logger.quiet(message.<span style="color:#080;font-weight:bold">get</span>())
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Properties are created via <code>project</code> (a property of <code>DefaultTask</code> of type <code>Project</code>)</p>
+</section><section>
+<h2 id="the-greetingextension-extension-type">The <code>GreetingExtension</code> extension type</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">GreetingExtension</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">project</span>: Project) {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">defaultGreeting</span>: Property&lt;String&gt; = project.objects.<span style="color:#080;font-weight:bold">property</span>(String::<span style="color:#080;font-weight:bold">class</span>.java)
+</span></span><span style="display:flex;"><span>        .apply { convention(<span style="color:#d20;background-color:#fff0f0">"Hello from"</span>) } <span style="color:#888">// Set a conventional value
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// A DSL would go there
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">greetWith</span>(greeting: () -&gt; String) = defaultGreeting.<span style="color:#080;font-weight:bold">set</span>(greeting())
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Extensions can be seen as global configuration containers
+<br>
+If the plugin can be driven with a DSL, the extension is a good place for the entry point</p>
+</section><section>
+<h2 id="the-greetingplugin">The <code>GreetingPlugin</code></h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">GreetingPlugin</span> : Plugin&lt;Project&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">apply</span>(target: Project) {
+</span></span><span style="display:flex;"><span>        <span style="color:#888">// Create the extension
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">extension</span> = target.extensions.create(<span style="color:#d20;background-color:#fff0f0">"greetings"</span>, GreetingExtension::<span style="color:#080;font-weight:bold">class</span>.java, target)
+</span></span><span style="display:flex;"><span>        <span style="color:#888">// Create the task
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        target.tasks.register(<span style="color:#d20;background-color:#fff0f0">"greet"</span>, GreetingTask::<span style="color:#080;font-weight:bold">class</span>.java).<span style="color:#080;font-weight:bold">get</span>().run {
+</span></span><span style="display:flex;"><span>            <span style="color:#888">// Set the default greeting to be the one configured in the extension
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            greeting.<span style="color:#080;font-weight:bold">set</span>(extension.defaultGreeting)
+</span></span><span style="display:flex;"><span>            <span style="color:#888">// Configuration per-task can still be changed manually by users
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>Extensions are created via a <code>Project</code> object</li>
+<li>The <code>Plugin</code> configures the project as needed for the tasks and the extension to work</li>
+<li>Plugins can forcibly <em>apply</em> other plugins
+<ul>
+<li>e.g., the Kotlin plugin applies the <code>java-library</code> plugin behind the scenes</li>
+</ul>
+</li>
+<li>Plugins can <em>react</em> to the application of other plugins
+<ul>
+<li>e.g., enable additional features or provide compatibility</li>
+<li>doing so is possible by the <code>plugins</code> property of <code>Project</code>, e.g.:</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>project.plugins.withType(JavaPlugin::<span style="color:#080;font-weight:bold">class</span>.java) {
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Stuff you want to do only if someone enables the Java plugin for the current project
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></code></pre></div></section><section>
+<h2 id="testing-a-plugin">Testing a plugin</h2>
+<p>We got a plugin, we don’t know yet how to use it though.
+<br>
+First step is: <em>testing it to see if it works</em></p>
+<ol>
+<li>Create a modified <em>version of Gradle including the plugin</em>
+<ul>
+<li>Or simply, add the plugin to the build classpath</li>
+</ul>
+</li>
+<li>Prepare a Gradle <em>workspace</em></li>
+<li><em>Launch the tasks</em> of interest</li>
+<li><em>Verify</em> the task success (or failure, if expected), or the program output</li>
+</ol>
+<p><strong>Tools to be used</strong></p>
+<ol>
+<li>The <strong>Gradle test kit</strong>, for programmatically launching Gradle and ispecting the execution results</li>
+<li><a href="https://github.com/kotest/kotest">Kotest</a>, a test framework for Kotlin
+<ul>
+<li>could be done with JUnit or other systems, but Kotest is more idiomatic</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="importing-gradle-test-kit-and-kotest">Importing Gradle test kit and Kotest</h2>
+<p>It’s just matter of pulling the right dependencies</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    implementation(gradleApi())
+</span></span><span style="display:flex;"><span>    testImplementation(gradleTestKit()) <span style="color:#888">// Test implementation: available for testing compile and runtime
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-runner-junit5:4.2.5"</span>) <span style="color:#888">// for kotest framework
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-assertions-core:4.2.5"</span>) <span style="color:#888">// for kotest core assertions
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-assertions-core-jvm:4.2.5"</span>) <span style="color:#888">// for kotest core jvm assertions
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></code></pre></div><p>Kotest leverages Junit 5 / Jupiter for execution, we need to enable it</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.withType&lt;Test&gt; { <span style="color:#888">// The task type is defined in the Java plugin
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    useJUnitPlatform() <span style="color:#888">// Use JUnit 5 engine
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></code></pre></div></section><section>
+<h2 id="exploiting-configuration-options">Exploiting configuration options</h2>
+<p>In general, our automation process may and should be <strong>informative</strong>
+<br>
+We can exploit the API of any Gradle plugin at our advantage
+<br>
+(Of course it depends <em>whether or not</em> configuration options are available)</p>
+<p>Let’s add information to our testing system:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.withType&lt;Test&gt; {
+</span></span><span style="display:flex;"><span>    useJUnitPlatform() <span style="color:#888">// Use JUnit 5 engine
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    testLogging.showStandardStreams = <span style="color:#080;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>    testLogging {
+</span></span><span style="display:flex;"><span>        showCauses = <span style="color:#080;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>        showStackTraces = <span style="color:#080;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>        showStandardStreams = <span style="color:#080;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>        events(*org.gradle.api.tasks.testing.logging.<span style="color:#b06;font-weight:bold">TestLogEvent</span>.values())
+</span></span><span style="display:flex;"><span>        exceptionFormat = org.gradle.api.tasks.testing.logging.<span style="color:#b06;font-weight:bold">TestExceptionFormat</span>.FULL
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In general <em>explore the API and use it your advantage</em></p>
+</section><section>
+<h2 id="plugin-classpath-injection">Plugin Classpath injection</h2>
+<p>By default, the Gradle test kit just runs Gradle.
+We want to inject our plugin into the distribution.</p>
+<p><strong>Strategy</strong></p>
+<ol>
+<li>Create the list of files composing our <em>runtime classpath</em></li>
+<li>Make sure that the list is always up to date and ready before test execution</li>
+<li>Use such list as our classpath for running Gradle</li>
+</ol>
+</section><section>
+<h2 id="kotest">Kotest</h2>
+<p>Kotest is a testing framework fro Kotlin, inspired by <a href="https://www.scalatest.org/">Scalatest</a> and <a href="https://cucumber.io/">Cucumber</a></p>
+<ul>
+<li>Supports <a href="https://github.com/kotest/kotest/blob/master/doc/styles.md">several styles</a></li>
+<li>We will use <code>FreeSpec</code> (Scalatest inspired), similar to <code>StringSpec</code> (Kotest original)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">PluginTest</span> : FreeSpec({
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Arbitrarily nested test levels
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#d20;background-color:#fff0f0">"whenever a Formula 1 championship"</span> - {
+</span></span><span style="display:flex;"><span>        <span style="color:#d20;background-color:#fff0f0">"begins testing"</span> - {
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"Ferrari and Mercedes are favorites"</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#888">// Test code for
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#888">// "whenever a Formula 1 championship begins testing Ferrari and Mercedes are favorites"
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#d20;background-color:#fff0f0">"reaches mid-season"</span> - {
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"Vettel spins repeatedly"</span> { <span style="color:#888">/* Test code */</span> }
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"Ferrari"</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"lags behind with development"</span>  { <span style="color:#888">/* Test code */</span> }
+</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"wins next year"</span> { <span style="color:#888">/* Test code */</span> }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    } 
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div></section><section>
+<h2 id="preparing-the-test-infrastructure">Preparing the test infrastructure</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Configure a Gradle runner
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runner</span> = <span style="color:#b06;font-weight:bold">GradleRunner</span>.create()
+</span></span><span style="display:flex;"><span>    .withProjectDir()
+</span></span><span style="display:flex;"><span>    .withPluginClasspath(classpath) <span style="color:#888">// we need Gradle **and** our plugin
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    .withArguments(<span style="color:#d20;background-color:#fff0f0">":tasks"</span>, <span style="color:#d20;background-color:#fff0f0">":you"</span>, <span style="color:#d20;background-color:#fff0f0">":need"</span>, <span style="color:#d20;background-color:#fff0f0">":to"</span>, <span style="color:#d20;background-color:#fff0f0">":run:"</span>, <span style="color:#d20;background-color:#fff0f0">"--and"</span>, <span style="color:#d20;background-color:#fff0f0">"--cli"</span>, <span style="color:#d20;background-color:#fff0f0">"--options"</span>)
+</span></span><span style="display:flex;"><span>    .build() <span style="color:#888">// This actually runs Gradle
+</span></span></span><span style="display:flex;"><span><span style="color:#888">// Inspect results
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>runner.task(<span style="color:#d20;background-color:#fff0f0">":someExistingTask"</span>)?.outcome shouldBe <span style="color:#b06;font-weight:bold">TaskOutcome</span>.SUCCESS
+</span></span><span style="display:flex;"><span>runner.output shouldContain <span style="color:#d20;background-color:#fff0f0">"Hello from Gradle"</span>
+</span></span></code></pre></div><p>Final result in the <a href="https://github.com/DanySK/Course-Laboratory-of-Software-Systems/blob/master/code/automation/10-greetings-plugin/src/test/kotlin/PluginTest.kt">attached code</a>!</p>
+</section><section>
+<h2 id="dry-with-dependencies-declaration">DRY with dependencies declaration</h2>
+<p>Look at the following code:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-runner-junit5:4.2.5"</span>)
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-assertions-core:4.2.5"</span>)
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-assertions-core-jvm:4.2.5"</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It is <em>repetitive</em> and <em>fragile</em> (what if you change the version of a single kotest module?)</p>
+</section><section>
+<h2 id="dry-with-dependencies-declaration-1">DRY with dependencies declaration</h2>
+<p>Let’s patch all this fragility:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">kotestVersion</span> = <span style="color:#d20;background-color:#fff0f0">"4.2.5"</span>
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-runner-junit5:</span><span style="color:#33b;background-color:#fff0f0">$kotestVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-assertions-core:</span><span style="color:#33b;background-color:#fff0f0">$kotestVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
+</span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-assertions-core-jvm:</span><span style="color:#33b;background-color:#fff0f0">$kotestVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Still, quite repetitive…</p>
+</section><section>
+<h2 id="dry-with-dependencies-declaration-2">DRY with dependencies declaration</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    val kotestVersion = <span style="color:#d20;background-color:#fff0f0">"4.2.5"</span>
+</span></span><span style="display:flex;"><span>    fun <span style="color:#06b;font-weight:bold">kotest</span>(<span style="color:#369;font-style:italic">module:</span> String) = <span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-$module:$kotestVersion"</span>
+</span></span><span style="display:flex;"><span>    testImplementation(kotest(<span style="color:#d20;background-color:#fff0f0">"runner-junit5"</span>)
+</span></span><span style="display:flex;"><span>    testImplementation(kotest(<span style="color:#d20;background-color:#fff0f0">"assertions-core"</span>)
+</span></span><span style="display:flex;"><span>    testImplementation(kotest(<span style="color:#d20;background-color:#fff0f0">"assertions-core-jvm"</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Uhmm…</p>
+<ul>
+<li>it’s still repetitive (can be furter factorized by bundling the kotest modules)</li>
+<li>the function and version could be included in <code>buildSrc</code></li>
+<li>very custom! Nicer, but…
+<ol>
+<li>Harder to understand for newbies</li>
+<li>May make further automation harder (automatic updates?)</li>
+</ol>
+</li>
+</ul>
+</section><section>
+<h2 id="declaring-dependencies-in-a-catalog">Declaring dependencies in a <em>catalog</em></h2>
+<p>Gradle 7 introduced the <em>catalogs</em>, a standardized way to collect and bundle dependencies.</p>
+<p>Catalogs can be declared in:</p>
+<ul>
+<li>the <code>build.gradle.kts</code> file (they are API, of course)</li>
+<li>a <a href="https://github.com/toml-lang/toml">TOML</a> configuration file (default: <code>gradle/libs.versions.toml</code>)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>[versions]
+</span></span><span style="display:flex;"><span>dokka = <span style="color:#d20;background-color:#fff0f0">"1.8.10"</span>
+</span></span><span style="display:flex;"><span>konf = <span style="color:#d20;background-color:#fff0f0">"1.1.2"</span>
+</span></span><span style="display:flex;"><span>kotest = <span style="color:#d20;background-color:#fff0f0">"5.6.1"</span>
+</span></span><span style="display:flex;"><span>kotlin = <span style="color:#d20;background-color:#fff0f0">"1.8.21"</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[libraries]
+</span></span><span style="display:flex;"><span>classgraph = <span style="color:#d20;background-color:#fff0f0">"io.github.classgraph:classgraph:4.8.157"</span>
+</span></span><span style="display:flex;"><span>konf-yaml = { module = <span style="color:#d20;background-color:#fff0f0">"com.uchuhimo:konf-yaml"</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">"konf"</span> }
+</span></span><span style="display:flex;"><span>kotest-junit5-jvm = { module = <span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-runner-junit5-jvm"</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">"kotest"</span> }
+</span></span><span style="display:flex;"><span>kotest-assertions-core-jvm = { module = <span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-assertions-core-jvm"</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">"kotest"</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[bundles]
+</span></span><span style="display:flex;"><span>kotlin-testing = [ <span style="color:#d20;background-color:#fff0f0">"kotest-junit5-jvm"</span>, <span style="color:#d20;background-color:#fff0f0">"kotest-assertions-core-jvm"</span> ]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[plugins]
+</span></span><span style="display:flex;"><span>dokka = { id = <span style="color:#d20;background-color:#fff0f0">"org.jetbrains.dokka"</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">"dokka"</span> }
+</span></span><span style="display:flex;"><span>gitSemVer = <span style="color:#d20;background-color:#fff0f0">"org.danilopianini.git-sensitive-semantic-versioning:1.1.9"</span>
+</span></span><span style="display:flex;"><span>gradlePluginPublish = <span style="color:#d20;background-color:#fff0f0">"com.gradle.plugin-publish:1.2.0"</span>
+</span></span><span style="display:flex;"><span>jacoco-testkit = <span style="color:#d20;background-color:#fff0f0">"pl.droidsonroids.jacoco.testkit:1.0.11"</span>
+</span></span><span style="display:flex;"><span>kotlin-jvm = { id = <span style="color:#d20;background-color:#fff0f0">"org.jetbrains.kotlin.jvm"</span>, version.ref = <span style="color:#d20;background-color:#fff0f0">"kotlin"</span> }
+</span></span><span style="display:flex;"><span>kotlin-qa = <span style="color:#d20;background-color:#fff0f0">"org.danilopianini.gradle-kotlin-qa:0.29.2"</span>
+</span></span><span style="display:flex;"><span>multiJvmTesting = <span style="color:#d20;background-color:#fff0f0">"org.danilopianini.multi-jvm-test-plugin:0.4.23"</span>
+</span></span><span style="display:flex;"><span>publishOnCentral = <span style="color:#d20;background-color:#fff0f0">"org.danilopianini.publish-on-central:5.0.5"</span>
+</span></span><span style="display:flex;"><span>taskTree = <span style="color:#d20;background-color:#fff0f0">"com.dorongold.task-tree:2.1.1"</span>
+</span></span></code></pre></div>
+<ul>
+<li>Gradle auto-generates <em>type-safe accessors</em> for the definitions</li>
+</ul>
+</section><section>
+<h2 id="using-the-default-catalog">Using the default catalog</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#555">@Suppress</span>(<span style="color:#d20;background-color:#fff0f0">"DSL_SCOPE_VIOLATION"</span>)
+</span></span><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    <span style="color:#a61717;background-color:#e3d2d2">`</span>java-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
+</span></span><span style="display:flex;"><span>    alias(libs.plugins.dokka)
+</span></span><span style="display:flex;"><span>    alias(libs.plugins.gitSemVer)
+</span></span><span style="display:flex;"><span>    alias(libs.plugins.gradlePluginPublish)
+</span></span><span style="display:flex;"><span>    alias(libs.plugins.jacoco.testkit)
+</span></span><span style="display:flex;"><span>    alias(libs.plugins.kotlin.jvm)
+</span></span><span style="display:flex;"><span>    alias(libs.plugins.kotlin.qa)
+</span></span><span style="display:flex;"><span>    alias(libs.plugins.publishOnCentral)
+</span></span><span style="display:flex;"><span>    alias(libs.plugins.multiJvmTesting)</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    maximumSupportedJvmVersion.<span style="color:#080;font-weight:bold">set</span>(latestJavaSupportedByGradle)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    api(gradleApi())
+</span></span><span style="display:flex;"><span>    api(gradleKotlinDsl())
+</span></span><span style="display:flex;"><span>    api(kotlin(<span style="color:#d20;background-color:#fff0f0">"stdlib-jdk8"</span>))
+</span></span><span style="display:flex;"><span>    testImplementation(gradleTestKit())
+</span></span><span style="display:flex;"><span>    testImplementation(libs.konf.yaml)</span></span></code></pre></div>
+</section><section>
+<h2 id="build-vs-compile-vs-test-toolchains">Build vs. Compile vs. Test toolchains</h2>
+<p>We now have three different runtimes at play:</p>
+<ol>
+<li>One or more <strong>compilation targets</strong>
+<ul>
+<li>In case of JVM projects, the target bytecode version</li>
+<li>In case of .NET projects, the target .NET</li>
+<li>In case of native projects, the target OS / architecture</li>
+</ul>
+</li>
+<li>One or more <strong>runtime targets</strong>
+<ul>
+<li>In case of JVM or .NET projects the virtual machines we want to support</li>
+</ul>
+</li>
+<li>A <strong>built-time runtime</strong>
+<ul>
+<li>In case of Gradle, the JVM running the build system</li>
+</ul>
+</li>
+</ol>
+<p>These toolchains <em>should be controlled indipendently</em>!</p>
+<p>You may want to use Java 16 to run Gradle, but compile in a Java 8-compatible bytecode, and then test on Java 11.</p>
+</section><section>
+<h2 id="build-vs-compile-vs-test-toolchains-1">Build vs. Compile vs. Test toolchains</h2>
+<p>We now have three different runtimes at play:</p>
+<ol>
+<li>One or more <strong>compilation targets</strong>
+<ul>
+<li>In case of JVM projects, the target bytecode version</li>
+<li>In case of .NET projects, the target .NET</li>
+<li>In case of native projects, the target OS / architecture</li>
+</ul>
+</li>
+<li>One or more <strong>runtime targets</strong>
+<ul>
+<li>In case of JVM or .NET projects the virtual machines we want to support</li>
+</ul>
+</li>
+<li>A <strong>built-time runtime</strong>
+<ul>
+<li>In case of Gradle, the JVM running the build system</li>
+</ul>
+</li>
+</ol>
+<p>These toolchains <em>should be controlled indipendently</em>!</p>
+<p>You may want to use Java 16 to run Gradle, but compile in a Java 8-compatible bytecode, and then test on Java 11.</p>
+</section><section>
+<h2 id="gradle-and-the-toolchains">Gradle and the toolchains</h2>
+<p>Default behaviour: Gradle uses <em>the same JVM it is running in</em> as:</p>
+<ul>
+<li>build runtime (you don’t say)</li>
+<li>compile target</li>
+<li>test runtime</li>
+</ul>
+<p>Supporting multiple toolchains may not be easy!</p>
+<ul>
+<li>Cross-compilers?</li>
+<li>Automatic retrieval of runtime environments?</li>
+<li>Emulators for native devices?</li>
+</ul>
+<p>Targeting a portable runtime (such as the JVM) <em>helps a lot</em>.</p>
+</section><section>
+<h2 id="introducing-the-gradle-toolchains">Introducing the Gradle toolchains</h2>
+<p>Relatively new tool, from Gradle 6.7 (October 2020)</p>
+<p>Define the reference toolchain version (<em>compilation target</em>):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>java {
+</span></span><span style="display:flex;"><span>    toolchain {
+</span></span><span style="display:flex;"><span>        languageVersion.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#b06;font-weight:bold">JavaLanguageVersion</span>.of(<span style="color:#00d;font-weight:bold">11</span>))
+</span></span><span style="display:flex;"><span>        vendor.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#b06;font-weight:bold">JvmVendorSpec</span>.ADOPTOPENJDK) <span style="color:#888">// Optionally, specify a vendor
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        implementation.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#b06;font-weight:bold">JvmImplementation</span>.J9) <span style="color:#888">// Optionally, select an implementation
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Create tasks for running tests on specific environments:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.withType&lt;Test&gt;().toList().takeIf { <span style="color:#080;font-weight:bold">it</span>.size == <span style="color:#00d;font-weight:bold">1</span> }?.let{ <span style="color:#080;font-weight:bold">it</span>.first }.run {
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// If there exist a "test" task, run it with some specific JVM version
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    javaLauncher.<span style="color:#080;font-weight:bold">set</span>(javaToolchains.launcherFor { languageVersion.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#b06;font-weight:bold">JavaLanguageVersion</span>.of(<span style="color:#00d;font-weight:bold">8</span>)) })
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#888">// Register another test task, with a different JVM
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">testWithJVM17</span> <span style="color:#080;font-weight:bold">by</span> tasks.registering&lt;Test&gt; { <span style="color:#888">// Also works with JavaExec
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    javaLauncher.<span style="color:#080;font-weight:bold">set</span>(javaToolchains.launcherFor { languageVersion.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#b06;font-weight:bold">JavaLanguageVersion</span>.of(<span style="color:#00d;font-weight:bold">17</span>)) })
+</span></span><span style="display:flex;"><span>} <span style="color:#888">// You can pick JVM's not yet supported by Gradle!
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>tasks.findByName(<span style="color:#d20;background-color:#fff0f0">"check"</span>)?.configure { <span style="color:#080;font-weight:bold">it</span>.dependsOn(testWithJVM17) } <span style="color:#888">// make it part of the QA suite
+</span></span></span></code></pre></div></section><section>
+<h2 id="making-the-plugin-available">Making the plugin available</h2>
+<p>We now know how to run the plugin,
+<br>
+yet manual classpath modification is not the way we want to run our plugin</p>
+<p>We want something like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"it.unibo.lss.greetings"</span>) version <span style="color:#d20;background-color:#fff0f0">"0.1.0"</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>To do so, we need to ship our plugin to the <a href="https://plugins.gradle.org/">Gradle plugin portal</a>
+<br>
+Gradle provides <a href="https://plugins.gradle.org/docs/publish-plugin">a plugin publishing plugin</a> to simplify delivery</p>
+<p>…but before, we need to learn how to</p>
+<ol>
+<li>
+<p>click $\Rightarrow{}$ <a href="../05-version-selection"><strong>pick a version number</strong></a> $\Leftarrow{}$ click</p>
+</li>
+<li>
+<p>click $\Rightarrow{}$ <a href="../06-licenses"><strong>select a software license</strong></a>! $\Leftarrow{}$ click</p>
+</li>
+</ol>
+</section><section>
+<h1 id="setting-a-version">Setting a version</h1>
+<p>The project version can be specified in Gradle by simply setting the <code>version</code> property of the project:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>version = <span style="color:#d20;background-color:#fff0f0">"0.1.0"</span>
+</span></span></code></pre></div><ul>
+<li>Drawback: <em>manual management</em>!</li>
+</ul>
+<p>It would be better to <em>rely on the underlying DVCS</em>
+<br>
+to compute a Semantic Versioning compatible version!</p>
+</section><section>
+<h2 id="dvcs-based-automatic-semantic-versioning">DVCS-based Automatic semantic versioning</h2>
+<p>There are a number of plugins that do so
+<br>
+including <a href="https://github.com/DanySK/git-sensitive-semantic-versioning-gradle-plugin">one I’ve developed</a></p>
+<p>Minimal configuration:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    id (<span style="color:#d20;background-color:#fff0f0">"org.danilopianini.git-sensitive-semantic-versioning"</span>) version <span style="color:#d20;background-color:#fff0f0">"0.3.0"</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span> ./gradlew printGitSemVer
+</span></span><span style="display:flex;"><span>&gt; Task :printGitSemVer
+</span></span><span style="display:flex;"><span>Version computed by GitSemVer: 0.1.0-archeo+cf5b4c0
+</span></span></code></pre></div><p>Another possibility is <em>writing a plugin yourself</em>
+<br>
+But at the moment we are stuck: we don’t know yet how to expose plugins to other builds</p>
+</section><section>
+<h1 id="selecting-a-license">Selecting a license</h1>
+<p>There’s not really much I want to protect in this example, so I’m going to pick one of the most open licenses: MIT (BSD would have been a good alternative)</p>
+<ol>
+<li>Create a LICENSE file</li>
+<li>Copy the text from the MIT license</li>
+<li>If needed, edit details</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Copyright 2020 Danilo Pianini
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+</span></span><span style="display:flex;"><span>documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+</span></span><span style="display:flex;"><span>the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+</span></span><span style="display:flex;"><span>permit persons to whom the Software is furnished to do so, subject to the following conditions:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+</span></span><span style="display:flex;"><span>Software.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+</span></span><span style="display:flex;"><span>WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+</span></span><span style="display:flex;"><span>OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+</span></span><span style="display:flex;"><span>OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</span></span></code></pre></div></section><section>
+<h1 id="maven-style-packaging">Maven style packaging</h1>
+<p>JVM artifacts are normally shipped in form of jar archives
+<br>
+the de-facto convention is <em>inherited from Maven</em>:</p>
+<ul>
+<li>Each distribution has a <strong>groupId</strong>, an <strong>artifactId</strong>, and a <strong>version</strong>
+<ul>
+<li>e.g. <code>com.google.guava:guava:29.0-jre</code>
+<ul>
+<li>groupId: <code>com.google.guava</code></li>
+<li>artifactId: <code>guava</code></li>
+<li>version: <code>29.0-jre</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Further <strong>metadata</strong> is stored in a <code>pom.xml</code> file</li>
+<li>Multiple artifacts in the same distributions are identified by a <strong>classifier</strong>
+<ul>
+<li>e.g., a project having executables, sources, and javadoc, may have:
+<ul>
+<li><code>guava-29.0-jre.jar</code></li>
+<li><code>guava-29.0-jre-javadoc.jar</code></li>
+<li><code>guava-29.0-jre-sources.jar</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="setting-the-details">Setting the details</h1>
+<p>In order to create Maven-compatible artifacts, we need first to set the <strong>groupId</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>group = <span style="color:#d20;background-color:#fff0f0">"it.unibo.firstplugin"</span>
+</span></span></code></pre></div><p>Many repositories require to register the group and associate developer identities to it</p>
+<p>The project name set in <code>settings.gradle.kts</code> is usually used as <strong>artifactId</strong></p>
+</section><section>
+<h2 id="preparing-the-plugin-publication">Preparing the plugin publication</h2>
+<p>Gradle provides two plugins to simplify the assembly and upload of plugins</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>  <span style="color:#a61717;background-color:#e3d2d2">`</span>java-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
+</span></span><span style="display:flex;"><span>  id(<span style="color:#d20;background-color:#fff0f0">"com.gradle.plugin-publish"</span>) version <span style="color:#d20;background-color:#fff0f0">"0.12.0"</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>pluginBundle { <span style="color:#888">// These settings are set for the whole plugin bundle
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    website = <span style="color:#d20;background-color:#fff0f0">"https://danysk.github.io/Course-Laboratory-of-Software-Systems/"</span>
+</span></span><span style="display:flex;"><span>    vcsUrl = <span style="color:#d20;background-color:#fff0f0">"https://github.com/DanySK/Course-Laboratory-of-Software-Systems"</span>
+</span></span><span style="display:flex;"><span>    tags = listOf(<span style="color:#d20;background-color:#fff0f0">"example"</span>, <span style="color:#d20;background-color:#fff0f0">"greetings"</span>, <span style="color:#d20;background-color:#fff0f0">"lss"</span>, <span style="color:#d20;background-color:#fff0f0">"unibo"</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradlePlugin {
+</span></span><span style="display:flex;"><span>    plugins {
+</span></span><span style="display:flex;"><span>        create(<span style="color:#d20;background-color:#fff0f0">""</span>) { <span style="color:#888">// One entry per plugin
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            id = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${project.group}</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#33b;background-color:#fff0f0">${project.name}</span><span style="color:#d20;background-color:#fff0f0">"</span>
+</span></span><span style="display:flex;"><span>            displayName = <span style="color:#d20;background-color:#fff0f0">"LSS Greeting plugin"</span>
+</span></span><span style="display:flex;"><span>            description = <span style="color:#d20;background-color:#fff0f0">"Example plugin for the LSS course"</span>
+</span></span><span style="display:flex;"><span>            implementationClass = <span style="color:#d20;background-color:#fff0f0">"it.unibo.lss.firstplugin.GreetingPlugin"</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>They add the <code>publishPlugins</code> task</p>
+</section><section>
+<h2 id="credentials">Credentials</h2>
+<p>In order to publish on the Gradle Plugin Portal (but it is true for any repository) users need to be <em>authenticated</em>
+<br>
+This is most frequently done via authentication tokens, and more rarely by username and password.</p>
+<p>It is first required to <a href="https://plugins.gradle.org/user/register">register</a>,
+once done, an <strong>API Key</strong> will be available from the web interface, along with a <strong>secret</strong>.</p>
+<p>These data is required to be able to publish, and can be fed to Gradle in two ways:</p>
+<ol>
+<li>By editing the <code>~/.gradle/gradle.properties</code> file, adding:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle.publish.key=YOUR_KEY
+</span></span><span style="display:flex;"><span>gradle.publish.secret=YOUR_SECRET
+</span></span></code></pre></div><ol start="2">
+<li>Via command line, using <code>-P</code> flags:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>./gradlew -Pgradle.publish.key=&lt;key&gt; -Pgradle.publish.secret=&lt;secret&gt; publishPlugins
+</span></span></code></pre></div></section><section>
+<h1 id="actual-publication">Actual publication</h1>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>❯ ./gradlew publishPlugins
+</span></span><span style="display:flex;"><span>&gt; Task :publishPlugins
+</span></span><span style="display:flex;"><span>Publishing plugin it.unibo.lss2020.greetings-plugin version 0.1.0-archeo+ea6b9d7
+</span></span><span style="display:flex;"><span>Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7.jar
+</span></span><span style="display:flex;"><span>Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7-sources.jar
+</span></span><span style="display:flex;"><span>Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7-javadoc.jar
+</span></span><span style="display:flex;"><span>Publishing artifact build/publish-generated-resources/pom.xml
+</span></span><span style="display:flex;"><span>Activating plugin it.unibo.lss2020.greetings-plugin version 0.1.0-archeo+ea6b9d7
+</span></span></code></pre></div><p><a href="https://plugins.gradle.org/plugin/it.unibo.lss2020.greetings-plugin">The result is a published plugin</a></p>
+</section><section>
+<h1 id="quality-control">Quality control</h1>
+<p>It is a good practice to set up some tools to validate the quality of the source code and testing.</p>
+<p>In the case of Kotlin, there are three useful tools:</p>
+<ol>
+<li>Setting the <strong>compiler</strong> into a “<em>warnings as errors</em>” mode</li>
+<li>Enabling a <em>coverage</em> tool such as <strong>Jacoco</strong></li>
+<li>Configuring <strong>Ktlint</strong>, a Pinterest-made tool similar to Checkstyle</li>
+<li>Configuring <strong>Detekt</strong>, a <em>static code analysis</em> tool similar to PMD</li>
+</ol>
+<ul>
+<li>All quality control tasks are dependencies of the <code>check</code> task</li>
+</ul>
+<p>Moreover, we need a way to <em>inspect the results</em> of executing these controls, besides of course failing if too many things go wrong.</p>
+<p>(note: under Kotlin and Scala, I do not recommend to use Spotbugs: even though it works, it generates <em>way</em> too many false positives)</p>
+</section><section>
+<h2 id="build-reports-in-gradle">Build reports in Gradle</h2>
+<p>Tasks with a report module usually publish their results under <code>$buildDir/reports/$reportName</code></p>
+<ul>
+<li>For instance, <em>test results</em> are published in <code>$buildDir/reports/tests</code></li>
+<li>Other tools follow the same convention</li>
+<li>If you want to write a reporting task, extend from <code>AbstractReportTask</code></li>
+</ul>
+</section><section>
+<h2 id="using-jacoco-with-kotest">Using Jacoco with Kotest</h2>
+<p>Jacoco works with Kotest out of the box</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Some plugins
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    jacoco
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Some plugins
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></code></pre></div><p>The plugin introduces two tasks:</p>
+<ul>
+<li><code>jacocoTestCoverageVerification</code></li>
+<li><code>jacocoTestReport</code></li>
+</ul>
+<p>The latter must be configured to produce readable reports:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.jacocoTestReport {
+</span></span><span style="display:flex;"><span>    reports {
+</span></span><span style="display:flex;"><span>        <span style="color:#888">// xml.isEnabled = true // Useful for processing results automatically
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        html.isEnabled = <span style="color:#080;font-weight:bold">true</span> <span style="color:#888">// Useful for human inspection
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Note: Jacoco does not work with the Gradle test kit, but <a href="https://github.com/koral--/jacoco-gradle-testkit-plugin">there are plugins</a> to work this around.</p>
+</section><section>
+<h2 id="aggressive-compiler-settings">Aggressive compiler settings</h2>
+<p>Can be configured for every <code>KotlinCompile</code> task</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">withType</span>&lt;org.<span style="color:#369">jetbrains</span>.<span style="color:#369">kotlin</span>.<span style="color:#369">gradle</span>.<span style="color:#369">tasks</span>.<span style="color:#369">KotlinCompile</span>&gt; {
+</span></span><span style="display:flex;"><span>    kotlinOptions {
+</span></span><span style="display:flex;"><span>        allWarningsAsErrors = <span style="color:#080;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h1 id="ktlint">Ktlint</h1>
+<ul>
+<li>Linter with <em>minimal configuration</em> options</li>
+<li>Configuration happens in a <code>.editorconfig</code> file</li>
+<li>Also <em>checks build files</em></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"org.jlleitschuh.gradle.ktlint"</span>) version <span style="color:#d20;background-color:#fff0f0">"9.4.1"</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Adds the following tasks:</p>
+<ul>
+<li><code>ktlintApplyToIdea</code>, <code>ktlintApplyToIdeaGlobally</code> – Change the IntelliJ Idea configuration to adhere to the rules</li>
+<li><code>ktlintCheck</code>, <code>ktlintKotlinScriptCheck</code>, <code>ktlint&lt;SourceSetName&gt;SourceSetCheck</code>, – Apply rules and report errors</li>
+<li><code>ktlintFormat</code>, <code>ktlintKotlinScriptFormat</code>, <code>ktlint&lt;SourceSetName&gt;SourceSetFormat</code> – Lint code automatically</li>
+</ul>
+</section><section>
+<h1 id="detekt">Detekt</h1>
+<ul>
+<li>Configurable static source code analyzer</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"io.gitlab.arturbosch.detekt"</span>) version <span style="color:#d20;background-color:#fff0f0">"1.14.1"</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>repositories {
+</span></span><span style="display:flex;"><span>    mavenCentral()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Adds a configuration "detektPlugins"
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    detektPlugins(<span style="color:#d20;background-color:#fff0f0">"io.gitlab.arturbosch.detekt:detekt-formatting:1.14.1"</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>detekt {
+</span></span><span style="display:flex;"><span>    failFast = <span style="color:#080;font-weight:bold">true</span> <span style="color:#888">// fail build on any finding
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    buildUponDefaultConfig = <span style="color:#080;font-weight:bold">true</span> <span style="color:#888">// preconfigure defaults
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    config = files(<span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$projectDir</span><span style="color:#d20;background-color:#fff0f0">/config/detekt.yml"</span>) <span style="color:#888">// Custom additional rules
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></code></pre></div><p>Adds the <code>detekt</code> task, failing in case of violation</p>
+</section><section>
+<h1 id="dry">DRY!</h1>
+<p>You know how to build and publish Gradle plugins: <strong>factorize the common part!</strong></p>
+<h3 id="example-preconfigured-kotlin-qa">Example: Preconfigured Kotlin QA</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Just applies and pre-configures jacoco, detekt, and ktlint
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">"org.danilopianini.gradle-kotlin-qa"</span>) version <span style="color:#d20;background-color:#fff0f0">"0.2.1"</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Just applies and pre-configures jacoco, Spotbugs, PMD, and checkstyle
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">"org.danilopianini.gradle-java-qa"</span>) version <span style="color:#d20;background-color:#fff0f0">"0.2.1"</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h1 id="code-documentation">Code documentation</h1>
+<p>It is a good practice to automate the generation of the API documentation.</p>
+<ul>
+<li>The <code>java[-library]</code> plugin adds a <code>javadoc</code> task for the Javadoc</li>
+<li>The <code>scala</code> plugin includes a task of type <code>ScalaDoc</code></li>
+<li>Documentation for Kotlin is generated by using the <strong>Dokka</strong> tool
+<ul>
+<li>Jetbrains provides a plugin!</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins { id(<span style="color:#d20;background-color:#fff0f0">"org.jetbrains.dokka"</span>) version <span style="color:#d20;background-color:#fff0f0">"1.4.10"</span> }
+</span></span></code></pre></div><p>Adds four tasks:</p>
+<ul>
+<li><code>dokkaGfm</code>, <code>dokkaHtml</code>, <code>dokkaJavadoc</code>, <code>dokkaJekyll</code></li>
+<li>They differ by kind of documentation they generate</li>
+</ul>
+</section><section>
+<h1 id="creating-artifacts">Creating artifacts</h1>
+<p>The <code>java-library</code> and <code>java</code> plugins (applied behind the scenes by the <code>kotlin-jvm</code> plugin as well) automatically create an <code>assemble</code> task which generates a task of type <code>Jar</code> creating a non-executable jar with the project contents.</p>
+<ul>
+<li>Further tasks of the same type can be defined for other archives
+<ul>
+<li>e.g., containing sources or documentation</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">javadocJar</span> <span style="color:#080;font-weight:bold">by</span> tasks.registering(Jar::<span style="color:#080;font-weight:bold">class</span>) {
+</span></span><span style="display:flex;"><span>    archiveClassifier.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"javadoc"</span>)
+</span></span><span style="display:flex;"><span>    from(tasks.dokkaJavadoc.<span style="color:#080;font-weight:bold">get</span>().outputDirectory) <span style="color:#888">// Automatically makes it depend on dokkaJavadoc
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">sourceJar</span> <span style="color:#080;font-weight:bold">by</span> tasks.registering(Jar::<span style="color:#080;font-weight:bold">class</span>) {
+</span></span><span style="display:flex;"><span>    archiveClassifier.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"source"</span>)
+</span></span><span style="display:flex;"><span>    from(tasks.compileKotlin.<span style="color:#080;font-weight:bold">get</span>().outputDirectory)
+</span></span><span style="display:flex;"><span>    from(tasks.processResources.<span style="color:#080;font-weight:bold">get</span>().outputDirectory)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>generates a jar file with classifier <code>javadoc</code> inside the <code>build/libs</code> folder</p>
+</section><section>
+<h2 id="signing-artifacts">Signing artifacts</h2>
+<p>Many repositories require artifacts to be <strong>signed</strong> in order for them to be delivered/deployed</p>
+<ul>
+<li>e.g. Bintray, Maven Central</li>
+</ul>
+<p>If you do not have a signature yet, <a href="https://central.sonatype.org/pages/working-with-pgp-signatures.html">time to create one</a></p>
+<ul>
+<li>Creation: <code>gpg --gen-key</code></li>
+<li>List: <code>gpg --list-keys</code></li>
+<li>Distribution: <code>gpg --keyserver keyserver.ubuntu.com --send-keys &lt;KEY-ID&gt;</code></li>
+</ul>
+<p>Once you have a key, you can use the <code>signing</code> plugin to have Gradle generate signatures</p>
+<p>To set a default signatory, add to your <code>~/.gradle/gradle.properties</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#369">signing.keyId</span> = <span style="color:#d20;background-color:#fff0f0">&lt;your key id&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#369">signing.password</span> = <span style="color:#d20;background-color:#fff0f0">&lt;redacted&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#369">signing.secretKeyRingFile</span> = <span style="color:#d20;background-color:#fff0f0">&lt;your user home&gt;/.gnupg/secring.gpg</span>
+</span></span></code></pre></div></section><section>
+<h2 id="maven-central-and-other-software-repositories">Maven Central and other software repositories</h2>
+<p><a href="https://search.maven.org/">Maven Central</a> is one of the de-facto standard repositories for JVM (artifacts)</p>
+<ul>
+<li>It actually hosts any artifact compatible with the Maven conventional format</li>
+<li><strong>No-retract policy</strong>
+<ul>
+<li><strong>Errors</strong> <a href="https://search.maven.org/artifact/commons-io/commons-io">stay there forever</a></li>
+</ul>
+</li>
+<li><em>Requires</em> both <em>sources</em> and <em>Javadoc</em> artifacts to get shipped</li>
+<li>Artifacts on Central should only depend from other artifacts on Central</li>
+<li>“Old” deployment management, requires some machinery</li>
+</ul>
+<p>Other notable repositories:</p>
+<ul>
+<li><del><em>Bintray JCenter</em>: superset of Maven Central</del> (<strong>dismissed</strong>)</li>
+<li><em>Jitpack</em>: code hosting with (semi-)automatic packaging</li>
+<li><em>NPM</em>: for Javascript code</li>
+<li><em>PyPI</em>: for Python code</li>
+<li><em>RubyGems.org</em>: for Ruby code</li>
+</ul>
+</section><section>
+<h2 id="publishing-artifacts-on-maven-central">Publishing artifacts on Maven Central</h2>
+<p><strong>Requirements</strong></p>
+<ul>
+<li>A valid public signature</li>
+<li>A registered <strong>groupId</strong>
+<ul>
+<li>Registration is handled manually, <a href="https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&amp;pid=10134">open an issue</a></li>
+<li>You could register <code>io.github.yourghusername</code> as group id</li>
+</ul>
+</li>
+<li>Complete project metadata in a <code>pom.xml</code> file
+<ul>
+<li>Including developers, urls, project description, etc.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Procedure</strong></p>
+<ul>
+<li><em>Sign</em> artifacts with your registered signature</li>
+<li><em>Upload</em> them to <code>oss.sonatype.org</code></li>
+<li><em>Close</em> the repository
+<ul>
+<li>Automatically checks contents, structure, and signatures</li>
+</ul>
+</li>
+<li>Double check and then <em>Release</em>
+<ul>
+<li>There is <em>no turning back</em> after a mistake!</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="the-gradle-publish-plugin">The Gradle publish plugin</h2>
+<p>Gradle provides a <code>maven-publish</code> <em>plugin for automated delivery</em> to Maven repositories</p>
+<p>Requires some manual configuration:</p>
+<ul>
+<li>Explicit creation of a publication task</li>
+<li>Generation and attachment of sources and javadoc jars</li>
+<li>Configuration of the repository credentials</li>
+<li>Configuration of the <code>pom.xml</code> metadata</li>
+<li>Configuration of the signature</li>
+</ul>
+<p>If a publication <code>pubName</code> is created for a repository <code>RepoName</code>, then these tasks get created:</p>
+<ul>
+<li><code>publish&lt;PubName&gt;PublicationTo&lt;RepoName&gt;Repository</code></li>
+<li><code>publish&lt;PubName&gt;PublicationToMavenLocal</code></li>
+</ul>
+</section><section>
+<h2 id="the-gradle-publish-plugin-maven-central-example">The Gradle publish plugin: Maven Central example</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins { <span style="color:#a61717;background-color:#e3d2d2">`</span>maven-publish<span style="color:#a61717;background-color:#e3d2d2">`</span> }
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">javadocJar</span> <span style="color:#080;font-weight:bold">by</span> ...
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">sourceJar</span> <span style="color:#080;font-weight:bold">by</span> ...
+</span></span><span style="display:flex;"><span>publishing {
+</span></span><span style="display:flex;"><span>    maven {
+</span></span><span style="display:flex;"><span>        url = uri(<span style="color:#d20;background-color:#fff0f0">"https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">mavenCentralPwd</span>: String? <span style="color:#080;font-weight:bold">by</span> project <span style="color:#888">// Pass the pwd via -PmavenCentralPwd='yourPassword'
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        credentials {
+</span></span><span style="display:flex;"><span>            username = <span style="color:#d20;background-color:#fff0f0">"danysk"</span>
+</span></span><span style="display:flex;"><span>            password = mavenCentralPwd
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    publications {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">publicationName</span> <span style="color:#080;font-weight:bold">by</span> creating(MavenPublication::<span style="color:#080;font-weight:bold">class</span>) {
+</span></span><span style="display:flex;"><span>            from(components[<span style="color:#d20;background-color:#fff0f0">"java"</span>]) <span style="color:#888">// add the jar produced by the java plugin
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            <span style="color:#888">// Warning: the gradle plugin-publish plugin already adds them to the java SoftwareComponent
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            artifact(javadocJar) <span style="color:#888">// add the javadoc jar to this publication
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            artifact(sourceJar) <span style="color:#888">// add the source jar to this publication
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            pom {
+</span></span><span style="display:flex;"><span>                name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"My Library"</span>)
+</span></span><span style="display:flex;"><span>                description.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"A concise description of my library"</span>)
+</span></span><span style="display:flex;"><span>                url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"http://www.example.com/library"</span>)
+</span></span><span style="display:flex;"><span>                licenses { license { name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"..."</span>) } }
+</span></span><span style="display:flex;"><span>                developers { developer { name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"..."</span>) } }
+</span></span><span style="display:flex;"><span>                scm {
+</span></span><span style="display:flex;"><span>                    url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"..."</span>)
+</span></span><span style="display:flex;"><span>                    url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"..."</span>)
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        signing { sign(publicationName) }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="preconfigured-central-publication">Preconfigured Central publication</h2>
+<p>I produced a plugin that pre-configures <code>maven-publish</code> to point to Maven Central</p>
+<ul>
+<li>Reacts to the application of <code>java</code>, <code>maven-publish</code>, and <code>signing</code> plugins</li>
+<li>Defines task types <code>SourcesJar</code> and <code>JavadocJar</code>
+<ul>
+<li>Supports both Javadoc and Dokka</li>
+</ul>
+</li>
+<li>Creates tasks to create the archives before delivery</li>
+<li>Requires credentials to be set as environment variables
+<ul>
+<li><code>MAVEN_CENTRAL_USERNAME</code></li>
+<li><code>MAVEN_CENTRAL_PASSWORD</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="preconfigured-central-publication-1">Preconfigured Central publication</h2>
+<p></p><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>group = <span style="color:#d20;background-color:#fff0f0">"org.danilopianini"</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">inner</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ProjectInfo</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">longName</span> = <span style="color:#d20;background-color:#fff0f0">"Gradle Publish On Maven Central Plugin"</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">projectDetails</span> = <span style="color:#d20;background-color:#fff0f0">"A Plugin for easily publishing artifacts on Maven Central"</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">website</span> = <span style="color:#d20;background-color:#fff0f0">"https://github.com/DanySK/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">"</span></span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>            tags.<span style="color:#080;font-weight:bold">set</span>(info.tags)
+</span></span><span style="display:flex;"><span>            description = info.projectDetails
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>publishOnCentral {
+</span></span><span style="display:flex;"><span>    projectDescription.<span style="color:#080;font-weight:bold">set</span>(info.projectDetails)
+</span></span><span style="display:flex;"><span>    projectLongName.<span style="color:#080;font-weight:bold">set</span>(info.longName)
+</span></span><span style="display:flex;"><span>    projectUrl.<span style="color:#080;font-weight:bold">set</span>(info.website)
+</span></span><span style="display:flex;"><span>    scmConnection.<span style="color:#080;font-weight:bold">set</span>(info.scm)
+</span></span><span style="display:flex;"><span>    repository(<span style="color:#d20;background-color:#fff0f0">"https://maven.pkg.github.com/DanySK/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">"</span>.lowercase()) {
+</span></span><span style="display:flex;"><span>        user.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"danysk"</span>)
+</span></span><span style="display:flex;"><span>        password.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#b06;font-weight:bold">System</span>.getenv(<span style="color:#d20;background-color:#fff0f0">"GITHUB_TOKEN"</span>))
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    publishing {
+</span></span><span style="display:flex;"><span>        publications {
+</span></span><span style="display:flex;"><span>            withType&lt;MavenPublication&gt; {
+</span></span><span style="display:flex;"><span>                pom {
+</span></span><span style="display:flex;"><span>                    developers {
+</span></span><span style="display:flex;"><span>                        developer {
+</span></span><span style="display:flex;"><span>                            name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"Danilo Pianini"</span>)
+</span></span><span style="display:flex;"><span>                            email.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"danilo.pianini@gmail.com"</span>)
+</span></span><span style="display:flex;"><span>                            url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"http://www.danilopianini.org/"</span>)
+</span></span><span style="display:flex;"><span>                        }</span></span></code></pre></div><p></p>
+</section><section>
+<h1 id="inspecting-dependencies">Inspecting dependencies</h1>
+<p>In rich projects, most of the build-related issues are due to pesky stuff going on with <em>dependencies</em></p>
+<ul>
+<li>Transitive conflicts
+<ul>
+<li>dependency A requires B at version 1, dependency C requires B at version 2</li>
+</ul>
+</li>
+<li>Multiple names for the same artifact</li>
+<li>Unexpected differences between configurations</li>
+</ul>
+<p>Gradle allows for <strong>inspection</strong> of the dependencies:</p>
+<ul>
+<li><code>./gradlew dependencies</code> prints the dependency trees for each configuration</li>
+</ul>
+<p>Inspecting multiple large trees can be difficult</p>
+<ul>
+<li>A single dependency inspection is available</li>
+<li><code>./gradlew dependencyInsight --dependency &lt;DepName&gt; </code>
+<ul>
+<li>Optionally, fiterable by configuration: <code>--configuration &lt;ConfName&gt;</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="inspecting-dependencies-among-tasks">Inspecting dependencies <em>among tasks</em></h1>
+<p>When developing plugins or rich builds, the issue of dependencies also affect <strong>tasks</strong></p>
+<p>Gradle <em>does not</em> provide tools to ispect the task graph graphically, but a plugin exists.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    id <span style="color:#d20;background-color:#fff0f0">"com.dorongold.task-tree"</span> version <span style="color:#d20;background-color:#fff0f0">"2.1.1"</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Generates a <code>taskTree</code> task printing the task tree of the tasks listed along with <code>taskTree</code>.</p>
+</section><section>
+<h1 id="build-reporting">Build reporting</h1>
+<ul>
+<li>As any software, complex builds need rich inspection tools
+<ul>
+<li>Performance issues may arise</li>
+<li>Some tests may run anomalously slow</li>
+<li>Dependency trees may get hard to analyze in a terminal</li>
+<li>Plugin behaviour could be different than expected</li>
+</ul>
+</li>
+</ul>
+<p>Gradle supports a reporting system called <em>Gradle build scans</em></p>
+<ul>
+<li>Executable by appending <code>--scan</code> to the build</li>
+<li>Requires terminal interaction (or use of the <a href="https://docs.gradle.com/enterprise/gradle-plugin/">enterprise plugin</a>)</li>
+</ul>
+<p>Example scans:</p>
+<ul>
+<li><a href="https://scans.gradle.com/s/5i6ai7gz6qzmc">https://scans.gradle.com/s/5i6ai7gz6qzmc</a></li>
+<li><a href="https://scans.gradle.com/s/5jmd7avh2gnvi">https://scans.gradle.com/s/5jmd7avh2gnvi</a></li>
+</ul>
+</section><section>
+<h2 id="automated-scans-without---scan">Automated scans without <code>--scan</code></h2>
+<p>In <code>settings.gradle.kts</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>gradleEnterprise {
+</span></span><span style="display:flex;"><span>    buildScan {
+</span></span><span style="display:flex;"><span>        termsOfServiceUrl = <span style="color:#d20;background-color:#fff0f0">"https://gradle.com/terms-of-service"</span>
+</span></span><span style="display:flex;"><span>        termsOfServiceAgree = <span style="color:#d20;background-color:#fff0f0">"yes"</span>
+</span></span><span style="display:flex;"><span>        publishOnFailure()
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src="/reveal-hugo/object-assign.js"></script>
+
+<a href="/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"height":"1080","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false}],"pdfseparatefragments":false,"slide_number":true,"theme":"white","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
+
+<script src="/reveal-js/dist/reveal.js"></script>
+
+
+  
+  
+  <script type="text/javascript" src="/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/zoom/zoom.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/notes/notes.js"></script>
+  
+  
+  <script type="text/javascript" src="/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+
+  var revealHugoPlugins = { 
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
+   };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
+  Reveal.initialize(options);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false});
+
+    let render = (event) => {
+      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+      if (!mermaidElems.length){
+          return
+      }
+      mermaidElems.forEach(mermaidElem => {
+          let processed = mermaidElem.getAttribute('data-processed');
+          if (!processed){
+              
+              mermaid.init(undefined, mermaidElem);
+          }
+      });
+    };
+    Reveal.addEventListener('slidechanged', render);
+    Reveal.addEventListener('ready', render);
+  </script>
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+<script>
+  if (/.*?(\?|&)print-pdf/.test(window.location.toString())) {
+      var ytVideos = document.getElementsByTagName("iframe")
+      for (let i = 0; i < ytVideos.length; i++) {
+          var videoFrame = ytVideos[i]
+          var isYouTube = /^https?:\/\/(www.)youtube\.com\/.*/.test(videoFrame.src)
+          if (isYouTube) {
+              console.log(`Removing ${videoFrame.src}`)
+              var parent = videoFrame.parentElement
+              videoFrame.remove()
+              var p = document.createElement('p')
+              p.append(
+                  document.createTextNode(
+                      "There was an embedded video here, but it is disabled in the printed version of the slides."
+                  )
+              )
+              p.append(document.createElement('br'))
+              p.append(
+                  document.createTextNode(
+                      `Visit instead ${
+                          videoFrame.src
+                      } or ${
+                          videoFrame.src.replace(
+                              /(^https?:\/\/(www.)youtube\.com)\/(embed\/)(\w+).*/,
+                              "https://www.youtube.com/watch?v=$4"
+                          )
+                      }`
+                  )
+              )
+              parent.appendChild(p)
+          }
+      }
+  }
+</script>
+
+    
+  
+
+</body></html>

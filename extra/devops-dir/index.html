@@ -1,0 +1,562 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+<title>Development and Operations</title>
+<meta name="description" content="Introduction to DevOps">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/css/custom-theme.min.039d4fc68d969e2925568e1aa7cc960bbfd481c396410a31508d9131455be55f.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
+    
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="laboratory-of-software-systems">Laboratory of Software Systems</h1>
+<h2 id="development-and-operations">Development and operations</h2>
+<h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
+</section><section>
+<h1 id="development">Development</h1>
+<ul>
+<li>Analysis of a domain</li>
+<li>Design of a solution</li>
+<li>Implementation</li>
+<li>Testing</li>
+</ul>
+</section><section>
+<h1 id="operations">Operations</h1>
+<ul>
+<li>IT infrastructure</li>
+<li>Deployment</li>
+<li>Maintenance</li>
+</ul>
+</section><section>
+<h1 id="silo-mentality">Silo mentality</h1>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/devops/silos.svg" alt="silos"></p>
+</section><section>
+<h1 id="no-silos"><strong>No</strong> silos</h1>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/84eadfe2c2fb7da050763d60d05c549b953e18fe/devops/no-silos.svg" alt="silos"></p>
+</section><section>
+<h1 id="devops-culture">DevOps culture</h1>
+<ul>
+<li>
+<p><strong>Increased collaboration</strong></p>
+<ul>
+<li>Dev and Ops should <em>exchange information</em> and <em>work together</em></li>
+</ul>
+</li>
+<li>
+<p><strong>Shared responsibility</strong></p>
+<ul>
+<li>A team is responsible for the (sub) product for its <em>whole lifetime</em></li>
+<li><em>No handing over</em> projects from devs to ops</li>
+</ul>
+</li>
+<li>
+<p><strong>Autonomous teams</strong></p>
+<ul>
+<li><em>Lightweight decision making</em> process</li>
+</ul>
+</li>
+<li>
+<p><strong>Focus on the process, not just the product</strong></p>
+<ul>
+<li>Promote small, <em>incremental changes</em></li>
+<li><em>Automate</em> as much as possible</li>
+<li>Leverage the right <em>tool</em> for the job at hand</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="why-bother">Why bother?</h1>
+<ol>
+<li>
+<p><strong>Risk management</strong></p>
+<ul>
+<li>Reduce the probability of <em>failure</em></li>
+<li>Detect <em>defects</em> before hitting the market</li>
+<li>Quickly <em>react</em> to problems</li>
+</ul>
+</li>
+<li>
+<p><strong>Resource exploitation</strong></p>
+<ul>
+<li>Use <em>human resources</em> for human-y work</li>
+<li>Reduce <em>time to market</em></li>
+<li>Embrace <em>innovation</em></li>
+<li>Exploit <em>emerging technologies</em></li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h1 id="devops">DevOps</h1>
+<ol>
+<li><strong>Principles</strong></li>
+<li><strong>Practices</strong></li>
+<li><strong>Tools</strong></li>
+</ol>
+<p><strong>Principles</strong> <em>inspire</em> <strong>practices</strong></p>
+<p><strong>Practices</strong> <em>require</em> <strong>tools</strong></p>
+</section><section>
+<h1 id="devops-principles">DevOps principles</h1>
+<h3 id="not-exhaustive">(not exhaustive)</h3>
+<ul>
+<li>Collaboration</li>
+<li>Reproducibility</li>
+<li>Automation</li>
+<li>Incrementality</li>
+<li>Robustness</li>
+</ul>
+</section><section>
+<h1 id="devops-practices">DevOps practices</h1>
+<ul>
+<li>Workflow organization</li>
+<li>Build automation</li>
+<li>Self-testing code</li>
+<li>Code quality control</li>
+<li>Continuous Integration</li>
+<li>Continuous Delivery</li>
+<li>Continuous Deployment</li>
+<li>Continuous Monitoring</li>
+</ul>
+</section><section>
+<h1 id="devops-practices">DevOps practices</h1>
+<h2 id="workflow-organization"><em>Workflow organization</em></h2>
+<h4 id="lightweight-processes-and-shared-responsibility">Lightweight processes and shared responsibility</h4>
+<ul>
+<li>Participants should have clear roles</li>
+<li>Lifecycle phases should be mapped into the workflow</li>
+</ul>
+<p>
+</p><h3 id="tools"><strong>Tools</strong></h3>
+<ul>
+<li>Version control systems
+<ul>
+<li>Reproducible project history</li>
+<li>Enable several workflows</li>
+</ul>
+</li>
+<li>Workflow management platforms
+<ul>
+<li>Tracking of progress, issues, proposals</li>
+<li>Activities are linked to code</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="gitflow">Gitflow</h2>
+<img src="assets/gitflow.png" style="
+    
+    
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+">
+
+</section><section>
+<h2 id="forks-and-pull-requests">Forks and pull requests</h2>
+<img src="assets/fork-and-pr.svg" style="
+    
+    height: 50vh;
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+">
+
+</section><section>
+<h1 id="devops-practices-1">DevOps practices</h1>
+<h2 id="self-testing-code"><em>Self-testing code</em></h2>
+<h4 id="code-includes-tests"><strong>Code includes tests</strong></h4>
+<ul>
+<li>Several testing levels
+<ul>
+<li>Unit, acceptance, integration, etc.</li>
+</ul>
+</li>
+<li>Testing is <strong>entirely automated</strong></li>
+<li>Solving an issue implies the creation of a <em>regression test</em></li>
+<li>Tests are executed <em>for every change</em></li>
+</ul>
+<p>
+</p><h3 id="tools-1"><strong>Tools</strong></h3>
+<ul>
+<li>Build automators
+<ul>
+<li>Compile, test, and run QA on software</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="devops-practices-2">DevOps practices</h1>
+<h2 id="code-quality-control"><em>Code quality control</em></h2>
+<h4 id="code-is-coherent-and-understandable"><strong>Code is coherent and understandable</strong></h4>
+<ul>
+<li>Consistent code style across the board
+<ul>
+<li>Improved readability</li>
+<li>Much cleaner diffs</li>
+<li>Improved bisection / regression tracking</li>
+</ul>
+</li>
+<li>Extremely <strong>clean code</strong> <em>reduces</em> the need for documentation
+<ul>
+<li>Newbies can be productive more quickly</li>
+</ul>
+</li>
+<li>A large part of code QA can be automated!</li>
+</ul>
+<p>
+</p><h3 id="tools-2"><strong>Tools</strong></h3>
+<ul>
+<li>Build automators</li>
+<li>Static analyzers
+<ul>
+<li>Verify metrics and rules without execution</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="devops-practices-3">DevOps practices</h1>
+<h2 id="continuous-integration"><em>Continuous integration</em></h2>
+<h4 id="code-must-not-diverge"><strong>Code must not diverge</strong></h4>
+<ul>
+<li>Working copies are <em>kept in sync</em> with the mainline
+<ul>
+<li>How its done depends on the workflow organization</li>
+</ul>
+</li>
+<li>Build and test <em>automatically</em> on a fresh machine</li>
+<li>Build and test <em>on all the target platforms</em></li>
+<li>Promptly intercept (feedback) failures and issues</li>
+<li>Deploy successful artifacts</li>
+</ul>
+<p>
+</p><h3 id="tools-3"><strong>Tools</strong></h3>
+<ul>
+<li>Continuous Integration platforms
+<ul>
+<li>Run the automation pipeline on reference environments</li>
+<li>Promotes infrastructure as code
+<ul>
+<li>(at least for the build/test/check phase)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="continuous-integration-1">Continuous integration</h1>
+<h4 id="risk-reduction"><strong>Risk reduction</strong></h4>
+<p><img src="assets/integration-traditional.png" style="
+    
+    
+    max-width: 25vw;
+    max-height: 50vh;
+    object-fit: contain;
+">
+
+$\Rightarrow$
+<img src="assets/integration-continuous.png" style="
+    
+    
+    max-width: 25vw;
+    max-height: 50vh;
+    object-fit: contain;
+">
+</p>
+</section><section>
+<h1 id="devops-practices-4">DevOps practices</h1>
+<h2 id="continuous-delivery"><em>Continuous Delivery</em></h2>
+<h4 id="every-working-build-should-produce-a-potential-release"><strong>Every working build should produce a potential release</strong></h4>
+<ul>
+<li>The CI pipeline should produce final artifact</li>
+<li>Artifacts should be available for quick deployment</li>
+</ul>
+<p>
+</p><h3 id="tools-4"><strong>Tools</strong></h3>
+<ul>
+<li>Build automators</li>
+<li>Continuous Integration platforms</li>
+</ul>
+</section><section>
+<h1 id="devops-practices-5">DevOps practices</h1>
+<h2 id="continuous-deployment"><em>Continuous Deployment</em></h2>
+<h4 id="actual-deployment-should-be-automatic"><strong>Actual deployment should be automatic</strong></h4>
+<ul>
+<li>There should be a strategy for delivered code to enter production
+<ul>
+<li>Reversibly (e.g. <a href="https://martinfowler.com/bliki/BlueGreenDeployment.html">blue <em>green</em> deployment</a>)</li>
+<li>Gradually (e.g. <a href="https://martinfowler.com/bliki/CanaryRelease.html">canary release</a>)</li>
+</ul>
+</li>
+<li><em>Infrastructure</em> should be <em>defined by software</em></li>
+<li>Deliverability <em>before</em> new features</li>
+</ul>
+<p>
+</p><h3 id="tools-5"><strong>Tools</strong></h3>
+<ul>
+<li>Continuous Integration platforms</li>
+<li>Configuration management software
+<ul>
+<li>Enables <em>Continuous configuration automation</em></li>
+<li>Defines infrastructure via software with zero human interaction</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="devops-at-work">DevOps <em>at work</em></h1>
+<h3 id="an-internal-project-where-techniques-are-applied">An internal project where techniques are applied</h3>
+<ul>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/">“Truth” Repository</a></li>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/branches">Branches</a></li>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/network/members">Forks</a></li>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/pull/469">Example pull request</a></li>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/pull/479">Example automatic update</a></li>
+<li><a href="https://travis-ci.org/github/AlchemistSimulator/Alchemist">CI/CD pipeline</a></li>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/blob/develop/.travis.yml">(Build) Infrastructure as code</a></li>
+</ul>
+<p><a href="https://github.com/DanySK/Course-Laboratory-of-Software-Systems"><strong>These slides are in CI/CD as well!</strong></a></p>
+<ul>
+<li><a href="https://travis-ci.com/github/DanySK/Course-Laboratory-of-Software-Systems">This is the latest build</a></li>
+</ul>
+</section><section>
+<h1 id="devops-for-dir">DevOps for DIR</h1>
+<h2 id="version-control"><em>Version control</em></h2>
+<ul>
+<li><strong>Basics</strong> of distributed version control
+<ul>
+<li>including <em>SVN <a href="http://archive.is/LYwng">“reeducation”</a></em></li>
+<li>Repository creation and <em>local</em> maintenance</li>
+<li>Basics of <em>collaboration</em> (branching, merging)</li>
+<li><em>Multi-repo</em> (forks, review, pull requests)</li>
+</ul>
+</li>
+<li>Agile <strong>workflows</strong> depending on specific needs</li>
+<li><strong>Advanced</strong> distributed version control
+<ul>
+<li>History alteration (Rebasing / Squashing)</li>
+<li>Bisection</li>
+<li>Cherry picking</li>
+<li>DVCS sub-modularization
+<ul>
+<li>(used in these slides)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="devops-for-dir-1">DevOps for DIR</h1>
+<h2 id="automation"><em>Automation</em></h2>
+<ul>
+<li>Software lifecycle organization and build automation
+<ul>
+<li>From <em>source</em> to <em>tested and deployable</em> in one command</li>
+<li><a href="https://gradle.org/">Gradle</a> is the house speciality
+<ul>
+<li>Basics</li>
+<li>Build organization</li>
+<li>Customization and advanced</li>
+<li>Custom plugin development</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Advanced automation
+<ul>
+<li><strong>Requires working CI</strong> <em>and</em> <strong>comprehensive testing</strong> or it’s going to burn</li>
+<li><a href="https://github.com/DanySK/upgradle/pull/122">Automated software updates</a></li>
+<li><a href="https://github.com/AlchemistSimulator/Alchemist/pull/464">Automated build infrastructure updates</a></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="devops-for-dir-2">DevOps for DIR</h1>
+<h2 id="continuous-integration--deployment--delivery"><em>Continuous Integration / Deployment / Delivery</em></h2>
+<ul>
+<li>Adding <strong>CI</strong> to existing projects
+<ul>
+<li>Needs a <em>committment to</em> the <em>DevOps</em> philosophy</li>
+</ul>
+</li>
+<li><em>Multiplatform</em> testing
+<ul>
+<li>OS type and version</li>
+<li>Platform (JDK, CLR, Python interpreter) version</li>
+<li>Multi-stage</li>
+</ul>
+</li>
+<li>Continuous <em>deployment</em>
+<ul>
+<li>“One click away from production”</li>
+</ul>
+</li>
+<li>Continuous <em>delivery</em>
+<ul>
+<li>From code to production automagically</li>
+</ul>
+</li>
+</ul>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src="/reveal-hugo/object-assign.js"></script>
+
+<a href="/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"height":"1080","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false}],"pdfseparatefragments":false,"slide_number":true,"theme":"white","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
+
+<script src="/reveal-js/dist/reveal.js"></script>
+
+
+  
+  
+  <script type="text/javascript" src="/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/zoom/zoom.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/notes/notes.js"></script>
+  
+  
+  <script type="text/javascript" src="/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+
+  var revealHugoPlugins = { 
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
+   };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
+  Reveal.initialize(options);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false});
+
+    let render = (event) => {
+      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+      if (!mermaidElems.length){
+          return
+      }
+      mermaidElems.forEach(mermaidElem => {
+          let processed = mermaidElem.getAttribute('data-processed');
+          if (!processed){
+              
+              mermaid.init(undefined, mermaidElem);
+          }
+      });
+    };
+    Reveal.addEventListener('slidechanged', render);
+    Reveal.addEventListener('ready', render);
+  </script>
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+<script>
+  if (/.*?(\?|&)print-pdf/.test(window.location.toString())) {
+      var ytVideos = document.getElementsByTagName("iframe")
+      for (let i = 0; i < ytVideos.length; i++) {
+          var videoFrame = ytVideos[i]
+          var isYouTube = /^https?:\/\/(www.)youtube\.com\/.*/.test(videoFrame.src)
+          if (isYouTube) {
+              console.log(`Removing ${videoFrame.src}`)
+              var parent = videoFrame.parentElement
+              videoFrame.remove()
+              var p = document.createElement('p')
+              p.append(
+                  document.createTextNode(
+                      "There was an embedded video here, but it is disabled in the printed version of the slides."
+                  )
+              )
+              p.append(document.createElement('br'))
+              p.append(
+                  document.createTextNode(
+                      `Visit instead ${
+                          videoFrame.src
+                      } or ${
+                          videoFrame.src.replace(
+                              /(^https?:\/\/(www.)youtube\.com)\/(embed\/)(\w+).*/,
+                              "https://www.youtube.com/watch?v=$4"
+                          )
+                      }`
+                  )
+              )
+              parent.appendChild(p)
+          }
+      }
+  }
+</script>
+
+    
+  
+
+</body></html>
