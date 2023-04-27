@@ -55,4 +55,5 @@ jobs:
           replacesArtifacts: true
           repo: pss-slides
           tag: ${{ steps.version-compute.outputs.version }}
-          token: ${{ github.token }}
+          token: ${{ secrets.DEPLOYMENT_TOKEN }}
+
