@@ -53,7 +53,7 @@ jobs:
           allowUpdates: true
           artifacts: "*.pdf"
           replacesArtifacts: true
-          repo: pss-slides
+          repo: spe-slides
           tag: ${{ steps.version-compute.outputs.version }}
           token: ${{ secrets.DEPLOYMENT_TOKEN }}
 
