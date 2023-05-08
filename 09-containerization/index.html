@@ -28,10 +28,11 @@
 <br>
 <h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2023-05-07
+<p>Compiled on: 2023-05-08
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
+<!-- this file includes generated content. Do not edit. Edit content/09-containerization/_generator.md, instead. -->
 <h2 id="bare-metal-vs-vms-vs-containers">Bare metal vs. VMs vs. Containers</h2>
 
 
@@ -39,35 +40,23 @@
 
 
 <figure>
-  <img src="https://g.gravizo.com/svg?%0adigraph%20structs%20%7b%0a%20%20%20%20rankdir%3dLR%0a%20%20%20%20graph%20%5bfontname%3d%22helvetica%22%2c%20layout%3dneato%5d%0a%20%20%20%20edge%20%5bfontname%3d%22helvetica%22%5d%0a%20%20%20%20node%20%5bfontname%3d%22helvetica%22%2c%20shape%3drecord%2c%20style%3d%22rounded%2c%20filled%22%2c%20fontcolor%3dwhite%2c%20fixedsize%3dtrue%2c%20width%3d3%5d%3b%0a%20%20%20%20%22Bare%20metal%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%220%2c0%21%22%2c%20layout%3dneato%5d%0a%20%20%20%20Physical%20%5bfillcolor%3dblack%2c%20pos%3d%220%2c0.5%21%22%5d%0a%20%20%20%20%22Operating%20System%22%20%5bfillcolor%3dgray%2c%20pos%3d%220%2c1.1%21%22%5d%0a%20%20%20%20Runtime%20%5bfillcolor%3dgreen%2c%20pos%3d%220%2c1.7%21%22%5d%0a%20%20%20%20App1%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%22-1.025%2c2.3%21%22%5d%0a%20%20%20%20App2%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%220%2c2.3%21%22%5d%0a%20%20%20%20App3%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%221.025%2c2.3%21%22%5d%0a%0a%20%20%20%20%22Virtual%20Machine%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%223.5%2c0%21%22%5d%0a%20%20%20%20VM_Phy%20%5blabel%3dPhysical%2c%20fillcolor%3dblack%2c%20pos%3d%223.5%2c0.5%21%22%5d%0a%20%20%20%20%22Host%20Operating%20System%22%20%5bfillcolor%3dgray%2c%20pos%3d%223.5%2c1.1%21%22%5d%0a%20%20%20%20Hypervisor%20%5bfillcolor%3dorange%2c%20pos%3d%223.5%2c1.7%21%22%2c%20fontcolor%3dblack%5d%0a%20%20%20%20GuestOS1%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%222.475%2c2.3%21%22%5d%0a%20%20%20%20GuestOS2%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%223.5%2c2.3%21%22%5d%0a%20%20%20%20GuestOS3%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%224.525%2c2.3%21%22%5d%0a%20%20%20%20Runtime1%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%222.475%2c2.9%21%22%5d%0a%20%20%20%20Runtime2%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%223.5%2c2.9%21%22%5d%0a%20%20%20%20Runtime3%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%224.525%2c2.9%21%22%5d%0a%20%20%20%20VM_App1%20%5blabel%3dApp1%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%222.475%2c3.5%21%22%5d%0a%20%20%20%20VM_App2%20%5blabel%3dApp2%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%223.5%2c3.5%21%22%5d%0a%20%20%20%20VM_App3%20%5blabel%3dApp3%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%224.525%2c3.5%21%22%5d%0a%0a%20%20%20%20%22Container%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%227%2c0%21%22%5d%0a%20%20%20%20C_Phy%20%5blabel%3dPhysical%2c%20fillcolor%3dblack%2c%20pos%3d%227%2c0.5%21%22%5d%0a%20%20%20%20C_K%20%5blabel%3d%22Operating%20System%22%2c%20fillcolor%3dgray%2c%20pos%3d%227%2c1.1%21%22%5d%0a%20%20%20%20%22Container%20Service%22%20%5bfillcolor%3dblue%2c%20pos%3d%227%2c1.7%21%22%5d%0a%20%20%20%20C_Rt1%20%5blabel%3dRuntime1%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%225.975%2c2.3%21%22%5d%0a%20%20%20%20C_Rt2%20%5blabel%3dRuntime2%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%227%2c2.3%21%22%5d%0a%20%20%20%20C_Rt3%20%5blabel%3dRuntime3%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%228.025%2c2.3%21%22%5d%0a%20%20%20%20C_App1%20%5blabel%3dApp1%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%225.975%2c2.9%21%22%5d%0a%20%20%20%20C_App2%20%5blabel%3dApp2%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%227%2c2.9%21%22%5d%0a%20%20%20%20C_App3%20%5blabel%3dApp3%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%228.025%2c2.9%21%22%5d%0a%7d%0a" alt="">
+  <img src="https://g.gravizo.com/svg?%0adigraph%20structs%20%7b%0arankdir%3dLR%0agraph%20%5bfontname%3d%22helvetica%22%2c%20layout%3dneato%5d%0aedge%20%5bfontname%3d%22helvetica%22%5d%0anode%20%5bfontname%3d%22helvetica%22%2c%20shape%3drecord%2c%20style%3d%22rounded%2c%20filled%22%2c%20fontcolor%3dwhite%2c%20fixedsize%3dtrue%2c%20width%3d3%5d%3b%0a%22Bare%20metal%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%220%2c0%21%22%2c%20layout%3dneato%5d%0aPhysical%20%5bfillcolor%3dblack%2c%20pos%3d%220%2c0.5%21%22%5d%0a%22Operating%20System%22%20%5bfillcolor%3dgray%2c%20pos%3d%220%2c1.1%21%22%5d%0aRuntime%20%5bfillcolor%3dgreen%2c%20pos%3d%220%2c1.7%21%22%5d%0aApp1%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%22-1.025%2c2.3%21%22%5d%0aApp2%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%220%2c2.3%21%22%5d%0aApp3%20%5bfillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%221.025%2c2.3%21%22%5d%0a%0a%20%20%20%20%22Virtual%20Machine%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%223.5%2c0%21%22%5d%0a%20%20%20%20VM_Phy%20%5blabel%3dPhysical%2c%20fillcolor%3dblack%2c%20pos%3d%223.5%2c0.5%21%22%5d%0a%20%20%20%20%22Host%20Operating%20System%22%20%5bfillcolor%3dgray%2c%20pos%3d%223.5%2c1.1%21%22%5d%0a%20%20%20%20Hypervisor%20%5bfillcolor%3dorange%2c%20pos%3d%223.5%2c1.7%21%22%2c%20fontcolor%3dblack%5d%0a%20%20%20%20GuestOS1%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%222.475%2c2.3%21%22%5d%0a%20%20%20%20GuestOS2%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%223.5%2c2.3%21%22%5d%0a%20%20%20%20GuestOS3%20%5bfillcolor%3dgray%2c%20width%3d0.95%2c%20pos%3d%224.525%2c2.3%21%22%5d%0a%20%20%20%20Runtime1%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%222.475%2c2.9%21%22%5d%0a%20%20%20%20Runtime2%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%223.5%2c2.9%21%22%5d%0a%20%20%20%20Runtime3%20%5bfillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%224.525%2c2.9%21%22%5d%0a%20%20%20%20VM_App1%20%5blabel%3dApp1%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%222.475%2c3.5%21%22%5d%0a%20%20%20%20VM_App2%20%5blabel%3dApp2%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%223.5%2c3.5%21%22%5d%0a%20%20%20%20VM_App3%20%5blabel%3dApp3%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%224.525%2c3.5%21%22%5d%0a%0a%20%20%20%20%22Container%22%20%5bshape%3dplaintext%2c%20style%3d%22%22%2c%20fontcolor%3dblack%20fontsize%3d20%2c%20pos%3d%227%2c0%21%22%5d%0a%20%20%20%20C_Phy%20%5blabel%3dPhysical%2c%20fillcolor%3dblack%2c%20pos%3d%227%2c0.5%21%22%5d%0a%20%20%20%20C_K%20%5blabel%3d%22Operating%20System%22%2c%20fillcolor%3dgray%2c%20pos%3d%227%2c1.1%21%22%5d%0a%20%20%20%20%22Container%20Service%22%20%5bfillcolor%3dblue%2c%20pos%3d%227%2c1.7%21%22%5d%0a%20%20%20%20C_Rt1%20%5blabel%3dRuntime1%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%225.975%2c2.3%21%22%5d%0a%20%20%20%20C_Rt2%20%5blabel%3dRuntime2%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%227%2c2.3%21%22%5d%0a%20%20%20%20C_Rt3%20%5blabel%3dRuntime3%2c%20fillcolor%3dgreen%2c%20width%3d0.95%2c%20pos%3d%228.025%2c2.3%21%22%5d%0a%20%20%20%20C_App1%20%5blabel%3dApp1%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%225.975%2c2.9%21%22%5d%0a%20%20%20%20C_App2%20%5blabel%3dApp2%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%227%2c2.9%21%22%5d%0a%20%20%20%20C_App3%20%5blabel%3dApp3%2c%20fillcolor%3dred%2c%20width%3d0.95%2c%20pos%3d%228.025%2c2.9%21%22%5d%0a%7d%0a" alt="">
     <figcaption></figcaption>
 </figure>
 
 <p>Runtime <strong>isolation</strong> without operating system <strong>replication</strong></p>
 </section><section>
 <h2 id="why-containers">Why containers?</h2>
-<p><img src="memes/works-on-my-machine.jpeg" alt="">
-<img src="memes/docker-born.jpeg" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/696dc95b813275aa4c11c798745eb863edc28677/containerization/works-on-my-machine.jpeg" alt=""></p>
+</section><section>
+<h2 id="why-containers-1">Why containers?</h2>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/696dc95b813275aa4c11c798745eb863edc28677/containerization/docker-born.jpeg" alt=""></p>
 </section><section>
 <h2 id="lightweight-virtual-machines">Lightweight virtual machines?</h2>
-<img src="memes/lightweight-container.jpg" style="
-    
-    
-    max-width: 95vw;
-    max-height: 80vh;
-    object-fit: contain;
-">
-
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/696dc95b813275aa4c11c798745eb863edc28677/containerization/lightweight-container.jpg" alt=""></p>
 </section><section>
 <h2 id="closer-to-confined-processes">Closer to confined processes</h2>
-<img src="memes/chroot.jpeg" style="
-    
-    height: 60vh;
-    max-width: 95vw;
-    max-height: 80vh;
-    object-fit: contain;
-">
-
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/696dc95b813275aa4c11c798745eb863edc28677/containerization/chroot.jpeg" alt=""></p>
 </section><section>
 <h2 id="docker">Docker</h2>
 <p>Docker is a containerization platform</p>
@@ -100,7 +89,7 @@
 <li><em>Daemon</em>: service pulling images from registries and instancing containers</li>
 <li><em>Client</em>: interface towards the daemon</li>
 </ul>
-<p><img src="architecture.svg" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/de260d8b34eff7c4a409d98a096a5e7f2e79b4e4/containerization/architecture.svg" alt=""></p>
 </section><section>
 <h2 id="running-docker-containers">Running docker containers</h2>
 <ol>
