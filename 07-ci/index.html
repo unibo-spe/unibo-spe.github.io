@@ -5,11 +5,9 @@
 <meta name="author" content="Danilo Pianini">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="/reveal-js/dist/reset.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/reveal-js/dist/reveal.css">
   <link rel="stylesheet" href="/css/custom-theme.min.039d4fc68d969e2925568e1aa7cc960bbfd481c396410a31508d9131455be55f.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
-    
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
@@ -29,7 +27,7 @@
 <br>
 <h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2023-06-06
+<p>Compiled on: 2023-06-07
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -1178,7 +1176,7 @@ with a pre-populated text area</li>
     }
     return map;
   }
-  
+
   var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
 
   var revealHugoPlugins = { 
@@ -1200,9 +1198,43 @@ with a pre-populated text area</li>
 
 
 
+  
 
+  
 
+  
 
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 
 
 
@@ -1223,8 +1255,11 @@ with a pre-populated text area</li>
           }
       });
     };
-    Reveal.addEventListener('slidechanged', render);
-    Reveal.addEventListener('ready', render);
+    
+    render({currentSlide: Reveal.getCurrentSlide()});
+
+    Reveal.on('slidechanged', render);
+    Reveal.on('ready', render);
   </script>
 
     <script>
