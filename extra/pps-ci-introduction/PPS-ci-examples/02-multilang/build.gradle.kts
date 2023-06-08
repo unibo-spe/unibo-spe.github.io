@@ -2,7 +2,7 @@ plugins {
     java
     scala
     groovy
-    kotlin("jvm") version "1.8.21"
+    kotlin("jvm") version "1.8.22"
 }
 repositories {
     mavenCentral()
@@ -10,5 +10,5 @@ repositories {
 dependencies {
     implementation("org.codehaus.groovy:groovy:3.0.17")
     implementation(kotlin("stdlib"))
-    implementation("org.scala-lang:scala3-library_3:3.2.2")
+    implementation("org.scala-lang:scala3-library_3:3.3.0")
 }
