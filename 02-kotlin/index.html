@@ -27,7 +27,7 @@
 <br>
 <h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2023-08-22
+<p>Compiled on: 2023-08-23
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -118,7 +118,7 @@ The behaviour can be controlled via annotations.</p>
 </span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>(arguments: Array&lt;String&gt;) = println(<span style="color:#d20;background-color:#fff0f0">"Hello World"</span>) <span style="color:#888">// Valid entry point
 </span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">main</span>(arguments: Array&lt;String&gt;) {
 </span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">"Hello World"</span>) <span style="color:#888">// Return type is Unit, no need to return
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>} 
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-101-4">Kotlin 101</h1>
 <h2 id="nullable-types">Nullable types</h2>
@@ -399,8 +399,8 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 <ul>
 <li>There are no <code>implicit</code>s in Kotlin, the <code>import</code> statement does not modify context</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.lss.experiments</span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.lss.ddd.Entity</span> <span style="color:#888">// Available as Entity locally
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.spe.experiments</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.spe.ddd.Entity</span> <span style="color:#888">// Available as Entity locally
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.company.someproduct.Entity</span> <span style="color:#080;font-weight:bold">as</span> SomeProductEntity <span style="color:#888">// name aliasing
 </span></span></span></code></pre></div></section><section>
 <h1 id="kotlin-101-20">Kotlin 101</h1>
@@ -818,7 +818,7 @@ In Scala</p>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">A</span> <span style="color:#888">// Same file and same name identify a companion
 </span></span></span></code></pre></div><p>In Kotlin</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">companion</span> <span style="color:#080;font-weight:bold">object</span> <span style="color:#888">// Companions are inner to classes 
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">companion</span> <span style="color:#080;font-weight:bold">object</span> <span style="color:#888">// Companions are inner to classes
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span><span style="display:flex;"><span>A <span style="color:#888">// refers to A.Companion
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">A</span> <span style="color:#888">// This is an independent object
@@ -842,7 +842,7 @@ In Scala</p>
 <h2 id="visibility-control">Visibility control</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Visibility</span> <span style="color:#080;font-weight:bold">internal</span> <span style="color:#080;font-weight:bold">constructor</span>( <span style="color:#888">// constructor is required to apply visibility restrictionss
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: Int <span style="color:#888">// Same as Scala
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>) { 
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>) {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">protected</span> <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">state</span> = <span style="color:#00d;font-weight:bold">0</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">set</span> <span style="color:#888">// visibility restriction for properties in get/set methods
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
@@ -1563,7 +1563,7 @@ and is similar to Smalltalk / Ceylon / Xtend / Ruby as well</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">myLambda</span> = {
 </span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">"Hey I'm computing"</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">whatsMyReturnType</span>() = { 
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">whatsMyReturnType</span>() = {
 </span></span><span style="display:flex;"><span>    <span style="color:#d20;background-color:#fff0f0">"A string"</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>myLambda.invoke() <span style="color:#888">// Java-style invocation
@@ -1746,7 +1746,7 @@ This enables a powerful form of <em>scope control</em></p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span><span style="display:flex;"><span><span style="color:#888">// Extension members are actual members! They require a receiver!
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#b06;font-weight:bold">String</span>.intro.withBatman() <span style="color:#888">// error: unresolved reference: intro
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>, <span style="color:#b06;font-weight:bold">R</span>&gt; <span style="color:#06b;font-weight:bold">insideTheScopeOf</span>(<span style="color:#080;font-weight:bold">receiver</span>: T, method: <span style="color:#b06;font-weight:bold">T</span>.() -&gt; R): R = <span style="color:#080;font-weight:bold">receiver</span>.method() 
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>, <span style="color:#b06;font-weight:bold">R</span>&gt; <span style="color:#06b;font-weight:bold">insideTheScopeOf</span>(<span style="color:#080;font-weight:bold">receiver</span>: T, method: <span style="color:#b06;font-weight:bold">T</span>.() -&gt; R): R = <span style="color:#080;font-weight:bold">receiver</span>.method()
 </span></span><span style="display:flex;"><span>insideTheScopeOf(Batman) { <span style="color:#888">// inside this function, Batman is the dispatch receiver!
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#b06;font-weight:bold">String</span>.intro.withBatman() <span style="color:#888">// OK!
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
@@ -1904,8 +1904,6 @@ Used to cause side effects and returning the original object</p>
   
 
   
-    
-  
 
   
 
@@ -1936,30 +1934,6 @@ Used to cause side effects and returning the original object</p>
   
 
 
-
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
-  <script>
-    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false});
-
-    let render = (event) => {
-      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
-      if (!mermaidElems.length){
-          return
-      }
-      mermaidElems.forEach(mermaidElem => {
-          let processed = mermaidElem.getAttribute('data-processed');
-          if (!processed){
-              
-              mermaid.init(undefined, mermaidElem);
-          }
-      });
-    };
-    
-    render({currentSlide: Reveal.getCurrentSlide()});
-
-    Reveal.on('slidechanged', render);
-    Reveal.on('ready', render);
-  </script>
 
     <script>
     MathJax = {

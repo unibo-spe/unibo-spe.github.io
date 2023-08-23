@@ -1,7 +1,8 @@
 <!DOCTYPE html><html lang="en"><head>
+	<meta name="generator" content="Hugo 0.117.0">
     <meta charset="utf-8">
-<title>Extra goodies of SPE</title>
-<meta name="description" content="Extra goodies">
+<title>Software Process Engineering</title>
+<meta name="description" content="Software Process Engineering">
 <meta name="author" content="Danilo Pianini">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,14 +22,34 @@
       <div class="slides">
   
 
-    <section><h1 id="hahahugoshortcode12s0hbhb">Software Process Engineering</h1>
-<h2 id="extra-goodies">Extra goodies</h2>
-<h3 id="danilo-pianinimailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a></h3>
-</section><section>
-<h1 id="extra-goodies-1">Extra goodies</h1>
+    <section><h2 id="software-process-engineering">Software Process Engineering</h2>
+<p><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></p>
+<h3 id="index-of-the-course">Index of the course</h3>
 <ul>
-<li><a href="pps-ci-introduction">Introduction to DevOps for “Programming and Development paradigms”</a></li>
-<li><a href="devops-dir">Introduction to DevOps for the <strong>DIR</strong> (Distretto Informatico Romagnolo)</a></li>
+<li><a href="00-intro">Introduction to the course</a></li>
+<li><a href="01-devops-intro">The DevOps philosophy</a></li>
+<li><a href="02-kotlin">Kotlin for Scala developers</a>
+<ul>
+<li><a href="03-internal-dsls">Internal DSLs construction</a></li>
+</ul>
+</li>
+<li><a href="04-build-automation">Build automation</a></li>
+<li>Sharing
+<ul>
+<li><a href="05-version-selection">Software versioning</a></li>
+<li><a href="06-licenses">Software licensing</a></li>
+</ul>
+</li>
+<li><a href="07-ci">Continuous integration/delivery/deployment</a></li>
+<li><a href="08-advanced-git">Advanced version control</a></li>
+<li><a href="09-containerization">Containerization</a></li>
+</ul>
+</section><section>
+<h1 id="extra">Extra</h1>
+<p>There is some additional material not involving the course, that gets shipped together with it though.</p>
+<p>Typically, because it’s somewhat related.</p>
+<ul>
+<li><a href="extra">Extra content</a></li>
 </ul>
 </section>
 
@@ -44,7 +65,7 @@
 <a href="/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
 
 <script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"height":"1080","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false}],"pdfseparatefragments":false,"slide_number":true,"theme":"white","transition":"slide","transition_speed":"fast","width":"1920"}</script>
-<script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme_options":{"targetpath":"css/custom-theme.css"}}</script>
 
 <script src="/reveal-js/dist/reveal.js"></script>
 
@@ -105,11 +126,7 @@
   
 
   
-    
-  
 
-  
-    
   
 
   
@@ -141,30 +158,6 @@
   
 
 
-
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
-  <script>
-    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false});
-
-    let render = (event) => {
-      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
-      if (!mermaidElems.length){
-          return
-      }
-      mermaidElems.forEach(mermaidElem => {
-          let processed = mermaidElem.getAttribute('data-processed');
-          if (!processed){
-              
-              mermaid.init(undefined, mermaidElem);
-          }
-      });
-    };
-    
-    render({currentSlide: Reveal.getCurrentSlide()});
-
-    Reveal.on('slidechanged', render);
-    Reveal.on('ready', render);
-  </script>
 
     <script>
     MathJax = {
