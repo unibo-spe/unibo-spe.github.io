@@ -303,7 +303,7 @@ and many are developed by the community.</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># Steps represent a sequence of tasks that will be executed as part of the job</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@8b5e8b768746b50394015010d25e690bfab9dfbc<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># Runs a single command using the runners shell</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Run a one-line script<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo Hello from a ${{ runner.os }} machine!<span style="color:#bbb">
@@ -321,7 +321,7 @@ and many are developed by the community.</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Check out repository code<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v3<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v4<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo "💡 The ${{ github.repository }} repository has been cloned to the runner."<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo "🖥️ The workflow is now ready to test your code on the runner."<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>List files in the repository<span style="color:#bbb">
@@ -498,7 +498,7 @@ and many are developed by the community.</p>
 </ul>
 <p>It is a <em>common</em> and <em>non-trivial</em> operation (the checked out version must be the version originating the workflow), thus GitHub provides an action:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Check out repository code<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v3</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v4</span></span></code></pre></div>
 <p>Since actions typically do not need the entire history of the project, by default the action checks out <em>only the commit that originated the workflow</em> (<code>--depth=1</code> when cloning)</p>
 <ul>
 <li><em>Shallow cloning</em> has better <em>performance</em></li>
@@ -512,7 +512,7 @@ and many are developed by the community.</p>
 </section><section>
 <h2 id="checking-out-the-whole-history">Checking out the whole history</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with default token<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v3.6.0<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v4.0.0<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>inputs.token == ''<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
@@ -542,7 +542,7 @@ The simplest way to send commands is to print on standard output a message in th
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>danysk/action-checkout@0.2.11<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>danysk/action-checkout@0.2.12<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">id</span>:<span style="color:#bbb"> </span>branch-name<span style="color:#bbb"> </span><span style="color:#888"># Custom id</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>tj-actions/branch-names@v7<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">id</span>:<span style="color:#bbb"> </span>output-from-shell<span style="color:#bbb">
@@ -789,14 +789,14 @@ the alternative is to <em>install a private key in the runner</em></p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">using</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"composite"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with custom token<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v3.6.0<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v4.0.0<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>inputs.token != ''<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">submodules</span>:<span style="color:#bbb"> </span>recursive<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">token</span>:<span style="color:#bbb"> </span>${{ inputs.token }}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with default token<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v3.6.0<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v4.0.0<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>inputs.token == ''<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
@@ -1200,6 +1200,8 @@ with a pre-populated text area</li>
 
   
 
+  
+    
   
 
   
