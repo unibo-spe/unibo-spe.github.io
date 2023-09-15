@@ -1,0 +1,852 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+<title>Domain Driven Design</title>
+<meta name="description" content="Practical introduction to Domain Driven Design">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/css/custom-theme.min.d87831e776998ef49522b04eb4dc09e99de17c72203f12dba6bc2c43887c8877.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script src="https://unibo-spe.github.io//plantuml.js"></script>
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="domain-driven-design">Domain Driven Design</h1>
+<h2 id="hahahugoshortcode12s0hbhb">Software Process Engineering</h2>
+<br>
+<h3 id="giovanni-ciatto-----giovanniciattouniboitmailtogiovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
+<br>
+<p>Compiled on: 2023-09-15
+ — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
+<p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
+</section><section>
+<h1 id="motivation-and-context">Motivation and Context</h1>
+</section><section>
+<h2 id="why-a-structured-design-process">Why a structured design process?</h2>
+<ul>
+<li>
+<p>You know programming, in many programming languages</p>
+</li>
+<li>
+<p>You know about object-oriented programming and design patterns</p>
+</li>
+<li>
+<p>You know about software architectures and design principles</p>
+</li>
+<li>
+<p>You know about software engineering best practices</p>
+</li>
+</ul>
+<br>
+<p><em>What’s the <strong>criterion</strong> to choose <strong>if</strong> and <strong>when</strong> to adopt languages / patterns / architectures / principles / practices?</em></p>
+</section><section>
+<h2 id="recommended-workflow">Recommended workflow</h2>
+<h3 id="problem-xrightarrowcolorredanalysis-model-xrightarrowcolorreddesign-architecture-xrightarrowimplementation-solution">Problem $\xrightarrow{\color{red}analysis}$ <strong>Model</strong> $\xrightarrow{\color{red}design}$ Architecture $\xrightarrow{implementation}$ Solution</h3>
+<ul>
+<li>yet, how to derive the model?</li>
+</ul>
+</section><section>
+<h2 id="why-domain-driven-design">Why Domain Driven Design?</h2>
+<ul>
+<li>
+<p>Here we present <strong>domain-driven design</strong> (DDD)</p>
+<ul>
+<li>one of many approaches to software design</li>
+</ul>
+</li>
+<li>
+<p>It consists of principles, best practices, and patterns leading design</p>
+<ul>
+<li>unified under a common <em>philosophy</em></li>
+<li>focus is on the <em>design workflow</em>, other than the result</li>
+</ul>
+</li>
+<li>
+<p>We prefer it over alternatives for several reasons:</p>
+<ul>
+<li>it stresses <em>adherence</em> to the problem at hand</li>
+<li>it focuses on delivering a <em>business-tailored</em> model
+<ul>
+<li>and, therefore, a business-tailored solution</li>
+</ul>
+</li>
+<li>it harmonises <em>communication</em> among managers, technicians, and users</li>
+<li>it stresses the production of maintanable and <em>extensible</em> software</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="about-domain-driven-design">About Domain-Driven Design</h1>
+</section><section>
+
+
+<section data-shortcode-section="">
+<h2 id="what-is-the-domain">What is the domain?</h2>
+<ul>
+<li>
+<p>Definition of <strong>domain</strong>:</p>
+<ul>
+<li>a well established sphere of knowledge, influence or activity</li>
+<li>the subject area to which the user applies the software</li>
+</ul>
+</li>
+<li>
+<p>Remarks:</p>
+<ul>
+<li>focus is on how users and experts perceive the domain</li>
+<li>focus is not on how developers perceive the domain</li>
+</ul>
+</li>
+<li>
+<p>Examples of domains and the contexts composing them</p>
+<ul>
+<li>some university (department, faculty, HR, etc.)</li>
+<li>some given company (manufacturing, marketing, HR, etc.)</li>
+<li>linear algebra (matrices, complex numbers, polynoms, etc.)</li>
+<li>machine learning (classification, regression, feature selection, etc.)</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="ddd-philosophy-pt-1">DDD Philosophy (pt. 1)</h2>
+<ul>
+<li>
+<p>Software will represent a solution to a problem in some business domain</p>
+<ul>
+<li>it should be modelled &amp; implemented to match that domain
+<ul>
+<li>i.e. modelling should elicit the key aspects of a domain, possibly by interacting with experts</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Words do not have meaning per se, but rather w.r.t. a domain</p>
+<ul>
+<li>i.e. the same word may have different meanings in different domains</li>
+<li>each domain comes with a particular language characterising it
+<ul>
+<li>SW components (interfaces, classes, etc.) should be named after that language</li>
+</ul>
+</li>
+<li>interaction with experts is essential to identify a domain’s language</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="ddd-philosophy-pt-2">DDD Philosophy (pt. 2)</h2>
+<ul>
+<li>
+<p>SW should stick to the domain, at any moment</p>
+<ul>
+<li>archiecture and implementation should favour adherence to the domain
+<ul>
+<li>in spite of their evolution / modification</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Functionalities, structure, and UX should mirror the domain too</p>
+<ul>
+<li>using the libraries should be natural for developers</li>
+<li>UX should be natural for users</li>
+</ul>
+<p>as both developers and users are (supposed to be) immersed in the domain</p>
+</li>
+</ul>
+
+</section>
+</section><section>
+
+
+<section data-shortcode-section="">
+<h2 id="main-notions-overview">Main notions (overview)</h2>
+<ul>
+<li>
+<p><strong>Domain</strong>: the reference area of knowledge</p>
+</li>
+<li>
+<p><strong>Context</strong>: a portion of the domain</p>
+</li>
+<li>
+<p><strong>Model</strong>: a reification of the domain in SW</p>
+</li>
+<li>
+<p><strong>Ubiquitous Language</strong>: language used by domain experts and mirrored by the model</p>
+</li>
+</ul>
+</section><section>
+<h2 id="main-notions-_domain_">Main notions (<em>Domain</em>)</h2>
+<blockquote>
+<p>A well established sphere of knowledge, influence or activity</p>
+</blockquote>
+<ul>
+<li>e.g. some university (department, faculty, HR, etc.), linear algebra, etc.</li>
+</ul>
+</section><section>
+<h2 id="main-notions-_context_">Main notions (<em>Context</em>)</h2>
+<blockquote>
+<p>A portion of the domain:</p>
+<ul>
+<li>relying on a sub-set of the concepts of the domain</li>
+<li>where words/names have a unique, precise meaning</li>
+</ul>
+</blockquote>
+<ul>
+<li>e.g. departments, divisions, complex numbers, etc.</li>
+</ul>
+</section><section>
+<h2 id="main-notions-domain-_vs_-context">Main notions (Domain <em>vs.</em> Context)</h2>
+<p><img src="./domain.png" alt="Domain and context"></p>
+</section><section>
+<h2 id="main-notions-domain-_model_">Main notions (Domain <em>Model</em>)</h2>
+<blockquote>
+<p>Set of <strong>software</strong> abstractions mapping relevant <em>concepts</em> of the domain</p>
+</blockquote>
+<ul>
+<li>e.g. C# projects, namespaces, interfaces, classes, structures, methods, etc.</li>
+</ul>
+</section><section>
+<h2 id="main-notions-_ubiquitous-language_">Main notions (<em>Ubiquitous Language</em>)</h2>
+<blockquote>
+<ul>
+<li>A <em>language</em> structured around the domain model
+<ul>
+<li><em>used by all people</em> involved into the domain</li>
+<li>which should be <em>used in the software</em></li>
+<li>in such a way that their <em>semantics is preserved</em></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>
+<p>underlying assumption:</p>
+<ul>
+<li>different people call the same things differently</li>
+<li>especially when they come from different contexts</li>
+</ul>
+</li>
+<li>
+<p>commonly reified into a <strong>glossary</strong> of terms</p>
+</li>
+<li>
+<p>commonly used to name software components</p>
+</li>
+</ul>
+
+</section>
+</section><section>
+
+
+<section data-shortcode-section="">
+<h2 id="conceptual-workflow">Conceptual Workflow</h2>
+<ol>
+<li>
+<p>Identify the domain</p>
+</li>
+<li>
+<p>Identify the main contexts within the domain</p>
+<ul>
+<li>possibly, by interacting with experts</li>
+</ul>
+</li>
+<li>
+<p>Identify the actual meaning of commonly used words within the domain</p>
+<ul>
+<li>
+<p>possibly, by interacting with experts</p>
+</li>
+<li>
+<p><em>without assuming you already know the meaning of words</em></p>
+<ul>
+<li>i.e. do <strong>not</strong> rely on (your) <strong>common sense</strong></li>
+</ul>
+</li>
+<li>
+<p>keep in mind that the meaning of word may vary among contexts</p>
+<ul>
+<li>this is not just a glossary, but also
+<ul>
+<li>idiomatic or domain-specific expressions</li>
+<li>procedures, events, etc.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Adhere to the language, use it, make it yours</p>
+<ul>
+<li>especially when talking about the domain / model / software</li>
+<li>design/sketch code mirroring the language</li>
+</ul>
+</li>
+<li>
+<p>Draw a <strong>context map</strong> tracking</p>
+<ul>
+<li>the main contexts and their junctions</li>
+<li>words whose meaning varies across contexts</li>
+</ul>
+</li>
+<li>
+<p>Model the software around the ubiquitous language</p>
+<ul>
+<li>rule of thumb: <strong>1 concept $\approx$ 1 interface</strong></li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="example-of-context-map">Example of context map</h2>
+<p><img src="./context-map.jpg" alt="Context map"></p>
+
+</section>
+</section><section>
+<h2 id="towards-building-blocks">Towards building blocks</h2>
+
+<div class="multiCol">
+    
+
+<div class="col ">
+    <p>Domain</p>
+<ul>
+<li>Concept
+<ul>
+<li>instance</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<div class="col ">
+    <p>$\xrightarrow{modelling}$</p>
+
+</div>
+
+<div class="col ">
+    <p>Model</p>
+<ul>
+<li>Type
+<ul>
+<li>object</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+</div>
+<ul>
+<li>
+<p>Each <em>concept</em> from each <strong>context</strong> shall become a <em>type</em> in the <strong>model</strong></p>
+<ul>
+<li>type $\approx$ class, interface, structure, ADT, etc.
+<ul>
+<li>depends on what the programming language has to offer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Use <em>building blocks</em> as <strong>archetypes</strong></p>
+<ul>
+<li>let them guide and constrain your design</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="workflow">Workflow</h2>
+<p>(continued)</p>
+<ol start="7">
+<li>
+<p>Chose the most adequate building block for each concept</p>
+<ul>
+<li>depending on the nature of the concept</li>
+<li>… or the properties of its instances</li>
+</ul>
+</li>
+<li>
+<p>The building block dictates how to design the type corresponding to the concept</p>
+<ul>
+<li>objects in OOP are shaped by types</li>
+</ul>
+</li>
+<li>
+<p>The choice of building block may lead to the identification of other concepts / models</p>
+<ul>
+<li>e.g. entities may need value objects as identifiers</li>
+<li>e.g. entities may need repositories to be stored</li>
+<li>e.g. entities may need factories to be created</li>
+<li>e.g. aggregates may be composed by entities or value objects</li>
+</ul>
+</li>
+</ol>
+</section><section>
+
+
+<section data-shortcode-section="">
+<h2 id="building-blocks-overview">Building blocks (overview)</h2>
+<ul>
+<li>
+<p><strong>Entity</strong>: objects with an identifier</p>
+</li>
+<li>
+<p><strong>Value Object</strong>: objects without identity</p>
+</li>
+<li>
+<p><strong>Aggregate Root</strong>: compound objects</p>
+</li>
+<li>
+<p><strong>Domain Event</strong>: objects modelling relevant event (notifications)</p>
+</li>
+<li>
+<p><strong>Service</strong> objects: providing stateless functionalities</p>
+</li>
+<li>
+<p><strong>Repository</strong>: objects providing storage facilities</p>
+</li>
+<li>
+<p><strong>Factory</strong>: objects creating other objects</p>
+</li>
+</ul>
+</section><section>
+<h2 id="entities-vs-value-objects">Entities vs. Value Objects</h2>
+<h3 id="genus-differentia-definition">Genus-differentia definition:</h3>
+<ul>
+<li><em>genus</em>: both can be used to model <strong>elementary</strong> concepts</li>
+<li><em>differentia</em>: entities have an explicit <strong>identity</strong>, value objects are <strong>interchangeable</strong></li>
+</ul>
+<br>
+<h3 id="quick-modelling-examples">Quick modelling examples</h3>
+<h4 id="classroom">Classroom</h4>
+<ul>
+<li>
+<p>Seats in classroom may be modelled as value-objects</p>
+</li>
+<li>
+<p>Attendees of a class may be modelled as entities</p>
+</li>
+</ul>
+<h4 id="seats-on-a-plane">Seats on a plane</h4>
+<ul>
+<li>
+<p>Numbered seats $\rightarrow$ entities</p>
+</li>
+<li>
+<p>otherwise $\rightarrow$ value objects</p>
+</li>
+</ul>
+</section><section>
+<h2 id="entities-vs-value-objects-practicals">Entities vs. Value Objects (practicals)</h2>
+<h3 id="constraints-of-value-objects">Constraints of Value Objects</h3>
+<ul>
+<li>Identified by their attributes
+<ul>
+<li>equality compares attributes alone</li>
+</ul>
+</li>
+<li>Must be stateless $\Rightarrow$ require an immutable design
+<ul>
+<li>read-only properties</li>
+<li>lack of state-changing methods</li>
+</ul>
+</li>
+<li>May be implemented as
+<ul>
+<li>structures in .NET</li>
+<li>data classes in Kotlin, Scala, Python</li>
+<li>records in Java</li>
+</ul>
+</li>
+<li>Must implement <code>equals()</code> and <code>hashCode()</code> on JVM
+<ul>
+<li>implementation must compare the objects’ attributes</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="entities-vs-value-objects-practicals-1">Entities vs. Value Objects (practicals)</h2>
+<h3 id="constraints-of-entities">Constraints of Entities</h3>
+<ul>
+<li>They have an inherent identity, which never changes during their lifespan
+<ul>
+<li>common modelling: <strong>identifier attribute</strong>, of some value type</li>
+<li>equality compares identity</li>
+</ul>
+</li>
+<li>Can be stateful $\Rightarrow$ may have a mutable design
+<ul>
+<li>modifiable properties</li>
+<li>state-changing methods</li>
+</ul>
+</li>
+<li>May be implemented via classes in most languages</li>
+<li>Must implement <code>equals()</code> and <code>hashCode()</code> on JVM
+<ul>
+<li>implementation must compare (at least) the objects’ identifiers</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="entities-vs-value-objects-example">Entities vs. Value Objects (example)</h2>
+<figure id="plantuml-figure-0" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<p>interface Customer {
++ CustomerID getID()
++ String getName()
++ void <strong>setName</strong>(name: String)
++ String getEmail()
++ void <strong>setEmail</strong>(email: String)
+}
+note left: Entity</p>
+<p>interface CustomerID {
++ Object getValue()
+}
+note right: Value Object</p>
+<p>interface TaxCode {
++ String getValue()
+}
+note left: Value Object</p>
+<p>interface VatNumber {
++ long getValue()
+}
+note right: Value Object</p>
+<p>VatNumber -d-|&gt; CustomerID
+TaxCode -d-|&gt; CustomerID</p>
+<p>Customer *-r- CustomerID</p>
+</figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-0");
+</script>
+</section><section>
+<h2 id="aggregate-root">Aggregate Root</h2>
+<h3 id="definition">Definition</h3>
+<ul>
+<li>
+<p>A composite object, aggregating related entities/value objects</p>
+</li>
+<li>
+<p>It ensures the consistency of the objects it contains</p>
+</li>
+<li>
+<p>It mediates the usage of the composing objects from the outside</p>
+<ul>
+<li>acting as a façade</li>
+</ul>
+</li>
+<li>
+<p>Outside objects should avoid holding references to composing objects</p>
+</li>
+</ul>
+</section><section>
+<h2 id="aggregate-root-practicals">Aggregate Root (practicals)</h2>
+<h3 id="constraints-of-aggregates">Constraints of Aggregates</h3>
+<ul>
+<li>
+<p>They are usually <em>compound</em> entities</p>
+</li>
+<li>
+<p>They can be or exploit <em>collections</em> to contain composing items</p>
+<ul>
+<li>they may leverage on the <a href="https://en.wikipedia.org/wiki/Composite_pattern">composite pattern</a></li>
+</ul>
+</li>
+<li>
+<p>May be better implemented as classes in most programming languages</p>
+</li>
+<li>
+<p>Must implement <code>equals()</code> and <code>hashCode()</code> on JVM</p>
+<ul>
+<li>implementation may take composing items into account</li>
+</ul>
+</li>
+<li>
+<p>Components of an aggregate should <em>not</em> hold <strong>references</strong> to components of <em>other</em> aggregates</p>
+<ul>
+<li>that’s why they are called aggregate <em>roots</em></li>
+</ul>
+<p><img src="./aggregate-references.png" alt="Aggregate roots should not hold references to other aggregates’ components"></p>
+</li>
+</ul>
+</section><section>
+<h2 id="aggregate-root-example">Aggregate Root (example)</h2>
+<p><img src="./aggregate-root.png" alt="Two aggregates with inter-dependencies"></p>
+</section><section>
+<h2 id="factories">Factories</h2>
+<h3 id="definition-1">Definition</h3>
+<ul>
+<li>Objects aimed at creating other objects, in order to:
+<ul>
+<li>encapsulate the creation logic for complex objects
+<ul>
+<li>making it evolvable, interchangeable, replaceable</li>
+</ul>
+</li>
+<li>ease the enforcement of invariants</li>
+<li>support dynamic selection of the most adequate implementation</li>
+</ul>
+</li>
+</ul>
+<br>
+<p><img src="./factories.png" alt="Concept of factory"></p>
+<h3 id="remarks">Remarks</h3>
+<ul>
+<li>DDD’s notion of factory is quite wide
+<ul>
+<li>DDD’s Factories $\supset$ GOF’s Factories $\cup$ Builders $\cup$ …</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="factories-practicals">Factories (practicals)</h2>
+<h3 id="constraints-of-factories">Constraints of Factories</h3>
+<ul>
+<li>
+<p>They are usually identityless and stateless objects</p>
+<ul>
+<li>recall the <a href="https://en.wikipedia.org/wiki/Abstract_factory_pattern">abstract factory pattern</a></li>
+</ul>
+</li>
+<li>
+<p>May be implemented as classes in most OOP languages</p>
+</li>
+<li>
+<p>Provide methods to instantiate entities or value objects</p>
+</li>
+<li>
+<p>Usually they require no mutable field/property</p>
+</li>
+<li>
+<p>No need to implement <code>equals()</code> and <code>hashCode()</code> on JVM</p>
+</li>
+</ul>
+</section><section>
+<h2 id="factories-example">Factories (example)</h2>
+<figure id="plantuml-figure-1" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<p>interface CustomerID</p>
+<p>interface TaxCode</p>
+<p>interface VatNumber</p>
+<p>interface Customer</p>
+<p>Customer “1” *– “1” CustomerID</p>
+<p>VatNumber -u-|&gt; CustomerID
+TaxCode -u-|&gt; CustomerID</p>
+<p>interface CustomerFactory {
++ VatNumber computeVatNumber(String name, String surname, Date birthDate, String birthPlace)
+–
++ Customer newCustomerPerson(TaxCode code, String fullName, string email)
++ Customer newCustomerPerson(String name, String surname, Date birthDate, String birthPlace, String email)
+–
++ Customer newCustomerCompany(VatNumber code, String fullName, String email)
+}</p>
+<p>CustomerFactory -r-&gt; VatNumber: creates
+CustomerFactory -u-&gt; Customer: creates</p>
+</figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-1");
+</script>
+
+</section>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src="/reveal-hugo/object-assign.js"></script>
+
+<a href="/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"height":"1080","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false}],"pdfseparatefragments":false,"slide_number":true,"theme":"white","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"}}</script>
+
+<script src="/reveal-js/dist/reveal.js"></script>
+
+
+  
+  
+  <script type="text/javascript" src="/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/zoom/zoom.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/notes/notes.js"></script>
+  
+  
+  <script type="text/javascript" src="/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+
+  var revealHugoPlugins = { 
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
+   };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
+  Reveal.initialize(options);
+</script>
+
+
+
+
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false});
+
+    let render = (event) => {
+      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+      if (!mermaidElems.length){
+          return
+      }
+      mermaidElems.forEach(mermaidElem => {
+          let processed = mermaidElem.getAttribute('data-processed');
+          if (!processed){
+              
+              mermaid.init(undefined, mermaidElem);
+          }
+      });
+    };
+    
+    render({currentSlide: Reveal.getCurrentSlide()});
+
+    Reveal.on('slidechanged', render);
+    Reveal.on('ready', render);
+  </script>
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+<script>
+  if (/.*?(\?|&)print-pdf/.test(window.location.toString())) {
+      var ytVideos = document.getElementsByTagName("iframe")
+      for (let i = 0; i < ytVideos.length; i++) {
+          var videoFrame = ytVideos[i]
+          var isYouTube = /^https?:\/\/(www.)youtube\.com\/.*/.test(videoFrame.src)
+          if (isYouTube) {
+              console.log(`Removing ${videoFrame.src}`)
+              var parent = videoFrame.parentElement
+              videoFrame.remove()
+              var p = document.createElement('p')
+              p.append(
+                  document.createTextNode(
+                      "There was an embedded video here, but it is disabled in the printed version of the slides."
+                  )
+              )
+              p.append(document.createElement('br'))
+              p.append(
+                  document.createTextNode(
+                      `Visit instead ${
+                          videoFrame.src
+                      } or ${
+                          videoFrame.src.replace(
+                              /(^https?:\/\/(www.)youtube\.com)\/(embed\/)(\w+).*/,
+                              "https://www.youtube.com/watch?v=$4"
+                          )
+                      }`
+                  )
+              )
+              parent.appendChild(p)
+          }
+      }
+  }
+</script>
+
+    
+  
+
+</body></html>
