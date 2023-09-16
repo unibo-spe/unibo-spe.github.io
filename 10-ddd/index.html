@@ -845,12 +845,7 @@ OrderID -d[hidden]- Customer</p>
 <p>A value-like object capturing some domain-related event (i.e. a relevant variation)</p>
 </blockquote>
 <ul>
-<li>
-<p>actually, only the event notification/description is reified to a type</p>
-</li>
-<li>
-<p>event sources &amp; listeners shall be identified too</p>
-</li>
+<li>actually, only the event notification/description is reified to a type</li>
 </ul>
 <p><img src="./domain-events.png" alt="Concept of domain events"></p>
 </section><section>
@@ -862,13 +857,39 @@ OrderID -d[hidden]- Customer</p>
 </ul>
 <p>###&nbsp;Remarks</p>
 <ul>
-<li>Strong relation with the observer pattern (i.e. publish-subscribe)</li>
+<li>Strong relation with the <a href="https://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> (i.e. publish-subscribe)</li>
 <li>Strong relation with the event sourcing approach (described later)</li>
 <li>Strong relation with the CQRS pattern (described later)</li>
 </ul>
 </section><section>
 <p>##&nbsp;Domain Events (constraints)</p>
-<p>TBD</p>
+<ul>
+<li>
+<p>They are usually time-stamped value objects</p>
+</li>
+<li>
+<p>May be implemented as data-classes or records</p>
+</li>
+<li>
+<p>They represent a relevant variation in the domain</p>
+<ul>
+<li>e.g. a change in the state of some entity / repository</li>
+</ul>
+</li>
+<li>
+<p>Event sources &amp; listeners shall be identified too</p>
+<ul>
+<li>who is generating the event?</li>
+<li>who is consuming the event?</li>
+</ul>
+</li>
+<li>
+<p>Infrastructural components may be devoted to propagate events across contexts</p>
+<ul>
+<li>e.g. a message broker, a message queue, etc.</li>
+</ul>
+</li>
+</ul>
 </section><section>
 <h2 id="domain-events-example">Domain Events (example)</h2>
 <figure id="plantuml-figure-4" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
