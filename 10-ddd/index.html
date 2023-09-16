@@ -22,7 +22,12 @@
       <div class="slides">
   
 
-    <section><h1 id="domain-driven-design">Domain Driven Design</h1>
+    <section><style>
+.reveal blockquote {
+    font-family: 'Georgia';
+}
+</style>
+<h1 id="domain-driven-design">Domain Driven Design</h1>
 <h2 id="hahahugoshortcode12s0hbhb">Software Process Engineering</h2>
 <br>
 <h3 id="giovanni-ciatto-----giovanniciattouniboitmailtogiovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
@@ -87,7 +92,7 @@
 </li>
 </ul>
 </section><section>
-<h1 id="about-domain-driven-design">About Domain-Driven Design</h1>
+<h1 id="main-notions-of-ddd">Main notions of DDD</h1>
 </section><section>
 
 
@@ -172,7 +177,7 @@
 
 
 <section data-shortcode-section="">
-<h2 id="main-notions-overview">Main notions (overview)</h2>
+<h2 id="overview-of-main-notions">Overview of main notions</h2>
 <ul>
 <li>
 <p><strong>Domain</strong>: the reference area of knowledge</p>
@@ -188,7 +193,7 @@
 </li>
 </ul>
 </section><section>
-<h2 id="main-notions-_domain_">Main notions (<em>Domain</em>)</h2>
+<h2 id="the-_domain_">The <em>Domain</em></h2>
 <blockquote>
 <p>A well established sphere of knowledge, influence or activity</p>
 </blockquote>
@@ -196,7 +201,7 @@
 <li>e.g. some university (department, faculty, HR, etc.), linear algebra, etc.</li>
 </ul>
 </section><section>
-<h2 id="main-notions-_context_">Main notions (<em>Context</em>)</h2>
+<h2 id="_contexts_"><em>Contexts</em></h2>
 <blockquote>
 <p>A portion of the domain:</p>
 <ul>
@@ -208,10 +213,10 @@
 <li>e.g. departments, divisions, complex numbers, etc.</li>
 </ul>
 </section><section>
-<h2 id="main-notions-domain-_vs_-context">Main notions (Domain <em>vs.</em> Context)</h2>
+<h2 id="domain-_vs_-context">Domain <em>vs.</em> Context</h2>
 <p><img src="./domain.png" alt="Domain and context"></p>
 </section><section>
-<h2 id="main-notions-domain-_model_">Main notions (Domain <em>Model</em>)</h2>
+<h2 id="the-domain-_model_">The domain <em>Model</em></h2>
 <blockquote>
 <p>Set of <strong>software</strong> abstractions mapping relevant <em>concepts</em> of the domain</p>
 </blockquote>
@@ -219,7 +224,7 @@
 <li>e.g. C# projects, namespaces, interfaces, classes, structures, methods, etc.</li>
 </ul>
 </section><section>
-<h2 id="main-notions-_ubiquitous-language_">Main notions (<em>Ubiquitous Language</em>)</h2>
+<h2 id="the-_ubiquitous-language_">The <em>Ubiquitous Language</em></h2>
 <blockquote>
 <ul>
 <li>A <em>language</em> structured around the domain model
@@ -314,6 +319,8 @@
 <p><img src="./context-map.jpg" alt="Context map"></p>
 
 </section>
+</section><section>
+<h1 id="ddd-building-blocks">DDD Building Blocks</h1>
 </section><section>
 <h2 id="towards-building-blocks">Towards building blocks</h2>
 
@@ -423,6 +430,9 @@
 <p><strong>Factory</strong>: objects creating other objects</p>
 </li>
 </ul>
+</section><section>
+<h2 id="building-blocks-concept">Building blocks (concept)</h2>
+<p><img src="./building-blocks.png" alt="Building blocks graphical overview"></p>
 </section><section>
 <h2 id="entities-vs-value-objects">Entities vs. Value Objects</h2>
 <blockquote>
@@ -922,6 +932,255 @@ note right of OrderManagementService: service</p>
 </script>
 
 </section>
+</section><section>
+<h1 id="ddd-patterns">DDD Patterns</h1>
+</section><section>
+<h2 id="towards-ddd-patterns">Towards DDD patterns</h2>
+<h3 id="further-notions-involving-__contexts__">Further notions involving <strong>contexts</strong></h3>
+<ul>
+<li>
+<p><strong>Bounded Context</strong>: enforce a model’s boundaries &amp; make them explicit</p>
+</li>
+<li>
+<p><strong>Context Map</strong>: providing a global view on the domain and its contexts</p>
+</li>
+</ul>
+</section><section>
+<h2 id="actual-definitions">Actual definitions</h2>
+<h3 id="bounded-context">Bounded Context</h3>
+<blockquote>
+<p>The explicit boundary of a software model, from a</p>
+<ul>
+<li>technical (e.g., dependencies among classes/interfaces)</li>
+<li>physical (e.g., common database, common facilities)</li>
+<li>organizational (e.g. people maintaining/using the code)</li>
+</ul>
+<p>perspective</p>
+</blockquote>
+<br>
+<h3 id="context-map">Context Map</h3>
+<blockquote>
+<p>A map of all the contexts in a domain and their boundaries</p>
+<ul>
+<li>and their points of contact
+<ul>
+<li>e.g. their dependencies, homonyms, false friends, etc.</li>
+</ul>
+</li>
+<li>providing the whole picture of the domain</li>
+</ul>
+</blockquote>
+</section><section>
+<h2 id="example-of-bounded-context-map">Example of bounded context map</h2>
+<p><img src="./bounded-contexts.png" alt="Context map"></p>
+</section><section>
+<h2 id="bounded-contexts--context-maps-best-practices">Bounded Contexts &amp; Context Maps (best practices)</h2>
+<ul>
+<li>
+<p>Clearly identify &amp; represent boundaries among contexts</p>
+</li>
+<li>
+<p>Avoid responsibility diffusion over a single context</p>
+<ul>
+<li>one responsible person / team for each context</li>
+</ul>
+</li>
+<li>
+<p>Avoid changing the model for problems arising outside the context</p>
+<ul>
+<li>rather, extend the domain by creating new contexts</li>
+</ul>
+</li>
+<li>
+<p>Enforce context’s cohesion via automated unit and integration testing</p>
+<ul>
+<li>to be (re)executed as frequently as possible</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="model-integrity-problem">Model integrity problem</h2>
+<h3 id="how-to-preserve-the-integrity-of-the-model">How to preserve the integrity of the model?</h3>
+<ul>
+<li>
+<p>As the domain evolves, the software model should evolve with it</p>
+<ul>
+<li>in order to maintain the coupling</li>
+</ul>
+</li>
+<li>
+<p>Yet, the domain rarely changes as a whole</p>
+<ul>
+<li>more commonly, it changes in a context-specific way</li>
+</ul>
+</li>
+<li>
+<p>Contexts-are bounded, but not isolated</p>
+<ul>
+<li>so are models, which may depend on each other</li>
+</ul>
+</li>
+<li>
+<p>Changes to a context, and its model may propagate to other context / models</p>
+</li>
+</ul>
+<blockquote>
+<p>Domain / model changes are critical and should be done carefully</p>
+</blockquote>
+</section><section>
+<h2 id="model-integrity-patterns">Model integrity patterns</h2>
+<ul>
+<li><strong>Shared kernel</strong>: sharing a common model among contexts</li>
+<li><strong>Customer–supplier</strong>: the consumer model’s team requests changes in the supplier model</li>
+<li><strong>Conformist</strong>: one model’s team reacts to changes of some model they depend on</li>
+<li><strong>Anti-corruption layer</strong>: a model’s team isolates itself from another model</li>
+</ul>
+<h3 id="purposes">Purposes</h3>
+<ul>
+<li>
+<p><em>Preserve</em> the integrity of the model w.r.t. the domain</p>
+</li>
+<li>
+<p><em>Minimise</em> the potential <em>impact</em> / <em>reach</em> of changes</p>
+<ul>
+<li>each context should be as independent as possible</li>
+<li>each change affect as few contexts as possible</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="model-integrity-patterns-background-pt-1">Model integrity patterns (background, pt. 1)</h2>
+<p><img src="./context-map.jpg" alt="Context maps concept"></p>
+<ul>
+<li>Context maps highlight relations among contexts
+<ul>
+<li>yet, not all relations are equal, nor symmetric</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="model-integrity-patterns-background-pt-2">Model integrity patterns (background, pt. 2)</h2>
+<p><img src="./provider-consumer.jpg" alt="Upstream and downstream roles"></p>
+<p>Each relation among 2 contexts usually involves 2 ends/roles:</p>
+<ul>
+<li><strong>upstream</strong> end, i.e. the one <em>providing</em> functionalities</li>
+<li><strong>downstream</strong> end, i.e. the one <em>consuming</em> functionalities
+<ul>
+<li>the downstream <em>depends</em> upon the upstream, but <em>not</em> vice versa</li>
+</ul>
+</li>
+</ul>
+<br>
+<p><strong>Integration</strong> among <em>contexts</em> $\leftrightarrow$ <strong>interaction</strong> among <em>teams</em></p>
+<ul>
+<li>several strategies may be employed, depending on
+<ul>
+<li>mutual <em>trust</em>* among teams</li>
+<li>ease of <em>communication</em>/cooperation among teams</li>
+<li>technical / organizational / administrative / legal <em>constraints</em></li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<p>*trust $\approx$ willingness to collaborate + seek for stability</p>
+</section><section>
+<h2 id="shared-kernel">Shared Kernel</h2>
+<p><img src="./shared-kernel.jpg" alt="Shared kernel concept"></p>
+<ul>
+<li>
+<p>Best when: multiple contexts <em>share</em> the same team / organization / product</p>
+</li>
+<li>
+<p>Key idea: <em>factorise</em> common portions of the model into a shared kernel</p>
+</li>
+<li>
+<p>Upstream and downstream <em>collaborate</em> in designing / developing / maintaining the model</p>
+<ul>
+<li>they are <em>peers</em></li>
+</ul>
+</li>
+<li>
+<p>Keeping the kernel as <em>small</em> as possible is fundamental</p>
+</li>
+</ul>
+</section><section>
+<h2 id="customer--supplier">Customer–Supplier</h2>
+<p><img src="./customer-supplier.jpg" alt="Customer–supplier concept"></p>
+<ul>
+<li>
+<p>Best when:</p>
+<ul>
+<li>multiple teams</li>
+<li>mutual trust</li>
+<li>good communication</li>
+</ul>
+</li>
+<li>
+<p>Key idea:</p>
+<ul>
+<li>upstream acts as supplier, downstream acts as customer</li>
+<li>both sides collaborate to maximise integration among their models
+<ul>
+<li>and interoperability among their SW</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Customers may ask for features, suppliers will do their best</p>
+</li>
+<li>
+<p>Suppliers shall warn before changing their model</p>
+</li>
+</ul>
+</section><section>
+<h2 id="conformist">Conformist</h2>
+<p><img src="./conformist.jpg" alt="Conformist concept"></p>
+<ul>
+<li>
+<p>Best when:</p>
+<ul>
+<li>multiple teams</li>
+<li>poor communication / different pace</li>
+<li>some trust</li>
+</ul>
+</li>
+<li>
+<p>Key idea: downstream must conform to the upstream, reactively</p>
+<ul>
+<li>adapting their model accordingly</li>
+<li>whenever the upstream’s one changes</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="anti-corruption-layer">Anti-corruption layer</h2>
+<p><img src="./anti-corruption-layer.jpg" alt="Anti-corruption layer concept"></p>
+<ul>
+<li>
+<p>Best when:</p>
+<ul>
+<li>multiple teams</li>
+<li>poor communication</li>
+<li>poor trust</li>
+</ul>
+</li>
+<li>
+<p>If upstream cannot be trusted, and interaction is pointless…</p>
+<ul>
+<li>e.g. legacy code, poorly maintained library, etc.</li>
+</ul>
+</li>
+<li>
+<p>… downstream must defend from unexpected / unanticipated change</p>
+</li>
+<li>
+<p>The upstream’s model is then reverse engineered &amp; <strong>adapted</strong></p>
+<ul>
+<li>e.g. often, repository types are anti-corruption layers for DB technologies</li>
+</ul>
+</li>
+</ul>
 </section>
 
   
