@@ -32,7 +32,7 @@
 <br>
 <h3 id="giovanni-ciatto-----giovanniciattouniboitmailtogiovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2023-09-16
+<p>Compiled on: 2023-09-17
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -1178,6 +1178,279 @@ note right of OrderManagementService: service</p>
 <p>The upstream’s model is then reverse engineered &amp; <strong>adapted</strong></p>
 <ul>
 <li>e.g. often, repository types are anti-corruption layers for DB technologies</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h1 id="layered-architecture">Layered Architecture</h1>
+</section><section>
+<h2 id="layered-architecture-disclaimer">Layered Architecture (disclaimer)</h2>
+<ul>
+<li>
+<p>DDD does not enforce a particular architecture</p>
+</li>
+<li>
+<p>Any is fine as long the model is integer</p>
+</li>
+<li>
+<p>Layered architectures are well suited to preserve models’ integrity</p>
+</li>
+<li>
+<p>Here we focus on the <strong>hexagonal architecture</strong>, a particular case of layered architecture</p>
+<ul>
+<li>well suited to DDD</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="hexagonal-architecture-concept">Hexagonal architecture (concept)</h2>
+<p><img src="./layered-architecture.svg" alt="Hexagonal architecture concept"></p>
+<ul>
+<li>outer layers depend on innermost ones
+<ul>
+<li>the vice versa is not true</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="hexagonal-architecture-explanation">Hexagonal architecture (explanation)</h2>
+<ol>
+<li>
+<p><strong>Domain layer</strong>: contains the domain model (entities, values, events, aggregates, etc.)</p>
+<ul>
+<li>must support a wide range of applications</li>
+<li>has no dependency from any other layer</li>
+</ul>
+</li>
+<li>
+<p><strong>Application layer</strong>: contains services providing business logic</p>
+<ul>
+<li>supports a particular use case via services</li>
+<li>depends on the domain layer</li>
+</ul>
+</li>
+<li>
+<p><strong>Presentation layer</strong>: provides conversion facilities to/from representation formats</p>
+<ul>
+<li>e.g. JSON, BSON, XML, YAML, XDR, Avro, HTML, etc.
+<ul>
+<li>depends on the domain layer (and, possibly, on the application layer)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Storage layer</strong>: supports persistent storage/retrieval of domain data</p>
+<ul>
+<li>this is where repositories are implemented</li>
+<li>may involve some DB technology</li>
+<li>depends on the domain layer (and, possibly, on the presentation layer)</li>
+</ul>
+</li>
+<li>
+<p><strong>Interface layers</strong> (e.g. ReST API, MOM, View): let external entities access the software</p>
+<ul>
+<li>via a GUI, or via some remote interface such as HTTP</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="enforcing-the-architecture-in-the-code">Enforcing the architecture in the code</h2>
+<ul>
+<li>
+<p>Layering may be enforced in the code</p>
+</li>
+<li>
+<p>By mapping layers into modules</p>
+<ul>
+<li>module $\approx$ packaging unit
+<ul>
+<li>e.g. Gradle sub-projects, Maven modules, .NET assemblies, etc.</li>
+</ul>
+</li>
+<li>each module having its own build dependencies</li>
+</ul>
+</li>
+</ul>
+
+<figure id="plantuml-figure-7" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+    
+top to bottom direction
+
+component ":domain" as domain
+component ":application" as application
+component ":presentation" as presentation
+component "third-party serialization library" as gson
+component "third-party DB client library" as db
+component ":storage" as storage
+component ":web-api" as server
+component ":message-queue" as mq 
+component ":command-line" as cli
+component product
+
+domain &lt;|-- application
+application &lt;|-- presentation
+presentation &lt;|-- server
+presentation &lt;|-- mq
+application &lt;|-- storage
+presentation -r-|&gt; gson
+presentation &lt;|-- cli
+db &lt;|-l- storage  
+product -u-|&gt; server
+product -u-|&gt; storage
+product -u-|&gt; mq    
+
+</figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-7");
+</script>
+
+</section><section>
+<h1 id="advanced-aspects-of-ddd">Advanced aspects of DDD</h1>
+</section><section>
+<h2 id="event-sourcing-preliminaries">Event sourcing (preliminaries)</h2>
+<ul>
+<li>Whenever there is a <em>mutable</em> entity …</li>
+<li>… whose state evolution over time must be tracked …</li>
+<li>… state transitions can be memorised in 2 ways:
+<ul>
+<li>one may track the <strong>current state</strong></li>
+<li>or the <strong>flow</strong> of <strong>variations</strong></li>
+</ul>
+</li>
+</ul>
+<p><img src="./state-vs-flow.svg" alt="Flow vs. state representation"></p>
+</section><section>
+<h2 id="event-sourcing">Event sourcing</h2>
+<blockquote>
+<p>A pattern where <em>domain events</em> are reified into <em>time-stamped data</em> and the whole <em>evolution</em> of a system is persistently <em>stored</em></p>
+</blockquote>
+<ul>
+<li>perfect match with DDD as domain events are first-class citizens</li>
+</ul>
+</section><section>
+<h2 id="event-sourcing-pros--cons">Event sourcing (pros &amp; cons)</h2>
+<h3 id="benefits">Benefits</h3>
+<ul>
+<li>
+<p>Historical data can be analysed, to serve several purposes</p>
+<ul>
+<li>e.g. predictive maintenance, optimization, analyse &amp; anticipate faults</li>
+</ul>
+</li>
+<li>
+<p>Past situations can be replayed</p>
+<ul>
+<li>e.g. which improves debugging, enables measurements</li>
+</ul>
+</li>
+<li>
+<p>Enables complex event detection &amp; reaction</p>
+</li>
+<li>
+<p>Enables CQRS (described later)</p>
+</li>
+</ul>
+<h3 id="limitations">Limitations</h3>
+<ul>
+<li>A lot of data is generated and must be stored, which costs <em>space</em></li>
+<li>Reconstructing the (current) state costs <em>time</em></li>
+</ul>
+</section><section>
+<h2 id="command--query-responsibility-segregation-__cqrs__">Command–Query Responsibility Segregation (<strong>CQRS</strong>)</h2>
+<ul>
+<li>
+<p>Advanced pattern for building <em>highly-scalable</em> applications</p>
+</li>
+<li>
+<p>It leverages upon <em>event sourcing</em> and <em>layered architecture</em>…</p>
+</li>
+<li>
+<p>… to deliver <strong>reactive</strong>, <strong>eventual-consistent</strong> solutions where:</p>
+<ul>
+<li>contexts boundaries can be easily enforced</li>
+<li>single responsibility principle is applied extensively</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="cqrs-definition">CQRS definition</h2>
+<blockquote>
+<p><strong>Split</strong> the <em>domain</em> and <em>application</em> layers to <em>segregate</em> <strong>read/write</strong> responsibilities</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>Read</strong> model (a.k.a. <em>view</em> or <em>query</em> model)</p>
+<ul>
+<li>accepts queries aimed at <strong>observing</strong> the state of the system</li>
+</ul>
+</li>
+<li>
+<p><strong>Write</strong> model (a.k.a. <em>command</em> model)</p>
+<ul>
+<li>accepts commands aimed at <strong>altering</strong> the state of the system</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="cqrs-concept">CQRS concept</h2>
+<p><img src="./cqrs.png" alt="CQRS concept"></p>
+</section><section>
+<h2 id="cqrs-workflow-writing">CQRS workflow (writing)</h2>
+<p>Whenever users are willing to <em>perform an action</em> into the system:</p>
+<ol>
+<li>they create a <strong>command</strong> and forward it to the <strong>write model</strong></li>
+</ol>
+<ul>
+<li>i.e. an object describing a <em>variation</em> to be applied to some domain aspect</li>
+</ul>
+<br>
+<ol start="2">
+<li>the command is possibly <em>validated</em> &amp; <strong>stored</strong> onto some database</li>
+</ol>
+<ul>
+<li>an ad-hoc <strong>database</strong> is available in the model for storing commands</li>
+</ul>
+</section><section>
+<h2 id="cqrs-workflow-reading">CQRS workflow (reading)</h2>
+<p>Whenever users are willing to <em>inspect/observe the system</em> at time $t$:</p>
+<ol>
+<li>they perform a <strong>query</strong> on the <strong>read model</strong>
+<ul>
+<li>asking for the state of the system <em>at time $t$</em></li>
+<li>e.g. $t$ $\equiv$ now</li>
+</ul>
+</li>
+</ol>
+<br>
+<ol start="2">
+<li>commands up to time $t$ are assumed to be <strong>reified</strong> when reading
+<ul>
+<li>a <strong>snapshot</strong> of the system state <em>at time $t$</em> is returned to users</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="cqrs----when-are-commands-reified">CQRS – When are commands reified?</h2>
+<blockquote>
+<p><strong>Reification</strong>: is the process of computing the state of the system at time $t$ by applying of commands recorded up to time $t$
+<br></p>
+</blockquote>
+<ul>
+<li>
+<p>If queries and commands are stored on different databases</p>
+<ul>
+<li>reification implies updating the query database</li>
+<li>the query database should be <strong>read-efficient</strong></li>
+<li>the commands database should be <strong>write-efficient</strong></li>
+</ul>
+</li>
+<li>
+<p>Several, non-mutually-exclusive strategies:</p>
+<ul>
+<li><strong>eager</strong>: commands are reified as soon as they are received</li>
+<li><strong>pull</strong>: commands are reified upon reading queries</li>
+<li><strong>push</strong>: commands are reified in background, periodically</li>
 </ul>
 </li>
 </ul>
