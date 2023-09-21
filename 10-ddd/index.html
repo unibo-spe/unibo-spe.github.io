@@ -32,7 +32,7 @@
 <br>
 <h3 id="giovanni-ciatto-----giovanniciattouniboitmailtogiovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2023-09-19
+<p>Compiled on: 2023-09-21
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -41,20 +41,22 @@
 <h2 id="why-a-structured-design-process">Why a structured design process?</h2>
 <ul>
 <li>
-<p>You know programming, in many programming languages</p>
+<p>You know programming, in many <em>programming languages</em></p>
 </li>
 <li>
-<p>You know about object-oriented programming and design patterns</p>
+<p>You know about object-oriented programming and <em>design patterns</em></p>
 </li>
 <li>
-<p>You know about software architectures and design principles</p>
+<p>You know about <em>software architectures</em> and <em>design principles</em></p>
 </li>
 <li>
-<p>You know about software engineering best practices</p>
+<p>You know about <em>software engineering</em> best practices</p>
 </li>
 </ul>
 <br>
-<p><em>What’s the <strong>criterion</strong> to choose <strong>if</strong> and <strong>when</strong> to adopt languages / patterns / architectures / principles / practices?</em></p>
+<blockquote>
+<p>What’s the <strong>criterion</strong> to choose <strong>if</strong> and <strong>when</strong> to adopt languages / patterns / architectures / principles / practices?</p>
+</blockquote>
 </section><section>
 <h2 id="recommended-workflow">Recommended workflow</h2>
 <h3 id="problem-xrightarrowcolorredanalysis-model-xrightarrowcolorreddesign-architecture-xrightarrowimplementation-solution">Problem $\xrightarrow{\color{red}analysis}$ <strong>Model</strong> $\xrightarrow{\color{red}design}$ Architecture $\xrightarrow{implementation}$ Solution</h3>
@@ -64,21 +66,24 @@
 </section><section>
 <h2 id="why-domain-driven-design">Why Domain Driven Design?</h2>
 <ul>
-<li>
-<p>Here we present <strong>domain-driven design</strong> (DDD)</p>
+<li>Here we present <strong>domain-driven design</strong> (DDD)
 <ul>
 <li>one of many approaches to software design</li>
 </ul>
 </li>
-<li>
-<p>It consists of principles, best practices, and patterns leading design</p>
+</ul>
+<br>
+<ul>
+<li>It consists of principles, best practices, and patterns leading design
 <ul>
 <li>unified under a common <em>philosophy</em></li>
 <li>focus is on the <em>design workflow</em>, other than the result</li>
 </ul>
 </li>
-<li>
-<p>We prefer it over alternatives for several reasons:</p>
+</ul>
+<br>
+<ul>
+<li>Major benefits:
 <ul>
 <li>it stresses <em>adherence</em> to the problem at hand</li>
 <li>it focuses on delivering a <em>business-tailored</em> model
@@ -99,22 +104,25 @@
 <section data-shortcode-section="">
 <h2 id="what-is-the-domain">What is the domain?</h2>
 <ul>
-<li>
-<p>Definition of <strong>domain</strong>:</p>
+<li>Definition of <strong>domain</strong>:
 <ul>
-<li>a well established sphere of knowledge, influence or activity</li>
-<li>the subject area to which the user applies the software</li>
+<li>a well-established <em>sphere of knowledge</em>, influence or activity</li>
+<li>the <em>subject area</em> to which the user applies the software</li>
 </ul>
 </li>
-<li>
-<p>Remarks:</p>
+</ul>
+<br>
 <ul>
-<li>focus is on how users and experts perceive the domain</li>
-<li>focus is not on how developers perceive the domain</li>
+<li>Remarks:
+<ul>
+<li>focus is on how <strong>users and experts perceive the domain</strong></li>
+<li>focus is <strong>not</strong> on how <strong>developers</strong> perceive the domain</li>
 </ul>
 </li>
-<li>
-<p>Examples of domains and the contexts composing them</p>
+</ul>
+<br>
+<ul>
+<li>Examples of domains and the contexts composing them
 <ul>
 <li>some university (department, faculty, HR, etc.)</li>
 <li>some given company (manufacturing, marketing, HR, etc.)</li>
@@ -127,11 +135,12 @@
 <h2 id="ddd-philosophy-pt-1">DDD Philosophy (pt. 1)</h2>
 <ul>
 <li>
-<p>Software will represent a solution to a problem in some business domain</p>
+<p><em>Software</em> will represent a <em>solution</em> to a <em>problem</em> in some <strong>business domain</strong></p>
 <ul>
-<li>it should be modelled &amp; implemented to match that domain
+<li>it should be <em>modelled</em> &amp; <em>implemented</em> to match that domain
 <ul>
 <li>i.e. modelling should elicit the key aspects of a domain, possibly by interacting with experts</li>
+<li>i.e. design and implementation should <em>mirror</em> the domain</li>
 </ul>
 </li>
 </ul>
@@ -139,21 +148,20 @@
 <li>
 <p>Words do not have meaning per se, but rather w.r.t. a domain</p>
 <ul>
-<li>i.e. the same word may have different meanings in different domains</li>
+<li>i.e. the <em>same word</em> may have <em>different meanings</em> in different domains</li>
 <li>each domain comes with a particular language characterising it
 <ul>
-<li>SW components (interfaces, classes, etc.) should be named after that language</li>
+<li><em>software components</em> (interfaces, classes, etc.) should be <em>named after</em> that language</li>
 </ul>
 </li>
-<li>interaction with experts is essential to identify a domain’s language</li>
+<li><em>interaction with experts</em> is essential to identify a domain’s language</li>
 </ul>
 </li>
 </ul>
 </section><section>
 <h2 id="ddd-philosophy-pt-2">DDD Philosophy (pt. 2)</h2>
 <ul>
-<li>
-<p>SW should stick to the domain, at any moment</p>
+<li>Software should stick to the domain, at any moment
 <ul>
 <li>archiecture and implementation should favour adherence to the domain
 <ul>
@@ -162,6 +170,9 @@
 </li>
 </ul>
 </li>
+</ul>
+<br>
+<ul>
 <li>
 <p>Functionalities, structure, and UX should mirror the domain too</p>
 <ul>
@@ -186,7 +197,7 @@
 <p><strong>Context</strong>: a portion of the domain</p>
 </li>
 <li>
-<p><strong>Model</strong>: a reification of the domain in SW</p>
+<p><strong>Model</strong>: a reification of the domain in software</p>
 </li>
 <li>
 <p><strong>Ubiquitous Language</strong>: language used by domain experts and mirrored by the model</p>
@@ -203,10 +214,11 @@
 </section><section>
 <h2 id="_contexts_"><em>Contexts</em></h2>
 <blockquote>
-<p>A portion of the domain:</p>
+<p>A <em>portion</em> of the domain with a clear <em>boundary</em>:</p>
 <ul>
 <li>relying on a sub-set of the concepts of the domain</li>
 <li>where words/names have a unique, precise meaning</li>
+<li>clearly distinguishable from other contexts</li>
 </ul>
 </blockquote>
 <ul>
@@ -248,7 +260,7 @@
 <p>commonly reified into a <strong>glossary</strong> of terms</p>
 </li>
 <li>
-<p>commonly used to name software components</p>
+<p><strong>used to name software components</strong></p>
 </li>
 </ul>
 
@@ -260,16 +272,16 @@
 <h2 id="conceptual-workflow">Conceptual Workflow</h2>
 <ol>
 <li>
-<p>Identify the domain</p>
+<p>Identify the <strong>domain</strong>, give a name to it</p>
 </li>
 <li>
-<p>Identify the main contexts within the domain</p>
+<p>Identify the <strong>main contexts</strong> within the domain, giving them names</p>
 <ul>
 <li>possibly, by interacting with experts</li>
 </ul>
 </li>
 <li>
-<p>Identify the actual meaning of commonly used words within the domain</p>
+<p>Identify the actual meaning of <strong>relevant words</strong> from the domain, and track them into a <strong>glossary</strong></p>
 <ul>
 <li>
 <p>possibly, by interacting with experts</p>
@@ -281,14 +293,10 @@
 </ul>
 </li>
 <li>
-<p>keep in mind that the meaning of word may vary among contexts</p>
+<p>keep in mind that the meaning of words may vary among contexts</p>
 <ul>
-<li>this is not just a glossary, but also
-<ul>
-<li>idiomatic or domain-specific expressions</li>
-<li>procedures, events, etc.</li>
-</ul>
-</li>
+<li><strong>homonyms</strong>: similar names, different meanings</li>
+<li><strong>synonyms</strong>: different names, similar meanings</li>
 </ul>
 </li>
 </ul>
@@ -358,8 +366,7 @@
 
 </div>
 <ul>
-<li>
-<p>Each <em>concept</em> from each <strong>context</strong> shall become a <em>type</em> in the <strong>model</strong></p>
+<li>Each <em>concept</em> from each <strong>context</strong> shall become a <em>type</em> in the <strong>model</strong>
 <ul>
 <li>type $\approx$ class, interface, structure, ADT, etc.
 <ul>
@@ -368,8 +375,10 @@
 </li>
 </ul>
 </li>
-<li>
-<p>Use <em>building blocks</em> as <strong>archetypes</strong></p>
+</ul>
+<br>
+<ul>
+<li>Use <em>building blocks</em> as <strong>archetypes</strong>
 <ul>
 <li>let them guide and constrain your design</li>
 </ul>
@@ -380,20 +389,20 @@
 <p>(continued)</p>
 <ol start="7">
 <li>
-<p>Chose the most adequate building block for each concept</p>
+<p><em>Chose</em> the most adequate <strong>building block</strong> for each concept</p>
 <ul>
 <li>depending on the nature of the concept</li>
 <li>… or the properties of its instances</li>
 </ul>
 </li>
 <li>
-<p>The building block dictates how to design the type corresponding to the concept</p>
+<p>The building block dictates how to <strong>design the type</strong> corresponding to the concept</p>
 <ul>
 <li>objects in OOP are shaped by types</li>
 </ul>
 </li>
 <li>
-<p>The choice of building block may lead to the identification of other concepts / models</p>
+<p>The choice of building block may lead to the identification of <strong>other concepts / models</strong></p>
 <ul>
 <li>e.g. entities may need value objects as identifiers</li>
 <li>e.g. entities may need repositories to be stored</li>
@@ -492,7 +501,7 @@
 </ul>
 </section><section>
 <h2 id="entities-vs-value-objects-constraints-1">Entities vs. Value Objects (constraints)</h2>
-<p>###&nbsp;Entities</p>
+<h3 id="entities">Entities</h3>
 <ul>
 <li>They have an inherent identity, which never changes during their lifespan
 <ul>
@@ -661,10 +670,10 @@ TaxCode -d-|&gt; CustomerID</p>
 TaxCode -u-|&gt; CustomerID</p>
 <p>interface CustomerFactory {
 + VatNumber computeVatNumber(String name, String surname, Date birthDate, String birthPlace)
-–
+..
 + Customer newCustomerPerson(TaxCode code, String fullName, string email)
 + Customer newCustomerPerson(String name, String surname, Date birthDate, String birthPlace, String email)
-–
+..
 + Customer newCustomerCompany(VatNumber code, String fullName, String email)
 }</p>
 <p>CustomerFactory -r-&gt; VatNumber: creates
@@ -860,19 +869,19 @@ OrderID -d[hidden]- Customer</p>
 <p><img src="./domain-events.png" alt="Concept of domain events"></p>
 </section><section>
 <h2 id="domain-events-details">Domain Events (details)</h2>
-<p>###&nbsp;Purpose</p>
+<h3 id="purpose-3">Purpose</h3>
 <ul>
 <li>Propagate changes among portions of the domain model</li>
 <li>Record changes concerning the domain</li>
 </ul>
-<p>###&nbsp;Remarks</p>
+<h3 id="remarks-3">Remarks</h3>
 <ul>
 <li>Strong relation with the <a href="https://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> (i.e. publish-subscribe)</li>
 <li>Strong relation with the event sourcing approach (described later)</li>
 <li>Strong relation with the CQRS pattern (described later)</li>
 </ul>
 </section><section>
-<p>##&nbsp;Domain Events (constraints)</p>
+<h2 id="domain-events-constraints">Domain Events (constraints)</h2>
 <ul>
 <li>
 <p>They are usually time-stamped value objects</p>
@@ -947,22 +956,22 @@ note right of OrderManagementService: service</p>
 </ul>
 </section><section>
 <h2 id="actual-definitions">Actual definitions</h2>
-<h3 id="bounded-context">Bounded Context</h3>
+<h3 id="context-boundary">Context Boundary</h3>
 <blockquote>
-<p>The explicit boundary of a software model, from a</p>
+<p>The <em>boundary</em> of a context and its software model should be <strong>explicit</strong>.
+This is helpful from several perspectives:</p>
 <ul>
-<li>technical (e.g., dependencies among classes/interfaces)</li>
-<li>physical (e.g., common database, common facilities)</li>
-<li>organizational (e.g. people maintaining/using the code)</li>
+<li>technical (e.g., <strong>dependencies</strong> among classes/interfaces)</li>
+<li>physical (e.g., common database, <strong>common facilities</strong>)</li>
+<li>organizational (e.g. <strong>people/teams</strong> maintaining/using the code)</li>
 </ul>
-<p>perspective</p>
 </blockquote>
 <br>
 <h3 id="context-map">Context Map</h3>
 <blockquote>
-<p>A map of all the contexts in a domain and their boundaries</p>
+<p>A <strong>map</strong> of <em>all</em> the <strong>contexts</strong> in a domain and their <strong>boundaries</strong></p>
 <ul>
-<li>and their points of contact
+<li>and their <strong>points of contact</strong>
 <ul>
 <li>e.g. their dependencies, homonyms, false friends, etc.</li>
 </ul>
@@ -977,22 +986,22 @@ note right of OrderManagementService: service</p>
 <h2 id="bounded-contexts--context-maps-best-practices">Bounded Contexts &amp; Context Maps (best practices)</h2>
 <ul>
 <li>
-<p>Clearly identify &amp; represent boundaries among contexts</p>
+<p>Clearly <em>identify &amp; represent</em>_ <em>boundaries</em> among contexts</p>
 </li>
 <li>
-<p>Avoid responsibility diffusion over a single context</p>
+<p><em>Avoid</em> <strong>responsibility diffusion</strong> over a single context</p>
 <ul>
 <li>one responsible person / team for each context</li>
 </ul>
 </li>
 <li>
-<p>Avoid changing the model for problems arising outside the context</p>
+<p><em>Avoid changes</em> in the model for <strong>problems</strong> arising <strong>outside</strong> the context</p>
 <ul>
 <li>rather, extend the domain by creating new contexts</li>
 </ul>
 </li>
 <li>
-<p>Enforce context’s cohesion via automated unit and integration testing</p>
+<p>Enforce context’s <strong>cohesion</strong> via automated unit and integration <strong>testing</strong></p>
 <ul>
 <li>to be (re)executed as frequently as possible</li>
 </ul>
@@ -1003,7 +1012,7 @@ note right of OrderManagementService: service</p>
 <h3 id="how-to-preserve-the-integrity-of-the-model">How to preserve the integrity of the model?</h3>
 <ul>
 <li>
-<p>As the domain evolves, the software model should evolve with it</p>
+<p>As the <strong>domain evolves</strong>, the software <em>model should evolve</em> with it</p>
 <ul>
 <li>in order to maintain the coupling</li>
 </ul>
@@ -1011,21 +1020,21 @@ note right of OrderManagementService: service</p>
 <li>
 <p>Yet, the domain rarely changes as a whole</p>
 <ul>
-<li>more commonly, it changes in a context-specific way</li>
+<li>more commonly, it changes in a <strong>context-specific</strong> way</li>
 </ul>
 </li>
 <li>
-<p>Contexts-are bounded, but not isolated</p>
+<p>Contexts-are bounded, but <strong>not isolated</strong></p>
 <ul>
-<li>so are models, which may depend on each other</li>
+<li>so are models, which may <em>depend</em> on each other</li>
 </ul>
 </li>
 <li>
-<p>Changes to a context, and its model may propagate to other context / models</p>
+<p>Changes to a context, and its model may <strong>propagate</strong> to other context / models</p>
 </li>
 </ul>
 <blockquote>
-<p>Domain / model changes are critical and should be done carefully</p>
+<p>Domain / model <strong>changes are critical</strong> and should be done carefully</p>
 </blockquote>
 </section><section>
 <h2 id="model-integrity-patterns">Model integrity patterns</h2>
@@ -1054,7 +1063,7 @@ note right of OrderManagementService: service</p>
 <ul>
 <li>Context maps highlight relations among contexts
 <ul>
-<li>yet, not all relations are equal, nor symmetric</li>
+<li>yet, <em>not</em> <strong>all relations are equal</strong>, nor symmetric</li>
 </ul>
 </li>
 </ul>
@@ -1088,19 +1097,19 @@ note right of OrderManagementService: service</p>
 <p><img src="./shared-kernel.jpg" alt="Shared kernel concept"></p>
 <ul>
 <li>
-<p>Best when: multiple contexts <em>share</em> the same team / organization / product</p>
+<p>Best when: multiple contexts <em>share</em> the <strong>same team</strong> / organization / product</p>
 </li>
 <li>
-<p>Key idea: <em>factorise</em> common portions of the model into a shared kernel</p>
+<p>Key idea: <strong>factorise</strong> common portions of the model into a shared kernel</p>
 </li>
 <li>
-<p>Upstream and downstream <em>collaborate</em> in designing / developing / maintaining the model</p>
+<p>Upstream and downstream <strong>collaborate</strong> in designing / developing / maintaining the model</p>
 <ul>
 <li>they are <em>peers</em></li>
 </ul>
 </li>
 <li>
-<p>Keeping the kernel as <em>small</em> as possible is fundamental</p>
+<p>Keeping the <strong>kernel</strong> as <strong>small</strong> as possible is fundamental</p>
 </li>
 </ul>
 </section><section>
@@ -1111,26 +1120,26 @@ note right of OrderManagementService: service</p>
 <p>Best when:</p>
 <ul>
 <li>multiple teams</li>
-<li>mutual trust</li>
+<li><strong>mutual trust</strong></li>
 <li>good communication</li>
 </ul>
 </li>
 <li>
 <p>Key idea:</p>
 <ul>
-<li>upstream acts as supplier, downstream acts as customer</li>
-<li>both sides collaborate to maximise integration among their models
+<li><strong>upstream</strong> acts as <em>supplier</em>, <strong>downstream</strong> acts as <em>customer</em></li>
+<li>both sides collaborate to <strong>maximise integration</strong> among their models
 <ul>
-<li>and interoperability among their SW</li>
+<li>and interoperability among their software</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>
-<p>Customers may ask for features, suppliers will do their best</p>
+<p>Customers may <em>ask</em> for features, suppliers will do their best to <strong>provide</strong> them</p>
 </li>
 <li>
-<p>Suppliers shall warn before changing their model</p>
+<p>Suppliers shall <strong>warn</strong> before changing their model</p>
 </li>
 </ul>
 </section><section>
@@ -1454,6 +1463,124 @@ product -u-|&gt; mq
 </ul>
 </li>
 </ul>
+</section><section>
+<h1 id="exercises">Exercises</h1>
+</section><section>
+<h2 id="exercise----simple-store-pt-1">Exercise – Simple Store (pt. 1)</h2>
+<p>A simple domain keeping track of: <em>customers</em>, <em>products</em>, and <em>orders</em>.</p>
+<h3 id="customers">Customers</h3>
+<ul>
+<li>
+<p>Customers can either be companies or persons</p>
+</li>
+<li>
+<p>Companies are identified by a VAT number</p>
+</li>
+<li>
+<p>Persons are identified by tax codes</p>
+</li>
+<li>
+<p>In any case a name and email are recorded for each customer</p>
+</li>
+<li>
+<p>Both the name and email may vary over time</p>
+</li>
+</ul>
+<h3 id="products">Products</h3>
+<ul>
+<li>
+<p>Products are identified by name and type/category</p>
+</li>
+<li>
+<p>They have a nominal price, expressed using some currency</p>
+</li>
+<li>
+<p>The availability of each product is tracked as well</p>
+</li>
+<li>
+<p>Both the price and the available quantity may vary over time</p>
+</li>
+</ul>
+</section><section>
+<h2 id="exercise----simple-store-pt-2">Exercise – Simple Store (pt. 2)</h2>
+<h3 id="money-and-exchange-rates">Money and exchange rates</h3>
+<ul>
+<li>
+<p>Money is represented by a decimal value and a currency</p>
+</li>
+<li>
+<p>Currencies are represented by a name, a symbol and an acronym</p>
+<ul>
+<li>e.g. Euro, EUR, €</li>
+<li>e.g. USA Dollar, USD, $</li>
+</ul>
+</li>
+<li>
+<p>Exchange rates keep track of the conversion rate</p>
+<ul>
+<li>from a source currency</li>
+<li>to a destination currency</li>
+<li>in a particular moment</li>
+</ul>
+</li>
+<li>
+<p>Information about exchange rates can be attained from the Internet</p>
+</li>
+<li>
+<p>We can compute the price of each product, in any currency, at any moment</p>
+</li>
+</ul>
+</section><section>
+<h2 id="exercise----simple-store-pt-3">Exercise – Simple Store (pt. 3)</h2>
+<h3 id="orders">Orders</h3>
+<ul>
+<li>
+<p>Orders are identified by a serial number</p>
+</li>
+<li>
+<p>They keep track of the many products ordered by a customer</p>
+<ul>
+<li>and the amount of copies ordered for each product</li>
+</ul>
+</li>
+<li>
+<p>Also, orders keep track of when they have been performed</p>
+</li>
+<li>
+<p>All such information may be modified before the order is delivered</p>
+</li>
+<li>
+<p>When a new order is registered, many actions should be performed in reaction</p>
+</li>
+<li>
+<p>It must be possible to compute the actual total price of an order</p>
+<ul>
+<li>in a particular moment, using a particular currency</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="exercise----simple-store-pt-4">Exercise – Simple Store (pt. 4)</h2>
+<h3 id="to-do">TO-DO</h3>
+<ol>
+<li>Read informal domain description</li>
+<li>Identify the main domain concepts composing the ubiquitous language</li>
+<li>Model the domain as Java types (classes or interfaces)
+<ul>
+<li>the model should include entities, value objects, repositories, factories, and services</li>
+</ul>
+</li>
+<li>Structure the Java types according to some module structure compliant with hexagonal architecture</li>
+<li>Sketch tests and, then, implementation for at least one
+<ul>
+<li>entity</li>
+<li>value object</li>
+<li>factory</li>
+<li>repository</li>
+<li>value object</li>
+</ul>
+</li>
+</ol>
 </section>
 
   
