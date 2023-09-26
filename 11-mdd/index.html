@@ -109,9 +109,6 @@
 </ul>
 </li>
 </ul>
-<blockquote>
-<p>Is UML the only choice? Are there other relevant meta-models?</p>
-</blockquote>
 </section><section>
 <h2 id="model-driven-whatever">Model-driven whatever</h2>
 <ul>
@@ -689,10 +686,79 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 
 </section>
 </section><section>
-<h1 id="mdd-in-practice-with-xtext">MDD in Practice with Xtext</h1>
+<h1 id="mdd-in-practice">MDD in Practice</h1>
+</section><section>
+<h2 id="tools-for-mdd">Tools for MDD</h2>
+<ul>
+<li>
+<p>Eclipse’s <a href="https://eclipse.dev/Xtext/">Xtext</a> widespread tool for MDD</p>
+</li>
+<li>
+<p>JetBrains’ <a href="https://www.jetbrains.com/mps/">MPS</a> main competitor of Xtext</p>
+</li>
+<li>
+<p><a href="https://langium.org">Langium</a> clone of Xtext, but based on TypeScript</p>
+</li>
+</ul>
+<h3 id="other-relevant-tools-for-language-engineering">Other relevant tools for language engineering</h3>
+<ul>
+<li>
+<p><a href="https://www.antlr.org/">ANTLR</a> only parser generation for Java, JS, Python, .Net, C++</p>
+</li>
+<li>
+<p><a href="https://microsoft.github.io/language-server-protocol/overviews/lsp/overview/">Language Server Protocol</a> (LSP)</p>
+</li>
+</ul>
+</section><section>
+<h2 id="key-idea-behind-lsp">Key idea behind LSP</h2>
+<p><img src="./lsp.png" alt="LSP concept"></p>
+<ul>
+<li>
+<p>de-facto standard protocol among IDEs</p>
+</li>
+<li>
+<p>providing various IDE-like capabilities as-a-service</p>
+</li>
+<li>
+<p>making it easier to support multiple IDEs for the same language</p>
+</li>
+<li>
+<p>must-have feature for any MDD tool we may consider for our DSL</p>
+</li>
+</ul>
 </section><section>
 <h2 id="about-xtext">About Xtext</h2>
-<p>TBD</p>
+<ul>
+<li>
+<p>A framework for MDD and in particular domain-specific languages</p>
+</li>
+<li>
+<p>Xtext provides a language for definining languages…</p>
+</li>
+<li>
+<p>… which is also a meta-modelling language</p>
+</li>
+<li>
+<p>Meta-modelling and DSL definition are done simultaneously</p>
+</li>
+<li>
+<p>It automatically generates the full language infrastructure, including</p>
+<ul>
+<li>model interfaces / classes (<a href="https://eclipse.dev/modeling/emf/">EMF</a> compliant)</li>
+<li>parser</li>
+<li>validator (with pluggable rules)</li>
+<li>transpiler stub</li>
+<li>scoping (with pluggable rules)</li>
+<li>IDE support via LSP</li>
+<li>syntax colouring</li>
+<li>etc.</li>
+<li>test stubs</li>
+</ul>
+</li>
+<li>
+<p>Exercises and examples about MDD will be based on Xtext</p>
+</li>
+</ul>
 </section>
 
   
@@ -803,8 +869,6 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 
   
 
-  
-    
   
 
   
