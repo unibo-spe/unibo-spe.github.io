@@ -1282,7 +1282,7 @@ This is helpful from several perspectives:</p>
 </li>
 </ul>
 
-<figure id="plantuml-figure-7" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-7" class="plantuml" alt="" style="width: 70%;max-width: 95vw;max-height: 80vh;">
     
 top to bottom direction
 
@@ -1466,7 +1466,10 @@ product -u-|&gt; mq
 </section><section>
 <h1 id="exercises">Exercises</h1>
 </section><section>
-<h2 id="exercise----simple-store-pt-1">Exercise – Simple Store (pt. 1)</h2>
+
+
+<section data-shortcode-section="">
+<h2 id="exercise-1----simple-store-pt-1">Exercise 1 – Simple Store (pt. 1)</h2>
 <p>A simple domain keeping track of: <em>customers</em>, <em>products</em>, and <em>orders</em>.</p>
 <h3 id="customers">Customers</h3>
 <ul>
@@ -1502,7 +1505,7 @@ product -u-|&gt; mq
 </li>
 </ul>
 </section><section>
-<h2 id="exercise----simple-store-pt-2">Exercise – Simple Store (pt. 2)</h2>
+<h2 id="exercise-1----simple-store-pt-2">Exercise 1 – Simple Store (pt. 2)</h2>
 <h3 id="money-and-exchange-rates">Money and exchange rates</h3>
 <ul>
 <li>
@@ -1531,7 +1534,7 @@ product -u-|&gt; mq
 </li>
 </ul>
 </section><section>
-<h2 id="exercise----simple-store-pt-3">Exercise – Simple Store (pt. 3)</h2>
+<h2 id="exercise-1----simple-store-pt-3">Exercise 1 – Simple Store (pt. 3)</h2>
 <h3 id="orders">Orders</h3>
 <ul>
 <li>
@@ -1560,18 +1563,22 @@ product -u-|&gt; mq
 </li>
 </ul>
 </section><section>
-<h2 id="exercise----simple-store-pt-4">Exercise – Simple Store (pt. 4)</h2>
+<h2 id="exercise-1----simple-store-pt-4">Exercise 1 – Simple Store (pt. 4)</h2>
 <h3 id="to-do">TO-DO</h3>
 <ol>
-<li>Read informal domain description</li>
-<li>Identify the main domain concepts composing the ubiquitous language</li>
-<li>Model the domain as Java types (classes or interfaces)
+<li><strong>Read</strong> informal domain description</li>
+<li><strong>Identify</strong> the main <strong>domain concepts</strong> composing the ubiquitous language</li>
+<li><strong>Model</strong> the domain as <strong>Java types</strong> (classes or <em>interfaces</em>)
 <ul>
 <li>the model should include entities, value objects, repositories, factories, and services</li>
 </ul>
 </li>
-<li>Structure the Java types according to some module structure compliant with hexagonal architecture</li>
-<li>Sketch tests and, then, implementation for at least one
+<li><strong>Structure</strong> the Java types according to some module structure compliant with <strong>hexagonal architecture</strong>
+<ul>
+<li>i.e. put code into either the <code>domain</code> or <code>application</code> modules</li>
+</ul>
+</li>
+<li>Sketch <em>tests</em> and, then, implementation for at least one
 <ul>
 <li>entity</li>
 <li>value object</li>
@@ -1581,6 +1588,85 @@ product -u-|&gt; mq
 </ul>
 </li>
 </ol>
+
+</section>
+</section><section>
+
+
+<section data-shortcode-section="">
+<h2 id="exercise-2----trivial-cqrs-pt-1">Exercise 2 – Trivial CQRS (pt. 1)</h2>
+<ul>
+<li>Very simple repository type: the <code>Counter</code></li>
+<li>It contains 1 <code>long</code> number, initially set to <code>0</code></li>
+<li>The value may be read or changed arbitrarily</li>
+<li>Whenever the value changes, a new domain event is published, of type <code>Variation</code></li>
+<li>However, the repository only memorises the <em>current</em> value of the counter</li>
+</ul>
+</section><section>
+<h2 id="exercise-2----trivial-cqrs-pt-2">Exercise 2 – Trivial CQRS (pt. 2)</h2>
+<h3 id="to-do">TO-DO</h3>
+<ol>
+<li>Switch the design towards <strong>event sourcing</strong>, by memorising variations instead of snapshots.</li>
+<li>Implement the <strong>CQRS pattern</strong> by splitting the repository into 2 parts:</li>
+</ol>
+<ul>
+<li>a <strong>write-model</strong> for storing variations</li>
+<li>a <strong>read-model</strong> for retrieving a snapshot of the counter’s value in a given moment</li>
+</ul>
+<br>
+<p>In practice:</p>
+<ol>
+<li>provide <strong>implementations</strong> for the <code>CounterReader</code> and <code>CounterWriter</code> interfaces</li>
+<li>optionally, <em>test</em> those implementations</li>
+</ol>
+
+</section>
+</section><section>
+
+
+<section data-shortcode-section="">
+<h2 id="exercise-3----anti-corruption-layer-pt-1">Exercise 3 – Anti corruption layer (pt. 1)</h2>
+<ul>
+<li>
+<p>Very simple domain: <code>Table</code>s</p>
+<ul>
+<li>i.e. 2-D containers of <code>Row</code>s…</li>
+<li>… where each row contains one or more <code>String</code> values</li>
+</ul>
+</li>
+<li>
+<p>Functionalities for <strong>CSV</strong> <em>import/export</em> are missing and need to be implemented via <em>third-party libraries</em></p>
+<ul>
+<li><a href="https://commons.apache.org/proper/commons-csv/">Apache Commons CSV</a>
+<ul>
+<li>Guide here: <a href="https://www.baeldung.com/apache-commons-csv">https://www.baeldung.com/apache-commons-csv</a></li>
+</ul>
+</li>
+<li><a href="http://opencsv.sourceforge.net/">OpenCSV</a>
+<ul>
+<li>Guide here: <a href="https://www.baeldung.com/opencsv">https://www.baeldung.com/opencsv</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="exercise-3----anti-corruption-layer-pt-2">Exercise 3 – Anti corruption layer (pt. 2)</h2>
+<h3 id="to-do">TO-DO</h3>
+<ol>
+<li>Extend the model of our domain with new <strong>interfaces</strong> supporting <strong>CSV parsing / writing functionalities</strong></li>
+<li>Design the interfaces so that they are <strong>agnostic</strong> of the third-party libraries
+<ul>
+<li>without corrupting the domain model with library-specific types</li>
+</ul>
+</li>
+<li>Provide <strong>implementations</strong> for the interfaces, using <strong>one of the two</strong> libraries</li>
+<li>Sketch <em>tests</em> for the implementations</li>
+<li>Provide <strong>implementations</strong> for the interfaces, using <strong>the other</strong> library</li>
+<li>Use the same tests as above to prove the two implementations work <em>the same way</em></li>
+</ol>
+
+</section>
 </section>
 
   
