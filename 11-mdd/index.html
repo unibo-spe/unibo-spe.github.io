@@ -730,16 +730,16 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <h2 id="about-xtext">About Xtext</h2>
 <ul>
 <li>
-<p>A framework for MDD and in particular domain-specific languages</p>
+<p>A framework for MDD and, in particular, <strong>external DSL</strong></p>
 </li>
 <li>
-<p>Xtext provides a language for definining languages…</p>
+<p>Xtext provides a language for defining languages…</p>
 </li>
 <li>
-<p>… which is also a meta-modelling language</p>
+<p>… which is also a <strong>meta-modelling language</strong></p>
 </li>
 <li>
-<p>Meta-modelling and DSL definition are done simultaneously</p>
+<p><strong>Meta-modelling</strong> and <strong>DSL definition</strong> are done <em>simultaneously</em></p>
 </li>
 <li>
 <p>It automatically generates the full language infrastructure, including</p>
@@ -759,6 +759,571 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <p>Exercises and examples about MDD will be based on Xtext</p>
 </li>
 </ul>
+</section><section>
+<h2 id="running-example-the-task-scheduling-domain">Running example: the <strong>task scheduling</strong> domain</h2>
+<ul>
+<li>
+<p>Users may be willing to <strong>schedule</strong> custom <em>tasks</em> on a machine</p>
+</li>
+<li>
+<p><strong>Task</strong> $\equiv$ running any <em>command</em> available on the OS</p>
+<ul>
+<li>via some <em>shell</em> (e.g. <code>bash</code>, <code>cmd</code>, <code>powershell</code>, etc.) of choice</li>
+</ul>
+</li>
+<li>
+<p><strong>Scheduling</strong> implied defining <em>when</em> the task should be executed</p>
+<ul>
+<li><em>relatively</em> to now: e.g. <em><strong>in</strong> 5 minutes</em>, <em><strong>in</strong> 1 hour</em>, etc.</li>
+<li><em>absolutely</em>: e.g. <em>today <strong>at</strong> 10:00</em>, <em>tomorrow <strong>at</strong> 12:00</em>, <em><strong>on</strong> 2023/11/23 <strong>at</strong> 13:16</em> etc.</li>
+<li><em>before</em> or <em>after</em> <strong>some other task</strong></li>
+<li><em>periodically</em>: e.g. <em><strong>every</strong> 5 minutes</em>, <em><strong>every</strong> 48 hours</em>, etc.</li>
+</ul>
+</li>
+<li>
+<p>Notice that tasks may be <em>inter-<strong>dependent</strong></em> (e.g. because of before/after relations)</p>
+</li>
+</ul>
+</section><section>
+<h2 id="running-example-the-sheduler-dsl-pt-1">Running example: the <code>Sheduler</code> DSL (pt. 1)</h2>
+<blockquote>
+<p><strong>Sheduler</strong> $\equiv$ <strong>Sh</strong>ell + Sch<strong>eduler</strong></p>
+<p>¯\<em>(ツ)</em>/¯</p>
+</blockquote>
+<ol>
+<li>
+<p>We shall use <strong>Xtext’s meta-modelling language</strong> to define the domain of <em>task scheduling</em></p>
+</li>
+<li>
+<p>Simultaneously, we will define the <strong>syntax</strong> of the DSL</p>
+</li>
+<li>
+<p>We will then add <strong>scoping</strong> and <strong>validation</strong> rules to the DSL, via the Xtext framework</p>
+</li>
+<li>
+<p>The next step is designing and implementing the <strong>execution engine</strong> for the DSL</p>
+<ul>
+<li>we shall exploit Java’s <a href="https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ScheduledExecutorService.html"><code>ScheduledExecutorService</code>s</a> for this purpose</li>
+</ul>
+</li>
+<li>
+<p>Finally, we will create a <strong>code generator</strong> creating Java code from the DSL</p>
+</li>
+</ol>
+</section><section>
+<h2 id="running-example-the-sheduler-dsl-pt-2">Running example: the <code>Sheduler</code> DSL (pt. 2)</h2>
+<p>Code: <a href="https://github.com/unibo-spe/sheduler-lang">https://github.com/unibo-spe/sheduler-lang</a></p>
+<ol>
+<li>
+<p>Clone with Git</p>
+</li>
+<li>
+<p>The cloned repository is and <a href="https://www.eclipse.org/downloads/">Ecplise</a> project</p>
+<ul>
+<li>please install <a href="https://eclipse.dev/Xtext/download.html">Eclipse for DSL developers</a> from Xtext’s website</li>
+</ul>
+</li>
+<li>
+<p>Open the cloned repository in Eclipse, <strong>selecting the repository <em>root</em> directory as workspace</strong></p>
+</li>
+<li>
+<p>In Eclipse, import the <code>it.unibo.spe.mdd.sheduler.parent</code> directory as a <strong>Gradle project</strong></p>
+</li>
+<li>
+<p>You may also use <strong>IntelliJ</strong>, in that case just import the <code>sheduler-lang/it.unibo.spe.mdd.sheduler.parent</code> directory as Gradle project</p>
+<ul>
+<li>no syntax colouring or Xtext support on IntelliJ or VSCode</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="xtext-project-structure-pt-1">Xtext project structure (pt. 1)</h2>
+<pre tabindex="0"><code>sheduler-lang/
+└── it.unibo.spe.mdd.sheduler.parent/
+ &nbsp;&nbsp; ├── build.gradle
+ &nbsp;&nbsp; ├── gradle/
+ &nbsp;&nbsp; ├── gradle.properties
+ &nbsp;&nbsp; ├── gradlew
+ &nbsp;&nbsp; ├── gradlew.bat
+ &nbsp;&nbsp; ├── it.unibo.spe.mdd.sheduler/
+ &nbsp;&nbsp; │&nbsp;&nbsp; ├── build.gradle
+ &nbsp;&nbsp; │&nbsp;&nbsp; └── src/
+ &nbsp;&nbsp; │&nbsp;&nbsp;     └── main/
+ &nbsp;&nbsp; │&nbsp;&nbsp;      &nbsp;&nbsp; └── java/
+ &nbsp;&nbsp; │&nbsp;&nbsp;      &nbsp;&nbsp;  &nbsp;&nbsp; └── it/unibo/spe/mdd/sheduler/
+ &nbsp;&nbsp; │&nbsp;&nbsp;      &nbsp;&nbsp;  &nbsp;&nbsp;     └── sheduler
+ &nbsp;&nbsp; │&nbsp;&nbsp;      &nbsp;&nbsp;  &nbsp;&nbsp;         ├── GenerateSheduler.mwe2
+ &nbsp;&nbsp; │&nbsp;&nbsp;      &nbsp;&nbsp;  &nbsp;&nbsp;         └── Sheduler.xtext
+ &nbsp;&nbsp; ├── it.unibo.spe.mdd.sheduler.ide/
+ &nbsp;&nbsp; │&nbsp;&nbsp; └── build.gradle
+ &nbsp;&nbsp; ├── it.unibo.spe.mdd.sheduler.web/
+ &nbsp;&nbsp; │&nbsp;&nbsp; └── build.gradle
+ &nbsp;&nbsp; └── settings.gradle
+</code></pre></section><section>
+<h2 id="xtext-project-structure-pt-2">Xtext project structure (pt. 2)</h2>
+<ul>
+<li><code>parent</code> project is just the container of others</li>
+<li><code>sheduler</code> project is where the domain is modelled, and the language is defined
+<ul>
+<li>including parser, validator, scoping, etc.</li>
+<li>2 very important files:
+<ul>
+<li><code>Sheduler.xtext</code>: this is where modelling and language definition occurs</li>
+<li><code>GenerateSheduler.mwe2</code>: this is where the automated generation of scoping, validation, generation, testing facilities is configured</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>ide</code> project is where the generic IDE support via LSP is defined
+<ul>
+<li>depends on <code>sheduler</code> project</li>
+<li>you don’t really need to touch anything in here: LSP code is generated by Xtext</li>
+<li>this project may be packed into a runnable Jar for starting the LSP server</li>
+</ul>
+</li>
+<li><code>web</code> project is where the web-based playground for our language is defined
+<ul>
+<li>depends on <code>ide</code> project</li>
+<li>you don’t really need to touch anything in here: the web playground is generated by Xtext</li>
+<li>this project may be packed into a runnable Jar for starting the web playground</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="relevant-gradle-tasks-for-xtext">Relevant Gradle tasks for Xtext</h2>
+<ul>
+<li>
+<p><code>generateXtextLanguage</code> generates the language infrastructure</p>
+<ul>
+<li>there including:
+<ul>
+<li>domain model interfaces / classes</li>
+<li>parser</li>
+<li>validator stub</li>
+<li>scoping stub</li>
+<li>code generation stub</li>
+</ul>
+</li>
+<li>this task is automatically executed by Gradle before compilation</li>
+<li>you may run it manually if you want to force the generation of the language infrastructure</li>
+</ul>
+</li>
+<li>
+<p><code>shadowJar</code> generates the runnable Jar for the LSP server</p>
+<ul>
+<li>this task should be run manually if you want to deploy the LSP server</li>
+</ul>
+</li>
+<li>
+<p><code>jettyRun</code> starts the Web-playground for the Sheduler language</p>
+<ul>
+<li>this task should be run manually during manual testing of the language</li>
+</ul>
+</li>
+<li>
+<p>ordinary Gradle tasks for compilation, testing, etc. are as usual</p>
+</li>
+</ul>
+</section><section>
+<h2 id="the-generateshedulermwe2-file">The <code>GenerateSheduler.mwe2</code> file</h2>
+<ul>
+<li>
+<p>This is automatically generated by Eclipse when setting up an Xtext project</p>
+</li>
+<li>
+<p>Pretty self-explanatory:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>module <span style="color:#080;font-weight:bold">it</span>.unibo.spe.mdd.sheduler.GenerateSheduler
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.eclipse.xtext.xtext.generator.*</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.eclipse.xtext.xtext.generator.model.project.*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">rootPath</span> = <span style="color:#d20;background-color:#fff0f0">".."</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Workflow {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    component = XtextGenerator {
+</span></span><span style="display:flex;"><span>        configuration = {
+</span></span><span style="display:flex;"><span>            project = StandardProjectConfig {
+</span></span><span style="display:flex;"><span>                baseName = <span style="color:#d20;background-color:#fff0f0">"it.unibo.spe.mdd.sheduler"</span>
+</span></span><span style="display:flex;"><span>                rootPath = rootPath
+</span></span><span style="display:flex;"><span>                runtimeTest = { enabled = <span style="color:#080;font-weight:bold">true</span> }
+</span></span><span style="display:flex;"><span>                web = { enabled = <span style="color:#080;font-weight:bold">true</span> }
+</span></span><span style="display:flex;"><span>                mavenLayout = <span style="color:#080;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            code = {
+</span></span><span style="display:flex;"><span>                encoding = <span style="color:#d20;background-color:#fff0f0">"UTF-8"</span>
+</span></span><span style="display:flex;"><span>                lineDelimiter = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#04d;background-color:#fff0f0">\r\n</span><span style="color:#d20;background-color:#fff0f0">"</span>
+</span></span><span style="display:flex;"><span>                fileHeader = <span style="color:#d20;background-color:#fff0f0">"/*</span><span style="color:#04d;background-color:#fff0f0">\n</span><span style="color:#d20;background-color:#fff0f0"> * generated by Xtext </span><span style="color:#04d;background-color:#fff0f0">\$</span><span style="color:#d20;background-color:#fff0f0">{version}</span><span style="color:#04d;background-color:#fff0f0">\n</span><span style="color:#d20;background-color:#fff0f0"> */"</span>
+</span></span><span style="display:flex;"><span>                preferXtendStubs = <span style="color:#080;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        language = StandardLanguage {
+</span></span><span style="display:flex;"><span>            name = <span style="color:#d20;background-color:#fff0f0">"it.unibo.spe.mdd.sheduler.Sheduler"</span>
+</span></span><span style="display:flex;"><span>            fileExtensions = <span style="color:#d20;background-color:#fff0f0">"shed"</span>
+</span></span><span style="display:flex;"><span>            serializer = { generateStub = <span style="color:#080;font-weight:bold">false</span> }
+</span></span><span style="display:flex;"><span>            validator = { generateDeprecationValidation = <span style="color:#080;font-weight:bold">true</span> }
+</span></span><span style="display:flex;"><span>            generator = {
+</span></span><span style="display:flex;"><span>                generateXtendStub = <span style="color:#080;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>                generateJavaMain = <span style="color:#080;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            junitSupport = {
+</span></span><span style="display:flex;"><span>                junitVersion = <span style="color:#d20;background-color:#fff0f0">"5"</span>
+</span></span><span style="display:flex;"><span>                generateXtendStub = <span style="color:#080;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>                generateStub = <span style="color:#080;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ul>
+</section><section>
+<h2 id="lets-model-a-bit">Let’s model a bit</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>grammar it.<span style="color:#369">unibo</span>.<span style="color:#369">spe</span>.<span style="color:#369">mdd</span>.<span style="color:#369">sheduler</span>.<span style="color:#369">Sheduler</span> with org.<span style="color:#369">eclipse</span>.<span style="color:#369">xtext</span>.<span style="color:#369">common</span>.<span style="color:#369">Terminals</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>generate sheduler <span style="color:#d20;background-color:#fff0f0">"http://www.unibo.it/spe/mdd/sheduler/Sheduler"</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">TaskPoolSet:</span> pools+=TaskPool+ ;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">TaskPool:</span> <span style="color:#d20;background-color:#fff0f0">'pool'</span> name=ID? <span style="color:#d20;background-color:#fff0f0">'{'</span> tasks+=Task+ <span style="color:#d20;background-color:#fff0f0">'}'</span> ;
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">Task:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#d20;background-color:#fff0f0">'schedule'</span> (<span style="color:#d20;background-color:#fff0f0">'task'</span> name=ID)? <span style="color:#d20;background-color:#fff0f0">'{'</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#d20;background-color:#fff0f0">'command'</span> command=STRING
+</span></span><span style="display:flex;"><span>		(<span style="color:#d20;background-color:#fff0f0">'entry'</span> <span style="color:#d20;background-color:#fff0f0">'point'</span> entrypoint=STRING)?
+</span></span><span style="display:flex;"><span>		(
+</span></span><span style="display:flex;"><span>			<span style="color:#d20;background-color:#fff0f0">'in'</span> relative=RelativeTime |
+</span></span><span style="display:flex;"><span>			<span style="color:#d20;background-color:#fff0f0">'at'</span> absolute=AbsoluteTime |
+</span></span><span style="display:flex;"><span>			<span style="color:#d20;background-color:#fff0f0">'before'</span> before=[Task] |            <span style="color:#888">// square brackets denote references to other model elements
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>			<span style="color:#d20;background-color:#fff0f0">'after'</span> after=[Task] 
+</span></span><span style="display:flex;"><span>		)
+</span></span><span style="display:flex;"><span>		(<span style="color:#d20;background-color:#fff0f0">'repeat'</span> <span style="color:#d20;background-color:#fff0f0">'every'</span> period=RelativeTime)?
+</span></span><span style="display:flex;"><span>	<span style="color:#d20;background-color:#fff0f0">'}'</span>
+</span></span><span style="display:flex;"><span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">AbsoluteTime:</span> date=Date time=ClockTime ;
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">Date:</span> year=INT <span style="color:#d20;background-color:#fff0f0">'/'</span> month=INT <span style="color:#d20;background-color:#fff0f0">'/'</span> day=INT;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">ClockTime:</span> hour=INT <span style="color:#d20;background-color:#fff0f0">':'</span> minute=INT (<span style="color:#d20;background-color:#fff0f0">':'</span> second=INT (<span style="color:#d20;background-color:#fff0f0">':'</span> millisecond=INT (<span style="color:#d20;background-color:#fff0f0">':'</span> nanosecond=INT)?)?)? ;
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">RelativeTime:</span> timeSpans += TimeSpan ((<span style="color:#d20;background-color:#fff0f0">'and'</span> | <span style="color:#d20;background-color:#fff0f0">','</span> | <span style="color:#d20;background-color:#fff0f0">'+'</span>) timeSpans += TimeSpan)* ;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">TimeSpan:</span> duration=INT unit=(TimeUnit|LongTimeUnit);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">enum</span> <span style="color:#b06;font-weight:bold">TimeUnit</span>: NANOSECONDS = <span style="color:#d20;background-color:#fff0f0">'ns'</span> | MILLISECONDS = <span style="color:#d20;background-color:#fff0f0">'ms'</span> | SECONDS = <span style="color:#d20;background-color:#fff0f0">'s'</span> | MINUTES = <span style="color:#d20;background-color:#fff0f0">'m'</span> | HOURS = <span style="color:#d20;background-color:#fff0f0">'h'</span> | DAYS = <span style="color:#d20;background-color:#fff0f0">'d'</span> | WEEKS = <span style="color:#d20;background-color:#fff0f0">'w'</span> | 	YEARS = <span style="color:#d20;background-color:#fff0f0">'y'</span> ;
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">enum</span> <span style="color:#b06;font-weight:bold">LongTimeUnit</span> returns <span style="color:#369;font-style:italic">TimeUnit:</span> 
+</span></span><span style="display:flex;"><span>	NANOSECONDS = <span style="color:#d20;background-color:#fff0f0">'nanoseconds'</span> | 
+</span></span><span style="display:flex;"><span>	MILLISECONDS = <span style="color:#d20;background-color:#fff0f0">'milliseconds'</span> |
+</span></span><span style="display:flex;"><span>	SECONDS = <span style="color:#d20;background-color:#fff0f0">'seconds'</span> |
+</span></span><span style="display:flex;"><span>	MINUTES = <span style="color:#d20;background-color:#fff0f0">'minutes'</span> | 
+</span></span><span style="display:flex;"><span>	HOURS = <span style="color:#d20;background-color:#fff0f0">'hours'</span> |
+</span></span><span style="display:flex;"><span>	DAYS = <span style="color:#d20;background-color:#fff0f0">'days'</span> |
+</span></span><span style="display:flex;"><span>	WEEKS = <span style="color:#d20;background-color:#fff0f0">'weeks'</span> |
+</span></span><span style="display:flex;"><span>	YEARS = <span style="color:#d20;background-color:#fff0f0">'years'</span> ;
+</span></span></code></pre></div></section><section>
+<h2 id="generated-interfaces">Generated interfaces</h2>
+
+<figure id="plantuml-figure-2" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+    
+@startuml
+left to right direction
+
+interface AbsoluteTime  {
+  + getDate(): Date
+  + setDate(Date): void
+  + setTime(ClockTime): void
+  + getTime(): ClockTime
+}
+interface ClockTime  {
+  + getMinute(): int
+  + setMinute(int): void
+  + getNanosecond(): int
+  + setSecond(int): void
+  + getMillisecond(): int
+  + getHour(): int
+  + setMillisecond(int): void
+  + setHour(int): void
+  + getSecond(): int
+  + setNanosecond(int): void
+}
+interface Date  {
+  + getYear(): int
+  + getMonth(): int
+  + setMonth(int): void
+  + setDay(int): void
+  + setYear(int): void
+  + getDay(): int
+}
+interface RelativeTime  {
+  + getTimeSpans(): EList<timespan>
+}
+interface ShedulerFactory  {
+  + createTask(): Task
+  + createClockTime(): ClockTime
+  + createTimeSpan(): TimeSpan
+  + createDate(): Date
+  + createRelativeTime(): RelativeTime
+  + createTaskPoolSet(): TaskPoolSet
+  + getShedulerPackage(): ShedulerPackage
+  + createTaskPool(): TaskPool
+  + createAbsoluteTime(): AbsoluteTime
+}
+interface Task  {
+  + getCommand(): String
+  + setPeriod(RelativeTime): void
+  + setBefore(Task): void
+  + setName(String): void
+  + setEntrypoint(String): void
+  + getAfter(): Task
+  + setRelative(RelativeTime): void
+  + getEntrypoint(): String
+  + getName(): String
+  + getAbsolute(): AbsoluteTime
+  + setAfter(Task): void
+  + setCommand(String): void
+  + getPeriod(): RelativeTime
+  + getRelative(): RelativeTime
+  + setAbsolute(AbsoluteTime): void
+  + getBefore(): Task
+}
+interface TaskPool  {
+  + getName(): String
+  + setName(String): void
+  + getTasks(): EList<task>
+}
+interface TaskPoolSet  {
+  + getPools(): EList<taskpool>
+}
+interface TimeSpan  {
+  + setUnit(TimeUnit): void
+  + getUnit(): TimeUnit
+  + getDuration(): int
+  + setDuration(int): void
+}
+enum TimeUnit  {
+  + getName(): String
+  + values(): TimeUnit[]
+  + get(String): TimeUnit?
+  + valueOf(String): TimeUnit
+  + get(int): TimeUnit?
+  + getLiteral(): String
+  + getByName(String): TimeUnit?
+  + getValue(): int
+  + toString(): String
+}
+
+TaskPoolSet *-- TaskPool
+TaskPool *-- Task
+Task *-- RelativeTime
+Task *-- AbsoluteTime
+RelativeTime *-- TimeSpan
+TimeSpan *-- TimeUnit     
+RelativeTime *-- Date
+RelativeTime *-- ClockTime
+@enduml
+
+</taskpool></task></timespan></figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-2");
+</script>
+
+<p>Classes are generated too!</p>
+</section><section>
+<h2 id="try-the-syntax">Try the syntax</h2>
+<ul>
+<li>
+<p>Run task <code>jettyRun</code> to start the web playground</p>
+</li>
+<li>
+<p>Open <a href="http://localhost:8080">http://localhost:8080</a></p>
+</li>
+<li>
+<p>Copy-paste the following example program:</p>
+<pre tabindex="0"><code>pool {
+    schedule task greetWorldFrequently {
+        command "echo hello"
+        entry point "/bin/sh -c"
+        in 5 minutes
+        repeat every 1 hours
+    }
+}
+</code></pre></li>
+<li>
+<p>What you should see (press <strong>Ctrl+Space</strong> to see the <em>auto-completion</em> menu)
+<img src="./web-shed.png" alt="Web playground"></p>
+</li>
+</ul>
+</section><section>
+<h2 id="about-validation-rules-pt-1">About validation rules (pt. 1)</h2>
+<ul>
+<li>
+<p>Validation rules are defined in the <code>ShedulerValidator</code> class</p>
+<ul>
+<li>package: <code>it.unibo.spe.mdd.sheduler.validation</code></li>
+<li>Gradle sub-project: <code>sheduler-lang/it.unibo.spe.mdd.sheduler.parent/</code><strong><code>it.unibo.spe.mdd.sheduler</code></strong></li>
+</ul>
+</li>
+<li>
+<p>Stub class is generated by Xtext when running the <code>generateXtextLanguage</code> task</p>
+<ul>
+<li>which simply triggers the execution of the <code>GenerateSheduler.mwe2</code> file</li>
+</ul>
+</li>
+<li>
+<p>Content of the stub and validation rule example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">it.unibo.spe.mdd.sheduler.validation</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.spe.mdd.sheduler.sheduler.*</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.eclipse.xtext.validation.Check</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.eclipse.xtext.validation.CheckType</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerValidator</span> <span style="color:#080;font-weight:bold">extends</span> AbstractShedulerValidator {
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@Check</span>(CheckType.<span style="color:#369">FAST</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">ensureDateIsValid</span>(Date date) {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (date.<span style="color:#369">getYear</span>() &lt; <span style="color:#00d;font-weight:bold">0</span>) {
+</span></span><span style="display:flex;"><span>            error(<span style="color:#d20;background-color:#fff0f0">"Year must be positive"</span>, date, ShedulerPackage.<span style="color:#369">Literals</span>.<span style="color:#369">DATE__YEAR</span>, <span style="color:#00d;font-weight:bold">0</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (date.<span style="color:#369">getMonth</span>() &lt; <span style="color:#00d;font-weight:bold">1</span> || date.<span style="color:#369">getMonth</span>() &gt; <span style="color:#00d;font-weight:bold">12</span>) {
+</span></span><span style="display:flex;"><span>            error(<span style="color:#d20;background-color:#fff0f0">"Month must be between 1 and 12"</span>, date, ShedulerPackage.<span style="color:#369">Literals</span>.<span style="color:#369">DATE__MONTH</span>, <span style="color:#00d;font-weight:bold">0</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (date.<span style="color:#369">getDay</span>() &lt; <span style="color:#00d;font-weight:bold">1</span> || date.<span style="color:#369">getDay</span>() &gt; <span style="color:#00d;font-weight:bold">31</span>) {
+</span></span><span style="display:flex;"><span>            error(<span style="color:#d20;background-color:#fff0f0">"Day must be between 1 and 31"</span>, date, ShedulerPackage.<span style="color:#369">Literals</span>.<span style="color:#369">DATE__DAY</span>, <span style="color:#00d;font-weight:bold">0</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>documentation here: <a href="https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation">https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation</a></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="about-validation-rules-pt-2">About validation rules (pt. 2)</h2>
+<p>Remarks:</p>
+<ul>
+<li>the name of the validation method is meaning-less</li>
+<li>only the <strong>type</strong> of the parameter matters</li>
+<li>plus the presence of the <code>@Check</code> annotation</li>
+<li>the <code>@CheckType</code> annotation is optional, and defaults to <code>CheckType.NORMAL</code>
+<ul>
+<li><code>FAST</code> will run whenever a file is modified</li>
+<li><code>NORMAL</code> checks will run when saving the file, and</li>
+<li><code>EXPENSIVE</code> checks will run when explicitly validating the file via the menu option</li>
+</ul>
+</li>
+<li>method <code>error(...)</code> may be replaced by <code>warning(...)</code> for minor issues</li>
+</ul>
+</section><section>
+<h2 id="exercise-1-custom-validation-rules-pt-1">Exercise 1: custom validation rules (pt. 1)</h2>
+<p>Write custom validation rules covering the following constraints:</p>
+<ol>
+<li>
+<p>Warning if attempting to represent some <code>RelativeTime</code> as <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html"><code>java.time.Duration</code></a> object would result in an overflow</p>
+<ul>
+<li>cf. the utility methods in class <code>TimeUtils</code></li>
+</ul>
+</li>
+<li>
+<p>Warning if attempting to represent some <code>AbsoluteTime</code> as <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html"><code>java.time.LocalDateTime</code></a> object would result in an overflow</p>
+<ul>
+<li>cf. the utility methods in class <code>TimeUtils</code></li>
+</ul>
+</li>
+<li>
+<p>Warning if some <code>AbsoluteTime</code> is in the past or in the present (only future admitted)</p>
+<ul>
+<li>cf. the utility methods in class <code>TimeUtils</code></li>
+<li>cf. <code>LocalDateTime.now()</code></li>
+<li>cf. <code>LocalDateTime.isBefore()</code></li>
+</ul>
+</li>
+<li>
+<p>Error is some <code>ClockTime</code> is invalid</p>
+<ul>
+<li>hour must be between 0 and 23</li>
+<li>minute must be between 0 and 59</li>
+<li>second must be between 0 and 59</li>
+<li>millisecond must be between 0 and 999</li>
+<li>nanosecond must be between 0 and 999</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="exercise-1-custom-validation-rules-pt-2">Exercise 1: custom validation rules (pt. 2)</h2>
+<ol start="5">
+<li>
+<p>Error if some <code>TimeSpan</code> is invalid</p>
+<ul>
+<li>negative duration</li>
+<li>1000 or more when the unit is nano/milli seconds</li>
+<li>60 or more when the unit is minutes/seconds</li>
+<li>24 or more when the unit is hours</li>
+</ul>
+</li>
+<li>
+<p>Error if any two tasks from the same pool have the same name</p>
+</li>
+<li>
+<p>Error if any two pools have the same name</p>
+</li>
+<li>
+<p>No periodicity should be allowed for tasks that are scheduled before/after some other task</p>
+</li>
+</ol>
+</section><section>
+<h2 id="about-scoping-rules">About scoping rules</h2>
+<ul>
+<li>
+<p>Validation rules are defined in the <code>ShedulerScopeProvider</code> class</p>
+<ul>
+<li>package: <code>it.unibo.spe.mdd.sheduler.scoping</code></li>
+<li>Gradle sub-project: <code>sheduler-lang/it.unibo.spe.mdd.sheduler.parent/</code><strong><code>it.unibo.spe.mdd.sheduler</code></strong></li>
+</ul>
+</li>
+<li>
+<p>Stub class is generated by Xtext when running the <code>generateXtextLanguage</code> task</p>
+</li>
+<li>
+<p>Content of the stub and validation rule example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerScopeProvider</span> <span style="color:#080;font-weight:bold">extends</span> AbstractShedulerScopeProvider {
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> IScope <span style="color:#06b;font-weight:bold">getScope</span>(EObject context, EReference reference) {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">super</span>.<span style="color:#369">getScope</span>(context, reference);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>Documentation here: <a href="https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping">https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping</a></li>
+</ul>
+</li>
+<li>
+<p>Remarks</p>
+<ul>
+<li>only one method should be overridden</li>
+<li>it should return an <code>IScope</code> object, for each <code>EObject</code> containing some <code>EReference</code></li>
+<li>in our case, this could only happen in <code>Task</code>s’ <code>before</code> and <code>after</code> properties</li>
+<li>the scope is essentially a container of <code>EObject</code>s, which are the possible values for the <code>EReference</code>
+<ul>
+<li>the implementer of the scope provide should select which <code>EObject</code>s to include in the scope</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="exercise-2-custom-scoping-rules">Exercise 2: custom scoping rules</h2>
+<h3 id="to-do">TO-DO</h3>
+<p>Write a custom scoping policy for the <code>before</code> and <code>after</code> properties of <code>Task</code>s, such that:</p>
+<ul>
+<li>only <code>Task</code>s from the same <code>TaskPool</code> can be referenced by some <code>Task</code></li>
+<li><code>Task</code>s from some <code>TaskPool</code> cannot be referenced by <code>Task</code> from other <code>TaskPool</code>s</li>
+<li>anonymous <code>Task</code>s (i.e. those without a name) cannot be referenced at all</li>
+</ul>
+<br>
+<p>Documentation here: <a href="https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping">https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping</a></p>
+</section><section>
+<h2 id="code-generation">Code generation</h2>
+<blockquote>
+<p>This will be the content of the next lecture!</p>
+</blockquote>
 </section>
 
   
@@ -869,6 +1434,8 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 
   
 
+  
+    
   
 
   
