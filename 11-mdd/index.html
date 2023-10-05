@@ -803,7 +803,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <li>
 <p>The next step is designing and implementing the <strong>execution engine</strong> for the DSL</p>
 <ul>
-<li>we shall exploit Java’s <a href="https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ScheduledExecutorService.html"><code>ScheduledExecutorService</code>s</a> for this purpose</li>
+<li>we shall exploit Java’s <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ScheduledExecutorService.html"><code>ScheduledExecutorService</code>s</a> for this purpose</li>
 </ul>
 </li>
 <li>
@@ -985,42 +985,42 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 </span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">TaskPoolSet:</span> pools+=TaskPool+ ;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">TaskPool:</span> <span style="color:#d20;background-color:#fff0f0">'pool'</span> name=ID? <span style="color:#d20;background-color:#fff0f0">'{'</span> tasks+=Task+ <span style="color:#d20;background-color:#fff0f0">'}'</span> ;
-</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">Task:</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#d20;background-color:#fff0f0">'schedule'</span> (<span style="color:#d20;background-color:#fff0f0">'task'</span> name=ID)? <span style="color:#d20;background-color:#fff0f0">'{'</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#d20;background-color:#fff0f0">'command'</span> command=STRING
-</span></span><span style="display:flex;"><span>		(<span style="color:#d20;background-color:#fff0f0">'entry'</span> <span style="color:#d20;background-color:#fff0f0">'point'</span> entrypoint=STRING)?
-</span></span><span style="display:flex;"><span>		(
-</span></span><span style="display:flex;"><span>			<span style="color:#d20;background-color:#fff0f0">'in'</span> relative=RelativeTime |
-</span></span><span style="display:flex;"><span>			<span style="color:#d20;background-color:#fff0f0">'at'</span> absolute=AbsoluteTime |
-</span></span><span style="display:flex;"><span>			<span style="color:#d20;background-color:#fff0f0">'before'</span> before=[Task] |            <span style="color:#888">// square brackets denote references to other model elements
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>			<span style="color:#d20;background-color:#fff0f0">'after'</span> after=[Task] 
-</span></span><span style="display:flex;"><span>		)
-</span></span><span style="display:flex;"><span>		(<span style="color:#d20;background-color:#fff0f0">'repeat'</span> <span style="color:#d20;background-color:#fff0f0">'every'</span> period=RelativeTime)?
-</span></span><span style="display:flex;"><span>	<span style="color:#d20;background-color:#fff0f0">'}'</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#d20;background-color:#fff0f0">'schedule'</span> (<span style="color:#d20;background-color:#fff0f0">'task'</span> name=ID)? <span style="color:#d20;background-color:#fff0f0">'{'</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#d20;background-color:#fff0f0">'command'</span> command=STRING
+</span></span><span style="display:flex;"><span>        (<span style="color:#d20;background-color:#fff0f0">'entry'</span> <span style="color:#d20;background-color:#fff0f0">'point'</span> entrypoint=STRING)?
+</span></span><span style="display:flex;"><span>        (
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">'in'</span> relative=RelativeTime |
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">'at'</span> absolute=AbsoluteTime |
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">'before'</span> before=[Task] |            <span style="color:#888">// square brackets denote references to other model elements
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            <span style="color:#d20;background-color:#fff0f0">'after'</span> after=[Task] 
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        (<span style="color:#d20;background-color:#fff0f0">'repeat'</span> <span style="color:#d20;background-color:#fff0f0">'every'</span> period=RelativeTime)?
+</span></span><span style="display:flex;"><span>    <span style="color:#d20;background-color:#fff0f0">'}'</span>
 </span></span><span style="display:flex;"><span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">AbsoluteTime:</span> date=Date time=ClockTime ;
-</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">Date:</span> year=INT <span style="color:#d20;background-color:#fff0f0">'/'</span> month=INT <span style="color:#d20;background-color:#fff0f0">'/'</span> day=INT;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">ClockTime:</span> hour=INT <span style="color:#d20;background-color:#fff0f0">':'</span> minute=INT (<span style="color:#d20;background-color:#fff0f0">':'</span> second=INT (<span style="color:#d20;background-color:#fff0f0">':'</span> millisecond=INT (<span style="color:#d20;background-color:#fff0f0">':'</span> nanosecond=INT)?)?)? ;
-</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">RelativeTime:</span> timeSpans += TimeSpan ((<span style="color:#d20;background-color:#fff0f0">'and'</span> | <span style="color:#d20;background-color:#fff0f0">','</span> | <span style="color:#d20;background-color:#fff0f0">'+'</span>) timeSpans += TimeSpan)* ;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#369;font-style:italic">TimeSpan:</span> duration=INT unit=(TimeUnit|LongTimeUnit);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">enum</span> <span style="color:#b06;font-weight:bold">TimeUnit</span>: NANOSECONDS = <span style="color:#d20;background-color:#fff0f0">'ns'</span> | MILLISECONDS = <span style="color:#d20;background-color:#fff0f0">'ms'</span> | SECONDS = <span style="color:#d20;background-color:#fff0f0">'s'</span> | MINUTES = <span style="color:#d20;background-color:#fff0f0">'m'</span> | HOURS = <span style="color:#d20;background-color:#fff0f0">'h'</span> | DAYS = <span style="color:#d20;background-color:#fff0f0">'d'</span> | WEEKS = <span style="color:#d20;background-color:#fff0f0">'w'</span> | 	YEARS = <span style="color:#d20;background-color:#fff0f0">'y'</span> ;
-</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">enum</span> <span style="color:#b06;font-weight:bold">LongTimeUnit</span> returns <span style="color:#369;font-style:italic">TimeUnit:</span> 
-</span></span><span style="display:flex;"><span>	NANOSECONDS = <span style="color:#d20;background-color:#fff0f0">'nanoseconds'</span> | 
-</span></span><span style="display:flex;"><span>	MILLISECONDS = <span style="color:#d20;background-color:#fff0f0">'milliseconds'</span> |
-</span></span><span style="display:flex;"><span>	SECONDS = <span style="color:#d20;background-color:#fff0f0">'seconds'</span> |
-</span></span><span style="display:flex;"><span>	MINUTES = <span style="color:#d20;background-color:#fff0f0">'minutes'</span> | 
-</span></span><span style="display:flex;"><span>	HOURS = <span style="color:#d20;background-color:#fff0f0">'hours'</span> |
-</span></span><span style="display:flex;"><span>	DAYS = <span style="color:#d20;background-color:#fff0f0">'days'</span> |
-</span></span><span style="display:flex;"><span>	WEEKS = <span style="color:#d20;background-color:#fff0f0">'weeks'</span> |
-</span></span><span style="display:flex;"><span>	YEARS = <span style="color:#d20;background-color:#fff0f0">'years'</span> ;
+</span></span><span style="display:flex;"><span>    NANOSECONDS = <span style="color:#d20;background-color:#fff0f0">'nanoseconds'</span> | 
+</span></span><span style="display:flex;"><span>    MILLISECONDS = <span style="color:#d20;background-color:#fff0f0">'milliseconds'</span> |
+</span></span><span style="display:flex;"><span>    SECONDS = <span style="color:#d20;background-color:#fff0f0">'seconds'</span> |
+</span></span><span style="display:flex;"><span>    MINUTES = <span style="color:#d20;background-color:#fff0f0">'minutes'</span> | 
+</span></span><span style="display:flex;"><span>    HOURS = <span style="color:#d20;background-color:#fff0f0">'hours'</span> |
+</span></span><span style="display:flex;"><span>    DAYS = <span style="color:#d20;background-color:#fff0f0">'days'</span> |
+</span></span><span style="display:flex;"><span>    WEEKS = <span style="color:#d20;background-color:#fff0f0">'weeks'</span> |
+</span></span><span style="display:flex;"><span>    YEARS = <span style="color:#d20;background-color:#fff0f0">'years'</span> ;
 </span></span></code></pre></div></section><section>
 <h2 id="generated-interfaces">Generated interfaces</h2>
 
@@ -1320,10 +1320,267 @@ RelativeTime *-- ClockTime
 <br>
 <p>Documentation here: <a href="https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping">https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping</a></p>
 </section><section>
-<h2 id="code-generation">Code generation</h2>
-<blockquote>
-<p>This will be the content of the next lecture!</p>
-</blockquote>
+<h2 id="giving-semantics-to-the-language">Giving semantics to the language</h2>
+<ul>
+<li>
+<p>Two approaches:</p>
+<ul>
+<li><strong>interpretation</strong>: the DSL is interpreted by some <strong>execution engine</strong></li>
+<li><strong>translation</strong>: the DSL is translated into some <em>executable code</em>, leveraging on the API of some <strong>execution engine</strong></li>
+</ul>
+</li>
+<li>
+<p>Both approaches require the definition of an <strong>execution engine</strong></p>
+<ul>
+<li>i.e. a library providing the <strong>functionalities</strong> of the DSL</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="focus-on-the-execution-engine">Focus on the execution engine</h2>
+<ol>
+<li>
+<p>Is there functionality in the JDK which supports the <strong>scheduling</strong> of tasks in the future?</p>
+<ul>
+<li>if <em>yes</em>: let’s use it! <em>otherwise</em>, let’s look for some <em>third-party library</em>, or <em>implement</em> it ourselves</li>
+<li>luckily, we may use <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ScheduledExecutorService.html"><code>ScheduledExecutorService</code>s</a> !</li>
+</ul>
+</li>
+<li>
+<p>Same question for the <strong>execution</strong> of custom <strong>commands</strong> via some <em>shell</em>?</p>
+<ul>
+<li>luckily, we may use <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/ProcessBuilder.html"><code>ProcessBuilder</code>s</a>!</li>
+</ul>
+</li>
+<li>
+<p>Design insights:</p>
+<ol>
+<li>we may define some <em>custom</em> notion of <code>ShedulerTask</code> encapsulating:
+<ul>
+<li>the <em>command</em> to be executed</li>
+<li>optionally, the <em>shell</em> to be used</li>
+<li>the initial <em>delay</em></li>
+<li>optionally, the <em>period</em></li>
+<li>optionally, the tasks to be executed <em>before/after</em></li>
+<li>the functionalities for <strong>executing</strong> the command via <code>ProcessBuilder</code>s</li>
+</ul>
+</li>
+<li>we may define some custom notion of <code>ShedulerRuntime</code>
+<ul>
+<li>leveraging on the <code>ScheduledExecutorService</code> API…</li>
+<li>… to schedule the <code>ShedulerTask</code>s for execution</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</section><section>
+<h2 id="example-the-shedulerruntime-and-shedulertask-classes">Example: the <code>ShedulerRuntime</code> and <code>ShedulerTask</code> classes</h2>
+
+<div class="multiCol">
+    <div class="col ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerRuntime</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">final</span> ScheduledExecutorService delegate;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#06b;font-weight:bold">ShedulerRuntime</span>(ScheduledExecutorService delegate) {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">this</span>.<span style="color:#369">delegate</span> = Objects.<span style="color:#369">requireNonNull</span>(delegate);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">schedule</span>(SheduleTask task) {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (task.<span style="color:#369">isPeriodic</span>()) {
+</span></span><span style="display:flex;"><span>            delegate.<span style="color:#369">scheduleWithFixedDelay</span>(
+</span></span><span style="display:flex;"><span>                task.<span style="color:#369">asRunnable</span>(), 
+</span></span><span style="display:flex;"><span>                task.<span style="color:#369">getDelay</span>().<span style="color:#369">toMillis</span>(), 
+</span></span><span style="display:flex;"><span>                task.<span style="color:#369">getPeriod</span>().<span style="color:#369">toMillis</span>(), 
+</span></span><span style="display:flex;"><span>                TimeUnit.<span style="color:#369">MILLISECONDS</span>
+</span></span><span style="display:flex;"><span>            );
+</span></span><span style="display:flex;"><span>        } <span style="color:#080;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>            delegate.<span style="color:#369">schedule</span>(
+</span></span><span style="display:flex;"><span>                task.<span style="color:#369">asRunnable</span>(), 
+</span></span><span style="display:flex;"><span>                task.<span style="color:#369">getDelay</span>().<span style="color:#369">toMillis</span>(), 
+</span></span><span style="display:flex;"><span>                TimeUnit.<span style="color:#369">MILLISECONDS</span>
+</span></span><span style="display:flex;"><span>            );
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</div>
+<div class="col ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerTask</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#06b;font-weight:bold">ShedulerTask</span>(String name, String command, String entrypoint, Duration delay) { <span style="color:#888">/*...*/</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> String <span style="color:#06b;font-weight:bold">getName</span>() { <span style="color:#888">/*...*/</span> }
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> String <span style="color:#06b;font-weight:bold">getCommand</span>() { <span style="color:#888">/*...*/</span> }
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> String <span style="color:#06b;font-weight:bold">getEntrypoint</span>() { <span style="color:#888">/*...*/</span> }
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> Duration <span style="color:#06b;font-weight:bold">getPeriod</span>() { <span style="color:#888">/*...*/</span> }
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#888;font-weight:bold">boolean</span> <span style="color:#06b;font-weight:bold">isPeriodic</span>() { <span style="color:#888">/*...*/</span> }
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> SheduleTask <span style="color:#06b;font-weight:bold">setPeriod</span>(Duration period) { <span style="color:#888">/*...*/</span> }
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> Duration <span style="color:#06b;font-weight:bold">getDelay</span>() { <span style="color:#888">/*...*/</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> Process <span style="color:#06b;font-weight:bold">executeAsync</span>() <span style="color:#080;font-weight:bold">throws</span> IOException { 
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">new</span> ProcessBuilder(entrypoint, command).<span style="color:#369">inheritIO</span>().<span style="color:#369">start</span>(); 
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> Runnable <span style="color:#06b;font-weight:bold">asRunnable</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> () -&gt; {
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>                executeAsync();
+</span></span><span style="display:flex;"><span>            } <span style="color:#080;font-weight:bold">catch</span> (IOException e) {
+</span></span><span style="display:flex;"><span>                e.<span style="color:#369">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> SheduleTask <span style="color:#06b;font-weight:bold">in</span>(String name, String command, String entrypoint, Duration delay) { <span style="color:#888">/*...*/</span> }
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> SheduleTask <span style="color:#06b;font-weight:bold">in</span>(String command, String entrypoint, Duration delay) { <span style="color:#888">/*...*/</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> SheduleTask <span style="color:#06b;font-weight:bold">at</span>(String name, String command, String entrypoint, LocalDateTime dateTime) { <span style="color:#888">/*...*/</span> }
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> SheduleTask <span style="color:#06b;font-weight:bold">at</span>(String command, String entrypoint, LocalDateTime dateTime) { <span style="color:#888">/*...*/</span> }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</div>
+
+</div>
+</section><section>
+<h3 id="usage-example">Usage example:</h3>
+
+<div class="multiCol">
+    <div class="col ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String[] args) {
+</span></span><span style="display:flex;"><span>    ShedulerRuntime runtime = <span style="color:#080;font-weight:bold">new</span> ShedulerRuntime(Executors.<span style="color:#369">newScheduledThreadPool</span>(<span style="color:#00d;font-weight:bold">1</span>));
+</span></span><span style="display:flex;"><span>    pool_myPool(runtime);
+</span></span><span style="display:flex;"><span>    pool_otherPool(runtime);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">pool_myPool</span>(ShedulerRuntime runtime) {
+</span></span><span style="display:flex;"><span>    ShedulerTask task0 = ShedulerTask.<span style="color:#369">in</span>(<span style="color:#d20;background-color:#fff0f0">"greetFrequently"</span>, <span style="color:#d20;background-color:#fff0f0">"echo hello"</span>, <span style="color:#d20;background-color:#fff0f0">"/bin/sh -c"</span>, Duration.<span style="color:#369">parse</span>(<span style="color:#d20;background-color:#fff0f0">"PT5M"</span>));
+</span></span><span style="display:flex;"><span>    task0.<span style="color:#369">setPeriodic</span>(Duration.<span style="color:#369">parse</span>(<span style="color:#d20;background-color:#fff0f0">"PT1H"</span>));
+</span></span><span style="display:flex;"><span>    ShedulerTask task1 = ShedulerTask.<span style="color:#369">at</span>(<span style="color:#d20;background-color:#fff0f0">"greetOnce"</span>, <span style="color:#d20;background-color:#fff0f0">"echo hello"</span>, <span style="color:#d20;background-color:#fff0f0">"/bin/bash -c"</span>, LocalDateTime.<span style="color:#369">parse</span>(<span style="color:#d20;background-color:#fff0f0">"2030-10-11T12:13"</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">pool_otherPool</span>(ShedulerRuntime runtime) {
+</span></span><span style="display:flex;"><span>    ShedulerTask task0 = ShedulerTask.<span style="color:#369">in</span>(<span style="color:#d20;background-color:#fff0f0">"shutdownAfter1Day"</span>, <span style="color:#d20;background-color:#fff0f0">"sudo shutdown now"</span>, <span style="color:#d20;background-color:#fff0f0">"/bin/zsh -c"</span>, Duration.<span style="color:#369">parse</span>(<span style="color:#d20;background-color:#fff0f0">"PT24H"</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</div>
+<div class="col ">
+    <pre tabindex="0"><code>pool myPool {
+    schedule task greetFrequently {
+        command "echo hello"
+        entry point "/bin/sh -c"
+        in 5 minutes
+        repeat every 1 hours
+    }
+    schedule task greetOnce {
+        command "echo hello"
+        entry point "/bin/bash -c"
+        at 2030/10/11 12:13
+    }
+}
+pool otherPool {
+    schedule task shutdownAfter1Day {
+        command "sudo shutdown now"
+        entry point "/bin/zsh -c"
+        in 1 days
+    }
+}
+</code></pre>
+</div>
+
+</div>
+</section><section>
+<h2 id="exercise-3-write-a-code-generator-for-the-sheduler-dsl">Exercise 3: write a code generator for the <code>Sheduler</code> DSL</h2>
+<ul>
+<li>
+<p>The code generator should output code having a structure similar to the one shown in the previous slide</p>
+</li>
+<li>
+<p>The <code>ShedulerRuntime</code> and <code>ShedulerTask</code> classes may be generated as they are in the example</p>
+</li>
+<li>
+<p>The key part is generating the <em>main</em>, where components are assembled together</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerGenerator</span> <span style="color:#080;font-weight:bold">extends</span> AbstractShedulerGenerator {
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">doGenerate</span>(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+</span></span><span style="display:flex;"><span>        File inputFile = <span style="color:#080;font-weight:bold">new</span> File(resource.<span style="color:#369">getURI</span>().<span style="color:#369">toFileString</span>());
+</span></span><span style="display:flex;"><span>        TaskPoolSet taskPools = (TaskPoolSet) resource.<span style="color:#369">getContents</span>().<span style="color:#369">get</span>(<span style="color:#00d;font-weight:bold">0</span>);
+</span></span><span style="display:flex;"><span>        String inputFileName = inputFile.<span style="color:#369">getName</span>().<span style="color:#369">split</span>(<span style="color:#d20;background-color:#fff0f0">"\\."</span>)[<span style="color:#00d;font-weight:bold">0</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        fsa.<span style="color:#369">generateFile</span>(<span style="color:#d20;background-color:#fff0f0">"ShedulerRuntime.java"</span>, <span style="color:#d20;background-color:#fff0f0">"CODE HERE"</span>);
+</span></span><span style="display:flex;"><span>        fsa.<span style="color:#369">generateFile</span>(<span style="color:#d20;background-color:#fff0f0">"ShedulerTask.java"</span>, <span style="color:#d20;background-color:#fff0f0">"CODE HERE"</span>);
+</span></span><span style="display:flex;"><span>        fsa.<span style="color:#369">generateFile</span>(<span style="color:#d20;background-color:#fff0f0">"ShedulerSystem_"</span> + inputFileName + <span style="color:#d20;background-color:#fff0f0">".java"</span>, <span style="color:#d20;background-color:#fff0f0">"CODE HERE"</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="exercise-4-write-an-interpreter-for-the-sheduler-dsl">Exercise 4: write an interpreter for the <code>Sheduler</code> DSL</h2>
+<ul>
+<li>
+<p>No code generation, just a <code>main</code></p>
+<ol>
+<li>parsing the DSL</li>
+<li>and converting each <code>Task</code> into a <code>ShedulerTask</code></li>
+<li>and running each task via some <code>ShedulerRuntime</code></li>
+</ol>
+</li>
+<li>
+<p>The <code>ShedulerRuntime</code> and <code>ShedulerTask</code> classes should be part of the runtime</p>
+</li>
+<li>
+<p>The key part is writing the <code>main</code>:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerInterpreter</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>(String[] args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (args.<span style="color:#369">length</span> == <span style="color:#00d;font-weight:bold">0</span>) {
+</span></span><span style="display:flex;"><span>            System.<span style="color:#369">err</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">"Aborting: no path to .shed file provided!"</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        Injector injector = <span style="color:#080;font-weight:bold">new</span> ShedulerStandaloneSetup().<span style="color:#369">createInjectorAndDoEMFRegistration</span>();
+</span></span><span style="display:flex;"><span>        ShedulerInterpreter interpreter = injector.<span style="color:#369">getInstance</span>(ShedulerInterpreter.<span style="color:#369">class</span>);
+</span></span><span style="display:flex;"><span>        interpreter.<span style="color:#369">runFile</span>(args[<span style="color:#00d;font-weight:bold">0</span>]);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@Inject</span> <span style="color:#080;font-weight:bold">private</span> Provider&lt;ResourceSet&gt; resourceSetProvider;
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@Inject</span> <span style="color:#080;font-weight:bold">private</span> IResourceValidator validator;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">protected</span> <span style="color:#888;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">runFile</span>(String string) {
+</span></span><span style="display:flex;"><span>        <span style="color:#888">// Load the resource
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        ResourceSet set = resourceSetProvider.<span style="color:#369">get</span>();
+</span></span><span style="display:flex;"><span>        Resource resource = set.<span style="color:#369">getResource</span>(URI.<span style="color:#369">createFileURI</span>(string), <span style="color:#080;font-weight:bold">true</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        TaskPoolSet taskPools = (TaskPoolSet) resource.<span style="color:#369">getContents</span>().<span style="color:#369">get</span>(<span style="color:#00d;font-weight:bold">0</span>);
+</span></span><span style="display:flex;"><span>        ShedulerRuntime runtime = <span style="color:#080;font-weight:bold">new</span> ShedulerRuntime(Executors.<span style="color:#369">newScheduledThreadPool</span>(<span style="color:#00d;font-weight:bold">1</span>));
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">for</span> (TaskPool pool : taskPools.<span style="color:#369">getPools</span>()) {
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">for</span> (Task task : pool.<span style="color:#369">getTasks</span>()) {
+</span></span><span style="display:flex;"><span>                runtime.<span style="color:#369">schedule</span>(toShedulerTask(task));
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> ShedulerTask <span style="color:#06b;font-weight:bold">toShedulerTask</span>(Task task) {
+</span></span><span style="display:flex;"><span>        <span style="color:#888">// TODO
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="exercise-5-support-for-task-dependencies">Exercise 5: support for task dependencies</h2>
+<ul>
+<li>
+<p>Add support for <strong>task dependencies</strong> (before/after) to the <em>execution engine</em></p>
+<ul>
+<li>the <em>parser</em> already supports that</li>
+<li>the <em>execution engine</em> requires some <em>refactoring</em></li>
+</ul>
+</li>
+<li>
+<p>Update the <strong>code generator</strong> accordingly</p>
+</li>
+<li>
+<p>Update the <strong>interpreter</strong> accordingly</p>
+</li>
+</ul>
 </section>
 
   
@@ -1434,8 +1691,6 @@ RelativeTime *-- ClockTime
 
   
 
-  
-    
   
 
   
