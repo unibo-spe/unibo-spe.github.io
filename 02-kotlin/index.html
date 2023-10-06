@@ -1730,7 +1730,7 @@ as such, their type can be legally expressed by:</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.<span style="color:#b06;font-weight:bold">Companion</span>.intro <span style="color:#080;font-weight:bold">get</span>() = generateSequence { <span style="color:#b06;font-weight:bold">Double</span>.NaN } <span style="color:#888">// String.Companion is extension receiver
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        .take(<span style="color:#00d;font-weight:bold">10</span>)
 </span></span><span style="display:flex;"><span>        .joinToString(separator = <span style="color:#d20;background-color:#fff0f0">""</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$this</span><span style="color:#d20;background-color:#fff0f0"> </span><span style="color:#33b;background-color:#fff0f0">${this@Batman.name}</span><span style="color:#d20;background-color:#fff0f0">!"</span> <span style="color:#888">// Qualified this access to the dispatch receiver
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$this</span><span style="color:#d20;background-color:#fff0f0"> </span><span style="color:#33b;background-color:#fff0f0">${ this@Batman.name }</span><span style="color:#d20;background-color:#fff0f0">!"</span> <span style="color:#888">// Qualified this access to the dispatch receiver
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-202----functional-kotlin-11">Kotlin 202 – Functional Kotlin</h1>
@@ -1743,7 +1743,7 @@ This enables a powerful form of <em>scope control</em></p>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.<span style="color:#b06;font-weight:bold">Companion</span>.intro <span style="color:#080;font-weight:bold">get</span>() = generateSequence { <span style="color:#b06;font-weight:bold">Double</span>.NaN } <span style="color:#888">// String is extension receiver
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        .take(<span style="color:#00d;font-weight:bold">10</span>)
 </span></span><span style="display:flex;"><span>        .joinToString(separator = <span style="color:#d20;background-color:#fff0f0">""</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$this</span><span style="color:#d20;background-color:#fff0f0"> </span><span style="color:#33b;background-color:#fff0f0">${this@Batman.name}</span><span style="color:#d20;background-color:#fff0f0">!"</span> <span style="color:#888">// Qualified this access to the dispatch receiver
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$this</span><span style="color:#d20;background-color:#fff0f0"> </span><span style="color:#33b;background-color:#fff0f0">${ this@Batman.name }</span><span style="color:#d20;background-color:#fff0f0">!"</span> <span style="color:#888">// Qualified this access to the dispatch receiver
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span><span style="display:flex;"><span><span style="color:#888">// Extension members are actual members! They require a receiver!
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#b06;font-weight:bold">String</span>.intro.withBatman() <span style="color:#888">// error: unresolved reference: intro
@@ -1828,6 +1828,16 @@ Used to cause side effects and returning the original object</p>
 <li>interoperatibility with Java</li>
 <li><code>inline class</code>es</li>
 </ul>
+</section><section>
+<h1 id="kotlin-1">Kotlin</h1>
+<h2 id="for-scala-developers-1"><em>(for Scala developers)</em></h2>
+<h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
+<br>
+<h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
+<br>
+<p>Compiled on: 2023-10-06
+ — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
+<p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section>
 
   
