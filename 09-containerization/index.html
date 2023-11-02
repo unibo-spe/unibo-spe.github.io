@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head>
     <meta charset="utf-8">
-<title>Containerization</title>
-<meta name="description" content="Containerization basics and CI">
+<title>Containerisation and Orchestration</title>
+<meta name="description" content="Practical introduction to Containerisation and Orchestration with Docker">
 <meta name="author" content="Danilo Pianini">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -22,17 +22,331 @@
       <div class="slides">
   
 
-    <section><h1 id="containerization-basics-and-ci">Containerization: Basics and CI</h1>
+    <section><style>
+.reveal blockquote {
+    font-family: 'Georgia';
+}
+</style>
+<h1 id="containerisation-and-orchestration">Containerisation and Orchestration</h1>
 <h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
 <br>
-<h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
+<h3 id="giovanni-ciatto-----giovanniciattouniboitmailtogiovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
 <p>Compiled on: 2023-11-02
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
+<h2 id="preliminaries">Preliminaries</h2>
+<blockquote>
+<p>[Software] <strong>Deployment</strong> $:=$ all of the activities that make a software system available for use</p>
+</blockquote>
+<ul>
+<li><a href="https://www.mlsu.ac.in/econtents/16_EBOOK-7th_ed_software_engineering_a_practitioners_approach_by_roger_s._pressman_.pdf"><em>Software Engineering: A Practitioner’s Approach</em>, Roger S. Pressman</a></li>
+</ul>
+<br>
+<h3 id="general-need-in-software-engineering">General need in Software Engineering</h3>
+<p>To govern the <em>deployment</em> of <strong>software systems</strong> onto some <strong>infrastructure</strong></p>
+<ul>
+<li>
+<p><strong>software system</strong>: multiple interacting software <em>components</em>, each one having its <em>computational requirements</em></p>
+<ul>
+<li>component $\approx$ process</li>
+</ul>
+</li>
+<li>
+<p><strong>infrastructure</strong>: the available <em>hardware</em> and <em>software</em> <strong>substratum</strong> supporting the execution of software components</p>
+<ul>
+<li>hardware $\approx$ CPU, memory, storage, network</li>
+<li>software $\approx$ operating system, drivers, runtimes, libraries</li>
+</ul>
+</li>
+<li>
+<p><strong>deployment</strong>: orderly <em>instantiating</em> software components onto the infrastructure, while</p>
+<ul>
+<li><em>satisfying</em> the computational <em>requirements</em> of each component</li>
+<li><em>optimising</em> the <em>exploitation</em> of the infrastructural facilities</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="what-to-deploy-pt-1">What to deploy? (pt. 1)</h2>
+<ul>
+<li>
+<p><strong>Short-lived tasks</strong> (a.k.a. <strong>jobs</strong>): tasks which eventually terminate</p>
+<ul>
+<li>e.g. data processing or generation tasks</li>
+<li>e.g. simulations</li>
+</ul>
+</li>
+<li>
+<p><strong>Long-lived tasks</strong> (a.k.a. <strong>services</strong>) tasks which run indefinitely</p>
+<ul>
+<li>e.g. web servers</li>
+<li>e.g. databases</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="what-to-deploy-pt-2">What to deploy? (pt. 2)</h2>
+<h3 id="short-lived-tasks">Short-lived tasks</h3>
+<blockquote>
+<p><strong>Short-lived</strong> tasks are bare computational activities aimed at <strong>processing/generating</strong> some data</p>
+</blockquote>
+<ul>
+<li>
+<p>Pure <strong>algorithms</strong> <em>accepting data</em> as input and/or <em>producing data</em> as output.</p>
+</li>
+<li>
+<p>They will eventually reach their natural <strong>termination</strong></p>
+<ul>
+<li><em>without</em> requiring external <em>intervention</em></li>
+</ul>
+</li>
+<li>
+<p>Common workflow:</p>
+<ol>
+<li>users <em>provide</em> the <em>code</em> and the <em>input</em> data,</li>
+<li>they <em>start</em> the task,</li>
+<li>they are interested in <em>getting the output</em> data</li>
+</ol>
+</li>
+<li>
+<p><strong>Parallelism</strong> may be exploited to <em>speed up</em> the computations</p>
+</li>
+</ul>
+</section><section>
+<h2 id="what-to-deploy-pt-3">What to deploy? (pt. 3)</h2>
+<h3 id="long-lived-tasks">Long-lived tasks</h3>
+<blockquote>
+<p><strong>Long-lived</strong> are computational activities which are <strong>not meant to terminate</strong> automatically (unless <em>explicitly stopped</em>)</p>
+</blockquote>
+<ul>
+<li>
+<p>Infinite <em>loops</em>, just <em>waiting</em> for <em>requests</em>, and <em>serving</em> them as soon as possible</p>
+</li>
+<li>
+<p><strong>Interactivity</strong> is a key aspect:</p>
+<ul>
+<li><strong>clients</strong> <em>interact</em> with the service,</li>
+<li>the service <strong>reacts</strong> to the clients’ requests</li>
+<li>clients may be <em>humans</em> or <em>other software</em> components</li>
+</ul>
+</li>
+<li>
+<p>Common workflow:</p>
+<ul>
+<li>users <em>provide</em> the <em>code</em> and some <em>deployment-automation</em> script</li>
+<li>they <em>start</em> the task,</li>
+<li>they are interested in <em>interacting</em> with the service
+<ul>
+<li>e.g. via the shell</li>
+<li>e.g. via some graphical user interface</li>
+<li>e.g. via some Web client</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Parallelism</strong> may be exploited to support <strong>replication</strong></p>
+<ul>
+<li>e.g. for <strong>fault tolerance</strong></li>
+<li>e.g. for <strong>load balancing</strong></li>
+<li>e.g. for <strong>scaling</strong></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="execution-context-of-a-computational-task">Execution context of a computational task</h2>
+<p>Regardless of their life-span, computational tasks may require <strong>computational resources</strong> of various sorts:</p>
+<ul>
+<li>
+<p>specific <strong>hardware capabilities</strong></p>
+<ul>
+<li>e.g. quick / multi-core CPUs for computation intensive tasks</li>
+<li>e.g. GPUs for tasks requiring parallelism</li>
+<li>e.g. primary memory (RAM)</li>
+<li>e.g. large / quick storage (SSD, HDD, etc.)</li>
+<li>e.g. quick networks connection (e.g. optical fiber)</li>
+</ul>
+</li>
+<li>
+<p>specific <strong>operative systems</strong> (Linux, MacOS, Windows, etc.) or specific <strong>architectures</strong> (x86, ARM, etc.)</p>
+</li>
+<li>
+<p>specific <strong>runtime platforms</strong> (e.g. JVM, Python, .NET etc.)</p>
+</li>
+<li>
+<p>specific <strong>infrastructural components</strong> (e.g. database, reverse proxy, load-balancer, broker, etc.)</p>
+</li>
+<li>
+<p>specific <strong>libraries</strong> (e.g. CUDA, <code>numpy</code>, etc.)</p>
+</li>
+</ul>
+</section><section>
+<h2 id="the-need-for-encapsulation-pt-1">The need for encapsulation (pt. 1)</h2>
+<!-- > __Encapsulation__ is the __hiding__ of the __implementation details__ of a __component__ from its __clients__.
+> Encapsulated components have a clear __interface__ which is the only way to interact with them. -->
+<blockquote>
+<p>Why can’t we simply configure bare-metal machines to host our tasks?</p>
+</blockquote>
+<ul>
+<li>
+<p>Need for <strong>multi-tenancy</strong> (i.e. sharing) on computational resources</p>
+<ol>
+<li>one may have <em>$N$ machines</em> and <em>$M$ applications</em>…
+<ul>
+<li>… and be willing to <strong>decouple</strong> applications from machines</li>
+</ul>
+</li>
+<li>different software components may have <strong>incompatible</strong> HW / SW requirements</li>
+</ol>
+</li>
+<li>
+<p>Need for <strong>isolation</strong></p>
+<ul>
+<li>preventing <em>spurious interactions</em> among different tenants</li>
+<li>a common requirement in multi-tenant scenarios</li>
+</ul>
+</li>
+<li>
+<p>Need to <strong>formalize / control / reproduce</strong> the <em>computational environment</em> of applications</p>
+<ul>
+<li>formalisation is a <em>pre-requisite</em> for <strong>automation</strong></li>
+<li>automation <em>enables</em> <strong>control</strong> and <strong>scale</strong></li>
+</ul>
+</li>
+<li>
+<p>Need to <strong>automate deployment</strong> of applications into <strong>production</strong> / <strong>testing</strong> environments</p>
+<ul>
+<li>this is the immediate <em>benefit for engineers</em></li>
+</ul>
+</li>
+<li>
+<p>Need for <strong>flexibility</strong> (in <em>re-deployment</em>), and <strong>scalability</strong></p>
+<ul>
+<li><em>effort minimisation</em> for application <strong>startup</strong> or <strong>transfer</strong></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="the-need-for-encapsulation-pt-2">The need for encapsulation (pt. 2)</h2>
+<p>Some abstraction is needed to encapsulate applications, and their computational environment, into a single unit</p>
+<blockquote>
+<p><strong>Encapsulation</strong> is the <strong>hiding</strong> of the <strong>implementation details</strong> of a <strong>component</strong> from its <strong>clients</strong>.
+Encapsulated components have a clear <strong>interface</strong> which is the only way to interact with them.</p>
+</blockquote>
+</section><section>
+<h2 id="how-to-achieve-encapsulation-pt-1">How to achieve encapsulation? (pt. 1)</h2>
+<ul>
+<li>
+<p><strong>Virtual machines</strong> (VM) on top of VM <em>hypervisors</em> (VMH)</p>
+</li>
+<li>
+<p><strong>Containers</strong> on top of container <em>engines</em> (CE)</p>
+</li>
+</ul>
+</section><section>
+<h2 id="how-to-achieve-encapsulation-pt-2">How to achieve encapsulation? (pt. 2)</h2>
+<h3 id="virtual-machines-and-hypervisors">Virtual machines and hypervisors</h3>
+<ul>
+<li>
+<p>VMH run on/as the OS of a bare-metal machine, abstracting HW and SW peculiarities away</p>
+<ul>
+<li>VM have virtualised HW and SW resources, different from the host’s ones</li>
+</ul>
+</li>
+<li>
+<p>VMH may instantiate multiple VM on the same machine</p>
+<ul>
+<li>partitioning actual resources ahead of time</li>
+</ul>
+</li>
+<li>
+<p>each VM runs its own OS, and may host multiple applications</p>
+<ul>
+<li>in the eyes of the user, the VM is undistinguishable from a bare-metal machine</li>
+</ul>
+</li>
+<li>
+<p>VM may be paused, snapshot (into file), resumed, and possibly migrated</p>
+<ul>
+<li>snapshots are files containing the whole file-system of the VM</li>
+</ul>
+</li>
+<li>
+<p>VM are coarse grained encapsulation units</p>
+<ul>
+<li>they are heavy-weight (GBs)</li>
+<li>they are slow to start, run, migrate, snapshot</li>
+<li>VM commonly encapsulate multiple application-level components
+<ul>
+<li>database, server, plus all their runtimes and libraries, etc.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Many industry-ready technologies:</p>
+<ul>
+<li>VMWare, VirtualBox, KVM, Xen, Hyper-V, QEMU, Proxmox, etc.</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="how-to-achieve-encapsulation-pt-3">How to achieve encapsulation? (pt. 3)</h2>
+<h3 id="containers-and-container-engines-ce">Containers and container engines (CE)</h3>
+<ul>
+<li>
+<p>CE run on/as the OS of a bare-metal/virtual machine, abstracting the runtime, storage, and network environment away</p>
+<ul>
+<li>the CPU, memory, OS kernel, drivers, and hardware are <strong>not virtualised</strong></li>
+</ul>
+</li>
+<li>
+<p>one may instantiate multiple containers on the same machine</p>
+<ul>
+<li>sharing the actual resources dynamically (overbooking support)</li>
+</ul>
+</li>
+<li>
+<p>each container shares the OS kernel of the host, yet having its own runtime(s), storage, and network facilities</p>
+<ul>
+<li>in the eyes of the user, the container is a process running on top of a minimal OS</li>
+</ul>
+</li>
+<li>
+<p>each container is instance of an image, i.e. a read-only template containing deployment instructions</p>
+<ul>
+<li>differences w.r.t. that image constitute the state of the container
+<ul>
+<li>these can be snapshot into file of minimal size</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>containers are fine-grained encapsulation units</p>
+<ul>
+<li>they are light-weight (MBs)</li>
+<li>they are fast to start, run, snapshot</li>
+<li>they are commonly used to encapsulate single application-level components
+<ul>
+<li>e.g. a database instance, a web-server instance, etc.</li>
+<li>the final application should consist of several, inter-communicating containers</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Many industry-ready technologies:</p>
+<ul>
+<li>Docker, LXC, LXD, Podman, etc.</li>
+</ul>
+</li>
+</ul>
+</section><section>
 <!-- this file includes generated content. Do not edit. Edit content/09-containerization/_generator.md, instead. -->
-<h2 id="bare-metal-vs-vms-vs-containers">Bare metal vs. VMs vs. Containers</h2>
+<h2 id="bare-metal-vs-vms-vs-containers">Bare-metal vs. VMs vs. Containers</h2>
 
 
   
@@ -43,13 +357,7 @@
     <figcaption></figcaption>
 </figure>
 
-<p>Runtime <strong>isolation</strong> without operating system <strong>replication</strong></p>
-</section><section>
-<h2 id="why-containers">Why containers?</h2>
-<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/6824b93d3d52b841386a744f57953a73ccb67378/containerization/works-on-my-machine.jpeg" alt=""></p>
-</section><section>
-<h2 id="why-containers-1">Why containers?</h2>
-<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/6824b93d3d52b841386a744f57953a73ccb67378/containerization/docker-born.jpeg" alt=""></p>
+<p>Containers provide <strong>runtime isolation</strong> <em>without</em> operating <strong>system replication</strong></p>
 </section><section>
 <h2 id="lightweight-virtual-machines">Lightweight virtual machines?</h2>
 <p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/6824b93d3d52b841386a744f57953a73ccb67378/containerization/lightweight-container.jpg" alt=""></p>
@@ -57,67 +365,190 @@
 <h2 id="closer-to-confined-processes">Closer to confined processes</h2>
 <p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/6824b93d3d52b841386a744f57953a73ccb67378/containerization/chroot.jpeg" alt=""></p>
 </section><section>
-<h2 id="docker">Docker</h2>
-<p>Docker is a containerization platform</p>
-<p><em>Standard de-facto</em> in industry</p>
-<p><strong>Base concepts</strong></p>
+<h2 id="scaling-up-to-the-cluster-level">Scaling up to the cluster level</h2>
+<blockquote>
+<p><strong>Cluster</strong> $:=$ a set of <em>similarly configured</em> <strong>machines</strong> (a.k.a. <strong>nodes</strong>) <strong>interconnected</strong> via a <strong>network</strong> in order to let users exploit their <strong>joint</strong> computational power</p>
+</blockquote>
 <ul>
-<li><em>Image</em>
+<li>
+<p>Users may want to deploy their applications on the cluster</p>
 <ul>
-<li>a <em>read-only template</em> with instructions for creating a Docker container</li>
-<li>images can get built upon other images</li>
-<li>images are made of a stack of <em>layers</em></li>
+<li>by means of a single access point
+<ul>
+<li>e.g. a Web dashboard, or a CLI</li>
 </ul>
 </li>
-<li><em>Container</em>
-<ul>
-<li>a <em>runnable instance</em> of an image</li>
-<li>namely, a “writable layer” atop an image</li>
 </ul>
 </li>
-<li><em>Service</em>
+<li>
+<p>Deployment shall allocate tasks on the cluster in an efficient way</p>
 <ul>
-<li>A software component in charge of running one or multiple containers</li>
+<li>meeting the tasks’ computational requirements</li>
+<li>balancing the load among the nodes</li>
+<li>matching requirements on actual capabilities of nodes</li>
+</ul>
+</li>
+<li>
+<p>Infrastructure-as-a-service (IaaS) cloud technologies support deploying tasks on clusters, as VM</p>
+<ul>
+<li>e.g. OpenStack, VSphere, etc.</li>
+</ul>
+</li>
+<li>
+<p>Container orchestrator support deploying tasks on clusters, as containers</p>
+<ul>
+<li>e.g. Kubernetes, Docker Swarm, etc.</li>
 </ul>
 </li>
 </ul>
 </section><section>
-<h2 id="docker-architecture">Docker architecture</h2>
-<ul>
-<li><em>Registry</em>: repository of images</li>
-<li><em>Daemon</em>: service pulling images from registries and instancing containers</li>
-<li><em>Client</em>: interface towards the daemon</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/6824b93d3d52b841386a744f57953a73ccb67378/containerization/architecture.svg" alt=""></p>
+<h2 id="why-containers-pt-1">Why containers? (pt. 1)</h2>
+
+<div class="multiCol">
+    
+
+<div class="col ">
+    <p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/6824b93d3d52b841386a744f57953a73ccb67378/containerization/works-on-my-machine.jpeg" alt=""></p>
+
+</div>
+
+<div class="col ">
+    <p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/6824b93d3d52b841386a744f57953a73ccb67378/containerization/docker-born.jpeg" alt=""></p>
+
+</div>
+
+</div>
 </section><section>
-<h2 id="running-docker-containers">Running docker containers</h2>
+<h2 id="why-containers-pt-2">Why containers? (pt. 2)</h2>
+<ul>
+<li>more fine-grained encapsulation (than VM)</li>
+<li>faster to start, stop, snapshot, migrate (w.r.t. VM)</li>
+<li>more modular, more scalable (than VM)</li>
+<li>useful for dev-ops, and CI/CD</li>
+<li>most-likely, it’s the future of cloud computing</li>
+</ul>
+</section><section>
+<h2 id="containerisation-vs-orchestration">Containerisation vs. Orchestration</h2>
+<ul>
+<li>
+<p><strong>Containerisation</strong> $:=$ the process of <em>encapsulating</em> an application into a <em>container</em></p>
+</li>
+<li>
+<p><strong>Orchestration</strong> $:=$ the process of <em>deploying</em> one or more container onto <em>one or more</em> machines</p>
+</li>
+<li>
+<p><strong>Containerisation</strong> is a <em>pre-requisite</em> for <strong>orchestration</strong></p>
+</li>
+<li>
+<p>Two syntaxes involved:</p>
+<ul>
+<li>one to <em>containerise</em> (i.e. create container images)</li>
+<li>one to <em>orchestrate</em> (i.e. deploy containers)</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="main-abstractions">Main abstractions</h2>
+<h3 id="encapsulation-level">Encapsulation level</h3>
+<ul>
+<li><strong>Container</strong>: a sandbox for running a process and its computational environment</li>
+<li><strong>Image</strong>: a template for creating containers</li>
+<li><strong>Layer</strong>: a single, cacheable, step in the creation of an image</li>
+<li><strong>Host</strong>: the machine hosting the containers</li>
+<li><strong>Registry</strong>: a repository of images (possibly external w.r.t. the host)</li>
+<li><strong>Network</strong>: a virtual network for connecting containers (among each others and with the host)</li>
+<li><strong>Volume</strong>: a bridge for letting containers share data with the host</li>
+<li><strong>Engine</strong> (a.k.a. <strong>daemon</strong>): the software running on the host, managing containers, images, volumes, layers, and networks</li>
+</ul>
+<h3 id="orchestration-level">Orchestration level</h3>
+<ul>
+<li><strong>Cluster</strong>: a set of machines, joint together by the same container orchestrator</li>
+<li><strong>Node</strong>: a machine in the cluster (each one acting as a host, and running the container engine)</li>
+<li><strong>Service</strong>: a set of replicas of the same container</li>
+<li><strong>Stack</strong>: a set of inter-related services</li>
+<li><strong>Secret</strong>: encrypted information to be made available on containers</li>
+</ul>
+</section><section>
+<h2 id="about-technologies">About technologies</h2>
+<p><strong>Docker</strong>: the most famous container technology, actually consisting of several components</p>
+<ul>
+<li><strong>Docker Engine</strong>: the container engine managing containers and images, locally</li>
+<li><strong>Docker CLI</strong>: the command line interface for Docker Engine (this is what you use)</li>
+<li><strong>Docker Desktop</strong>: a GUI for Docker Engine, mostly for inspection purposes</li>
+<li><strong>Docker Hub</strong>: the default registry for Docker images, available online</li>
+<li><strong>Docker Compose</strong>: a tool for orchestrating containers on a single machine</li>
+<li><strong>Docker Swarm</strong>: a tool for orchestrating containers on a cluster of machines</li>
+</ul>
+<p><img src="./architecture.svg" alt=""></p>
+</section><section>
+<h2 id="configure-docker-locally">Configure Docker locally</h2>
 <ol>
-<li>Install docker</li>
-<li>Add your user to the <code>docker</code> group</li>
-<li>Enable the docker service (on most Linux distributions <code>systemctl start docker</code>)</li>
+<li>Install Docker
+<ul>
+<li><a href="https://docs.docker.com/engine/install/">https://docs.docker.com/engine/install/</a></li>
+<li>most commonly available on package managers</li>
+</ul>
+</li>
+<li>[Linux only] Add your user to the <code>docker</code> group
+<ul>
+<li><code>sudo usermod -aG docker $USER</code></li>
+<li>log out and log in again</li>
+</ul>
+</li>
+<li>Enable and start the Docker service
+<ul>
+<li>on most Linux distributions <code>sudo systemctl enable docker; sudo systemctl start docker</code></li>
+<li>on MacOS and Windows, start the Docker Desktop application</li>
+</ul>
+</li>
+<li>Test your installation
+<ul>
+<li><code>docker run hello-world</code></li>
+</ul>
+</li>
+<li>Explore admissible sub-commands with <code>docker --help</code>
+<ul>
+<li>general command structure <code>docker &lt;resource&gt; &lt;command&gt; &lt;options&gt; &lt;args&gt;</code>
+<ul>
+<li>sometimes, when it’s obvious, <code>&lt;resource&gt;</code> can be omitted</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<br>
+<blockquote>
+<p>Subsequent examples work on Linux, but they should work on any platform</p>
+<ul>
+<li>provided that a <code>bash</code> or <code>zsh</code> shell is available</li>
+</ul>
+</blockquote>
+</section><section>
+<h2 id="running-containers">Running containers</h2>
+<ol>
 <li>Pull an image: <code>docker pull adoptopenjdk</code></li>
 <li>Run a container! <code>docker run adoptopenjdk</code></li>
 </ol>
-<p>Every container provides a <em>default command</em>, running without options runs such default in a <em>non-interactive</em> terminal.</p>
+<p>Every image provides a <em>default command</em>, running without options runs such default in a <em>non-interactive</em> terminal.</p>
 <p>Running in interactive mode can be achieved with the <code>-i</code> option</p>
-<p>Running a custom command can be achieved with writing the command after the image name</p>
+<p>Running a custom command <em>inside the container</em> can be achieved with writing the command after the image name</p>
 <ul>
 <li>e.g., <code>docker run -i adoptopenjdk bash</code></li>
 <li>parameters for the custom command can follow</li>
-<li>use the <code>t</code> option to run in a <em>pseudo-tty</em></li>
+<li>use the <code>t</code> option to run in a <em>pseudo-tty</em> (always use it whenever you use <code>-i</code>)</li>
 <li>use the <code>--rm</code> to remove the container after use</li>
 </ul>
 </section><section>
 <h2 id="interaction-with-the-outside-world">Interaction with the outside world</h2>
-<p>A docker container runs <em>in isolation</em>.</p>
+<p>A docker container runs <em>in isolation</em>, w.r.t. the host and other containers.</p>
 <p>Environment variables, network ports, and file system folders are <strong>not</strong> shared.</p>
-<p>Sharing must be explicit and requires options to be specified</p>
+<p>Sharing must be explicit and requires options to be specified after <code>docker run</code>:</p>
 <ul>
 <li>Passing environment variables: <code>-e &lt;name&gt;=&lt;value&gt;</code></li>
 <li>Mounting volumes: <code>-v &lt;host&gt;:&lt;guest&gt;:&lt;options&gt;</code>
 <ul>
-<li><code>&lt;host&gt;</code> is the path on the host system</li>
-<li><code>&lt;guest&gt;</code> is the location where it will be mounted on the guest</li>
+<li><code>&lt;host&gt;</code> is the path (or volume name) on the host system</li>
+<li><code>&lt;guest&gt;</code> is the location where it will be mounted on the container</li>
 <li><code>&lt;options&gt;</code> can be optionally specified as mount options (e.g., <code>rw</code>, <code>ro</code>)</li>
 </ul>
 </li>
@@ -140,33 +571,133 @@
 <li><code>docker image tag</code> – associates a tag to an image</li>
 </ul>
 </section><section>
-<h2 id="creating-docker-images">Creating docker images</h2>
-<p>Docker images are written in a <em>Dockerfile</em></p>
+<h2 id="creating-docker-images">Creating Docker images</h2>
+<p>Docker images are written in a <code>Dockerfile</code></p>
 <p>Every command inside a Dockerfile generates a new <em>layer</em></p>
 <p>The final stack of layers creates the final <em>image</em></p>
 <p>The <code>docker build</code> command interprets the Dockerfile commands to produce a sequence of layers</p>
 <p>Changes to a layer do not invalidate previous layers</p>
 </section><section>
+
+
+<section data-shortcode-section="">
 <h2 id="dockerfile-syntax">Dockerfile syntax</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, "scratch" can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#d20;background-color:#fff0f0"> manjarolinux/base </span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#d20;background-color:#fff0f0"> alpine:latest</span><span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">RUN</span> pacman -Sy --noconfirm gnupg archlinux-keyring manjaro-keyring<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Copies a file from the local folder into the image</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">COPY</span> makepkg.conf /etc/makepkg.conf<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">RUN</span> apk update; apk add nodejs npm<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Copies a file/directory from the host into the image</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">COPY</span> path/to/my/nodejs/project /my-project<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Sets the working directory</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">WORKDIR</span><span style="color:#d20;background-color:#fff0f0"> /my-project</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">RUN</span> npm install<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Adds a new environment variable</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">ENV</span> <span style="color:#369">GEM_HOME</span>=/rubygems/bin<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">ENV</span> <span style="color:#369">SERVICE_PORT</span>=<span style="color:#00d;font-weight:bold">8080</span>
+</span></span><span style="display:flex;"><span><span style="color:#888"># Exposes a port</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">EXPOSE</span><span style="color:#d20;background-color:#fff0f0"> 8080</span><span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Configures the default command to execute</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">CMD</span> bash<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span></code></pre></div></section><section>
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">CMD</span> npm run service<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span></code></pre></div><p>to be built by means of the command: <code>docker build -t PATH</code></p>
+<ul>
+<li><code>PATH</code> is the host path containing the <code>Dockerfile</code></li>
+</ul>
+</section><section>
+<h2 id="content-of-the-pathtomynodejsproject-directory">Content of the <code>path/to/my/nodejs/project</code> DIRECTORY</h2>
+<ol>
+<li><code>Dockerfile</code> as for the previous slide</li>
+</ol>
+<div class="multiCol">
+<div class="col ">
+    <ol start="2">
+<li>File <code>package.json</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">"name"</span>: <span style="color:#d20;background-color:#fff0f0">"example"</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">"version"</span>: <span style="color:#d20;background-color:#fff0f0">"1.0.0"</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">"description"</span>: <span style="color:#d20;background-color:#fff0f0">"Example Express WS for exemplifying Docker usage"</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">"main"</span>: <span style="color:#d20;background-color:#fff0f0">"index.mjs"</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">"scripts"</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#b06;font-weight:bold">"service"</span>: <span style="color:#d20;background-color:#fff0f0">"node index.mjs"</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">"dependencies"</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#b06;font-weight:bold">"express"</span>: <span style="color:#d20;background-color:#fff0f0">"^4.18.2"</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">"author"</span>: <span style="color:#d20;background-color:#fff0f0">"gciatto"</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">"license"</span>: <span style="color:#d20;background-color:#fff0f0">"ISC"</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</div>
+<div class="col ">
+    <pre tabindex="0"><code></code></pre>
+</div>
+<div class="col ">
+    <ol start="3">
+<li>File <code>index.mjs</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> { env } from <span style="color:#d20;background-color:#fff0f0">'process'</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> express from <span style="color:#d20;background-color:#fff0f0">'express'</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> { randomBytes } from <span style="color:#d20;background-color:#fff0f0">'crypto'</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> port = <span style="color:#d20;background-color:#fff0f0">'SERVICE_PORT'</span> <span style="color:#080;font-weight:bold">in</span> env ? env.SERVICE_PORT : <span style="color:#00d;font-weight:bold">8080</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> hostname = <span style="color:#d20;background-color:#fff0f0">'HOSTNAME'</span> <span style="color:#080;font-weight:bold">in</span> env ? env.HOSTNAME : <span style="color:#d20;background-color:#fff0f0">'localhost'</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> serverID = randomBytes(<span style="color:#00d;font-weight:bold">8</span>).toString(<span style="color:#d20;background-color:#fff0f0">'hex'</span>) <span style="color:#888">// 8-char random string
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> server = express()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">let</span> counter = <span style="color:#00d;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>server.get(<span style="color:#d20;background-color:#fff0f0">'/'</span>, <span style="color:#080;font-weight:bold">function</span> (req, res) {
+</span></span><span style="display:flex;"><span>  res.send(<span style="color:#d20;background-color:#fff0f0">`[</span><span style="color:#33b;background-color:#fff0f0">${</span>serverID<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">@</span><span style="color:#33b;background-color:#fff0f0">${</span>hostname<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">:</span><span style="color:#33b;background-color:#fff0f0">${</span>port<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">] Hit </span><span style="color:#33b;background-color:#fff0f0">${</span>++counter<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0"> times`</span>)
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>console.log(<span style="color:#d20;background-color:#fff0f0">`Service </span><span style="color:#33b;background-color:#fff0f0">${</span>serverID<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0"> listening on </span><span style="color:#33b;background-color:#fff0f0">${</span>hostname<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">:</span><span style="color:#33b;background-color:#fff0f0">${</span>port<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">`</span>)
+</span></span><span style="display:flex;"><span>server.listen(port)
+</span></span></code></pre></div><p>i.e. a Web service listening on the port indicated by the <code>SERIVICE_PORT</code> env var, showing Web pages of the form</p>
+<pre tabindex="0"><code>[$SERVER_ID@$HOST_NAME:PORT] Hit $VIEW_COUNT times
+</code></pre>
+</div>
+</div>
+<ol start="4">
+<li>File <code>.dockerignore</code></li>
+</ol>
+<pre tabindex="0"><code class="nohighlight" data-noescape="">node_modules/
+</code></pre>
+</section>
+</section><section>
+<h2 id="layers-and-caching-pt-1">Layers and caching (pt. 1)</h2>
+<p>Every line in a <code>Dockerfile</code> generates a new layer:</p>
+<p><img src="./layers-1.png" alt=""></p>
+<p>A layer is a <em>diff</em> w.r.t. the previous one</p>
+<p>In other words, Docker keeps track of what information is added to the image at each step</p>
+</section><section>
+<h2 id="layers-and-caching-pt-2">Layers and caching (pt. 2)</h2>
+<p>When a <code>Dockerfile</code> is built, Docker checks whether the layer has already been built in the recent past</p>
+<p>If so, it reuses the cached layer, and skips the execution of the corresponding command</p>
+<p><img src="./layers-2.png" alt=""></p>
+</section><section>
+<h2 id="layers-and-caching-pt-3">Layers and caching (pt. 3)</h2>
+<p>When the container is run, the images layers are <code>read-only</code>, and the container has a <code>read-write</code> layer on top of them</p>
+<p><img src="./rw-layer.png" alt=""></p>
+<p>So, when a container is stopped, the read-write layer is discarded, and the image layers are kept</p>
+<p>In this way, the <em>space occupied</em> by the container is <em>minimal</em></p>
+</section><section>
 <h2 id="naming-images">Naming images</h2>
 <p>Image naming is done via <em>tags</em></p>
 <p>The easiest way to do so is assigning tags at <em>build time</em> with the <code>-t</code> options of <code>docker build</code></p>
 <p>The option can be repeated multiple times to make multiple tags</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>docker build -t <span style="color:#d20;background-color:#fff0f0">"myImage:latest"</span> -t <span style="color:#d20;background-color:#fff0f0">"myImage:0.1.0"</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>docker build -t <span style="color:#d20;background-color:#fff0f0">"myImage:latest"</span> -t <span style="color:#d20;background-color:#fff0f0">"myImage:0.1.0"</span> PATH
 </span></span></code></pre></div><p><code>latest</code> is usually used to identify the most recent version of some image</p>
+<p>For instance, you may build the image from a few slides ago with:</p>
+<ul>
+<li><code>docker build -t my-service path/to/my/nodejs/project</code>
+<ul>
+<li>the image <code>my-service:latest</code> is automatically created</li>
+</ul>
+</li>
+</ul>
 </section><section>
-<h2 id="publishing-docker-images">Publishing docker images</h2>
+<h2 id="publishing-docker-images">Publishing Docker images</h2>
 <p>Images get published in <em>registries</em></p>
 <p>The most famous, free for publicly available images, is <em>Docker Hub</em></p>
 <p>By default, Docker uses Docker Hub as registry (both for <code>pull</code> and <code>push</code> operations)</p>
@@ -179,11 +710,844 @@
 <li><code>docker push &lt;image name&gt;</code></li>
 </ul>
 </section><section>
-<h2 id="building-docker-images-in-ci">Building docker images in CI</h2>
+<h2 id="building-docker-images-in-ci">Building Docker images in CI</h2>
 <p>Of course, as any other software, <em>custom docker images should get built in CI</em></p>
 <p>Several integrators use containers as build environments: it is possible to <em>build a container using a container</em></p>
 <p>More in general, there is <em>no inherent limit to nesting containers</em></p>
-</section>
+<p>For instance:</p>
+<ul>
+<li>you may run DIND (Docker-in-Docker) via: <code>docker run --privileged --rm -it docker:dind</code></li>
+<li>you may use the Docker CLI in a container: <code>docker run -it --rm docker:cli</code></li>
+</ul>
+</section><section>
+<h2 id="volumes">Volumes</h2>
+<p>Volumes are <em>bridges</em> between the <em>host’s</em> <strong>file system</strong> and the <em>container’s</em> one</p>
+<br>
+<p>Their support several use cases:</p>
+<ul>
+<li><strong>sharing</strong> data between the host and the container</li>
+<li><strong>persisting</strong> containers’ data</li>
+<li>sharing data among containers</li>
+</ul>
+</section><section>
+<h2 id="sorts-of-volumes-pt-1">Sorts of volumes (pt. 1)</h2>
+<p><img src="./volume-types.png" alt=""></p>
+<ul>
+<li>
+<p><strong>Bind mount</strong>: a host directory is <strong>mounted</strong> into the container</p>
+<ul>
+<li>the host directory is specified as <code>&lt;host path&gt;:&lt;guest path&gt;</code> (both must be <strong>absolute paths</strong>)
+<ul>
+<li>e.g. <code>docker run -v /home/user/my-project:/my-project ...</code></li>
+</ul>
+</li>
+<li>data present in <code>&lt;host path&gt;</code> can be read within the container at <code>&lt;guest path&gt;</code></li>
+<li>data written within the container at <code>&lt;guest path&gt;</code> can be accessed on <code>&lt;host path&gt;</code>
+<ul>
+<li>even after the container is stopped / deleted</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Named volume</strong>: virtual drives managed by Docker</p>
+<ul>
+<li>they are created with <code>docker volume create &lt;name&gt;</code></li>
+<li>they are mounted into containers as <code>&lt;name&gt;:&lt;guest path&gt;</code></li>
+<li>their content’s life span is independent of any container</li>
+<li>they can be attached to containers at run-time, referencing their name:
+<ul>
+<li>e.g. <code>docker run -v my-volume:/my-project ...</code></li>
+</ul>
+</li>
+<li>technically, they are just directories on the host’s file system, yet handled by Docker
+<ul>
+<li><code>/var/lib/docker/volumes/&lt;name&gt;/_data</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="sorts-of-volumes-pt-2">Sorts of volumes (pt. 2)</h2>
+<p><img src="./volume-types.png" alt=""></p>
+<ul>
+<li><strong>Tmpfs mount</strong> [Linux-only]: a temporary file system, living only as long as the container is alive
+<ul>
+<li>it is mounted into containers as <code>tmpfs:&lt;guest path&gt;</code></li>
+<li>it is useful for storing temporary data</li>
+<li>do not use it for sharing or persisting data</li>
+<li>it is like an anonymous, ephemeral named volume</li>
+<li>created by means of a <code>--tmpfs</code> option to <code>docker run</code>
+<ul>
+<li>e.g. <code>docker run --tmpfs &lt;guest path&gt; ...</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="example-containers-data-is-ephemeral">Example: containers’ data is ephemeral</h2>
+<ol>
+<li>
+<p>Let’s open a Linux shell in a container: <code>docker run -it --rm alpine:latest sh</code></p>
+</li>
+<li>
+<p>Let’s create folder in there: <code>mkdir -p /data</code></p>
+</li>
+<li>
+<p>Let’s create a file in there: <code>echo "Hello world" &gt; /data/hello.txt</code></p>
+</li>
+<li>
+<p>Does the file exist? <code>ls -la /data</code></p>
+<pre tabindex="0"><code>/ # ls -la /data
+total 12
+drwxr-xr-x    2 root     root          4096 Nov  2 09:28 .
+drwxr-xr-x    1 root     root          4096 Nov  2 09:28 ..
+-rw-r--r--    1 root     root             5 Nov  2 09:28 hello.txt
+</code></pre></li>
+<li>
+<p>Let’s exit the container: <code>exit</code></p>
+</li>
+<li>
+<p>Let’s open a new shell in a new container: <code>docker run -it --rm alpine:latest sh</code></p>
+</li>
+<li>
+<p>Does the file exist? <code>ls -la /data</code></p>
+<pre tabindex="0"><code>ls: /data: No such file or directory
+</code></pre></li>
+<li>
+<p>Why?</p>
+<ul>
+<li>the second <code>docker run ...</code> command created a new container</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="example-sharing-data-with-bind-mounts-pt-1">Example: sharing data with bind mounts (pt. 1)</h2>
+<ol>
+<li>
+<p>Let’s create a folder on the host: <code>mkdir -p $(pwd)/shared</code></p>
+</li>
+<li>
+<p>Let’s create 10 containers</p>
+<ol>
+<li>each one creating a file in <code>./shared/</code></li>
+<li>named <code>container-&lt;i&gt;.txt</code></li>
+<li>containing random data from <code>/dev/random</code>, encoded in base64</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">for</span> i in <span style="color:#080;font-weight:bold">$(</span>seq <span style="color:#00d;font-weight:bold">1</span> 10<span style="color:#080;font-weight:bold">)</span>; <span style="color:#080;font-weight:bold">do</span> 
+</span></span><span style="display:flex;"><span>    docker run --rm -d <span style="color:#04d;background-color:#fff0f0">\ </span>          <span style="color:#888"># detached mode</span>
+</span></span><span style="display:flex;"><span>        -v <span style="color:#080;font-weight:bold">$(</span><span style="color:#038">pwd</span><span style="color:#080;font-weight:bold">)</span>/shared:/data <span style="color:#04d;background-color:#fff0f0">\ </span>  <span style="color:#888"># bind mount</span>
+</span></span><span style="display:flex;"><span>        --hostname container-<span style="color:#369">$i</span> <span style="color:#04d;background-color:#fff0f0">\ </span> <span style="color:#888"># parametric hostname inside the container</span>
+</span></span><span style="display:flex;"><span>        alpine sh -c <span style="color:#04d;background-color:#fff0f0">\
+</span></span></span><span style="display:flex;"><span><span style="color:#04d;background-color:#fff0f0"></span>        <span style="color:#d20;background-color:#fff0f0">'cat /dev/random | head -n 1 | base64 &gt; /data/$(hostname).txt'</span>  
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">done</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Let’s have at the shared directory: <code>ls -la ./shared</code></p>
+<pre tabindex="0"><code>ls -la ./shared 
+totale 56
+drwxr-xr-x  2 user    user     4096  2 nov 10.51 .
+drwxr-xr-x 79 user    user    12288  2 nov 10.56 ..
+-rw-r--r--  1 root    root      329  2 nov 10.51 container-10.txt
+-rw-r--r--  1 root    root      333  2 nov 10.51 container-1.txt
+-rw-r--r--  1 root    root      381  2 nov 10.51 container-2.txt
+-rw-r--r--  1 root    root      167  2 nov 10.51 container-3.txt
+-rw-r--r--  1 root    root      110  2 nov 10.51 container-4.txt
+-rw-r--r--  1 root    root      102  2 nov 10.51 container-5.txt
+-rw-r--r--  1 root    root        9  2 nov 10.51 container-6.txt
+-rw-r--r--  1 root    root      106  2 nov 10.51 container-7.txt
+-rw-r--r--  1 root    root      766  2 nov 10.51 container-8.txt
+-rw-r--r--  1 root    root      203  2 nov 10.51 container-9.txt
+</code></pre></li>
+</ol>
+</section><section>
+<h2 id="example-sharing-data-with-bind-mounts-pt-2">Example: sharing data with bind mounts (pt. 2)</h2>
+<ol start="4">
+<li>Things to notice:
+<ul>
+<li>the files are owned by <code>root</code> (inside the container)</li>
+<li>the files are still owned by <code>root</code> on the host (outside the container)
+<ul>
+<li>despite the fact that the host user is <code>user</code></li>
+<li>if <code>user</code> has no superuser privileges, they cannot delete the files</li>
+</ul>
+</li>
+<li>when creating the container, bind mounts should be <strong>absolute</strong> paths
+<ul>
+<li>hence the need for <code>$(pwd)</code> to get the current working directory</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="example-sharing-data-with-named-volumes-pt-1">Example: sharing data with named volumes (pt. 1)</h2>
+<ol>
+<li>
+<p>Let’s create a named volume: <code>docker volume create my-volume</code></p>
+</li>
+<li>
+<p>Same 10 containers as before, but using the named volume instead of the bind mount</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">for</span> i in <span style="color:#080;font-weight:bold">$(</span>seq <span style="color:#00d;font-weight:bold">1</span> 10<span style="color:#080;font-weight:bold">)</span>; <span style="color:#080;font-weight:bold">do</span> 
+</span></span><span style="display:flex;"><span>    docker run --rm -d <span style="color:#04d;background-color:#fff0f0">\ </span>          <span style="color:#888"># detached mode</span>
+</span></span><span style="display:flex;"><span>        -v my-volume:/data <span style="color:#04d;background-color:#fff0f0">\ </span>      <span style="color:#888"># reference to volume my-volume</span>
+</span></span><span style="display:flex;"><span>        --hostname container-<span style="color:#369">$i</span> <span style="color:#04d;background-color:#fff0f0">\ </span> <span style="color:#888"># parametric hostname inside the container</span>
+</span></span><span style="display:flex;"><span>        alpine sh -c <span style="color:#04d;background-color:#fff0f0">\
+</span></span></span><span style="display:flex;"><span><span style="color:#04d;background-color:#fff0f0"></span>        <span style="color:#d20;background-color:#fff0f0">'cat /dev/random | head -n 1 | base64 &gt; /data/$(hostname).txt'</span>  
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">done</span>
+</span></span></code></pre></div></li>
+<li>
+<p>How to access the data now?</p>
+<ol>
+<li>by means of another container, attached to the same volume</li>
+<li>by means of the host, inspecting the volume’s file system</li>
+</ol>
+</li>
+</ol>
+</section><section>
+<h2 id="example-sharing-data-with-named-volumes-pt-2">Example: sharing data with named volumes (pt. 2)</h2>
+<h3 id="accessing-the-volume-from-another-container">Accessing the volume from another container</h3>
+<ol>
+<li>Let’s create yet another <em>interactice</em> container attached to the volume
+<ul>
+<li><code>docker run --rm -it -v my-volume:/data alpine sh</code></li>
+</ul>
+</li>
+<li>Let’s have a look at the data: <code>ls -la /data</code>
+<pre tabindex="0"><code>total 48
+drwxr-xr-x    2 root     root          4096 Nov  2 10:15 .
+drwxr-xr-x    1 root     root          4096 Nov  2 10:15 ..
+-rw-r--r--    1 root     root           608 Nov  2 10:14 container-1.txt
+-rw-r--r--    1 root     root           349 Nov  2 10:15 container-10.txt
+-rw-r--r--    1 root     root           369 Nov  2 10:14 container-2.txt
+-rw-r--r--    1 root     root           304 Nov  2 10:14 container-3.txt
+-rw-r--r--    1 root     root           240 Nov  2 10:14 container-4.txt
+-rw-r--r--    1 root     root           434 Nov  2 10:14 container-5.txt
+-rw-r--r--    1 root     root           150 Nov  2 10:14 container-6.txt
+-rw-r--r--    1 root     root            41 Nov  2 10:14 container-7.txt
+-rw-r--r--    1 root     root            33 Nov  2 10:15 container-8.txt
+-rw-r--r--    1 root     root          1212 Nov  2 10:15 container-9.txt
+</code></pre></li>
+</ol>
+</section><section>
+<h2 id="example-sharing-data-with-named-volumes-pt-3">Example: sharing data with named volumes (pt. 3)</h2>
+<h3 id="accessing-the-volume-from-the-host">Accessing the volume from the host</h3>
+<ol start="3">
+<li>
+<p>Alternatively, let’s find where the volume is stored on the host</p>
+<ul>
+<li>`docker volume inspect my-volume</li>
+</ul>
+</li>
+<li>
+<p>Let’s analyse the JSON description of the volume:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>[
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#b06;font-weight:bold">"CreatedAt"</span>: <span style="color:#d20;background-color:#fff0f0">"2023-11-02T11:13:56+01:00"</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b06;font-weight:bold">"Driver"</span>: <span style="color:#d20;background-color:#fff0f0">"local"</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b06;font-weight:bold">"Labels"</span>: <span style="color:#080;font-weight:bold">null</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b06;font-weight:bold">"Mountpoint"</span>: <span style="color:#d20;background-color:#fff0f0">"/var/lib/docker/volumes/my-volume/_data"</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b06;font-weight:bold">"Name"</span>: <span style="color:#d20;background-color:#fff0f0">"my-volume"</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b06;font-weight:bold">"Options"</span>: <span style="color:#080;font-weight:bold">null</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b06;font-weight:bold">"Scope"</span>: <span style="color:#d20;background-color:#fff0f0">"local"</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>]
+</span></span></code></pre></div></li>
+<li>
+<p>The <code>Mountpoint</code> entry reveals the location of the volume on the host’s file system</p>
+</li>
+<li>
+<p>Let’s look into that position (may require <em>super-user</em> access rights):</p>
+<ul>
+<li>
+<p><code>sudo ls -la /var/lib/docker/volumes/my-volume/_data</code></p>
+<pre tabindex="0"><code>totale 48
+drwxr-xr-x 2 root root 4096  2 nov 11.15 .
+drwx-----x 3 root root 4096  2 nov 11.13 ..
+-rw-r--r-- 1 root root  349  2 nov 11.15 container-10.txt
+-rw-r--r-- 1 root root  608  2 nov 11.14 container-1.txt
+-rw-r--r-- 1 root root  369  2 nov 11.14 container-2.txt
+-rw-r--r-- 1 root root  304  2 nov 11.14 container-3.txt
+-rw-r--r-- 1 root root  240  2 nov 11.14 container-4.txt
+-rw-r--r-- 1 root root  434  2 nov 11.14 container-5.txt
+-rw-r--r-- 1 root root  150  2 nov 11.14 container-6.txt
+-rw-r--r-- 1 root root   41  2 nov 11.14 container-7.txt
+-rw-r--r-- 1 root root   33  2 nov 11.15 container-8.txt
+-rw-r--r-- 1 root root 1212  2 nov 11.15 container-9.txt
+</code></pre></li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="how-to-retain-space-from-a-volume">How to retain space from a volume?</h2>
+<p>Volumes are not automatically cleaned up when containers are deleted</p>
+<p>Volumes must be <strong>explicitly</strong> deleted by the user</p>
+<ul>
+<li><code>docker volume rm &lt;volume name&gt;</code></li>
+</ul>
+<p>In our example, remember to delete <code>my-volume</code>:</p>
+<ul>
+<li><code>docker volume rm my-volume</code>
+<ul>
+<li>beware: this will delete all the data in the volume!</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="sudo-powered-containers">Sudo-powered containers</h2>
+<ul>
+<li>
+<p>Sometimes one may be willing to let a container access the Docker daemon of its host</p>
+<ul>
+<li>this is useful for running containers that can: create/delete other containers, handle images, etc.</li>
+</ul>
+</li>
+<li>
+<p>To achieve that one may exploit <strong>bind mounts</strong></p>
+<ul>
+<li>to share the Docker daemon’s socket with the container</li>
+</ul>
+</li>
+<li>
+<p>Explanation</p>
+<ul>
+<li>on the host, the Docker daemon is just a service listening for commands on a <a href="https://en.wikipedia.org/wiki/Unix_domain_socket">Unix socket</a></li>
+<li>the socket is usually reified as a file on the host’s file system, at <code>/var/run/docker.sock</code></li>
+<li>the <code>docker</code> command is just a CLI program writing/reading to/from the socket to govern the daemon</li>
+</ul>
+</li>
+<li>
+<p>One may simply create a Docker container with the Docker CLI tool installed on it</p>
+<ul>
+<li>and share the host’s Docker socket with that container via a bind mount
+<ul>
+<li><code>docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock --name sudo docker:cli sh</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Inside that container one may run the <code>docker</code> command as usual, to govern the host’s Docker daemon</p>
+<ul>
+<li>e.g. <code>docker ps</code></li>
+</ul>
+<pre tabindex="0"><code>CONTAINER ID   IMAGE        COMMAND                  CREATED          STATUS          PORTS      NAMES
+3d9016cd067e   docker:cli   "docker-entrypoint.s…"   5 seconds ago    Up 3 seconds               sudo
+</code></pre></li>
+</ul>
+</section><section>
+<h2 id="networks">Networks</h2>
+<p>Docker may virtualise container’s networking facilities</p>
+<ol>
+<li>network interfaces</li>
+<li>IP addresses</li>
+<li>layer-4 ports</li>
+</ol>
+<br>
+<p>This is useful for letting containers communicate with any external entity</p>
+<ul>
+<li>most commonly, other containers or the host</li>
+</ul>
+<br>
+<p>Networks are virtual entities managed by Docker</p>
+<ul>
+<li>they mimic the notion of <strong>layer-3 network</strong></li>
+<li>in the eyes of the single container, they are <strong>virtual network interfaces</strong></li>
+<li>overall, their purpose is to <strong>delimit</strong> the scope of communication for containers</li>
+</ul>
+</section><section>
+<h2 id="sorts-of-networks-pt-1">Sorts of networks (pt. 1)</h2>
+<p>Different sorts of networks are available in Docker, depending on the <strong>driver</strong>:</p>
+<p><img src="./networks.png" alt=""></p>
+</section><section>
+<h2 id="sorts-of-networks-pt-2">Sorts of networks (pt. 2)</h2>
+<p>Available drivers:</p>
+<ul>
+<li>
+<p><strong>none</strong>: no networking facilities are provided to the container, which is then isolated</p>
+</li>
+<li>
+<p><strong>host</strong>: remove network isolation between the container and the Docker host, and use the host’s networking directly</p>
+</li>
+<li>
+<p><strong>bridge</strong> (default): a virtual network, internal to the host, letting multiple containers communicate with each other</p>
+</li>
+<li>
+<p><strong>overlay</strong>: a virtual network, spanning multiple hosts, letting multiple containers communicate with each other among different nodes of the same cluster</p>
+</li>
+</ul>
+<br>
+<p>Other drivers are available as well, cf. <a href="https://docs.docker.com/network/drivers/">https://docs.docker.com/network/drivers/</a></p>
+</section><section>
+<h3 id="none-network-driver">None network driver</h3>
+<figure><img src="./none-network.png" width="20%">
+</figure>
+
+<ul>
+<li>
+<p><strong>No</strong> networking facilities are provided to the container <strong>at all</strong>, which is then <em>isolated</em> w.r.t the external world</p>
+</li>
+<li>
+<p>This is useful for containers that do not need to communicate via the network</p>
+<ul>
+<li>i.e. they <em>expose no service</em>, and they <strong>must not access</strong> the Internet
+<ul>
+<li>very rare situation</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Example: <code>docker run --network none -it --rm alpine sh</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>/ <span style="color:#888"># ping 8.8.8.8</span>
+</span></span><span style="display:flex;"><span>PING 8.8.8.8 (8.8.8.8): <span style="color:#00d;font-weight:bold">56</span> data bytes
+</span></span><span style="display:flex;"><span>ping: sendto: Network unreachable
+</span></span></code></pre></div></li>
+</ul>
+</section><section>
+<h3 id="host-driver">Host driver</h3>
+<figure><img src="./host-network.png" width="20%">
+</figure>
+
+<ul>
+<li>
+<p><strong>No isolation</strong> between the container and the host</p>
+<ul>
+<li>the container uses the host’s networking facilities <em>directly</em></li>
+</ul>
+</li>
+<li>
+<p>The main consequence is that the container will be assigned with the <strong>same IP address as the host</strong></p>
+<ul>
+<li>the layer-4 ports used by the container are <strong>also busy</strong> for the host
+<ul>
+<li>high <strong>collision</strong> probability</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Example: <code>docker run --network host my-service</code></p>
+<pre tabindex="0"><code>Service 540c3b7bb7860c6a listening on &lt;your pc's hostname&gt;:8080
+</code></pre><ul>
+<li>try now to start a service on port 8080 on your host
+<ul>
+<li>you should get an error message stating that port 8080 is already in use</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="bridge-network-pt-1">Bridge network (pt. 1)</h2>
+<figure><img src="./bridge-network.png" width="30%">
+</figure>
+
+<ul>
+<li>
+<p><strong>Virtual network</strong> spanning through <em>one or more containers</em> on the <em>same host</em></p>
+<ul>
+<li>containers attached to the <em>same</em> network can <strong>communicate</strong> with each other via <em>TCP/IP</em></li>
+<li>each container may be attached to <strong>multiple networks</strong>
+<ul>
+<li>e.g. one for internal communication, one for external communication</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Each container gets assigned with a <strong>private IP address</strong> on the network</p>
+<ul>
+<li>commonly in the range <code>172.x.y.z</code></li>
+<li>the IP address is contactable from the host</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="bridge-network-pt-2">Bridge network (pt. 2)</h2>
+<p>To exemplify the usage of IP:</p>
+<ol>
+<li>
+<p>let’s create a container using the <code>my-service</code> image created a few slides ago</p>
+<ul>
+<li><code>docker run --network bridge -d --rm --name my-container my-service</code></li>
+<li>this should be a service listening on port <code>8080</code></li>
+<li>we call the container <code>my-container</code></li>
+<li>specifying <code>--network bridge</code> is useless, because that’s the default</li>
+</ul>
+</li>
+<li>
+<p>let’s inspect the container’s IP address</p>
+<ul>
+<li><code>docker inspect my-container | grep IPAddress</code>
+<ul>
+<li>at the time of writing, the IP address is <code>172.17.0.2</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>open your browser and browse to <code>http://172.17.0.2:8080</code></p>
+<ul>
+<li>you should see a page of the form: <code>[$SERVER_ID@$HOST_NAME:PORT] Hit $VIEW_COUNT times</code></li>
+<li>the page is served by the container, contacted by IP</li>
+<li>so containes attached to <code>bridge</code>-like networks can be contacted by IP, from the host</li>
+</ul>
+</li>
+<li>
+<p>try to contact the container:</p>
+<ul>
+<li>by host name, from the host
+<ul>
+<li>this should not work $\Rightarrow$ no host-specific DNS resolution for containers</li>
+</ul>
+</li>
+<li>by IP, from another host (in the same LAN of the host)
+<ul>
+<li>this should not work $\Rightarrow$ <em>bridge</em> networks are host specific</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="bridge-network-pt-3">Bridge network (pt. 3)</h2>
+<p>Let’s create a non-trivial scenario with 2 container attached to the same network:</p>
+<ol>
+<li>one container (host name: <code>dind</code>) will run the Docker daemon (Docker-in-Docker)</li>
+<li>the other container (host name: <code>cli</code>) will run the Docker CLI</li>
+<li>let’s call the shared network <code>my-network</code></li>
+</ol>
+</section><section>
+<h2 id="bridge-network-pt-4">Bridge network (pt. 4)</h2>
+<ol>
+<li>
+<p>let’s create the network: <code>docker network create --driver bridge my-network</code></p>
+<ul>
+<li>a random string is returned: that’s the network’s ID</li>
+</ul>
+</li>
+<li>
+<p>let’s create the daemon:</p>
+<ul>
+<li><code>docker run --privileged -d --rm --network my-network --hostname dind docker:dind</code></li>
+</ul>
+</li>
+<li>
+<p>let’s create the client: <code>docker run -it --rm --network my-network --hostname cli docker:cli</code></p>
+<ol>
+<li>
+<p>inside <code>cli</code>, let’s check if <code>dind</code> is contactable by hostname: <code>ping dind</code></p>
+<ul>
+<li>this should work $\Rightarrow$ networks come with their own <strong>name resolution</strong> support</li>
+</ul>
+</li>
+<li>
+<p>inside <code>cli</code>, let’s check if the Docker client works: <code>docker ps</code></p>
+<pre tabindex="0"><code>error during connect: Get "http://docker:2375/v1.24/containers/json": dial tcp: lookup docker on 127.0.0.11:53: no such host
+</code></pre></li>
+<li>
+<p>apparently the <code>docker:cli</code> image is preconfigured to contact a daemon on the <code>docker</code> hostname</p>
+</li>
+</ol>
+</li>
+<li>
+<p>let’s stop <code>dind</code>:</p>
+<ul>
+<li>you can use <code>docker ps</code> on the host to get the name of the <code>dind</code> container</li>
+<li>then <code>docker stop &lt;container name&gt;</code></li>
+<li>or <code>docker stop $(docker ps -q --filter ancestor=docker:dind)</code>
+<ul>
+<li><code>-q</code> (<em>quiet</em>), only display container IDs</li>
+<li><code>--filter ancestor=X</code> selects containers whose image is <code>X</code></li>
+</ul>
+</li>
+<li>next time let’s give an explicit name to the container via <code>--name</code></li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="bridge-network-pt-5">Bridge network (pt. 5)</h2>
+<ol start="5">
+<li>
+<p>let’s restart a Docker-in-Docker daemon, using the <code>docker</code> hostname:</p>
+<ul>
+<li><code>docker run --privileged -d --rm --network my-network --name dind --hostname docker docker:dind dockerd --host=tcp://0.0.0.0:2375</code></li>
+<li>in general, it would be better to both <code>--name X</code> and <code>--hostname X</code>
+<ul>
+<li>same name and hostname to avoid confusion!</li>
+</ul>
+</li>
+<li><code>dockerd --host=tcp://0.0.0.0:2375</code> is necessary to force the port the daemon will listen on
+<ul>
+<li>and to disable TLS security (not recommended in production)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>let’s restart the client: <code>docker run -it --rm --network my-network --hostname cli docker:cli</code></p>
+</li>
+<li>
+<p>let’s run a command on the CLI, say <code>docker run hello-world</code></p>
+<ul>
+<li>this should work $\Rightarrow$ the client is now able to contact the daemon via the <code>docker</code> hostname</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="exposing-ports">Exposing ports</h2>
+<ul>
+<li>
+<p>When a container wraps a <strong>service</strong> listening on <strong>layer-4 port</strong>…</p>
+<ul>
+<li>… the port is <strong>not accessible</strong> from the <em>outside</em> world</li>
+<li>… unless it is <strong>explicitly exposed</strong> by the container</li>
+</ul>
+</li>
+<li>
+<p>When <em>creating</em> a Docker <em>image</em>, the <code>EXPOSE</code> command in the <code>Dockerfile</code> is used to declare ports <em>exposed by default</em></p>
+<ul>
+<li>e.g. <code>EXPOSE 8080</code></li>
+</ul>
+</li>
+<li>
+<p>The port exposed by a container can be inspected via <code>docker ps</code></p>
+<ul>
+<li>e.g. <code>docker run -d --rm my-service; docker ps</code></li>
+</ul>
+<pre tabindex="0"><code>CONTAINER ID   IMAGE        COMMAND                  CREATED        STATUS                  PORTS      NAMES
+7a14f3bf95cc   my-service   "/bin/sh -c 'npm run…"   1 second ago   Up Less than a second   8080/tcp   wonderful_goldwasser
+</code></pre><p>(look at the <code>PORTS</code> column)</p>
+</li>
+<li>
+<p>When <em>running</em> a Docker <em>container</em>, the exposed port can be mapped to host’s ports via <code>-P</code> option</p>
+<ul>
+<li>this would make any <code>EXPOSE</code>d port in the image mapped to some <em>random</em> port of the host</li>
+<li>e.g. <code>docker run -d --rm -P my-service; docker ps</code></li>
+<li>the actual port mapping you should run <code>docker ps</code></li>
+</ul>
+<pre tabindex="0"><code>CONTAINER ID   IMAGE        COMMAND                  CREATED         STATUS         PORTS                                         NAMES
+b1470831b62b   my-service   "/bin/sh -c 'npm run…"   6 seconds ago   Up 5 seconds   0.0.0.0:32773-&gt;8080/tcp, :::32773-&gt;8080/tcp   sad_benz
+</code></pre></li>
+<li>
+<p>One may control the mapping of ports via the <code>-p &lt;host port&gt;:&lt;guest port&gt;</code> option</p>
+<ul>
+<li>e.g. <code>docker run -d --rm -p 8888:8080 my-service; docker ps</code></li>
+<li>this would map the container’s port <code>8080</code> to the host’s port <code>8080</code></li>
+</ul>
+<pre tabindex="0"><code>CONTAINER ID   IMAGE        COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seconds   0.0.0.0:8888-&gt;8080/tcp, :::8888-&gt;8080/tcp   bold_booth
+</code></pre></li>
+</ul>
+</section><section>
+<h1 id="orchestration">Orchestration</h1>
+</section><section>
+<h2 id="do-we-need-orchestration">Do we need orchestration?</h2>
+<blockquote>
+<p>Operating containers manually is error prone and low-level</p>
+</blockquote>
+<ul>
+<li>
+<p>Docker Compose lets you increase the <strong>abstraction level</strong> on the <strong>single machine</strong></p>
+</li>
+<li>
+<p>Starting from a <strong>user-provided specification</strong> of a <strong>stack</strong>…</p>
+<ul>
+<li>i.e. a set of containers, their images, their environment, their dependencies</li>
+</ul>
+</li>
+<li>
+<p>… Docker Compose can:</p>
+<ul>
+<li><strong>orderly start</strong> the containers up</li>
+<li>while <em>creating</em> all required <em>networks</em> and <em>volumes</em></li>
+<li>and <strong>gracefully shut</strong> them <strong>down</strong> upon need</li>
+</ul>
+</li>
+<li>
+<p>The only thing the user must do is: creating a <code>docker-compose.yml</code> file</p>
+<ul>
+<li>a <a href="https://yaml.org/">YAML</a> file describing the stack</li>
+<li>following the <a href="https://docs.docker.com/compose/compose-file/">official specification</a></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="docker-compose-syntax-by-example-pt-1">Docker Compose syntax by example (pt. 1)</h2>
+<figure><img src="./compose-example.png" width="50%">
+</figure>
+
+<p>The example application is composed of the following parts:</p>
+<ul>
+<li>2 services, backed by Docker images: <code>webapp</code> and <code>database</code></li>
+<li>1 secret (HTTPS certificate), injected into the frontend</li>
+<li>1 secret (DB credentials), injected into both services</li>
+<li>1 configuration (HTTP), injected into the frontend</li>
+<li>1 persistent volume, attached to the backend</li>
+<li>2 networks</li>
+</ul>
+</section><section>
+<h2 id="docker-compose-syntax-by-example-pt-2">Docker Compose syntax by example (pt. 2)</h2>
+
+<div class="multiCol">
+    
+
+<div class="col ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3.9</span><span style="color:#bbb">                    </span><span style="color:#888"># version of the specification</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">                       </span><span style="color:#888"># section defining services composing the stack</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">frontend</span>:<span style="color:#bbb">                     </span><span style="color:#888"># name of the first service (frontend)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>example/webapp      <span style="color:#bbb"> </span><span style="color:#888"># image to use for the first service</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">depends_on</span>:<span style="color:#bbb">                 </span><span style="color:#888"># section for def</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">       </span>- backend               <span style="color:#bbb"> </span><span style="color:#888"># this should be started AFTER the backend service is healthy</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb">                </span><span style="color:#888"># section for environment variables</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">SERVICE_PORT</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">8043</span><span style="color:#bbb">        </span><span style="color:#888"># env var dictating the port the service will listen on</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">DB_HOST</span>:<span style="color:#bbb"> </span>backend         <span style="color:#bbb"> </span><span style="color:#888"># env variable dictating the hostname of the backend service </span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">                                </span><span style="color:#888"># (equal to the service name)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">DB_PORT</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3306</span><span style="color:#bbb">             </span><span style="color:#888"># env variable dictating the port the backend service will listen on</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">                      </span><span style="color:#888"># section for ports to be exposed / mapped on the host</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"443:8043"</span><span style="color:#bbb">              </span><span style="color:#888"># exposing port 8043 of the container as port 443 of the host</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">                   </span><span style="color:#888"># section for networks to be attached to</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- front-tier             <span style="color:#bbb"> </span><span style="color:#888"># attaching the service to the front-tier network (referenced by name)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- back-tier              <span style="color:#bbb"> </span><span style="color:#888"># attaching the service to the back-tier network (referenced by name)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># configs are files to be copied in the service' container, without needing to create a new image</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">                    </span><span style="color:#888"># section for configuration files to be injected in the container</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">source</span>:<span style="color:#bbb"> </span>httpd-config   <span style="color:#bbb"> </span><span style="color:#888"># reference to the configuration file (by name)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">target</span>:<span style="color:#bbb"> </span>/etc/httpd.conf<span style="color:#bbb"> </span><span style="color:#888"># path on the container where the config file will be mounted as read-only</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># secrets are reified as read-only files in /run/secrets/&lt;secret_name&gt;</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">                    </span><span style="color:#888"># section for secrets to be injected in the service' container</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- server-certificate     <span style="color:#bbb"> </span><span style="color:#888"># reference to the secret (by name)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db-credentials         <span style="color:#bbb"> </span><span style="color:#888"># reference to the secret (by name)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># assumption: image example/webapp is programmed to look in /run/secrets/&lt;secret_name&gt; </span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># and load the secrets therein contained</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">backend</span>:<span style="color:#bbb">                      </span><span style="color:#888"># name of the second service (backend)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>example/database    <span style="color:#bbb"> </span><span style="color:#888"># image to use for the second service</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># this is a command to be run inside the service to check whether it is healthy</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">healthcheck</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">test</span>:<span style="color:#bbb"> </span>[<span style="color:#d20;background-color:#fff0f0">"CMD"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"command"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"which"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"should"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"fail"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"if"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"db not healthy"</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">interval</span>:<span style="color:#bbb"> </span>1m30s<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">timeout</span>:<span style="color:#bbb"> </span>10s<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">retries</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">start_period</span>:<span style="color:#bbb"> </span>40s<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">                    </span><span style="color:#888"># section for volumes to be attached to the container</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db-data:/etc/data      <span style="color:#bbb"> </span><span style="color:#888"># the volume db-data (reference by name) will be mounted </span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">                                </span><span style="color:#888"># as read-write in /etc/data</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- back-tier              <span style="color:#bbb"> </span><span style="color:#888"># attaching the service to the back-tier network (referenced by name)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db-credentials         <span style="color:#bbb"> </span><span style="color:#888"># reference to the secret (by name)</span><span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+
+<div class="col ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">                   </span><span style="color:#888"># section for volumes to be created in the stack</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db-data</span>:<span style="color:#bbb">                 </span><span style="color:#888"># name of the volume, to be referenced by services</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">driver_opts</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"none"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">o</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"bind"</span><span style="color:#bbb">            </span><span style="color:#888"># this volume is a bind mount</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">device</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"/path/to/db/data/on/the/host"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">                   </span><span style="color:#888"># section for configuration files to be created in the stack</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">httpd-config</span>:<span style="color:#bbb">            </span><span style="color:#888"># name of the configuration file, to be referenced by services</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>path/to/http/configuration/file/on/the/host<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">                   </span><span style="color:#888"># section for secrets to be created in the stack</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">server-certificate</span>:<span style="color:#bbb">      </span><span style="color:#888"># name of the secret, to be referenced by services</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>path/to/certificate/file/on/the/host<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db-credentials</span>:<span style="color:#bbb">          </span><span style="color:#888"># name of the secret, to be referenced by services</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">         </span><span style="color:#888"># this secret is not created by the stack, but it is expected to be created by the user</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>my-db-creds     <span style="color:#bbb"> </span><span style="color:#888"># name of the secret, as created by the user </span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#888"># The presence of these objects is sufficient to define them</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">front-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">back-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+
+</div>
+</section><section>
+<h2 id="docker-compose-commands">Docker Compose commands</h2>
+<ul>
+<li>
+<p>See all possibilities with <code>docker compose --help</code></p>
+</li>
+<li>
+<p><code>docker compose up</code> starts the stack</p>
+<ul>
+<li>if the stack is not present, it is created</li>
+<li>if the stack is already present, it is updated</li>
+<li>if the stack is already present, and it is up-to-date, nothing happens</li>
+<li>interesting optional flags (see all with <code>--help</code>)
+<ul>
+<li><code>-d</code> (<em>detached mode</em>): run containers in the background</li>
+<li><code>--wait</code> wait for services to be running or healthy (implies detached mode)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>docker compose down</code> stops the stack</p>
+<ul>
+<li>if the stack is not present, nothing happens</li>
+<li>if the stack is present, it is stopped</li>
+<li>interesting optional flags (see all with <code>--help</code>)
+<ul>
+<li><code>--remove-orphans</code> remove containers for services not defined in the Compose file (e.g. residuals from previous versions)</li>
+<li><code>-v</code> remove named volumes declared in the “volumes” section of the Compose file and anonymous volumes attached to containers</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>All commands assume a <code>docker-compose.yml</code> file is present in the <strong>current working directory</strong></p>
+</blockquote>
+</section><section>
+<h2 id="working-example">Working example</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">mysql</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>mysql:5.7<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- mysql_data:/var/lib/mysql<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">restart</span>:<span style="color:#bbb"> </span>always<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- back-tier<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_ROOT_PASSWORD</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"..Password1.."</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_DATABASE</span>:<span style="color:#bbb"> </span>wordpress_db<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_USER</span>:<span style="color:#bbb"> </span>wordpress_user<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_PASSWORD</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">",,Password2,,"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">depends_on</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- mysql<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>wordpress:latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- wordpress_data:/var/www/html<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"8000:80"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">restart</span>:<span style="color:#bbb"> </span>always<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- back-tier<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_HOST</span>:<span style="color:#bbb"> </span>mysql:3306<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_USER</span>:<span style="color:#bbb"> </span>wordpress_user<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_PASSWORD</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">",,Password2,,"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_NAME</span>:<span style="color:#bbb"> </span>wordpress_db<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">mysql_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">back-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span></code></pre></div></section>
 
   
 
@@ -197,7 +1561,7 @@
 <a href="/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
 
 <script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"height":"1080","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false}],"pdfseparatefragments":false,"slide_number":true,"theme":"white","transition":"slide","transition_speed":"fast","width":"1920"}</script>
-<script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"}}</script>
 
 <script src="/reveal-js/dist/reveal.js"></script>
 
