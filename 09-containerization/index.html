@@ -1942,6 +1942,233 @@ b304d1ae5404   bridge               bridge    local
 </div>
 
 </div>
+</section><section>
+<h2 id="docker-compose-for-testing">Docker Compose for testing</h2>
+<ul>
+<li>
+<p>Docker Compose is also useful for software <strong>testing</strong></p>
+</li>
+<li>
+<p>E.g. whenever the system under test relied on some infrastructural component</p>
+<ul>
+<li>e.g. a database, a message broker, a cache, etc.</li>
+</ul>
+</li>
+<li>
+<p>Usual workflow for testing:</p>
+<ol>
+<li><strong>start</strong> the component</li>
+<li><strong>run</strong> the system under test</li>
+<li><strong>stop</strong> the component</li>
+</ol>
+</li>
+<li>
+<p>Docker Compose may be coupled with some <strong>test framework</strong> of choice to <strong>automate</strong> the process</p>
+</li>
+</ul>
+</section><section>
+<h2 id="example-docker-compose-for-testing--junit-pt-1">Example: Docker Compose for testing + JUnit (pt. 1)</h2>
+<h3 id="domain-model">Domain model</h3>
+
+<figure id="plantuml-figure-11" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+    
+interface Customer {
+    + id: CustomerID
+    + firstName: String 
+    + lastName: String
+    + birthDate: LocalDate
+    ...
+    + name: String
+    + isPerson: Boolean
+    + isCompany: Boolean
+}
+note bottom: Entity
+
+interface CustomerID {
+    + value: Any
+}
+note right: Value Object
+
+interface TaxCode {
+    + value: String
+}
+note left: Value Object
+
+interface VatNumber {
+    + value: Long
+}
+note right: Value Object
+
+VatNumber -d-|&gt; CustomerID
+TaxCode -d-|&gt; CustomerID
+
+Customer *-r- CustomerID
+
+interface CustomerRepository {
+    + findById(id: CustomerID): Iterable<customer>
+    + findByName(name: String): Iterable<customer>
+    + add(customer: Customer)
+    + update(oldId: CustomerID, customer: Customer)
+    + remove(id: CustomerID)
+}
+note left: Repository
+
+CustomerRepository o-r- Customer
+
+
+</customer></customer></figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-11");
+</script>
+
+</section><section>
+<h2 id="example-docker-compose-for-testing--junit-pt-2">Example: Docker Compose for testing + JUnit (pt. 2)</h2>
+<h3 id="implementation-details">Implementation details</h3>
+
+<figure id="plantuml-figure-12" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+    
+
+interface CustomerRepository {
+    + findById(id: CustomerID): Iterable<customer>
+    + findByName(name: String): Iterable<customer>
+    + add(customer: Customer)
+    + update(oldId: CustomerID, customer: Customer)
+    + remove(id: CustomerID)
+}
+
+class SqlCustomerRepository {
+    - connections: ConnectionFactory
+    - tableName: String
+    + createTable(replaceIfPresent: Boolean = false)
+}
+
+SqlCustomerRepository --|&gt; CustomerRepository
+
+package "db" {
+    interface ConnectionFactory {
+        + connect(): Connection
+    }
+    interface MariaDB {
+        + database: String
+        + username: String
+        + password: String
+        + host: String
+        + port: Int
+    }
+    class MariaDBConnection
+    MariaDBConnection --|&gt; MariaDB
+    MariaDBConnectionFactory --|&gt; ConnectionFactory
+    MariaDBConnectionFactory ..&gt; MariaDBConnection: creates
+}
+
+SqlCustomerRepository .r.&gt; MariaDBConnectionFactory: uses
+
+package "java sql" {
+    interface Connection
+    ConnectionFactory ..&gt; Connection: creates
+    MariaDBConnection --|&gt; Connection
+}
+
+
+</customer></customer></figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-12");
+</script>
+
+</section><section>
+<h2 id="example-docker-compose-for-testing--junit-pt-3">Example: Docker Compose for testing + JUnit (pt. 3)</h2>
+
+<div class="multiCol">
+    
+
+<div class="col ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">TestMariaDBCustomerRepository</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">companion</span> <span style="color:#080;font-weight:bold">object</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#555">@BeforeClass</span> <span style="color:#555">@JvmStatic</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setUpMariaDb</span>() { TODO(<span style="color:#d20;background-color:#fff0f0">"start MariaDB via Docker Compose"</span>) }
+</span></span><span style="display:flex;"><span>        <span style="color:#555">@AfterClass</span> <span style="color:#555">@JvmStatic</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">tearDownMariaDb</span>() { TODO(<span style="color:#d20;background-color:#fff0f0">"stop MariaDB via Docker Compose"</span>) }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">connectionFactory</span> = MariaDBConnectionFactory(DATABASE, USER, PASSWORD, HOST, PORT)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">lateinit</span> <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">repository</span>: SqlCustomerRepository
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@Before</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">createFreshTable</span>() {
+</span></span><span style="display:flex;"><span>        repository = SqlCustomerRepository(connectionFactory, TABLE)
+</span></span><span style="display:flex;"><span>        repository.createTable(replaceIfPresent = <span style="color:#080;font-weight:bold">true</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">taxCode</span> = TaxCode(<span style="color:#d20;background-color:#fff0f0">"CTTGNN92D07D468M"</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">person</span> = <span style="color:#b06;font-weight:bold">Customer</span>.person(taxCode, <span style="color:#d20;background-color:#fff0f0">"Giovanni"</span>, <span style="color:#d20;background-color:#fff0f0">"Ciatto"</span>, <span style="color:#b06;font-weight:bold">LocalDate</span>.of(<span style="color:#00d;font-weight:bold">1992</span>, <span style="color:#00d;font-weight:bold">4</span>, <span style="color:#00d;font-weight:bold">7</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">person2</span> = person.clone(birthDate = <span style="color:#b06;font-weight:bold">LocalDate</span>.of(<span style="color:#00d;font-weight:bold">1992</span>, <span style="color:#00d;font-weight:bold">4</span>, <span style="color:#00d;font-weight:bold">8</span>), id = TaxCode(<span style="color:#d20;background-color:#fff0f0">"CTTGNN92D08D468M"</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">vatNumber</span> = VatNumber(<span style="color:#00d;font-weight:bold">12345678987L</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">company</span> = <span style="color:#b06;font-weight:bold">Customer</span>.company(vatNumber, <span style="color:#d20;background-color:#fff0f0">"ACME"</span>, <span style="color:#d20;background-color:#fff0f0">"Inc."</span>, <span style="color:#b06;font-weight:bold">LocalDate</span>.of(<span style="color:#00d;font-weight:bold">1920</span>, <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@Test</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">complexTestWhichShouldActuallyBeDecomposedInSmallerTests</span>() {
+</span></span><span style="display:flex;"><span>        assertEquals(
+</span></span><span style="display:flex;"><span>            expected = emptyList(),
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">actual</span> = repository.findById(taxCode),
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        assertEquals(
+</span></span><span style="display:flex;"><span>            expected = emptyList(),
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">actual</span> = repository.findById(vatNumber),
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        repository.add(person)
+</span></span><span style="display:flex;"><span>        repository.add(company)
+</span></span><span style="display:flex;"><span>        assertEquals(
+</span></span><span style="display:flex;"><span>            expected = listOf(person),
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">actual</span> = repository.findById(taxCode),
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        assertEquals(
+</span></span><span style="display:flex;"><span>            expected = listOf(company),
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">actual</span> = repository.findById(vatNumber),
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        repository.remove(vatNumber)
+</span></span><span style="display:flex;"><span>        repository.update(taxCode, person2)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</div>
+
+<div class="col ">
+    <ul>
+<li>
+<p>Unit thest for the <code>SqlCustomerRepository</code> class</p>
+</li>
+<li>
+<p>Requires an instance of MariaDB to be tested</p>
+</li>
+<li>
+<p>Let’s use Docker Compose to start / stop MariaDB</p>
+</li>
+<li>
+<p>Try to complete the implementation of the <code>setUpMariaDb</code> and <code>tearDownMariaDb</code> methods</p>
+<ul>
+<li>use Java’s <code>ProcessBuilder</code>s to call <code>docker compose</code> commands</li>
+</ul>
+</li>
+<li>
+<p>Template for Docker Compose files available among test resources</p>
+<ul>
+<li><a href="https://github.com/unibo-spe/docker-compose-testing/blob/exercise/src/test/resources/it/unibo/spe/compose/docker-compose.yml.template"><code>docker-compose.yml.template</code></a>
+<ul>
+<li>does it require edits? why?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Code for the exercise:</p>
+<ul>
+<li><a href="https://github.com/unibo-spe/docker-compose-testing">https://github.com/unibo-spe/docker-compose-testing</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+</div>
 </section>
 
   
