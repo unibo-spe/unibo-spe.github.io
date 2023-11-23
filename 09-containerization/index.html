@@ -32,7 +32,7 @@
 <br>
 <h3 id="giovanni-ciatto-----giovanniciattouniboitmailtogiovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2023-11-19
+<p>Compiled on: 2023-11-23
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -1472,6 +1472,234 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 
 </div>
 </section><section>
+<h2 id="orchestration-level-notions-pt-1">Orchestration-level notions (pt. 1)</h2>
+<h3 id="stacks">Stacks</h3>
+<p>A <strong>stack</strong> is a set of <em>inter-related</em> services, networks, volumes, secrets, configs</p>
+<ul>
+<li>all of which are defined in a single <code>docker-compose.yml</code> file</li>
+<li>all of which are created / deleted / updated / started / stopped <strong>together</strong></li>
+</ul>
+<h3 id="services">Services</h3>
+<p>From <a href="https://docs.docker.com/compose/compose-file/05-services/">Docker Compose documentation</a>:</p>
+<ul>
+<li>a <strong>service</strong> is an <em>abstract definition</em> of a computing resource within an <em>application</em> which can be <strong>scaled</strong> or <strong>replaced</strong> independently from other components</li>
+<li>they are backed by a <em>set of</em> <strong>containers</strong>, run by the orchestrator according to <strong>replication requirements</strong> and <strong>placement constraints</strong></li>
+<li>they are backed by containers, hence they are defined by an <strong>image</strong> and set of <strong>runtime arguments</strong>
+<ul>
+<li>all containers within a service are <em>identically</em> created with these arguments</li>
+</ul>
+</li>
+<li>they are declared in the <code>services</code> section of the <code>docker-compose.yml</code> file
+<ul>
+<li>for each service, <em>attributes</em> may be spiecified, <em>overriding</em> the default behaviour of the image</li>
+<li>further attributes may be specified to declare <em>dependencies</em> on other services, volumes, networks, and so on
+<ul>
+<li>these must be declared in the same <code>docker-compose.yml</code> file</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="orchestration-level-notions-pt-2">Orchestration-level notions (pt. 2)</h2>
+<h3 id="configs">Configs</h3>
+<p>From <a href="https://docs.docker.com/compose/compose-file/08-configs/">Docker Compose documentation</a>:</p>
+<ul>
+<li>
+<p><strong>configs</strong> are <em>files</em> containing <em>configuration data</em> that can be <em>injected</em> into services upon instantiation</p>
+</li>
+<li>
+<p>they allow users to configure their services’ behaviour <em>without</em> the need to <strong>(re)build a (new) image</strong></p>
+</li>
+<li>
+<p>they are <em>read-only</em> files, mounted into services’ containers, similarly to <em>read-only</em> <strong>volumes</strong></p>
+</li>
+<li>
+<p>they are declared in the <code>configs</code> section of the <code>docker-compose.yml</code> file</p>
+</li>
+<li>
+<p>one config may either be created <strong>stack-wise</strong> out of a <strong>local file</strong> from the <em>host</em>…</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">config_name</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>/path/to/config/on/the/host<span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+<li>
+<p>… or it can be <strong>manually created</strong> by means of the <code>docker config create [OPTIONS] NAME PATH|-</code> command</p>
+<ul>
+<li>in this case they can be referenced in several <code>docker-compose.yml</code> files:
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">config_name</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"the name used when creating the config"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888"># this may be different than config_name</span><span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>in any case, the config’s mount point should be specified at the service level:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">my-service</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>- <span style="color:#b06;font-weight:bold">source</span>:<span style="color:#bbb"> </span>config_name<span style="color:#bbb"> </span><span style="color:#888"># reference to the configs section (by YAML name)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">              </span><span style="color:#b06;font-weight:bold">target</span>:<span style="color:#bbb"> </span>/path/to/config/on/the/container<span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+</ul>
+</section><section>
+<h2 id="orchestration-level-notions-pt-3">Orchestration-level notions (pt. 3)</h2>
+<h3 id="secrets">Secrets</h3>
+<p>From <a href="https://docs.docker.com/compose/compose-file/09-secrets/">Docker Compose documentation</a>:</p>
+<ul>
+<li>
+<p><strong>secrets</strong> are configs containing sensitive data that should be <em>kept secret</em></p>
+</li>
+<li>
+<p>put it simply, Docker makes it harder to inspect the content of secrets both on the host</p>
+</li>
+<li>
+<p>one secret may be either be created <strong>stack-wise</strong> out of a <strong>local file</strong> or an <strong>environment variable</strong> from the <em>host</em>…</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">                                            </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secret_name</span>:<span style="color:#bbb">                                        </span><span style="color:#b06;font-weight:bold">secret_name</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"/path/to/secret/on/the/host"</span><span style="color:#bbb">                 </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"NAME_OF_THE_VARIABLE_ON_THE_HOST"</span><span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+<li>
+<p>… or it can be <strong>manually created</strong> by means of the <code>docker secret create [OPTIONS] NAME PATH|-</code> command</p>
+<ul>
+<li>in this case they can be referenced in several <code>docker-compose.yml</code> files:
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secret_name</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"the name used when creating the secret"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888"># this may be different than secret_name</span><span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>in any case, the secret’s mount point should be specified at the service level:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">my-service</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#888"># short syntax, mounted on /run/secrets/&lt;secret_name&gt;</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>- secret_name<span style="color:#bbb"> </span><span style="color:#888"># reference to the secrets section (by YAML name)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#888"># long syntax</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>- <span style="color:#b06;font-weight:bold">source</span>:<span style="color:#bbb"> </span>secret_name<span style="color:#bbb"> </span><span style="color:#888"># reference to the secrets section (by YAML name)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">                </span><span style="color:#b06;font-weight:bold">target</span>:<span style="color:#bbb"> </span>/path/to/secret/on/the/container<span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+</ul>
+</section><section>
+<h2 id="orchestration-level-notions-pt-4">Orchestration-level notions (pt. 4)</h2>
+<h3 id="about-secrets-and-configs">About secrets and configs</h3>
+<p>Important remark:</p>
+<ul>
+<li>in the eyes of the container, secrets and configs are just <em>read-only files</em> mounted on some <code>PATH</code></li>
+<li>the containerised application is responsible for reading the secrets / configs from the mounted <code>PATH</code></li>
+<li>when <strong>using</strong> <em>somebody else’s image</em>, you may <em>expect</em> the image to be programmed to read secrets / configs from <strong>customisable paths</strong></li>
+<li>when <strong>creating</strong> your own image, you <em>should</em> make the application able to read secrets / configs from <strong>customisable paths</strong>
+<ul>
+<li>e.g. via environment variables</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="orchestration-level-notions-pt-5">Orchestration-level notions (pt. 5)</h2>
+<h3 id="volumes-1">Volumes</h3>
+<p>From <a href="https://docs.docker.com/compose/compose-file/07-volumes/">Docker Compose documentation</a>:</p>
+<ul>
+<li>volumes in compose are no different than the ones we have already discussed</li>
+<li>they are declared in the <code>volumes</code> section of the <code>docker-compose.yml</code> file</li>
+<li>one volume may be created <strong>stack-wise</strong> out of a <strong>local folder</strong> from the <em>host</em>…
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volume_name</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver</span>:<span style="color:#bbb"> </span>local<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver_opts</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"none"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#b06;font-weight:bold">o</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"bind"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#b06;font-weight:bold">device</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"/path/to/folder/on/the/host"</span><span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+<li>… or maybe some remote folder exposed by some <a href="https://en.wikipedia.org/wiki/Network_File_System">NFS</a> service on the network
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volume_name</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver</span>:<span style="color:#bbb"> </span>local<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver_opts</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"nfs"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#888"># meaning of options: https://wiki.archlinux.org/title/NFS#Mount_using_/etc/fstab</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#b06;font-weight:bold">o</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"addr=NFS_SERVER_ADDRESS,nolock,soft,rw"</span><span style="color:#bbb"> </span><span style="color:#888"># cf. nfs</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#b06;font-weight:bold">device</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">":/path/on/the/nfs/server/"</span><span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+</ul>
+</section><section>
+<h2 id="orchestration-level-notions-pt-6">Orchestration-level notions (pt. 6)</h2>
+<h3 id="volumes-contd">Volumes (cont’d)</h3>
+<ul>
+<li>
+<p>… or it can be <strong>manually created</strong> by means of the <code>docker volume create [OPTIONS] NAME</code> command</p>
+<ul>
+<li>in this case they can be referenced in several <code>docker-compose.yml</code> files:
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volume_name</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"the name used when creating the volume"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888"># this may be different than volume_name</span><span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>in any case, the volume’s mount point should be specified at the service level:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">my-service</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>- <span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span>volume<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">              </span><span style="color:#b06;font-weight:bold">source</span>:<span style="color:#bbb"> </span>volume_name<span style="color:#bbb"> </span><span style="color:#888"># reference to the volumes section (by YAML name)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">              </span><span style="color:#b06;font-weight:bold">target</span>:<span style="color:#bbb"> </span>/path/to/folder/on/the/container<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#888"># alternatively, one may define a service-specific bind mount on the fly</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>- <span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span>bind<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">              </span><span style="color:#b06;font-weight:bold">source</span>:<span style="color:#bbb"> </span>/path/to/folder/on/the/host<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">              </span><span style="color:#b06;font-weight:bold">target</span>:<span style="color:#bbb"> </span>/path/to/folder/on/the/container<span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+</ul>
+</section><section>
+<h2 id="orchestration-level-notions-pt-7">Orchestration-level notions (pt. 7)</h2>
+<h3 id="networks-1">Networks</h3>
+<p>From <a href="https://docs.docker.com/compose/compose-file/06-networks/">Docker Compose documentation</a>:</p>
+<ul>
+<li>
+<p>networks in compose are no different than the ones we have already discussed</p>
+</li>
+<li>
+<p>they are declared in the <code>networks</code> section of the <code>docker-compose.yml</code> file</p>
+</li>
+<li>
+<p>one network may be created <strong>stack-wise</strong> out of a <strong>local folder</strong> from the <em>host</em>…</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">network_name</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver</span>:<span style="color:#bbb"> </span>overlay<span style="color:#bbb"> </span><span style="color:#888"># default choice in swarm</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver_opts</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#888"># many options, covering many advanced use cases for network engineering</span><span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+<li>
+<p>… or it can be <strong>manually created</strong> by means of the <code>docker network create [OPTIONS] NAME</code> command</p>
+<ul>
+<li>in this case they can be referenced in several <code>docker-compose.yml</code> files:
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">network_name</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"the name used when creating the network"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888"># this may be different than network_name</span><span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>in any case, the network’s mount point should be specified at the service level:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">my-service</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>- network_name<span style="color:#bbb"> </span><span style="color:#888"># reference to the networks section (by YAML name)</span><span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+</ul>
+</section><section>
 <h2 id="docker-compose-commands">Docker Compose commands</h2>
 <ul>
 <li>
@@ -1509,14 +1737,20 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <p>All commands assume a <code>docker-compose.yml</code> file is present in the <strong>current working directory</strong></p>
 </blockquote>
 </section><section>
-<h2 id="working-example">Working example</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
+<h2 id="working-example-pt-1">Working example (pt. 1)</h2>
+
+<div class="multiCol">
+    
+
+<div class="col ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">mysql</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>mysql:5.7<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>mariadb:latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">command</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'--default-authentication-plugin=mysql_native_password'</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- mysql_data:/var/lib/mysql<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db_data:/var/lib/mysql<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">restart</span>:<span style="color:#bbb"> </span>always<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- back-tier<span style="color:#bbb">
@@ -1525,10 +1759,17 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_DATABASE</span>:<span style="color:#bbb"> </span>wordpress_db<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_USER</span>:<span style="color:#bbb"> </span>wordpress_user<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_PASSWORD</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">",,Password2,,"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">healthcheck</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">test</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"CMD"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"healthcheck.sh"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"--su-mysql"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"--connect"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"--innodb_initialized"</span><span style="color:#bbb"> </span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">start_period</span>:<span style="color:#bbb"> </span>1m<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">start_interval</span>:<span style="color:#bbb"> </span>10s<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">interval</span>:<span style="color:#bbb"> </span>1m<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">timeout</span>:<span style="color:#bbb"> </span>5s<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">retries</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">depends_on</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- mysql<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>wordpress:latest<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- wordpress_data:/var/www/html<span style="color:#bbb">
@@ -1538,16 +1779,170 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- back-tier<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_HOST</span>:<span style="color:#bbb"> </span>mysql:3306<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_HOST</span>:<span style="color:#bbb"> </span>db:3306<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_USER</span>:<span style="color:#bbb"> </span>wordpress_user<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_PASSWORD</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">",,Password2,,"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_NAME</span>:<span style="color:#bbb"> </span>wordpress_db<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">mysql_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">back-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
-</span></span></span></code></pre></div></section>
+</span></span></span></code></pre></div>
+</div>
+
+<div class="col ">
+    <blockquote>
+<p><strong>Beware</strong>: this is unsafe as passwords are in clear text!</p>
+</blockquote>
+<br>
+<h3 id="todo">TODO</h3>
+<ol>
+<li>
+<p>Copy-paste this code in a file named <code>your-dir/docker-compose.yml</code></p>
+</li>
+<li>
+<p><code>cd your-dir</code></p>
+</li>
+<li>
+<p><code>docker compose up</code> and then inspect the logs</p>
+</li>
+<li>
+<p>open your browser and browse to <a href="http://localhost:8000">http://localhost:8000</a></p>
+</li>
+<li>
+<p><code>docker ps</code> and have a look to the running containers</p>
+<ul>
+<li>and <code>docker network ls</code></li>
+<li>and <code>docker volume ls</code></li>
+</ul>
+</li>
+<li>
+<p>Press <code>Ctrl+C</code> to stop the stack</p>
+</li>
+<li>
+<p><code>docker compose down --volumes</code> to delete the stack</p>
+</li>
+</ol>
+
+</div>
+
+</div>
+</section><section>
+<h2 id="working-example-pt-2">Working example (pt. 2)</h2>
+<ul>
+<li>
+<p>Example of <code>docker compose up</code> logs:</p>
+<pre tabindex="0"><code>docker compose up
+[+] Building 0.0s (0/0) docker:default
+[+] Running 5/5
+✔ Network your-dir_back-tier        Created  0.1s 
+✔ Volume "your-dir_wordpress_data"  Created  0.1s 
+✔ Volume "your-dir_db_data"         Created  0.0s 
+✔ Container your-dir-db-1           Created  0.8s 
+✔ Container your-dir-wordpress-1    Created  0.9s 
+Attaching to db-1, wordpress-1
+db-1         | 2023-11-23 14:24:57+00:00 [Note] [Entrypoint]: Entrypoint script for MariaDB Server 1:11.2.2+maria~ubu2204 started.
+db-1         | 2023-11-23 14:24:57+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+db-1         | 2023-11-23 14:24:57+00:00 [Note] [Entrypoint]: Entrypoint script for MariaDB Server 1:11.2.2+maria~ubu2204 started.
+db-1         | 2023-11-23 14:24:57+00:00 [Note] [Entrypoint]: Initializing database files
+wordpress-1  | WordPress not found in /var/www/html - copying now...
+wordpress-1  | Complete! WordPress has been successfully copied to /var/www/html
+wordpress-1  | No 'wp-config.php' found in /var/www/html, but 'WORDPRESS_...' variables supplied; copying 'wp-config-docker.php' (WORDPRESS_DB_HOST WORDPRESS_DB_NAME WORDPRESS_DB_PASSWORD WORDPRESS_DB_USER)
+wordpress-1  | AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.22.0.3. Set the 'ServerName' directive globally to suppress this message
+wordpress-1  | AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.22.0.3. Set the 'ServerName' directive globally to suppress this message
+wordpress-1  | [Thu Nov 23 14:24:58.289485 2023] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.56 (Debian) PHP/8.0.30 configured -- resuming normal operations
+wordpress-1  | [Thu Nov 23 14:24:58.289516 2023] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+db-1         | 2023-11-23 14:24:58 0 [Warning] 'default-authentication-plugin' is MySQL 5.6 / 5.7 compatible option. To be implemented in later versions.
+...
+</code></pre><ul>
+<li>notice that the outputs of the two containers are interleaved</li>
+</ul>
+</li>
+<li>
+<p>Example of <code>docker ps</code> logs:</p>
+<pre tabindex="0"><code>CONTAINER ID   IMAGE              COMMAND                  CREATED         STATUS                   PORTS                                   NAMES
+4691a9641135   wordpress:latest   "docker-entrypoint.s…"   9 minutes ago   Up 9 minutes             0.0.0.0:8000-&gt;80/tcp, :::8000-&gt;80/tcp   your-dir-wordpress-1
+314feb9d42ab   mariadb:latest     "docker-entrypoint.s…"   9 minutes ago   Up 9 minutes (healthy)   3306/tcp                                your-dir-db-1
+</code></pre></li>
+<li>
+<p>Example of <code>docker network ls</code> logs:</p>
+<pre tabindex="0"><code>NETWORK ID     NAME                 DRIVER    SCOPE
+b304d1ae5404   bridge               bridge    local
+1bb39315ff98   host                 host      local
+03c8700dee6a   none                 null      local
+470d81d26296   your-dir_back-tier   bridge    local
+</code></pre></li>
+</ul>
+</section><section>
+<h2 id="working-example-pt-3">Working example (pt. 3)</h2>
+
+<div class="multiCol">
+    
+
+<div class="col ">
+    <h3 id="lets-make-the-stack-more-secure">Let’s make the stack more secure</h3>
+<ol>
+<li>
+<p>Let’s create a file containing the DB root password, say <code>db-root-password.txt</code>:</p>
+<ul>
+<li><code>echo -n "..Password1.." &gt; your-dir/db-root-password.txt</code></li>
+</ul>
+</li>
+<li>
+<p>Let’s create a file containing the DB user password, say <code>db-password.txt</code>:</p>
+<ul>
+<li><code>echo -n ",,Password2,," &gt; your-dir/db-password.txt</code></li>
+</ul>
+</li>
+<li>
+<p>Let’s edit the stack as described on the right</p>
+</li>
+</ol>
+
+</div>
+
+<div class="col ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_ROOT_PASSWORD_FILE</span>:<span style="color:#bbb"> </span>/run/secrets/db_root_password<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_PASSWORD_FILE</span>:<span style="color:#bbb"> </span>/run/secrets/db_password<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...    <span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db_root_password<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db_password<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_PASSWORD_FILE</span>:<span style="color:#bbb"> </span>/run/secrets/db_password<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db_password<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">back-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_password</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>db_password.txt<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_root_password</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>db_root_password.txt<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+
+</div>
+</section>
 
   
 
