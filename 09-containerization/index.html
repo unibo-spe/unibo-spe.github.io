@@ -32,7 +32,7 @@
 <br>
 <h3 id="giovanni-ciatto-----giovanniciattouniboitmailtogiovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2023-11-24
+<p>Compiled on: 2023-11-26
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -2260,6 +2260,69 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </ul>
 </li>
 </ol>
+</section><section>
+<h2 id="building-the-cluster-troubleshooting">Building the cluster (troubleshooting)</h2>
+<h3 id="things-that-may-go-wrong">Things that may go wrong</h3>
+<ol>
+<li>
+<p>There may be a firewall blocking the communication among nodes</p>
+<ul>
+<li>e.g. Windows Defender, the lab’s firewall, your home router’s firewall, etc.</li>
+<li>you may notice the presence of a firewall by the fact that <code>docker swarm join</code> hangs or fails with a timeout
+<ul>
+<li>in lack of a firewall, the command should succeed or fail almost immediately</li>
+</ul>
+</li>
+<li>troubleshouting:
+<ol>
+<li>identify which and how many firewalls are in place</li>
+<li>ensure that the firewall allows communication for <a href="https://docs.docker.com/engine/swarm/swarm-tutorial/#open-protocols-and-ports-between-the-hosts">Docker Swarm ports</a>
+<ul>
+<li>commonly: <code>2377/tcp</code>, <code>7946/tcp</code>, <code>7946/udp</code>, <code>4789/udp</code></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>You use Docker on <em>Windows or Mac</em>, hence the Docker daemon runs on a <em>virtual machine</em></p>
+<ul>
+<li>in this chase the IP of the virtual machine is different than the IP of your machine</li>
+<li>the <code>NODE_ADDRESS</code> in <code>docker swarm join --token &lt;SECRET_TOKEN&gt; &lt;NODE_ADDRESS&gt;:2377</code> returned by <code>docker swarm init</code> is the IP of the virtual machine</li>
+<li>troubleshouting:
+<ol>
+<li>find the actual IP of your machine (e.g. <code>ipconfig</code> on Windows, <code>ifconfig</code> on Mac), let’s call it <code>ACTUAL_IP</code></li>
+<li>configure your host to redirect Swarm traffic received by <code>ACTUAL_IP</code> towards <code>NODE_ADDRESS</code>
+<ul>
+<li>for all ports listed above (<code>2377</code>, <code>7946</code>, <code>4789</code>)</li>
+</ul>
+</li>
+<li>let other nodes use <code>ACTUAL_IP</code> insteaf of <code>NODE_ADDRESS</code> in <code>docker swarm join</code> when joining the cluster</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="troubleshouting-example-on-windows">Troubleshouting example on Windows</h2>
+<h3 id="opening-ports-on-windows-defender">Opening ports on Windows Defender</h3>
+<p>On an administrator Powershell, run the following commands:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>netsh advfirewall firewall add rule name=<span style="color:#d20;background-color:#fff0f0">"Docker Swarm Intra-manager"</span> dir=<span style="color:#080;font-weight:bold">in</span> action=allow protocol=TCP localport=<span style="color:#00d;font-weight:bold">2377</span>
+</span></span><span style="display:flex;"><span>netsh advfirewall firewall add rule name=<span style="color:#d20;background-color:#fff0f0">"Docker Swarm Overlay Network Discovery TCP"</span> dir=<span style="color:#080;font-weight:bold">in</span> action=allow protocol=TCP localport=<span style="color:#00d;font-weight:bold">7946</span>
+</span></span><span style="display:flex;"><span>netsh advfirewall firewall add rule name=<span style="color:#d20;background-color:#fff0f0">"Docker Swarm Overlay Network Discovery UDP"</span> dir=<span style="color:#080;font-weight:bold">in</span> action=allow protocol=UDP localport=<span style="color:#00d;font-weight:bold">7946</span>
+</span></span><span style="display:flex;"><span>netsh advfirewall firewall add rule name=<span style="color:#d20;background-color:#fff0f0">"Docker Swarm Overlay Network Traffic"</span> dir=<span style="color:#080;font-weight:bold">in</span> action=allow protocol=UDP localport=<span style="color:#00d;font-weight:bold">4789</span>
+</span></span></code></pre></div><ul>
+<li>this operation should be done on all nodes of the cluster running on Windows</li>
+</ul>
+<h3 id="forwarding-ports-on-windows">Forwarding ports on Windows</h3>
+<p>On an administrator Powershell, run the following commands:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>netsh interface portproxy add v4tov4 listenport=<span style="color:#00d;font-weight:bold">2377</span> listenaddress=<span style="color:#369">$ACTUAL_IP</span> connectport=<span style="color:#00d;font-weight:bold">2377</span> connectaddress=<span style="color:#369">$NODE_ADDRESS</span>
+</span></span><span style="display:flex;"><span>netsh interface portproxy add v4tov4 listenport=<span style="color:#00d;font-weight:bold">7946</span> listenaddress=<span style="color:#369">$ACTUAL_IP</span> connectport=<span style="color:#00d;font-weight:bold">7946</span> connectaddress=<span style="color:#369">$NODE_ADDRESS</span>
+</span></span><span style="display:flex;"><span>netsh interface portproxy add v4tov4 listenport=<span style="color:#00d;font-weight:bold">4789</span> listenaddress=<span style="color:#369">$ACTUAL_IP</span> connectport=<span style="color:#00d;font-weight:bold">4789</span> connectaddress=<span style="color:#369">$NODE_ADDRESS</span>
+</span></span></code></pre></div><ul>
+<li>this operation should be done on the very first master node of the cluster, if it’s running on Windows</li>
+</ul>
 </section><section>
 <h2 id="stacks-on-swarms">Stacks on Swarms</h2>
 <ul>
