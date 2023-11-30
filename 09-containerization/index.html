@@ -2505,6 +2505,278 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </ul>
 </li>
 </ul>
+</section><section>
+<h2 id="labelling-nodes">Labelling nodes</h2>
+<blockquote>
+<p>Nodes may be <strong>labelled</strong> with <code>key=value</code> pairs</p>
+</blockquote>
+<ul>
+<li>
+<p>Labels may be used to <strong>mark nodes</strong> with respect to their <strong>properties</strong></p>
+<ul>
+<li>e.g. hardware / software <strong>capabilities</strong>
+<ul>
+<li>e.g. <code>capabilities.cpu=yes</code></li>
+<li>e.g. <code>capabilities.web=yes</code></li>
+<li>e.g. <code>capabilities.storage=yes</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>This can be done <em>programmatically</em>….</p>
+<ul>
+<li>e.g. via <code>docker node update --label-add KEY=VALUE NODE_ID</code></li>
+</ul>
+</li>
+<li>
+<p>… or via <strong>Portainer</strong>:</p>
+<figure><img src="./portainer-node-labels.png" width="50%">
+    </figure>
+
+</li>
+<li>
+<p>labels can be used to set <em>placement</em> <strong>constraints</strong> or <strong>preferences</strong> for services:</p>
+<ul>
+<li>placement <em>constraints</em>: one service can only be deployed onto nodes with given labels</li>
+<li>placement <em>preferences</em>: one service’s <em>replicas</em> will be <em>spreaded</em> among nodes with given labels</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="example-of-placement-constraints">Example of placement constraints</h2>
+
+<div class="multiCol">
+    
+
+<div class="col ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>mariadb:latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.capabilities.storage==yes<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">depends_on</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>wordpress:latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"8889:80"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.capabilities.web==yes<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">back-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+
+<div class="col ">
+    <ul>
+<li>
+<p>Let’s define a stack for Wordpress, with <strong>placement constraints</strong></p>
+<ul>
+<li><code>db</code> service on a node with <em>storage</em> capabilities</li>
+<li><code>wordpress</code> service on a node with <em>web</em> capabilities</li>
+</ul>
+</li>
+<li>
+<p>On the <code>starwai</code> cluster:</p>
+<ul>
+<li>node <code>storage1.stairwai.ce.almaai.unibo.it</code> has <em>storage</em> capabilities</li>
+<li>node <code>inference2.stairwai.ce.almaai.unibo.it</code> has <em>web</em> capabilities</li>
+</ul>
+</li>
+<li>
+<p>The deployment is as follows:
+<img src="./portainer-wordpress-services.png" alt="Deployment with labels"></p>
+</li>
+</ul>
+
+</div>
+
+</div>
+</section><section>
+<h2 id="exposing-ports-on-the-swarm">Exposing ports on the Swarm</h2>
+<p>When a service <em>exposes a port</em>, and that’s deployed on a <em>Swarm</em>:</p>
+<ul>
+<li>
+<p>the service is exposed on <strong>all master nodes</strong> in the Swarm</p>
+</li>
+<li>
+<p>so, the <code>wordpress</code> service above could be visited from several URL:</p>
+<ul>
+<li><a href="http://storage1.stairwai.ce.almaai.unibo.it:8889">http://storage1.stairwai.ce.almaai.unibo.it:8889</a></li>
+<li><a href="http://inference1.stairwai.ce.almaai.unibo.it:8889">http://inference1.stairwai.ce.almaai.unibo.it:8889</a></li>
+<li><a href="http://inference4.stairwai.ce.almaai.unibo.it:8889">http://inference4.stairwai.ce.almaai.unibo.it:8889</a></li>
+</ul>
+</li>
+<li>
+<p>… as well as from the node which is actually hosting the service:</p>
+<ul>
+<li><a href="http://inference2.stairwai.ce.almaai.unibo.it:8889">http://inference2.stairwai.ce.almaai.unibo.it:8889</a></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="service-replication">Service replication</h2>
+<ul>
+<li>
+<p>Services may be <strong>replicated</strong> for the sake scalability / load-balancing / fault-tolerance, etc.</p>
+</li>
+<li>
+<p>Two types of services:</p>
+<ul>
+<li><code>global</code>: replicated <em>exactly</em> <strong>once per node</strong></li>
+<li><code>replicated</code>: replicated <code>N</code> times (with <code>N=1</code> by <em>default</em>)</li>
+</ul>
+</li>
+<li>
+<p>General case:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">service-name</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">mode</span>:<span style="color:#bbb"> </span>replicated<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">replicas</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">N</span><span style="color:#bbb">                  </span><span style="color:#888"># this should be a number!</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.role == manager<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.mylabel=myvalue<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">preferences</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- <span style="color:#b06;font-weight:bold">spread</span>:<span style="color:#bbb"> </span>node.labels.mylabel<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">max_replicas_per_node</span>:<span style="color:#bbb"> </span>M     <span style="color:#bbb"> </span><span style="color:#888"># this should be a number!</span><span style="color:#bbb">
+</span></span></span></code></pre></div></li>
+<li>
+<p>How to read it:</p>
+<ul>
+<li><code>N</code> replicas of the service will be deployed</li>
+<li>each one will be deployed on a <strong>manager node</strong> having the <code>mylabel</code> label set to <code>myvalue</code></li>
+<li>replicas will be evenly <em>spreaded</em> among the admissible nodes, possibly <em>evenly</em></li>
+<li>no more of <code>M</code> replicas will be put on the same node</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="example-of-placement-preferences">Example of placement preferences</h2>
+
+<div class="multiCol">
+    
+
+<div class="col ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">ws</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>pikalab/hitcounter:latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"8890:8080"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">replicas</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">10</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.capabilities.cpu==yes<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">preferences</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- <span style="color:#b06;font-weight:bold">spread</span>:<span style="color:#bbb"> </span>node.labels.capabilities.cpu<span style="color:#bbb">
+</span></span></span></code></pre></div><br>
+<ol start="2">
+<li>
+<p>Try to query it multiple times:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">while</span> true; <span style="color:#080;font-weight:bold">do</span>                                                                                                                                                                     INT ✘ 
+</span></span><span style="display:flex;"><span>    curl http://clusters.almaai.unibo.it:8890; 
+</span></span><span style="display:flex;"><span>    <span style="color:#038">echo</span> 
+</span></span><span style="display:flex;"><span>    sleep <span style="color:#00d;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">done</span>
+</span></span></code></pre></div><p>expected outcome:</p>
+<pre tabindex="0"><code>[9a6f89a39f8fd379@a3838ab6a606:8080] Hit 1 times
+[26c39b9f3d7f0cab@4ad25c3e148c:8080] Hit 1 times
+[97945332d20e71ed@969586109dee:8080] Hit 1 times
+[3b3256852103312a@5d3479044fac:8080] Hit 2 times
+[49e75aaae823c1e4@36e31b946486:8080] Hit 2 times
+[497583c21d17ad58@7c10a84858f3:8080] Hit 2 times
+[cf82689c910dfdf3@8aaa34535824:8080] Hit 2 times
+[9a456666c413f4a4@5ba876916f68:8080] Hit 2 times
+[41cadc9e0d7b0225@6cf54f65cda6:8080] Hit 2 times
+[84dbbff08ac91e74@4006352af1e0:8080] Hit 2 times
+[9a6f89a39f8fd379@a3838ab6a606:8080] Hit 2 times
+[26c39b9f3d7f0cab@4ad25c3e148c:8080] Hit 2 times
+[97945332d20e71ed@969586109dee:8080] Hit 2 times
+[3b3256852103312a@5d3479044fac:8080] Hit 3 times
+[49e75aaae823c1e4@36e31b946486:8080] Hit 3 times
+...
+</code></pre></li>
+</ol>
+
+</div>
+
+<div class="col ">
+    <ol>
+<li>
+<p>Serval replicas of the same service are created:</p>
+<p><img src="./portainer-replicated-service.png" alt="Deployment with replicas"></p>
+</li>
+</ol>
+<br>
+<ol start="3">
+<li>Requests will be forwarded to replicas in a <strong>non-deterministc</strong> fashion</li>
+</ol>
+
+</div>
+
+</div>
+</section><section>
+<h2 id="docker-swarm-and-volumes">Docker Swarm and Volumes</h2>
+
+<div class="multiCol">
+    
+
+<div class="col ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">simulation</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>pikalab/fakesim:latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">restart</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">on</span>-failure<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">replicas</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.capabilities.cpu==yes<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">max_replicas_per_node</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">1</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span>volume<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">source</span>:<span style="color:#bbb"> </span>shared_volume<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">target</span>:<span style="color:#bbb"> </span>/data<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">shared_volume</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+
+<div class="col ">
+    <ol>
+<li>
+<p>Several replicas of the simulation are created…</p>
+<p><img src="./portainer-fake-simulation.png" alt="Deployment with replicas"></p>
+</li>
+<li>
+<p>… as well as several volumes!</p>
+</li>
+</ol>
+<blockquote>
+<p>Volumes are <strong>always local</strong> w.r.t. the node the current container is deployed onto</p>
+</blockquote>
+
+</div>
+
+</div>
 </section>
 
   
