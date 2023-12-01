@@ -2739,7 +2739,11 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
     
 
 <div class="col ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
+    <blockquote>
+<p>Volumes are <strong>always local</strong> w.r.t. the node the current container is deployed onto</p>
+</blockquote>
+<br>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">simulation</span>:<span style="color:#bbb">
@@ -2768,11 +2772,15 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </li>
 <li>
 <p>… as well as several volumes!</p>
+<p><img src="./portainer-fake-simulation-volumes.png" alt="Deployment with replicas"></p>
+<ul>
+<li>one per replica, on the same node of the replica</li>
+</ul>
+</li>
+<li>
+<p>How to share data?</p>
 </li>
 </ol>
-<blockquote>
-<p>Volumes are <strong>always local</strong> w.r.t. the node the current container is deployed onto</p>
-</blockquote>
 
 </div>
 
