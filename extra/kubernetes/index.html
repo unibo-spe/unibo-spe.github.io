@@ -1,0 +1,1348 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+<title>Kubernetes</title>
+<meta name="description" content="Introduction to Kubernetes main aspects">
+<meta name="author" content="Danilo Pianini">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/css/custom-theme.min.ba1c0238d582ffad012af15a7af94b94529f0f95b6d26e861c65203269ee233a.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
+<link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://unibo-spe.github.io//plantuml.js"></script>
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><style>
+.reveal blockquote {
+    font-family: 'Georgia';
+    text-align: center;
+    font-size: 0.8em; 
+    font-style: italic;
+    padding: 30px;
+}
+
+.reveal blockquote p{
+	content: "";
+  text-align: center;
+}
+
+.reveal pre code {
+  font-size: 1.2em;
+}
+
+.center{
+	text-align: center;
+}
+
+
+</style>
+<h1 id="hahahugoshortcode17s0hbhb">Software Process Engineering</h1>
+<h2 id="intoduction-to-kubernetes">Intoduction to Kubernetes</h2>
+<h3 id="martina-baiardi---mbaiardiuniboitmailtombaiardiuniboit"><a href="mailto:m.baiardi@unibo.it">Martina Baiardi - m.baiardi@unibo.it</a></h3>
+</section><section>
+<h2 id="long-story-short">Long story short</h2>
+<p>Originally developed by Google,
+since its introduction in 2014,
+Kubernetes has grown to be on of the largest and most popular <em>open source</em> project in the world.</p>
+<br>
+<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/3523_RC02/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"Docker Swarm","geo":"","time":"2015-01-01 2023-01-01"},{"keyword":"Kubernetes","geo":"","time":"2015-01-01 2023-01-01"}],"category":0,"property":""}, {"exploreQuery":"date=2015-01-01%202023-01-01&q=Docker%20Swarm,Kubernetes","guestPath":"https://trends.google.com:443/trends/embed/"}); </script>
+</section><section>
+<h2 id="long-story-short-1">Long story short</h2>
+<p>Built for <em>distributed systems</em> suitable for <em>cloud developers</em> of all scales,
+it is meant to support <em>reliable</em> and <em>scalable</em> software systems.</p>
+
+
+<span class="fragment ">
+  <ul>
+<li><strong>Reliability</strong>: Services cannot fail, they must maintain <em>availability</em> even during software rollouts</li>
+<li><strong>Scalability</strong>: Services must grow their capacity to keep up with ever-increasing usage without redesigning the distributed system. Obviously, this includes both a scale-up and a scale-down of the service.</li>
+<li><strong>Distributed Systems</strong>: Pieces of software that together make up the service; they may run on different machines connected, and coordinating, via the network.</li>
+</ul>
+
+</span>
+
+</section><section>
+<h2 id="key-features">Key features</h2>
+<ul>
+<li>Immutability</li>
+<li>Everything is a declarative configuration object</li>
+<li>Broader range of object to create, and manage, the production environment</li>
+<li>Automatic scaling (up and down)</li>
+<li>Built-in monitoring</li>
+<li>Security</li>
+</ul>
+</section><section>
+<h2 id="immutability">Immutability</h2>
+<p>Just like Docker Swarm, Kubernetes is a container orchestrator.
+Containers represent a declarative way to package and run applications, giving an immutable environment that can be deployed anywhere.</p>
+<br>
+<p><strong>So, why Docker Swarm is not enough?</strong></p>
+<p>Docker Swarm is not meant to support large production deployments at scale.</p>
+</section><section>
+<h2 id="declarative-configuration-objects">Declarative configuration objects</h2>
+
+<div class="multiCol">
+    <div class="col  ">
+    <h3 id="docker-swarm">Docker Swarm</h3>
+<ul>
+<li>stuck to the docker ecosystem,
+<ul>
+<li>it does not support other container runtimes,</li>
+<li>it requires docker primitives to be used to manage the environment.</li>
+</ul>
+</li>
+<li>the only way to manage the environment is through the <code>docker-compose.yml</code> file.</li>
+</ul>
+<h3 id="example-with-a-docker-stack">Example with a Docker Stack:</h3>
+<pre tabindex="0"><code>docker stack deploy -c docker-compose.yml &lt;stack_name&gt;
+</code></pre><p><strong>Docker primitives required to build the environment</strong></p>
+</div> 
+<div class="col  ">
+    <h3 id="kubernetes">Kubernetes</h3>
+<ul>
+<li><strong>“everything is an object”</strong>
+<ul>
+<li>broader range of objects to customise the production environment,</li>
+<li>external declarative tool, named <code>kubectl</code>, to manage the environment.</li>
+</ul>
+</li>
+<li>it can be configured to work upon different container runtimes, such as <em>Docker</em>, <em>containerd</em>, <em>CRI-O</em>, etc.</li>
+</ul>
+<h3 id="example-with-a-kubernetes-deployment">Example with a Kubernetes Deployment:</h3>
+<pre tabindex="0"><code>kubectl create -f configuration-file.yaml
+</code></pre><p><strong>Command valid for every resource in the Kubernetes ecosystem</strong></p>
+</div>
+
+</div>
+</section><section>
+<h3 id="an-example-of-existing-kubernetes-resources-types">An example of existing Kubernetes resources types</h3>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>NAME                              SHORTNAMES   API VERSION                            NAMESPACED   KIND                   
+</span></span><span style="display:flex;"><span>namespaces                        ns           v1                                     <span style="color:#038">false</span>        Namespace              
+</span></span><span style="display:flex;"><span>nodes                             no           v1                                     <span style="color:#038">false</span>        Node                   
+</span></span><span style="display:flex;"><span>persistentvolumeclaims            pvc          v1                                     <span style="color:#038">true</span>         PersistentVolumeClaim  
+</span></span><span style="display:flex;"><span>persistentvolumes                 pv           v1                                     <span style="color:#038">false</span>        PersistentVolume       
+</span></span><span style="display:flex;"><span>pods                              po           v1                                     <span style="color:#038">true</span>         Pod                    
+</span></span><span style="display:flex;"><span>podtemplates                                   v1                                     <span style="color:#038">true</span>         PodTemplate            
+</span></span><span style="display:flex;"><span>replicationcontrollers            rc           v1                                     <span style="color:#038">true</span>         ReplicationController  
+</span></span><span style="display:flex;"><span>resourcequotas                    quota        v1                                     <span style="color:#038">true</span>         ResourceQuota          
+</span></span><span style="display:flex;"><span>secrets                                        v1                                     <span style="color:#038">true</span>         Secret                 
+</span></span><span style="display:flex;"><span>serviceaccounts                   sa           v1                                     <span style="color:#038">true</span>         ServiceAccount         
+</span></span><span style="display:flex;"><span>services                          svc          v1                                     <span style="color:#038">true</span>         Service                
+</span></span><span style="display:flex;"><span>apiservices                                    apiregistration.k8s.io/v1              <span style="color:#038">false</span>        APIService             
+</span></span><span style="display:flex;"><span>replicasets                       rs           apps/v1                                <span style="color:#038">true</span>         ReplicaSet             
+</span></span><span style="display:flex;"><span>deployments                       deploy       apps/v1                                <span style="color:#038">true</span>         Deployment             
+</span></span><span style="display:flex;"><span>statefulsets                      sts          apps/v1                                <span style="color:#038">true</span>         StatefulSet            
+</span></span><span style="display:flex;"><span>horizontalpodautoscalers          hpa          autoscaling/v2                         <span style="color:#038">true</span>         HorizontalPodAutoscaler
+</span></span><span style="display:flex;"><span>cronjobs                          cj           batch/v1                               <span style="color:#038">true</span>         CronJob                
+</span></span><span style="display:flex;"><span><span style="color:#038">jobs</span>                                           batch/v1                               <span style="color:#038">true</span>         Job                    
+</span></span><span style="display:flex;"><span>nodes                                          metrics.k8s.io/v1beta1                 <span style="color:#038">false</span>        NodeMetrics            
+</span></span><span style="display:flex;"><span>pods                                           metrics.k8s.io/v1beta1                 <span style="color:#038">true</span>         PodMetrics             
+</span></span><span style="display:flex;"><span>clusterrolebindings                            rbac.authorization.k8s.io/v1           <span style="color:#038">false</span>        ClusterRoleBinding
+</span></span><span style="display:flex;"><span>clusterroles                                   rbac.authorization.k8s.io/v1           <span style="color:#038">false</span>        ClusterRole 
+</span></span><span style="display:flex;"><span>rolebindings                                   rbac.authorization.k8s.io/v1           <span style="color:#038">true</span>         RoleBinding 
+</span></span><span style="display:flex;"><span>roles                                          rbac.authorization.k8s.io/v1           <span style="color:#038">true</span>         Role        
+</span></span><span style="display:flex;"><span>storageclasses                    sc           storage.k8s.io/v1                      <span style="color:#038">false</span>        StorageClass
+</span></span><span style="display:flex;"><span>volumeattachments                              storage.k8s.io/v1                      <span style="color:#038">false</span>        VolumeAttachment
+</span></span></code></pre></div></div>
+<br>
+<p>And the list goes on…</p>
+</section><section>
+<h2 id="automatic-scaling">Automatic scaling</h2>
+
+<div class="multiCol">
+    <div class="col  ">
+    <h3 id="docker-swarm">Docker Swarm</h3>
+<ul>
+<li>
+<p><code>Services</code> can scale their replica number,</p>
+<ul>
+<li>but only after a manual intervention.</li>
+</ul>
+</li>
+<li>
+<p>The cluster can grow its capacity,</p>
+<ul>
+<li>after the manual addition of another node.</li>
+</ul>
+</li>
+</ul>
+</div> 
+<div class="col  ">
+    <h3 id="kubernetes">Kubernetes</h3>
+<ul>
+<li>Can scale up and down the replicas of a resource,
+<ul>
+<li>both automatically and after a manual intervention,</li>
+<li>the automatic scaling can be configured to be based on observed metrics (i.e. the usage of the CPU/Memory).</li>
+</ul>
+</li>
+<li>The cluster can grow its capacity,
+<ul>
+<li><em>automatically</em> and after a manual intervention.</li>
+<li>supported only when running on <a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler#faqdocumentation">some</a> cloud providers.</li>
+</ul>
+</li>
+</ul>
+<br>
+<ul>
+<li><strong>Replicas and metrics are managed by resource objects too</strong></li>
+</ul>
+</div>
+
+</div>
+</section><section>
+<h2 id="built-in-monitoring">Built-in monitoring</h2>
+
+<div class="multiCol">
+    <div class="col  ">
+    <h3 id="docker-swarm">Docker Swarm</h3>
+<ul>
+<li>Monitoring is performed using third-party tools,
+<ul>
+<li>such as <em>Prometheus</em>, <em>Grafana</em>, etc.</li>
+</ul>
+</li>
+</ul>
+</div> 
+<div class="col  ">
+    <h3 id="kubernetes">Kubernetes</h3>
+<ul>
+<li>A basic monitoring is provided built-in with the cluster,
+<ul>
+<li>is necessary to install the <code>Metrics Server</code> plugin to enable the monitoring,</li>
+<li>this comprehends the usage of the <em>CPU</em> and <em>Memory</em> of the cluster nodes and containers</li>
+</ul>
+</li>
+<li>The monitoring can be extended using third-party tools,
+<ul>
+<li>such as <em>Prometheus</em>, <em>Grafana</em>, etc.</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</div>
+</section><section>
+<h2 id="metrics-in-kubernetes">Metrics in Kubernetes</h2>
+<br>
+<img src="hpa2.png" width="60%">
+</section><section>
+<h2 id="security">Security</h2>
+
+<div class="multiCol">
+    <div class="col  ">
+    <h3 id="docker-swarm">Docker Swarm</h3>
+<ul>
+<li>Simple access control based on TLS,
+<ul>
+<li>requires the direct access to a cluster node, and,</li>
+<li>it is not configurable for the single use case.</li>
+</ul>
+</li>
+<li>For a better access control is necessary to use a third-party management dashboard,
+<ul>
+<li>i.e. <em>Portainer</em>, etc.</li>
+</ul>
+</li>
+</ul>
+</div> 
+<div class="col  ">
+    <h3 id="kubernetes">Kubernetes</h3>
+<ul>
+<li>
+<p>Fine grained access control based on RBAC,</p>
+<ul>
+<li>configurable for the single use case</li>
+</ul>
+</li>
+<li>
+<p>Resources management is performed using the <code>kubectl</code> tool,</p>
+<ul>
+<li>it connects remotely to a cluster =&gt; no need to access a cluster node</li>
+<li>it is configured with specific user credentials
+<ul>
+<li>with a RBAC authorization</li>
+<li>using access tokens, connects using TLS</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Cluster resources can be split logically into <em>namespaces</em></p>
+<ul>
+<li>resources not visible between namespaces</li>
+<li>each one have its own RBAC configuration</li>
+<li>each one is assigned to a different team</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</div>
+</section><section>
+<h2 id="kubernetes-architecture">Kubernetes architecture</h2>
+<img src="cluster_overview.png">
+</section><section>
+<h2 id="kubernetes-objects-pods">Kubernetes objects: Pods</h2>
+
+<div class="multiCol">
+    <div class="col  ">
+    <img src="drawing-1.svg" class="align-middle">
+</div>
+<div class="col  ">
+    <br>
+<br>
+<h3 id="kubernetes-smallest-deployable-unit">Kubernetes smallest deployable unit.</h3>
+<ul>
+<li>Runs one (or more) containers
+<ul>
+<li>this allow to deploy toghether two different containers that are symbiotic between themself
+<ul>
+<li>for example, a web server container and the git synchronizer one that keeps it updated</li>
+<li>this is not the case of a web server and its database, which can be deployed in two different nodess</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</div>
+</section><section>
+<h2 id="kubernetes-objects-pods-1">Kubernetes objects: Pods</h2>
+
+<div class="multiCol">
+    <div class="col  ">
+    <img src="drawing-1.svg" class="align-middle">
+</div>
+<div class="col  ">
+    <br>
+<br>
+<ul>
+<li>Containers running in the same Pod share:
+<ul>
+<li>network namespace (ports),</li>
+<li>IP address,</li>
+<li>host name,</li>
+<li>storage (volumes),</li>
+<li>inter-process communication (IPC),</li>
+<li>Process identifiers (PIDs).</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</div>
+</section><section>
+<h2 id="kubernetes-objects-pods-2">Kubernetes objects: Pods</h2>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello-world<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">containers</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>busybox:latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">command</span>:<span style="color:#bbb"> </span>[<span style="color:#d20;background-color:#fff0f0">'sh'</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'-c'</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'echo "Hello, Kubernetes!" &amp;&amp; sleep 3600'</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">restartPolicy</span>:<span style="color:#bbb"> </span>OnFailure<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">imagePullPolicy</span>:<span style="color:#bbb"> </span>IfNotPresent<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">resources</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">requests</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">memory</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"64Mi"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">cpu</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"250m"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">limits</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">memory</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"128Mi"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">cpu</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"500m"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>- <span style="color:#b06;font-weight:bold">containerPort</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">80</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">protocol</span>:<span style="color:#bbb"> </span>TCP</span></span></code></pre></div>
+</div> 
+</section><section>
+<h2 id="kubernetes-objects-pods-3">Kubernetes objects: Pods</h2>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello-world<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">containers</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>busybox:latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">command</span>:<span style="color:#bbb"> </span>[<span style="color:#d20;background-color:#fff0f0">'sh'</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'-c'</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'echo "Hello, Kubernetes!" &amp;&amp; sleep 3600'</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">restartPolicy</span>:<span style="color:#bbb"> </span>OnFailure<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">imagePullPolicy</span>:<span style="color:#bbb"> </span>IfNotPresent<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">resources</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">requests</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">memory</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"64Mi"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">cpu</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"250m"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">limits</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">memory</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"128Mi"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">cpu</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"500m"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>- <span style="color:#b06;font-weight:bold">containerPort</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">80</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">protocol</span>:<span style="color:#bbb"> </span>TCP</span></span></code></pre></div>
+</div> 
+<div class="overlay">
+   <div class="restart-policy"></div>
+</div>
+</section><section>
+<h2 id="kubernetes-objects-pods-4">Kubernetes objects: Pods</h2>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello-world<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">containers</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>busybox:latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">command</span>:<span style="color:#bbb"> </span>[<span style="color:#d20;background-color:#fff0f0">'sh'</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'-c'</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'echo "Hello, Kubernetes!" &amp;&amp; sleep 3600'</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">restartPolicy</span>:<span style="color:#bbb"> </span>OnFailure<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">imagePullPolicy</span>:<span style="color:#bbb"> </span>IfNotPresent<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">resources</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">requests</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">memory</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"64Mi"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">cpu</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"250m"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">limits</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">memory</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"128Mi"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">cpu</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"500m"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>- <span style="color:#b06;font-weight:bold">containerPort</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">80</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">protocol</span>:<span style="color:#bbb"> </span>TCP</span></span></code></pre></div>
+</div> 
+<div class="overlay">
+   <div class="image-pull-policy"></div>
+</div>
+</section><section>
+<h2 id="kubernetes-objects-pods-5">Kubernetes objects: Pods</h2>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello-world<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">containers</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>busybox:latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">command</span>:<span style="color:#bbb"> </span>[<span style="color:#d20;background-color:#fff0f0">'sh'</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'-c'</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'echo "Hello, Kubernetes!" &amp;&amp; sleep 3600'</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">restartPolicy</span>:<span style="color:#bbb"> </span>OnFailure<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">imagePullPolicy</span>:<span style="color:#bbb"> </span>IfNotPresent<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">resources</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">requests</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">memory</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"64Mi"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">cpu</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"250m"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">limits</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">memory</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"128Mi"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">cpu</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"500m"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>- <span style="color:#b06;font-weight:bold">containerPort</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">80</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">protocol</span>:<span style="color:#bbb"> </span>TCP</span></span></code></pre></div>
+</div> 
+<div class="overlay">
+   <div class="resources"></div>
+</div>
+</section><section>
+<h2 id="metrics-in-kubernetes-1">Metrics in Kubernetes</h2>
+
+<div class="multiCol">
+    <div class="col  ">
+    <blockquote>
+<p><strong>CPU</strong> resources are expressed in <em>millicpu</em> units. <br>
+A millicpu, or millicore, is equivalent to 1/1000th of a CPU core. <br>
+<code>0.1 = 10% = 100m</code></p>
+</blockquote>
+</div>
+<div class="col  ">
+    <blockquote>
+<p><strong>Memory</strong> resources are measured in bytes. <br>
+You can express memory as a plain integer or with quantity suffixes, for example E, P, T, G, M, k. <br>
+You can also use the power-of-two equivalents, such as Ei, Pi, Ti, Gi, Mi, Ki. <br>
+<code>128974848 = 129e6 = 129M = 123Mi</code></p>
+</blockquote>
+</div>
+
+</div>
+</section><section>
+<h2 id="kubernetes-objects-pods-6">Kubernetes objects: Pods</h2>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello-world<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">containers</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>busybox:latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">command</span>:<span style="color:#bbb"> </span>[<span style="color:#d20;background-color:#fff0f0">'sh'</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'-c'</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'echo "Hello, Kubernetes!" &amp;&amp; sleep 3600'</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">restartPolicy</span>:<span style="color:#bbb"> </span>OnFailure<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">imagePullPolicy</span>:<span style="color:#bbb"> </span>IfNotPresent<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">resources</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">requests</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">memory</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"64Mi"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">cpu</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"250m"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">limits</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">memory</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"128Mi"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">cpu</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"500m"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>- <span style="color:#b06;font-weight:bold">containerPort</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">80</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">protocol</span>:<span style="color:#bbb"> </span>TCP</span></span></code></pre></div>
+</div> 
+<div class="overlay">
+   <div class="ports"></div>
+</div>
+</section><section>
+<h2 id="kubernetes-objects-deployment">Kubernetes objects: Deployment</h2>
+
+<div class="multiCol">
+    <div class="col  ">
+    <div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: apps/v1
+</span></span><span style="display:flex;"><span>kind: Deployment
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  name: nginx-deployment
+</span></span><span style="display:flex;"><span>  labels:
+</span></span><span style="display:flex;"><span>    app: nginx
+</span></span><span style="display:flex;"><span>spec:
+</span></span><span style="display:flex;"><span>  replicas: <span style="color:#00d;font-weight:bold">3</span>
+</span></span><span style="display:flex;"><span>  selector:
+</span></span><span style="display:flex;"><span>    matchLabels:
+</span></span><span style="display:flex;"><span>      app: nginx
+</span></span><span style="display:flex;"><span>  template:
+</span></span><span style="display:flex;"><span>    metadata:
+</span></span><span style="display:flex;"><span>      labels:
+</span></span><span style="display:flex;"><span>        app: nginx
+</span></span><span style="display:flex;"><span>    spec:
+</span></span><span style="display:flex;"><span>      containers:
+</span></span><span style="display:flex;"><span>      - name: nginx
+</span></span><span style="display:flex;"><span>        image: nginx:1.14.2
+</span></span><span style="display:flex;"><span>        ports:
+</span></span><span style="display:flex;"><span>        - containerPort: <span style="color:#00d;font-weight:bold">80</span>               
+</span></span></code></pre></div></div>
+</div>
+<div class="col  ">
+    <br>
+<br>
+<p><code>Pods</code> are not directly managed by the user, but through by a higher-level object called <code>Deployment</code>.</p>
+<ul>
+<li>They exist to manage the release of a new version of the application</li>
+<li>Avoid downtime during the update process of a Pod</li>
+<li>Entity that ties together a <code>ReplicaSets</code> and <code>Pods</code></li>
+</ul>
+</div>
+
+</div>
+</section><section>
+<h2 id="kubernetes-objects-deployment-1">Kubernetes objects: Deployment</h2>
+
+<div class="multiCol">
+    <div class="col  ">
+    <div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: apps/v1
+</span></span><span style="display:flex;"><span>kind: Deployment
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  name: nginx-deployment
+</span></span><span style="display:flex;"><span>  labels:
+</span></span><span style="display:flex;"><span>    app: nginx
+</span></span><span style="display:flex;"><span>spec:
+</span></span><span style="display:flex;"><span>  replicas: <span style="color:#00d;font-weight:bold">3</span>
+</span></span><span style="display:flex;"><span>  selector:
+</span></span><span style="display:flex;"><span>    matchLabels:
+</span></span><span style="display:flex;"><span>      app: nginx
+</span></span><span style="display:flex;"><span>  template:
+</span></span><span style="display:flex;"><span>    metadata:
+</span></span><span style="display:flex;"><span>      labels:
+</span></span><span style="display:flex;"><span>        app: nginx
+</span></span><span style="display:flex;"><span>    spec:
+</span></span><span style="display:flex;"><span>      containers:
+</span></span><span style="display:flex;"><span>      - name: nginx
+</span></span><span style="display:flex;"><span>        image: nginx:1.14.2
+</span></span><span style="display:flex;"><span>        ports:
+</span></span><span style="display:flex;"><span>        - containerPort: <span style="color:#00d;font-weight:bold">80</span>               
+</span></span></code></pre></div></div>
+</div>
+<div class="col  ">
+    <br>
+<br>
+<p>The connection between the <code>Deployment</code> and the <code>Pods</code> is done using the <code>selector</code> field</p>
+<ul>
+<li>they are unique labels that identify the <code>Pods</code> that the <code>Deployment</code> will manage</li>
+</ul>
+</div>
+
+</div>
+</section><section>
+<h2 id="kubernetes-objects-replicaset">Kubernetes objects: ReplicaSet</h2>
+<p>They are the objects that manage the <code>Pod</code> number</p>
+<ul>
+<li>they usually are not managed directly by the user, but through a <code>Deployment</code></li>
+<li>they let to scale the number of <code>Pods</code> up and down</li>
+</ul>
+<br>
+<br>
+<div class="center">
+Since a <code>Deployment</code> object manages a <code>ReplicaSet</code> one, users can scale dynamically the <code>Pod</code>'s number using:
+</div>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl scale deployment &lt;name&gt; --replicas=&lt;number&gt;
+</span></span></code></pre></div></div>
+</section><section>
+<h2 id="kubernetes-objects-services">Kubernetes objects: Services</h2>
+
+<div class="multiCol">
+    <div class="col  ">
+    <img src="drawing-1.svg" class="align-middle">
+</div>
+<div class="col  ">
+    <br>
+<br>
+<p>Service discovery in Kubernetes starts with the <em>Service</em> object.</p>
+<ul>
+<li>They are the entry-point for the application</li>
+<li>They redirect requests to the Pods in the cluster nodes
+<ul>
+<li>Don’t forget that Pods are ephemeral, so they can be moved between nodes, and their IP address can change</li>
+</ul>
+</li>
+<li>They group Pods in a network
+<ul>
+<li>meaning that Services know which Pods are replicas</li>
+</ul>
+</li>
+</ul>
+<br>
+<p><strong>How do they work?</strong>
+They exploit the labels selectors.</p>
+</div>
+
+</div>
+</section><section>
+<h2 id="kubernetes-objects-services-1">Kubernetes objects: Services</h2>
+<div class="center">
+There are three main types of Services:
+</div>
+<br>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ClusterIP</code></td>
+<td>Exposes the Service on a cluster-internal IP, only reachable <br> from within the cluster. This is the <em>default</em> value.</td>
+</tr>
+<tr>
+<td><code>NodePort</code></td>
+<td>Exposes the Service on each Node’s IP at a static port.</td>
+</tr>
+<tr>
+<td><code>LoadBalancer</code></td>
+<td>Exposes the server externally using a load balancer. <br> This type of Service is not offered directly from Kubernetes.</td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<p><code>Deployments</code> are not the only road:</p>
+
+<div class="multiCol">
+    <div class="col  ">
+    <h2 id="job">Job</h2>
+<p>Object that runs short-lived, one-off tasks.
+Useful to for things to do once, and then stop, for example a database migration.</p>
+</div>
+<div class="col  ">
+    <h2 id="cronjob">CronJob</h2>
+<p>CronJob is meant for performing regular scheduled actions such as backups, report generation, and so on.</p>
+</div>
+
+</div>
+
+<div class="multiCol">
+    <div class="col  ">
+    <h2 id="statefulset">StatefulSet</h2>
+<p>Like a Deployment, a StatefulSet manages Pods that are based on an identical container spec.
+Unlike a Deployment, a StatefulSet maintains a sticky identity for each of its Pods.
+These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that it maintains across any rescheduling.</p>
+</div>
+<div class="col  ">
+    <h2 id="daemonset">DaemonSet</h2>
+<p>A DaemonSet ensures that all (or some) Nodes run a copy of a Pod.
+As nodes are added to the cluster, Pods are added to them.
+As nodes are removed from the cluster, those Pods are garbage collected.</p>
+</div>
+
+</div>
+</section><section>
+<h2 id="access-control">Access Control</h2>
+<p>Enforced through the <code>Service Account</code> resource object</p>
+<ul>
+<li>represents a distinct identity in the cluster</li>
+<li>each one of them is <em>bound</em> to a specific <code>Namespace</code></li>
+<li>grants access to the API server</li>
+<li>grants permissions through the <em>RBAC</em> mechanism</li>
+<li>can be used to configure the authentication within <code>kubectl</code></li>
+</ul>
+</section><section>
+<h1 id="in-practice">In practice</h1>
+</section><section>
+<h2 id="installation-of-kubernetes">Installation of Kubernetes</h2>
+<ul>
+<li>
+<p>Several tools support the installation of a <em>production-ready Kubernetes cluster</em>, because is a <strong>complex</strong> process</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/">kubeadm</a></li>
+<li><a href="https://kubernetes.io/docs/setup/production-environment/tools/kubespray/">kubespray</a></li>
+<li><a href="https://kubernetes.io/docs/setup/production-environment/tools/kops/">kops</a></li>
+<li><a href="https://k3s.io/">k3s</a></li>
+<li>etc.</li>
+</ul>
+</li>
+<li>
+<p>For testing purposes, Kubernetes can be installed on a single machine using <a href="https://minikube.sigs.k8s.io/docs/start/">minikube</a></p>
+<ul>
+<li>single-node Kubernetes cluster</li>
+<li>works on Windows, Linux and macOS</li>
+<li>runs inside a VM, a container, or on the bare-metal, on your choice</li>
+<li>not suitable for production environments</li>
+<li>comes with a set of built-in plugins to be installed, for example:
+<ul>
+<li>Metrics Server</li>
+<li>Kubernetes Dashboard</li>
+<li>and others, we’ll see them later</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="minikube">Minikube</h2>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>minikube start --driver=<span style="color:#d20;background-color:#fff0f0">'virtualbox'</span> --extra-config=kubelet.housekeeping-interval=10s</span></span></code></pre></div>
+</div>
+<br>
+<blockquote>
+<p>The driver specifies where to install the kubernetes infrastructure, in this case inside a virtual machine managed by VirtualBox</p>
+<p>(that is pre-installed on the machine).</p>
+<p>Admissible values are: <code>virtualbox</code>, <code>kvm2</code>, <code>qemu2</code>, <code>vmware</code>, <code>docker</code>, <code>none</code>, <code>ssh</code>, <code>podman</code>. Default is <code>auto-detect</code></p>
+</blockquote>
+<blockquote>
+<p>The <code>--extra-config</code> param is used to configure Kubernetes’ <code>kubelet</code> during the initial startup.</p>
+<p>The flag <code>kubelet.housekeeping-interval</code> specifies the frequency at which the kubelet evaluates eviction thresholds,</p>
+<p>we need it to execute correctly the example provided in the next slides.</p>
+</blockquote>
+</section><section>
+<h2 id="minikube-1">Minikube</h2>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>$ minikube start
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>😄  minikube v1.32.0 on Arch 23.1.0
+</span></span><span style="display:flex;"><span>✨  Using the virtualbox driver based on existing profile
+</span></span><span style="display:flex;"><span>👍  Starting control plane node minikube in cluster minikube
+</span></span><span style="display:flex;"><span>🔄  Restarting existing virtualbox VM <span style="color:#080;font-weight:bold">for</span> <span style="color:#d20;background-color:#fff0f0">"minikube"</span> ...
+</span></span><span style="display:flex;"><span>🐳  Preparing Kubernetes v1.28.3 on Docker 24.0.7 ...
+</span></span><span style="display:flex;"><span>    ▪️ kubelet.housekeeping-interval=10s
+</span></span><span style="display:flex;"><span>🔗  Configuring bridge CNI (Container Networking Interface) ...
+</span></span><span style="display:flex;"><span>    ▪️ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+</span></span><span style="display:flex;"><span>🔎  Verifying Kubernetes components...
+</span></span><span style="display:flex;"><span>🌟  Enabled addons: storage-provisioner, default-storageclass
+</span></span><span style="display:flex;"><span>🏄  Done! kubectl is now configured to use <span style="color:#d20;background-color:#fff0f0">"minikube"</span> cluster and <span style="color:#d20;background-color:#fff0f0">"default"</span> namespace by default
+</span></span></code></pre></div></div>
+<h3 id="what-happened">What happened?</h3>
+<ul>
+<li>Now you have a virtual machine running on VirtualBox, and hosting a Kubernetes cluster.
+<ul>
+<li>You can look for it using the VirtualBox GUI</li>
+</ul>
+</li>
+<li>Minikube configured your <code>kubectl</code> environment
+<ul>
+<li><strong>But you don’t have <code>kubectl</code> installed yet!</strong></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="minikube-2">Minikube</h2>
+<div class="center">
+Useful commands: 
+</div>
+<br>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>minikube start</code></td>
+<td>Start the cluster</td>
+</tr>
+<tr>
+<td><code>minikube stop</code></td>
+<td>Stop the cluster</td>
+</tr>
+<tr>
+<td><code>minikube delete</code></td>
+<td>Delete the cluster</td>
+</tr>
+<tr>
+<td><code>minikube status</code></td>
+<td>Show the status of the cluster</td>
+</tr>
+<tr>
+<td><code>minikube dashboard</code></td>
+<td>Expose the builtin dashboard in localhost</td>
+</tr>
+<tr>
+<td><code>minikube addons list/enable/disable</code></td>
+<td>Lists/Enables/Disables available plugins into the cluster</td>
+</tr>
+</tbody>
+</table>
+</section><section>
+<h2 id="kubectl">Kubectl</h2>
+<p>The Kubernetes command-line tool, <code>kubectl</code>, allows you to run commands against Kubernetes clusters.</p>
+<ul>
+<li>You can install it following the official <a href="https://kubernetes.io/docs/tasks/tools/#kubectl">guide</a>.</li>
+</ul>
+<p>After a successful installation, you can verify that kubectl is correctly connected to our minikube cluster</p>
+<br>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>$ kubectl cluster-info
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Kubernetes control plane is running at https://192.168.59.101:8443
+</span></span><span style="display:flex;"><span>CoreDNS is running at https://192.168.59.101:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>To further debug and diagnose cluster problems, use <span style="color:#d20;background-color:#fff0f0">'kubectl cluster-info dump'</span>.
+</span></span></code></pre></div></div>
+<br>
+<b class="center">
+A different output means that the cluster is not configured correctly
+</b>
+</section><section>
+<h2 id="kubectl-1">Kubectl</h2>
+<div class="center">
+How can <code>kubectl</code> connect to the cluster? 
+<br>
+Let's look into the <code>~/.kube/config</code> file, or also use <code>kubectl config view</code>.
+<br>
+The output is something like this:
+</div>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>$ kubectl config view
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>clusters:
+</span></span><span style="display:flex;"><span>- cluster:
+</span></span><span style="display:flex;"><span>    certificate-authority: /home/anitvam/.minikube/ca.crt
+</span></span><span style="display:flex;"><span>    extensions:
+</span></span><span style="display:flex;"><span>    - extension:
+</span></span><span style="display:flex;"><span>        last-update: Mon, <span style="color:#00d;font-weight:bold">18</span> Dec <span style="color:#00d;font-weight:bold">2023</span> 12:59:17 CET
+</span></span><span style="display:flex;"><span>        provider: minikube.sigs.k8s.io
+</span></span><span style="display:flex;"><span>        version: v1.32.0
+</span></span><span style="display:flex;"><span>      name: cluster_info
+</span></span><span style="display:flex;"><span>    server: https://192.168.59.101:8443
+</span></span><span style="display:flex;"><span>  name: minikube
+</span></span><span style="display:flex;"><span>contexts:
+</span></span><span style="display:flex;"><span>- context:
+</span></span><span style="display:flex;"><span>    cluster: minikube
+</span></span><span style="display:flex;"><span>    extensions:
+</span></span><span style="display:flex;"><span>    - extension:
+</span></span><span style="display:flex;"><span>        last-update: Mon, <span style="color:#00d;font-weight:bold">18</span> Dec <span style="color:#00d;font-weight:bold">2023</span> 12:59:17 CET
+</span></span><span style="display:flex;"><span>        provider: minikube.sigs.k8s.io
+</span></span><span style="display:flex;"><span>        version: v1.32.0
+</span></span><span style="display:flex;"><span>      name: context_info
+</span></span><span style="display:flex;"><span>    namespace: default
+</span></span><span style="display:flex;"><span>    user: minikube
+</span></span><span style="display:flex;"><span>  name: minikube
+</span></span><span style="display:flex;"><span>current-context: minikube
+</span></span><span style="display:flex;"><span>kind: Config
+</span></span><span style="display:flex;"><span>preferences: {}
+</span></span><span style="display:flex;"><span>users:
+</span></span><span style="display:flex;"><span>- name: minikube
+</span></span><span style="display:flex;"><span>  user:
+</span></span><span style="display:flex;"><span>    client-certificate: /home/anitvam/.minikube/profiles/minikube/client.crt
+</span></span><span style="display:flex;"><span>    client-key: /home/anitvam/.minikube/profiles/minikube/client.key
+</span></span></code></pre></div></div>
+</section><section>
+<h2 id="kubectl-config-available-clusters">Kubectl config: available clusters</h2>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>clusters:
+</span></span><span style="display:flex;"><span>- cluster:
+</span></span><span style="display:flex;"><span>    certificate-authority: /home/anitvam/.minikube/ca.crt
+</span></span><span style="display:flex;"><span>    extensions:
+</span></span><span style="display:flex;"><span>    - extension:
+</span></span><span style="display:flex;"><span>        last-update: Mon, <span style="color:#00d;font-weight:bold">18</span> Dec <span style="color:#00d;font-weight:bold">2023</span> 12:59:17 CET
+</span></span><span style="display:flex;"><span>        provider: minikube.sigs.k8s.io
+</span></span><span style="display:flex;"><span>        version: v1.32.0
+</span></span><span style="display:flex;"><span>      name: cluster_info
+</span></span><span style="display:flex;"><span>    server: https://192.168.59.101:8443
+</span></span><span style="display:flex;"><span>  name: minikube
+</span></span><span style="display:flex;"><span>contexts:
+</span></span><span style="display:flex;"><span>- context:
+</span></span><span style="display:flex;"><span>    cluster: minikube
+</span></span><span style="display:flex;"><span>    extensions:
+</span></span><span style="display:flex;"><span>    - extension:
+</span></span><span style="display:flex;"><span>        last-update: Mon, <span style="color:#00d;font-weight:bold">18</span> Dec <span style="color:#00d;font-weight:bold">2023</span> 12:59:17 CET
+</span></span><span style="display:flex;"><span>        provider: minikube.sigs.k8s.io
+</span></span><span style="display:flex;"><span>        version: v1.32.0
+</span></span><span style="display:flex;"><span>      name: context_info
+</span></span><span style="display:flex;"><span>    namespace: default
+</span></span><span style="display:flex;"><span>    user: minikube
+</span></span><span style="display:flex;"><span>  name: minikube
+</span></span><span style="display:flex;"><span>current-context: minikube
+</span></span><span style="display:flex;"><span>kind: Config
+</span></span><span style="display:flex;"><span>preferences: {}
+</span></span><span style="display:flex;"><span>users:
+</span></span><span style="display:flex;"><span>- name: minikube
+</span></span><span style="display:flex;"><span>  user:
+</span></span><span style="display:flex;"><span>    client-certificate: /home/anitvam/.minikube/profiles/minikube/client.crt
+</span></span><span style="display:flex;"><span>    client-key: /home/anitvam/.minikube/profiles/minikube/client.key
+</span></span></code></pre></div></div>
+<div class="overlay">
+   <div class="config-cluster"></div>
+</div>
+</section><section>
+<h2 id="kubectl-config-user-certificates">Kubectl config: user certificates</h2>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>clusters:
+</span></span><span style="display:flex;"><span>- cluster:
+</span></span><span style="display:flex;"><span>    certificate-authority: /home/anitvam/.minikube/ca.crt
+</span></span><span style="display:flex;"><span>    extensions:
+</span></span><span style="display:flex;"><span>    - extension:
+</span></span><span style="display:flex;"><span>        last-update: Mon, <span style="color:#00d;font-weight:bold">18</span> Dec <span style="color:#00d;font-weight:bold">2023</span> 12:59:17 CET
+</span></span><span style="display:flex;"><span>        provider: minikube.sigs.k8s.io
+</span></span><span style="display:flex;"><span>        version: v1.32.0
+</span></span><span style="display:flex;"><span>      name: cluster_info
+</span></span><span style="display:flex;"><span>    server: https://192.168.59.101:8443
+</span></span><span style="display:flex;"><span>  name: minikube
+</span></span><span style="display:flex;"><span>contexts:
+</span></span><span style="display:flex;"><span>- context:
+</span></span><span style="display:flex;"><span>    cluster: minikube
+</span></span><span style="display:flex;"><span>    extensions:
+</span></span><span style="display:flex;"><span>    - extension:
+</span></span><span style="display:flex;"><span>        last-update: Mon, <span style="color:#00d;font-weight:bold">18</span> Dec <span style="color:#00d;font-weight:bold">2023</span> 12:59:17 CET
+</span></span><span style="display:flex;"><span>        provider: minikube.sigs.k8s.io
+</span></span><span style="display:flex;"><span>        version: v1.32.0
+</span></span><span style="display:flex;"><span>      name: context_info
+</span></span><span style="display:flex;"><span>    namespace: default
+</span></span><span style="display:flex;"><span>    user: minikube
+</span></span><span style="display:flex;"><span>  name: minikube
+</span></span><span style="display:flex;"><span>current-context: minikube
+</span></span><span style="display:flex;"><span>kind: Config
+</span></span><span style="display:flex;"><span>preferences: {}
+</span></span><span style="display:flex;"><span>users:
+</span></span><span style="display:flex;"><span>- name: minikube
+</span></span><span style="display:flex;"><span>  user:
+</span></span><span style="display:flex;"><span>    client-certificate: /home/anitvam/.minikube/profiles/minikube/client.crt
+</span></span><span style="display:flex;"><span>    client-key: /home/anitvam/.minikube/profiles/minikube/client.key
+</span></span></code></pre></div></div>
+<div class="overlay">
+   <div class="config-user"></div>
+</div>
+</section><section>
+<h2 id="kubectl-config-contexts">Kubectl config: contexts</h2>
+<ul>
+<li>Contexts declare the user to use to connect to a specific cluster.</li>
+<li>You can define multiple contexts to connect to clusters.</li>
+<li>You can connect to a single context at a time,
+<ul>
+<li>and switch between them using the <code>kubectl config use-context</code> command.</li>
+</ul>
+</li>
+</ul>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">clusters</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>- <span style="color:#b06;font-weight:bold">cluster</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">certificate-authority</span>:<span style="color:#bbb"> </span>/home/anitvam/.minikube/ca.crt<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">extensions</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">extension</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">last-update</span>:<span style="color:#bbb"> </span>Mon, 18 Dec 2023 12:59:17 CET<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">provider</span>:<span style="color:#bbb"> </span>minikube.sigs.k8s.io<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span>v1.32.0<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>cluster_info<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">server</span>:<span style="color:#bbb"> </span>https://192.168.59.101:8443<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">contexts</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>- <span style="color:#b06;font-weight:bold">context</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">cluster</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">extensions</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">extension</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">last-update</span>:<span style="color:#bbb"> </span>Mon, 18 Dec 2023 12:59:17 CET<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">provider</span>:<span style="color:#bbb"> </span>minikube.sigs.k8s.io<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span>v1.32.0<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>context_info<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">namespace</span>:<span style="color:#bbb"> </span>default<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">user</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">current-context</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Config<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">preferences</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">users</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">user</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">client-certificate</span>:<span style="color:#bbb"> </span>/home/anitvam/.minikube/profiles/minikube/client.crt<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">client-key</span>:<span style="color:#bbb"> </span>/home/anitvam/.minikube/profiles/minikube/client.key<span style="color:#bbb">
+</span></span></span></code></pre></div></div>
+<div class="overlay">
+   <div class="config-context"></div>
+</div>
+</section><section>
+<h2 id="lets-test-the-kubernetes-autoscaling">Let’s test the Kubernetes autoscaling</h2>
+<p>First of all, we need to enable the <code>metrics-server</code>, which is disabled by default</p>
+<ul>
+<li>we can enable it using the <code>minikube addons enable metrics-server</code> command</li>
+<li>we can verify that it is correctly installed using the <code>kubectl top nodes</code> command</li>
+<li>we need it to observe the CPU and Memory usage of the Pods in the cluster</li>
+</ul>
+<br>
+<div class="center">
+<blockquote>
+<p>Until the command <code>kubectl top</code> does not work properly, the metrics server is not enabled yet.<br>The operation may take a while.</p>
+</blockquote>
+</div>
+</section><section>
+<h2 id="lets-test-the-kubernetes-autoscaling-1">Let’s test the Kubernetes autoscaling</h2>
+<p>Now we can deploy our first Application</p>
+<ul>
+<li>it’s a simple php web server that answer “OK!” to every request</li>
+</ul>
+<h4 id="what-kubernetes-objects-should-we-use-to-deploy-it"><strong>What kubernetes objects should we use to deploy it?</strong></h4>
+</section><section>
+<h2 id="lets-test-the-kubernetes-autoscaling-2">Let’s test the Kubernetes autoscaling</h2>
+<div class="center">
+Two objects: A <code>Deployment</code> and a <code>Service</code>
+</div>
+
+<div class="multiCol">
+    
+
+<div class="col  ">
+    <div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: apps/v1
+</span></span><span style="display:flex;"><span>kind: Deployment
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  name: php-apache
+</span></span><span style="display:flex;"><span>spec:
+</span></span><span style="display:flex;"><span>  selector:
+</span></span><span style="display:flex;"><span>    matchLabels:
+</span></span><span style="display:flex;"><span>      run: php-apache
+</span></span><span style="display:flex;"><span>  template:
+</span></span><span style="display:flex;"><span>    metadata:
+</span></span><span style="display:flex;"><span>      labels:
+</span></span><span style="display:flex;"><span>        run: php-apache
+</span></span><span style="display:flex;"><span>    spec:
+</span></span><span style="display:flex;"><span>      containers:
+</span></span><span style="display:flex;"><span>      - name: php-apache
+</span></span><span style="display:flex;"><span>        image: registry.k8s.io/hpa-example
+</span></span><span style="display:flex;"><span>        ports:
+</span></span><span style="display:flex;"><span>        - containerPort: <span style="color:#00d;font-weight:bold">80</span>
+</span></span><span style="display:flex;"><span>        resources:
+</span></span><span style="display:flex;"><span>          limits:
+</span></span><span style="display:flex;"><span>            cpu: 500m
+</span></span><span style="display:flex;"><span>          requests:
+</span></span><span style="display:flex;"><span>            cpu: 200m
+</span></span></code></pre></div></div>
+
+</div>
+
+<div class="col  ">
+    <div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>kind: Service
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  name: php-apache
+</span></span><span style="display:flex;"><span>  labels:
+</span></span><span style="display:flex;"><span>    run: php-apache
+</span></span><span style="display:flex;"><span>spec:
+</span></span><span style="display:flex;"><span>  ports:
+</span></span><span style="display:flex;"><span>  - port: <span style="color:#00d;font-weight:bold">80</span>
+</span></span><span style="display:flex;"><span>  selector:
+</span></span><span style="display:flex;"><span>    run: php-apache
+</span></span></code></pre></div></div>
+
+</div>
+
+</div>
+
+
+<span class="fragment ">
+  <div class="center">
+They can both be deployed using the <code>kubectl apply -f &lt;file&gt;</code> command.
+</div>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl apply -f https://k8s.io/examples/application/php-apache.yaml
+</span></span></code></pre></div></div>
+
+</span>
+
+</section><section>
+<h2 id="lets-test-the-kubernetes-autoscaling-3">Let’s test the Kubernetes autoscaling</h2>
+<div class="center">
+We need to create an <code>Horizontal Pod Autoscaler</code>
+</div>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl autoscale deployment php-apache --cpu-percent=<span style="color:#00d;font-weight:bold">50</span> --min=<span style="color:#00d;font-weight:bold">1</span> --max=<span style="color:#00d;font-weight:bold">10</span>
+</span></span></code></pre></div></div>
+<br>
+<div class="center">
+It observes the CPU usage of the Pods and scales them <em>up</em> and <em>down</em> to maintain an <em>average CPU usage</em> of each Pod of <em>50%</em>. <br> 
+The minimum number of replicas that can be deployed is <em>1</em>, and the maximum is <em>10</em>.
+</div>
+</section><section>
+<h2 id="lets-test-the-kubernetes-autoscaling-4">Let’s test the Kubernetes autoscaling</h2>
+<p>Now, we have to simulate a huge workload</p>
+<ul>
+<li>for doing that we can use a Pod that continuously sends requests to the web server</li>
+<li><code>kubectl run</code> allows to create a Pod on-the-fly</li>
+</ul>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl run -it load-generator --rm --image=busybox:latest -- /bin/sh -c <span style="color:#d20;background-color:#fff0f0">"while sleep 0.01; do wget -q -O - http://php-apache; done"</span>
+</span></span></code></pre></div></div>
+<br>
+<br>
+<div class="center">
+We can observe the current <code>Horizontal Pod Autoscaler</code> status <br>
+using the <code>kubectl get hpa php-apache --watch</code> command.
+</div>
+</section><section>
+<h2 id="lets-test-the-kubernetes-autoscaling-5">Let’s test the Kubernetes autoscaling</h2>
+<div class="center">
+What we get (waiting a few minutes) is something like this:
+</div>
+<br>
+<div class="custom">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>$ kubectl get hpa php-apache --watch  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME         REFERENCE               TARGETS    MINPODS   MAXPODS   REPLICAS   AGE
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   0%/50%     <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">1</span>          10m
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   129%/50%   <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">1</span>          11m     
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   129%/50%   <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">3</span>          11m
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   138%/50%   <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">3</span>          12m
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   85%/50%    <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">3</span>          13m
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   85%/50%    <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">6</span>          13m
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   65%/50%    <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">6</span>          14m
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   51%/50%    <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">6</span>          15m
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   11%/50%    <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">6</span>          16m
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   0%/50%     <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">6</span>          17m
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   0%/50%     <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">6</span>          20m
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   0%/50%     <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">2</span>          21m
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   0%/50%     <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">2</span>          21m
+</span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   0%/50%     <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">1</span>          22m
+</span></span></code></pre></div></div>
+</section><section>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src="/reveal-hugo/object-assign.js"></script>
+
+<a href="/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"height":"1080","history":true,"mermaid":[{"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false}],"pdfseparatefragments":false,"slide_number":true,"theme":"white","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"transition":"slide","transition_speed":"fast"}</script>
+
+<script src="/reveal-js/dist/reveal.js"></script>
+
+
+  
+  
+  <script type="text/javascript" src="/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/zoom/zoom.js"></script>
+  
+  <script type="text/javascript" src="/reveal-js/plugin/notes/notes.js"></script>
+  
+  
+  <script type="text/javascript" src="/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+
+  var revealHugoPlugins = { 
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
+   };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
+  Reveal.initialize(options);
+</script>
+
+
+
+
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@9.1.6/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false});
+
+    let render = (event) => {
+      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+      if (!mermaidElems.length){
+          return
+      }
+      mermaidElems.forEach(mermaidElem => {
+          let processed = mermaidElem.getAttribute('data-processed');
+          if (!processed){
+              
+              mermaid.init(undefined, mermaidElem);
+          }
+      });
+    };
+    
+    render({currentSlide: Reveal.getCurrentSlide()});
+
+    Reveal.on('slidechanged', render);
+    Reveal.on('ready', render);
+  </script>
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+<script>
+  if (/.*?(\?|&)print-pdf/.test(window.location.toString())) {
+      var ytVideos = document.getElementsByTagName("iframe")
+      for (let i = 0; i < ytVideos.length; i++) {
+          var videoFrame = ytVideos[i]
+          var isYouTube = /^https?:\/\/(www.)youtube\.com\/.*/.test(videoFrame.src)
+          if (isYouTube) {
+              console.log(`Removing ${videoFrame.src}`)
+              var parent = videoFrame.parentElement
+              videoFrame.remove()
+              var p = document.createElement('p')
+              p.append(
+                  document.createTextNode(
+                      "There was an embedded video here, but it is disabled in the printed version of the slides."
+                  )
+              )
+              p.append(document.createElement('br'))
+              p.append(
+                  document.createTextNode(
+                      `Visit instead ${
+                          videoFrame.src
+                      } or ${
+                          videoFrame.src.replace(
+                              /(^https?:\/\/(www.)youtube\.com)\/(embed\/)(\w+).*/,
+                              "https://www.youtube.com/watch?v=$4"
+                          )
+                      }`
+                  )
+              )
+              parent.appendChild(p)
+          }
+      }
+  }
+</script>
+
+    
+  
+
+</body></html>
