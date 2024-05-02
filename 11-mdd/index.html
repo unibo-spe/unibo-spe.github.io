@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/css/custom-theme.min.b2438bbc34fe86c52736bfeac0cdf266f15384ffdfa6b5a169a3c8600c12113d.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/css/custom-theme.min.d5c442598d63cb43493486b9b759c232b9a2b08df57c1e25d2630d31c1daeeae.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
 <link rel="stylesheet" href="https://raw.githubusercontent.com/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
@@ -209,8 +209,8 @@
 </section><section>
 <h2 id="dsl-examples-pt-1">DSL Examples (pt. 1)</h2>
 <h3 id="dot-a-dsl-to-visualise-graphs">DOT: a DSL to visualise graphs</h3>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <pre tabindex="0"><code class="nohighlight" data-noescape="">digraph G {
     size ="4,4";
     main [shape=box];
@@ -232,6 +232,7 @@
     <p><img src="./dot-examle.svg" alt="Graphical representation of the DOT code on the left"></p>
 </div>
 </div>
+</div>
 <ul>
 <li>
 <p>DOT is a language that can describe graphs, for the sake of their visualisation</p>
@@ -243,8 +244,8 @@
 </section><section>
 <h2 id="dsl-examples-pt-2">DSL Examples (pt. 2)</h2>
 <h3 id="plantuml-a-dsl-to-visualise-uml-diagrams">PlantUML: a DSL to visualise UML diagrams</h3>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <pre tabindex="0"><code class="nohighlight" data-noescape="">interface Customer {
     + CustomerID getID()
     + String getName()
@@ -299,6 +300,7 @@ TaxCode -d-|&gt; CustomerID</p>
 <script>
     handlePlantumlFigureByID("plantuml-figure-0");
 </script>
+</div>
 </div>
 </div>
 </section><section>
@@ -1377,8 +1379,8 @@ RelativeTime *-- ClockTime
 </section><section>
 <h2 id="example-the-shedulerruntime-and-shedulertask-classes">Example: the <code>ShedulerRuntime</code> and <code>ShedulerTask</code> classes</h2>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerRuntime</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">final</span><span style="color:#bbb"> </span>ScheduledExecutorService<span style="color:#bbb"> </span>delegate;<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
@@ -1440,13 +1442,15 @@ RelativeTime *-- ClockTime
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h3 id="usage-example">Usage example:</h3>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">main</span>(String[]<span style="color:#bbb"> </span>args)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>ShedulerRuntime<span style="color:#bbb"> </span>runtime<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>ShedulerRuntime(Executors.<span style="color:#369">newScheduledThreadPool</span>(1));<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>pool_myPool(runtime);<span style="color:#bbb">
@@ -1490,8 +1494,10 @@ pool otherPool {
 }
 </code></pre>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h2 id="exercise-3-write-a-code-generator-for-the-sheduler-dsl">Exercise 3: write a code generator for the <code>Sheduler</code> DSL</h2>
 <ul>
@@ -1655,8 +1661,6 @@ pool otherPool {
 
 
 
-
-  
 
   
     

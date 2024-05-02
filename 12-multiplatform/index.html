@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/css/custom-theme.min.b2438bbc34fe86c52736bfeac0cdf266f15384ffdfa6b5a169a3c8600c12113d.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/css/custom-theme.min.d5c442598d63cb43493486b9b759c232b9a2b08df57c1e25d2630d31c1daeeae.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
 <link rel="stylesheet" href="https://raw.githubusercontent.com/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
@@ -2914,8 +2914,8 @@ AbstractParser &lt;|-- StringParser
 <ul>
 <li>Kotlin class $\equiv$ Java class</li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyClass</span> {}
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">MyType</span> {}
 </span></span></code></pre></div>
@@ -2926,6 +2926,7 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 <ul>
 <li>No syntactical difference among primitive and reference types
 <ul>
@@ -2933,8 +2934,8 @@ AbstractParser &lt;|-- StringParser
 </ul>
 </li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">x</span>: Int = <span style="color:#00d;font-weight:bold">0</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">y</span>: Int? = <span style="color:#080;font-weight:bold">null</span>
 </span></span></code></pre></div>
@@ -2945,6 +2946,7 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 <ul>
 <li>Some Kotlin types are replaced by Java types at compile time
 <ul>
@@ -2952,8 +2954,8 @@ AbstractParser &lt;|-- StringParser
 </ul>
 </li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">x</span>: Any = <span style="color:#d20;background-color:#fff0f0">"ciao"</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">y</span>: kotlin.collections.List&lt;Int&gt; = listOf(<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">2</span>, <span style="color:#00d;font-weight:bold">3</span>)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">z</span>: kotlin.collections.MutableList&lt;String&gt; = mutableListOf(<span style="color:#d20;background-color:#fff0f0">"a"</span>, <span style="color:#d20;background-color:#fff0f0">"b"</span>, <span style="color:#d20;background-color:#fff0f0">"c"</span>)
@@ -2966,6 +2968,7 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 <ul>
 <li>Other Kotlin types are mapped to homonymous Java types</li>
 </ul>
@@ -2974,8 +2977,8 @@ AbstractParser &lt;|-- StringParser
 <ul>
 <li>Kotlin properties are mapped to getter / setter methods</li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">MyType</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">x</span>: Int
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">y</span>: String
@@ -2990,11 +2993,12 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 <ul>
 <li>… unless the <code>JvmField</code> annotation is adopted</li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">kotlin.jvm.JvmField</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyType</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@JvmField</span>
@@ -3012,11 +3016,12 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 <ul>
 <li>Kotlin’s package functions in file <code>X.kt</code> are mapped to static methods of class <code>XKt</code></li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// file MyFile.kt
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">f</span>() {}
 </span></span></code></pre></div>
@@ -3028,11 +3033,12 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 <ul>
 <li>… unless the <code>JvmName</code> annotation is exploited</li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#555">@file</span>:JvmName(<span style="color:#d20;background-color:#fff0f0">"MyModule"</span>)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">kotlin.jvm.JvmName</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">f</span>() {}
@@ -3045,6 +3051,7 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 </section><section>
 <h2 id="kotlin--java-mapping-pt-3">Kotlin–Java Mapping (pt. 3)</h2>
 <ul>
@@ -3055,8 +3062,8 @@ AbstractParser &lt;|-- StringParser
 </ul>
 </li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">MySingleton</span> {}
 </span></span></code></pre></div>
 </div>
@@ -3068,11 +3075,12 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 <ul>
 <li>Class <code>X</code>’s companion object is mapped to public static final field named <code>Companion</code> on class <code>X</code></li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyType</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">constructor</span>()
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">companion</span> <span style="color:#080;font-weight:bold">object</span> {
@@ -3098,13 +3106,14 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 </section><section>
 <h2 id="kotlin--java-mapping-pt-4">Kotlin–Java Mapping (pt. 4)</h2>
 <ul>
 <li>Class <code>X</code>’s companion object’s member <code>M</code> tagged with <code>@JvmStatic</code> is mapped to static member <code>M</code> on class <code>X</code></li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">kotlin.jvm.JvmStatic</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyType</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">constructor</span>()
@@ -3129,11 +3138,12 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 <ul>
 <li>Kotlin’s variadic functions are mapped to Java’s variadic methods</li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">f</span>(<span style="color:#080;font-weight:bold">vararg</span> xs: Int) {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">ys</span>: Array&lt;Int&gt; = xs
 </span></span><span style="display:flex;"><span>}
@@ -3146,11 +3156,12 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 <ul>
 <li>Kotlin’s extension methods are mapped to ordinary Java methods with one more argument</li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyType</span> { }
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">MyType</span>.myMethod() {}
 </span></span><span style="display:flex;"><span>
@@ -3169,6 +3180,7 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 </section><section>
 <h2 id="kotlin--java-mapping-pt-5">Kotlin–Java Mapping (pt. 5)</h2>
 <ul>
@@ -3178,8 +3190,8 @@ AbstractParser &lt;|-- StringParser
 </ul>
 </li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">kotlin.sequences.*</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">x</span> = (<span style="color:#00d;font-weight:bold">0</span> ..&lt; <span style="color:#00d;font-weight:bold">10</span>).asSequence() <span style="color:#888">// 0, 1, 2, ..., 9
@@ -3205,11 +3217,12 @@ AbstractParser &lt;|-- StringParser
 </span></span></span></code></pre></div>
 </div>
 </div>
+</div>
 <ul>
 <li>optional arguments exist in Kotlin but they do not exist in Java</li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">f</span>(a: Int = <span style="color:#00d;font-weight:bold">1</span>, b: Int = <span style="color:#00d;font-weight:bold">2</span>, c: Int = <span style="color:#00d;font-weight:bold">3</span>) = <span style="color:#888">// ...
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>
 </span></span><span style="display:flex;"><span><span style="color:#888">// usage:
@@ -3222,6 +3235,7 @@ AbstractParser &lt;|-- StringParser
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#888">// usage:</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>f(1,<span style="color:#bbb"> </span>5,<span style="color:#bbb"> </span>3);<span style="color:#bbb">
 </span></span></span></code></pre></div>
+</div>
 </div>
 </div>
 </section><section>
@@ -3239,8 +3253,8 @@ AbstractParser &lt;|-- StringParser
 </ul>
 </li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">kotlin.jvm.JvmOverloads</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#555">@JvmOverloads</span>
@@ -3259,6 +3273,7 @@ AbstractParser &lt;|-- StringParser
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#888">// void f(int c) { f(1, 2, c); }</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#888">// void f(int b) { f(1, b, 3); }</span><span style="color:#bbb">
 </span></span></span></code></pre></div>
+</div>
 </div>
 </div>
 </section><section>
@@ -3297,8 +3312,8 @@ AbstractParser &lt;|-- StringParser
 </ul>
 </li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#555">@file</span>:Suppress(<span style="color:#d20;background-color:#fff0f0">"NON_EXPORTABLE_TYPE"</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">my.package</span>
@@ -3322,6 +3337,7 @@ AbstractParser &lt;|-- StringParser
 </span></span></code></pre></div>
 </div>
 </div>
+</div>
 </section><section>
 <h2 id="kotlin--javascript-mapping-pt-2">Kotlin–JavaScript Mapping (pt. 2)</h2>
 <ul>
@@ -3336,8 +3352,8 @@ AbstractParser &lt;|-- StringParser
 </ul>
 </li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span> <span style="color:#b06;font-weight:bold">my.package</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#555">@JsName</span>(<span style="color:#d20;background-color:#fff0f0">"sumNumbers"</span>)
@@ -3358,11 +3374,12 @@ AbstractParser &lt;|-- StringParser
 </span></span></code></pre></div>
 </div>
 </div>
+</div>
 <ul>
 <li>Kotlin class $\equiv$ <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object_prototypes">JS prototype</a></li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyClass</span>(<span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">argument</span>: String) {
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@JsName</span>(<span style="color:#d20;background-color:#fff0f0">"method"</span>)
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">method</span>(): String = argument + <span style="color:#d20;background-color:#fff0f0">"!"</span>
@@ -3377,6 +3394,7 @@ AbstractParser &lt;|-- StringParser
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">this</span>.randomName_1 + <span style="color:#d20;background-color:#fff0f0">"!"</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
+</div>
 </div>
 </div>
 </section><section>
@@ -3455,8 +3473,8 @@ AbstractParser &lt;|-- StringParser
 </ul>
 </li>
 </ul>
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">f</span>(<span style="color:#080;font-weight:bold">vararg</span> xs: String) = <span style="color:#888">// ...
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>
 </span></span><span style="display:flex;"><span><span style="color:#888">// usage:
@@ -3471,6 +3489,7 @@ AbstractParser &lt;|-- StringParser
 </span></span><span style="display:flex;"><span>f([<span style="color:#d20;background-color:#fff0f0">"a"</span>, <span style="color:#d20;background-color:#fff0f0">"b"</span>])
 </span></span><span style="display:flex;"><span>f([<span style="color:#d20;background-color:#fff0f0">"a"</span>, <span style="color:#d20;background-color:#fff0f0">"b"</span>, <span style="color:#d20;background-color:#fff0f0">"c"</span>])
 </span></span></code></pre></div>
+</div>
 </div>
 </div>
 
@@ -4440,8 +4459,6 @@ jdk4py==17.0.7.0
 
 
 
-
-  
 
   
     

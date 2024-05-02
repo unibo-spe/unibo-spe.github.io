@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/css/custom-theme.min.b2438bbc34fe86c52736bfeac0cdf266f15384ffdfa6b5a169a3c8600c12113d.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/css/custom-theme.min.d5c442598d63cb43493486b9b759c232b9a2b08df57c1e25d2630d31c1daeeae.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
 <link rel="stylesheet" href="https://raw.githubusercontent.com/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
@@ -91,8 +91,8 @@ Containers represent a declarative way to package and run applications, giving a
 </section><section>
 <h2 id="declarative-configuration-objects">Declarative configuration objects</h2>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <h3 id="docker-swarm">Docker Swarm</h3>
 <ul>
 <li>stuck to the docker ecosystem,
@@ -122,8 +122,10 @@ Containers represent a declarative way to package and run applications, giving a
 <pre tabindex="0"><code>kubectl create -f configuration-file.yaml
 </code></pre><p><strong>Command valid for every resource in the Kubernetes ecosystem</strong></p>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h3 id="an-example-of-existing-kubernetes-resources-types">An example of existing Kubernetes resources types</h3>
 <div class="custom">
@@ -160,8 +162,8 @@ Containers represent a declarative way to package and run applications, giving a
 </section><section>
 <h2 id="automatic-scaling">Automatic scaling</h2>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <h3 id="docker-swarm">Docker Swarm</h3>
 <ul>
 <li>
@@ -199,13 +201,15 @@ Containers represent a declarative way to package and run applications, giving a
 <li><strong>Replicas and metrics are managed by resource objects too</strong></li>
 </ul>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h2 id="built-in-monitoring">Built-in monitoring</h2>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <h3 id="docker-swarm">Docker Swarm</h3>
 <ul>
 <li>Monitoring is performed using third-party tools,
@@ -231,8 +235,10 @@ Containers represent a declarative way to package and run applications, giving a
 </li>
 </ul>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h2 id="metrics-in-kubernetes">Metrics in Kubernetes</h2>
 <br>
@@ -240,8 +246,8 @@ Containers represent a declarative way to package and run applications, giving a
 </section><section>
 <h2 id="security">Security</h2>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <h3 id="docker-swarm">Docker Swarm</h3>
 <ul>
 <li>Simple access control based on TLS,
@@ -288,16 +294,18 @@ Containers represent a declarative way to package and run applications, giving a
 </li>
 </ul>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h2 id="kubernetes-architecture">Kubernetes architecture</h2>
 <img src="cluster_overview.png">
 </section><section>
 <h2 id="kubernetes-objects-pods">Kubernetes objects: Pods</h2>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <img src="drawing-1.svg" class="align-middle">
 </div>
 <div class="col  ">
@@ -317,13 +325,15 @@ Containers represent a declarative way to package and run applications, giving a
 </li>
 </ul>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h2 id="kubernetes-objects-pods-1">Kubernetes objects: Pods</h2>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <img src="drawing-1.svg" class="align-middle">
 </div>
 <div class="col  ">
@@ -342,8 +352,10 @@ Containers represent a declarative way to package and run applications, giving a
 </li>
 </ul>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h2 id="kubernetes-objects-pods-2">Kubernetes objects: Pods</h2>
 <div class="custom">
@@ -456,8 +468,8 @@ Containers represent a declarative way to package and run applications, giving a
 </section><section>
 <h2 id="metrics-in-kubernetes-1">Metrics in Kubernetes</h2>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <blockquote>
 <p><strong>CPU</strong> resources are expressed in <em>millicpu</em> units. <br>
 A millicpu, or millicore, is equivalent to 1/1000th of a CPU core. <br>
@@ -472,8 +484,10 @@ You can also use the power-of-two equivalents, such as Ei, Pi, Ti, Gi, Mi, Ki. <
 <code>128974848 = 129e6 = 129M = 123Mi</code></p>
 </blockquote>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h2 id="kubernetes-objects-pods-6">Kubernetes objects: Pods</h2>
 <div class="custom">
@@ -505,8 +519,8 @@ You can also use the power-of-two equivalents, such as Ei, Pi, Ti, Gi, Mi, Ki. <
 </section><section>
 <h2 id="kubernetes-objects-deployment">Kubernetes objects: Deployment</h2>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="custom">
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: apps/v1
 </span></span><span style="display:flex;"><span>kind: Deployment
@@ -541,13 +555,15 @@ You can also use the power-of-two equivalents, such as Ei, Pi, Ti, Gi, Mi, Ki. <
 <li>Entity that ties together a <code>ReplicaSets</code> and <code>Pods</code></li>
 </ul>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h2 id="kubernetes-objects-deployment-1">Kubernetes objects: Deployment</h2>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <div class="custom">
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: apps/v1
 </span></span><span style="display:flex;"><span>kind: Deployment
@@ -580,8 +596,10 @@ You can also use the power-of-two equivalents, such as Ei, Pi, Ti, Gi, Mi, Ki. <
 <li>they are unique labels that identify the <code>Pods</code> that the <code>Deployment</code> will manage</li>
 </ul>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h2 id="kubernetes-objects-replicaset">Kubernetes objects: ReplicaSet</h2>
 <p>They are the objects that manage the <code>Pod</code> number</p>
@@ -600,8 +618,8 @@ Since a <code>Deployment</code> object manages a <code>ReplicaSet</code> one, us
 </section><section>
 <h2 id="kubernetes-objects-services">Kubernetes objects: Services</h2>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <img src="drawing-1.svg" class="align-middle">
 </div>
 <div class="col  ">
@@ -625,8 +643,10 @@ Since a <code>Deployment</code> object manages a <code>ReplicaSet</code> one, us
 <p><strong>How do they work?</strong>
 They exploit the labels selectors.</p>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h2 id="kubernetes-objects-services-1">Kubernetes objects: Services</h2>
 <div class="center">
@@ -658,8 +678,8 @@ There are three main types of Services:
 </section><section>
 <p><code>Deployments</code> are not the only road:</p>
 
-<div class="multiCol">
-    <div class="col  ">
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <h2 id="job">Job</h2>
 <p>Object that runs short-lived, one-off tasks.
 Useful to for things to do once, and then stop, for example a database migration.</p>
@@ -668,11 +688,13 @@ Useful to for things to do once, and then stop, for example a database migration
     <h2 id="cronjob">CronJob</h2>
 <p>CronJob is meant for performing regular scheduled actions such as backups, report generation, and so on.</p>
 </div>
-
+</div>
 </div>
 
-<div class="multiCol">
-    <div class="col  ">
+
+
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col  ">
     <h2 id="statefulset">StatefulSet</h2>
 <p>Like a Deployment, a StatefulSet manages Pods that are based on an identical container spec.
 Unlike a Deployment, a StatefulSet maintains a sticky identity for each of its Pods.
@@ -684,8 +706,10 @@ These pods are created from the same spec, but are not interchangeable: each has
 As nodes are added to the cluster, Pods are added to them.
 As nodes are removed from the cluster, those Pods are garbage collected.</p>
 </div>
-
 </div>
+</div>
+
+
 </section><section>
 <h2 id="access-control">Access Control</h2>
 <p>Enforced through the <code>Service Account</code> resource object</p>
@@ -1032,8 +1056,8 @@ The output is something like this:
 Two objects: A <code>Deployment</code> and a <code>Service</code>
 </div>
 
-<div class="multiCol">
-    
+<div class="container w-100 m-0 p-0">
+    <div class="row ">
 
 <div class="col  ">
     <div class="custom">
@@ -1080,8 +1104,10 @@ Two objects: A <code>Deployment</code> and a <code>Service</code>
 </span></span></code></pre></div></div>
 
 </div>
-
 </div>
+</div>
+
+
 
 
 <span class="fragment ">
@@ -1220,8 +1246,6 @@ What we get (waiting a few minutes) is something like this:
 
 
 
-
-  
 
   
     
