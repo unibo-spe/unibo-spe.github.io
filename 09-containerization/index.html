@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/css/custom-theme.min.d5c442598d63cb43493486b9b759c232b9a2b08df57c1e25d2630d31c1daeeae.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/css/custom-theme.min.321ea4eb383a8047a057e6112e1ed36f77ad5428e7285b79b888a39619fec224.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
 <link rel="stylesheet" href="https://raw.githubusercontent.com/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
@@ -404,8 +404,8 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </section><section>
 <h2 id="why-containers-pt-1">Why containers? (pt. 1)</h2>
 
-<div class="container w-100 m-0 p-0">
-    <div class="row ">
+<div class="multiCol">
+    
 
 <div class="col  ">
     <p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/6824b93d3d52b841386a744f57953a73ccb67378/containerization/works-on-my-machine.jpeg" alt=""></p>
@@ -416,9 +416,8 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
     <p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/6824b93d3d52b841386a744f57953a73ccb67378/containerization/docker-born.jpeg" alt=""></p>
 
 </div>
-</div>
-</div>
 
+</div>
 
 </section><section>
 <h2 id="why-containers-pt-2">Why containers? (pt. 2)</h2>
@@ -609,8 +608,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <ol>
 <li><code>Dockerfile</code> as for the previous slide</li>
 </ol>
-<div class="container w-100 m-0 p-0">
-    <div class="row ">
+<div class="multiCol">
 <div class="col  ">
     <ol start="2">
 <li>File <code>package.json</code></li>
@@ -659,7 +657,6 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </span></span></code></pre></div><p>i.e. a Web service listening on the port indicated by the <code>SERIVICE_PORT</code> env var, showing Web pages of the form</p>
 <pre tabindex="0"><code>[$SERVER_ID@$HOST_NAME:PORT] Hit $VIEW_COUNT times
 </code></pre>
-</div>
 </div>
 </div>
 <ol start="4">
@@ -1397,8 +1394,8 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </section><section>
 <h2 id="docker-compose-syntax-by-example-pt-2">Docker Compose syntax by example (pt. 2)</h2>
 
-<div class="container w-100 m-0 p-0">
-    <div class="row ">
+<div class="multiCol">
+    
 
 <div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3.9</span><span style="color:#bbb">                    </span><span style="color:#888"># version of the specification</span><span style="color:#bbb">
@@ -1474,9 +1471,8 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">back-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>
-</div>
-</div>
 
+</div>
 
 </section><section>
 <h2 id="orchestration-level-notions-pt-1">Orchestration-level notions (pt. 1)</h2>
@@ -1746,8 +1742,8 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </section><section>
 <h2 id="working-example-pt-1">Working example (pt. 1)</h2>
 
-<div class="container w-100 m-0 p-0">
-    <div class="row ">
+<div class="multiCol">
+    
 
 <div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
@@ -1833,9 +1829,8 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </ol>
 
 </div>
-</div>
-</div>
 
+</div>
 
 </section><section>
 <h2 id="working-example-pt-2">Working example (pt. 2)</h2>
@@ -1886,8 +1881,8 @@ b304d1ae5404   bridge               bridge    local
 </section><section>
 <h2 id="working-example-pt-3">Working example (pt. 3)</h2>
 
-<div class="container w-100 m-0 p-0">
-    <div class="row ">
+<div class="multiCol">
+    
 
 <div class="col  ">
     <h3 id="lets-make-the-stack-more-secure">Let’s make the stack more secure</h3>
@@ -1949,9 +1944,8 @@ b304d1ae5404   bridge               bridge    local
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>db_root_password.txt<span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>
-</div>
-</div>
 
+</div>
 
 </section><section>
 <h2 id="docker-compose-for-testing">Docker Compose for testing</h2>
@@ -2089,8 +2083,8 @@ package "java sql" {
 </section><section>
 <h2 id="example-docker-compose-for-testing--junit-pt-3">Example: Docker Compose for testing + JUnit (pt. 3)</h2>
 
-<div class="container w-100 m-0 p-0">
-    <div class="row ">
+<div class="multiCol">
+    
 
 <div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">TestMariaDBCustomerRepository</span> {
@@ -2178,9 +2172,8 @@ package "java sql" {
 </ul>
 
 </div>
-</div>
-</div>
 
+</div>
 
 </section><section>
 <h1 id="orchestration-1">Orchestration</h1>
@@ -2373,8 +2366,8 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </section><section>
 <h2 id="stack-deploy-example-portainerhttpswwwportainerio">Stack Deploy Example: <a href="https://www.portainer.io/">Portainer</a></h2>
 
-<div class="container w-100 m-0 p-0">
-    <div class="row ">
+<div class="multiCol">
+    
 
 <div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'3.2'</span><span style="color:#bbb">
@@ -2448,9 +2441,8 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </ol>
 
 </div>
-</div>
-</div>
 
+</div>
 
 </section><section>
 <h2 id="portainers-initial-configuration">Portainer’s Initial Configuration</h2>
@@ -2560,8 +2552,8 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </section><section>
 <h2 id="example-of-placement-constraints">Example of placement constraints</h2>
 
-<div class="container w-100 m-0 p-0">
-    <div class="row ">
+<div class="multiCol">
+    
 
 <div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
@@ -2616,9 +2608,8 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </ul>
 
 </div>
-</div>
-</div>
 
+</div>
 
 </section><section>
 <h2 id="exposing-ports-on-the-swarm">Exposing ports on the Swarm</h2>
@@ -2684,8 +2675,8 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </section><section>
 <h2 id="example-of-placement-preferences">Example of placement preferences</h2>
 
-<div class="container w-100 m-0 p-0">
-    <div class="row ">
+<div class="multiCol">
+    
 
 <div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
@@ -2746,15 +2737,14 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </ol>
 
 </div>
-</div>
-</div>
 
+</div>
 
 </section><section>
 <h2 id="docker-swarm-and-volumes">Docker Swarm and Volumes</h2>
 
-<div class="container w-100 m-0 p-0">
-    <div class="row ">
+<div class="multiCol">
+    
 
 <div class="col  ">
     <blockquote>
@@ -2801,9 +2791,8 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </ol>
 
 </div>
-</div>
-</div>
 
+</div>
 
 </section>
 
