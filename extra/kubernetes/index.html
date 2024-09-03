@@ -644,26 +644,26 @@ There are three main types of Services:
 </div>
 <br>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ClusterIP</code></td>
-<td>Exposes the Service on a cluster-internal IP, only reachable <br> from within the cluster. This is the <em>default</em> value.</td>
-</tr>
-<tr>
-<td><code>NodePort</code></td>
-<td>Exposes the Service on each Node’s IP at a static port.</td>
-</tr>
-<tr>
-<td><code>LoadBalancer</code></td>
-<td>Exposes the server externally using a load balancer. <br> This type of Service is not offered directly from Kubernetes.</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th style="text-align: left">Name</th>
+          <th style="text-align: left">Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>ClusterIP</code></td>
+          <td style="text-align: left">Exposes the Service on a cluster-internal IP, only reachable <br> from within the cluster. This is the <em>default</em> value.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>NodePort</code></td>
+          <td style="text-align: left">Exposes the Service on each Node’s IP at a static port.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>LoadBalancer</code></td>
+          <td style="text-align: left">Exposes the server externally using a load balancer. <br> This type of Service is not offered directly from Kubernetes.</td>
+      </tr>
+  </tbody>
 </table>
 </section><section>
 <p><code>Deployments</code> are not the only road:</p>
@@ -793,38 +793,38 @@ Useful commands:
 </div>
 <br>
 <table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>minikube start</code></td>
-<td>Start the cluster</td>
-</tr>
-<tr>
-<td><code>minikube stop</code></td>
-<td>Stop the cluster</td>
-</tr>
-<tr>
-<td><code>minikube delete</code></td>
-<td>Delete the cluster</td>
-</tr>
-<tr>
-<td><code>minikube status</code></td>
-<td>Show the status of the cluster</td>
-</tr>
-<tr>
-<td><code>minikube dashboard</code></td>
-<td>Expose the builtin dashboard in localhost</td>
-</tr>
-<tr>
-<td><code>minikube addons list/enable/disable</code></td>
-<td>Lists/Enables/Disables available plugins into the cluster</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th style="text-align: left">Command</th>
+          <th style="text-align: left">Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>minikube start</code></td>
+          <td style="text-align: left">Start the cluster</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>minikube stop</code></td>
+          <td style="text-align: left">Stop the cluster</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>minikube delete</code></td>
+          <td style="text-align: left">Delete the cluster</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>minikube status</code></td>
+          <td style="text-align: left">Show the status of the cluster</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>minikube dashboard</code></td>
+          <td style="text-align: left">Expose the builtin dashboard in localhost</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>minikube addons list/enable/disable</code></td>
+          <td style="text-align: left">Lists/Enables/Disables available plugins into the cluster</td>
+      </tr>
+  </tbody>
 </table>
 </section><section>
 <h2 id="kubectl">Kubectl</h2>
