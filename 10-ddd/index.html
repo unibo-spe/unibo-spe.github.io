@@ -26,9 +26,17 @@
 .reveal blockquote {
     font-family: 'Georgia';
 }
+
+.reveal blockquote::before{
+    content: "";
+}
+
+.reveal blockquote::after{
+    content: "";
+}
 </style>
 <h1 id="domain-driven-design">Domain Driven Design</h1>
-<h2 id="hahahugoshortcode14s0hbhb">Software Process Engineering</h2>
+<h2 id="hahahugoshortcode12s0hbhb">Software Process Engineering</h2>
 <br>
 <h3 id="giovanni-ciatto-----giovanniciattouniboitmailtogiovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
@@ -233,7 +241,7 @@
 <p>Set of <strong>software</strong> abstractions mapping relevant <em>concepts</em> of the domain</p>
 </blockquote>
 <ul>
-<li>e.g. C# projects, namespaces, interfaces, classes, structures, methods, etc.</li>
+<li>e.g. Java/Kotlin/Scala projects, packages, interfaces, classes, records, methods, etc.</li>
 </ul>
 </section><section>
 <h2 id="the-_ubiquitous-language_">The <em>Ubiquitous Language</em></h2>
@@ -476,12 +484,12 @@
 <h2 id="entities-vs-value-objects-constraints">Entities vs. Value Objects (constraints)</h2>
 <h3 id="value-objects">Value Objects</h3>
 <ul>
-<li>Identified by their attributes
+<li>Identified by their <em>attributes</em>
 <ul>
 <li>equality compares attributes alone</li>
 </ul>
 </li>
-<li>Must be stateless $\Rightarrow$ require an immutable design
+<li>Must be <em>stateless</em> $\Rightarrow$ better to use <em>immutable</em> design
 <ul>
 <li>read-only properties</li>
 <li>lack of state-changing methods</li>
@@ -490,11 +498,11 @@
 <li>May be implemented as
 <ul>
 <li>structures in .NET</li>
-<li>data classes in Kotlin, Scala, Python</li>
+<li><em>data classes</em> in Kotlin, Scala, Python</li>
 <li>records in Java</li>
 </ul>
 </li>
-<li>Must implement <code>equals()</code> and <code>hashCode()</code> on JVM
+<li><em>Must</em> implement <code>equals()</code> and <code>hashCode()</code> on JVM
 <ul>
 <li>implementation must compare the objects’ attributes</li>
 </ul>
@@ -504,19 +512,19 @@
 <h2 id="entities-vs-value-objects-constraints-1">Entities vs. Value Objects (constraints)</h2>
 <h3 id="entities">Entities</h3>
 <ul>
-<li>They have an inherent identity, which never changes during their lifespan
+<li>They have an inherent <em>identity</em>, which never changes during their lifespan
 <ul>
 <li>common modelling: <strong>identifier attribute</strong>, of some value type</li>
 <li>equality compares identity</li>
 </ul>
 </li>
-<li>Can be stateful $\Rightarrow$ may have a mutable design
+<li>Can be <em>stateful</em> $\Rightarrow$ may have a <em>mutable</em> design
 <ul>
 <li>modifiable properties</li>
 <li>state-changing methods</li>
 </ul>
 </li>
-<li>May be implemented via classes in most languages</li>
+<li>May be implemented via <em>classes</em> in most languages</li>
 <li>Must implement <code>equals()</code> and <code>hashCode()</code> on JVM
 <ul>
 <li>implementation must compare (at least) the objects’ identifiers</li>
@@ -528,6 +536,7 @@
 <figure id="plantuml-figure-0" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
 <p>interface Customer {
 + CustomerID getID()
+..
 + String getName()
 + void <strong>setName</strong>(name: String)
 + String getEmail()
@@ -558,19 +567,19 @@ TaxCode -d-|&gt; CustomerID</p>
 <h3 id="definition">Definition</h3>
 <ul>
 <li>
-<p>A composite object, aggregating related entities/value objects</p>
+<p>A <em>composite</em> entity, <em>aggregating</em> related entities/value objects</p>
 </li>
 <li>
-<p>It ensures the consistency of the objects it contains</p>
+<p>It <em>guarantees</em> the <em>consistency</em> of the objects it contains</p>
 </li>
 <li>
-<p>It mediates the usage of the composing objects from the outside</p>
+<p>It <em>mediates</em> the usage of the composing objects from the outside</p>
 <ul>
-<li>acting as a façade</li>
+<li>acting as a <em>façade</em> (<a href="https://en.wikipedia.org/wiki/Facade_pattern">à la GOF</a>)</li>
 </ul>
 </li>
 <li>
-<p>Outside objects should avoid holding references to composing objects</p>
+<p>Outside objects should <em>avoid</em> holding <em>references</em> to composing objects</p>
 </li>
 </ul>
 </section><section>
@@ -586,18 +595,19 @@ TaxCode -d-|&gt; CustomerID</p>
 </ul>
 </li>
 <li>
-<p>May be better implemented as classes in most programming languages</p>
+<p>May be better implemented as <em>classes</em> in most programming languages</p>
 </li>
 <li>
-<p>Must implement <code>equals()</code> and <code>hashCode()</code> on JVM</p>
+<p><em>Must</em> implement <code>equals()</code> and <code>hashCode()</code> on JVM (as any other entity)</p>
 <ul>
-<li>implementation may take composing items into account</li>
+<li>implementation may take <em>composing</em> items into account</li>
 </ul>
 </li>
 <li>
 <p>Components of an aggregate should <em>not</em> hold <strong>references</strong> to components of <em>other</em> aggregates</p>
 <ul>
 <li>that’s why they are called aggregate <em>roots</em></li>
+<li>notable exception: <em>references</em> to <em>identifiers</em> of other aggregates</li>
 </ul>
 <p><img src="./aggregate-references.png" alt="Aggregate roots should not hold references to other aggregates’ components"></p>
 </li>
@@ -605,6 +615,7 @@ TaxCode -d-|&gt; CustomerID</p>
 </section><section>
 <h2 id="aggregate-root-example">Aggregate Root (example)</h2>
 <p><img src="./aggregate-root.png" alt="Two aggregates with inter-dependencies"></p>
+<p>(notice the link between <code>Order</code> and <code>Buyer</code> implemented by letting the <code>Order</code> hold a reference to the <code>BuyerID</code>)</p>
 </section><section>
 <h2 id="factories-definition">Factories (definition)</h2>
 <blockquote>
@@ -617,21 +628,24 @@ TaxCode -d-|&gt; CustomerID</p>
 <h3 id="purpose">Purpose</h3>
 <ul>
 <li>
-<p>Factories encapsulate the creation logic for complex objects</p>
+<p>Factories encapsulate the <em>creation logic</em> for <em>complex objects</em></p>
 <ul>
 <li>making it evolvable, interchangeable, replaceable</li>
 </ul>
 </li>
 <li>
-<p>They ease the enforcement of invariants</p>
+<p>They ease the enforcement of <em>invariants</em></p>
 </li>
 <li>
-<p>They support dynamic selection of the most adequate implementation</p>
+<p>They support <em>dynamic selection</em> of the most adequate <em>implementation</em></p>
+<ul>
+<li>while <em>hiding</em> the actual implementation choice</li>
+</ul>
 </li>
 </ul>
 <h3 id="remarks">Remarks</h3>
 <ul>
-<li>DDD’s notion of factory is quite wide
+<li>DDD’s notion of factory is quite loose
 <ul>
 <li>DDD’s Factories $\supset$ GOF’s Factories $\cup$ Builders $\cup$ …</li>
 </ul>
@@ -641,19 +655,19 @@ TaxCode -d-|&gt; CustomerID</p>
 <h2 id="factories-constraints">Factories (constraints)</h2>
 <ul>
 <li>
-<p>They are usually identityless and stateless objects</p>
+<p>They are usually <em>identity-less</em> and <em>state-less</em> objects</p>
 <ul>
 <li>recall the <a href="https://en.wikipedia.org/wiki/Abstract_factory_pattern">abstract factory pattern</a></li>
 </ul>
 </li>
 <li>
-<p>May be implemented as classes in most OOP languages</p>
+<p>May be implemented as <em>classes</em> in most OOP languages</p>
 </li>
 <li>
-<p>Provide methods to instantiate entities or value objects</p>
+<p>Provide methods to <em>instantiate</em> entities or value objects</p>
 </li>
 <li>
-<p>Usually they require no mutable field/property</p>
+<p>Usually they require <em>no mutable</em> field/property</p>
 </li>
 <li>
 <p>No need to implement <code>equals()</code> and <code>hashCode()</code> on JVM</p>
@@ -676,7 +690,14 @@ TaxCode -u-|&gt; CustomerID</p>
 + Customer newCustomerPerson(String name, String surname, Date birthDate, String birthPlace, String email)
 ..
 + Customer newCustomerCompany(VatNumber code, String fullName, String email)
-}</p>
+}
+note bottom of CustomerFactory</p>
+<ul>
+<li>method for creating VAT numbers</li>
+<li>methods for creating person customers</li>
+<li>methods for creating company customers
+end note</li>
+</ul>
 <p>CustomerFactory -r-&gt; VatNumber: creates
 CustomerFactory -u-&gt; Customer: creates</p>
 </figure>
@@ -686,17 +707,17 @@ CustomerFactory -u-&gt; Customer: creates</p>
 </section><section>
 <h2 id="repositories-definition">Repositories (definition)</h2>
 <blockquote>
-<p>Objects mediating the persistent storage/retrieval of other objects</p>
+<p>Objects mediating the <em>persistent</em> <strong>storage/retrieval</strong> of other objects</p>
 </blockquote>
 <p><img src="./repositories.png" alt="Concept of repositories"></p>
 </section><section>
 <h2 id="repositories-details">Repositories (details)</h2>
 <h3 id="purpose-1">Purpose</h3>
 <ul>
-<li>Hiding (i.e. be backed by) some database technology</li>
-<li>Realising an object-relational mapping (ORM)</li>
-<li>Storing / retrieving aggregate roots as wholes</li>
-<li>Supporting CRUD operations on aggregate roots
+<li>Hiding (i.e. be backed by) some <em>database technology</em></li>
+<li>Possibly realising some sort of <a href="https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping">object-relational mapping (ORM)</a></li>
+<li><em>Storing</em> / <em>retrieving</em> aggregate roots as <em>wholes</em></li>
+<li>Supporting <em>CRUD</em> operations on aggregate roots
 <ul>
 <li>Create, Read, Update, Delete</li>
 </ul>
@@ -704,11 +725,14 @@ CustomerFactory -u-&gt; Customer: creates</p>
 </ul>
 <h3 id="remarks-1">Remarks</h3>
 <ul>
-<li>They may exploit factories for information retrieval</li>
-<li>If properly engineered, avoids lock-in effect for DB technologies</li>
+<li>They may exploit <em>factories</em> for turning retrieved data into objects</li>
+<li>If properly engineered, <em>avoids lock-in</em> effect for database technologies</li>
 <li>Design &amp; implementation may require thinking about:
 <ul>
-<li>the architecture, the infrastructure, the expected load, etc.</li>
+<li>the architecture,</li>
+<li>the infrastructure,</li>
+<li>the expected load,</li>
+<li>etc.</li>
 </ul>
 </li>
 </ul>
@@ -716,36 +740,37 @@ CustomerFactory -u-&gt; Customer: creates</p>
 <h2 id="repositories-constraints">Repositories (constraints)</h2>
 <ul>
 <li>
-<p>They are usually identity-less, stateful, and composed objects</p>
+<p>They are usually <em>identity-less</em>, <em>stateful</em>, and <em>composed</em> objects</p>
 <ul>
-<li>state may consist of the stored objects</li>
-<li>state may consist of DB connections</li>
+<li>state may consist of the <em>stored objects</em></li>
+<li>state may consist of <em>DB connections</em></li>
 </ul>
 </li>
 <li>
-<p>May be implemented as classes in most OOP languages</p>
+<p>May be implemented as <em>classes</em> in most OOP languages</p>
 </li>
 <li>
 <p>Provide methods to</p>
 <ul>
-<li>add, remove, update aggregate root entities</li>
-<li>select and return one or more entity, possibly in a lazy way
+<li><em>add</em>, <em>remove</em>, <em>update</em> aggregate root entities</li>
+<li><em>select</em> and return one or more entities, possibly in a <em>lazy</em> way
 <ul>
-<li>this should return <code>Iterable</code> or some <code>Collection</code> on JVM</li>
+<li>this should return <code>Iterable</code>, <code>Collection</code>, or <code>Stream</code> on JVM</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>
-<p>Non-trivial implementations should take care of</p>
+<p><em>Non-trivial</em> implementations should take care of</p>
 <ul>
-<li>enforcing consistency, in spite of concurrent access I support complex transactions</li>
+<li>enforcing <em>consistency</em>, in spite of <em>concurrent</em> access</li>
+<li>support complex <em>transactions</em></li>
 </ul>
 </li>
 </ul>
 </section><section>
 <h2 id="repositories-example">Repositories (example)</h2>
-<figure id="plantuml-figure-2" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-2" class="plantuml" alt="" style="width: 100%;height: 70vh;max-width: 95vw;max-height: 80vh;">
 <p>interface CustomerID</p>
 <p>interface Customer</p>
 <p>Customer “1” *-u- “1” CustomerID</p>
@@ -769,23 +794,23 @@ CustomerRegistry –&gt; CustomerID: exploits</p>
 </section><section>
 <h2 id="services">Services</h2>
 <blockquote>
-<p>Functional objects encapsulating the business logic of the software (commonly stateless &amp; identity-less),
-e.g. operations spanning through several entities, objects, aggregates, etc.</p>
+<p><em>Functional</em> objects encapsulating the <em>business logic</em> of the software
+<br> e.g. operations spanning through <em>several</em> entities, objects, aggregates, etc.</p>
 </blockquote>
 <h3 id="purpose-2">Purpose</h3>
 <ul>
-<li>Reifying control-related aspects of the software</li>
-<li>Wiring aggregates, entities, and value objects together</li>
-<li>Exposing coarse-grained functionalities to the users</li>
-<li>Providing a façade for the domain</li>
+<li>Reifying <em>control-related</em> aspects of the software</li>
+<li><em>Wiring</em> aggregates, entities, and value objects <em>together</em></li>
+<li>Exposing <em>coarse-grained functionalities</em> to the users</li>
+<li>Providing a <em>façade</em> for the domain</li>
 <li>Make the business logic evolvable, interchangeable, replaceable</li>
 </ul>
 <h3 id="remarks-2">Remarks</h3>
 <ul>
-<li>Services may be exposed via ReSTful API</li>
-<li>Should be designed keeping current uses cases into account
+<li>Services may be <em>exposed</em> via ReSTful API</li>
+<li>Should be designed keeping <em>current uses cases</em> into account (i.e. design services to be <em>purpose-specific</em>)
 <ul>
-<li>entities/objects should support future use cases, too</li>
+<li>entities/objects should support <em>future use cases</em>, too (i.e. design entities/objects to be <em>general purpose</em>)</li>
 </ul>
 </li>
 </ul>
@@ -793,39 +818,39 @@ e.g. operations spanning through several entities, objects, aggregates, etc.</p>
 <h2 id="services-constraints">Services (constraints)</h2>
 <ul>
 <li>
-<p>They are usually identity-less, stateless objects</p>
+<p>They are usually <em>identity-less</em>, <em>stateless</em> objects</p>
 </li>
 <li>
 <p>May be implemented as classes in OOP languages</p>
 <ul>
-<li>or bare functions in functional languages</li>
+<li>or bare <em>functions</em> in functional languages</li>
 </ul>
 </li>
 <li>
-<p>Commonly provide procedures to do business-related stuff</p>
+<p>Commonly provide <em>procedures</em> to do business-related stuff</p>
 <ul>
-<li>e.g. a particular operation
+<li>e.g. a particular operation…
 <ul>
-<li>concerning some particular aggregate root</li>
-<li>which does not support it directly</li>
-<li>because the operation is use-case specific</li>
+<li>… concerning some particular aggregate root</li>
+<li>… which does not support it directly through its methods</li>
+<li>… because the operation is use-case specific</li>
 </ul>
 </li>
 <li>e.g. proxying an external service</li>
-<li>e.g. a complex operation involving aggregates, repositories, factories, etc.</li>
+<li>e.g. a complex operation involving several aggregates, repositories, factories, etc.</li>
 </ul>
 </li>
 <li>
 <p>Non-trivial implementations should take care of</p>
 <ul>
-<li>supporting concurrent access to the service’s facilities</li>
-<li>exposing domain events to the external world</li>
+<li>supporting <em>concurrent access</em> to the service’s facilities</li>
+<li>exposing <em>domain events</em> to the external world</li>
 </ul>
 </li>
 </ul>
 </section><section>
 <h2 id="services-example">Services (example)</h2>
-<figure id="plantuml-figure-3" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-3" class="plantuml" alt="" style="width: 100%;height: 70vh;max-width: 95vw;max-height: 80vh;">
 <p>interface OrderManagementService {
 + void performOrder(Order order)
 }</p>
@@ -862,51 +887,70 @@ OrderID -d[hidden]- Customer</p>
 </section><section>
 <h2 id="domain-events-definition">Domain Events (definition)</h2>
 <blockquote>
-<p>A value-like object capturing some domain-related event (i.e. a relevant variation)</p>
+<p>A value-like object capturing some domain-related <em>event</em>
+<br> (i.e., an observable <em>variation</em> in the domain, which is <em>relevant</em> to the software)</p>
 </blockquote>
 <ul>
-<li>actually, only the event notification/description is reified to a type</li>
+<li>actually, only the event <em>notification</em>/description is reified to a type</li>
 </ul>
 <p><img src="./domain-events.png" alt="Concept of domain events"></p>
 </section><section>
 <h2 id="domain-events-details">Domain Events (details)</h2>
 <h3 id="purpose-3">Purpose</h3>
 <ul>
-<li>Propagate changes among portions of the domain model</li>
-<li>Record changes concerning the domain</li>
+<li><em>Propagate</em> changes among portions of the domain model (e.g. contexts, aggregates, entities, etc.)</li>
+<li><em>Record</em> changes concerning the domain</li>
 </ul>
 <h3 id="remarks-3">Remarks</h3>
 <ul>
-<li>Strong relation with the <a href="https://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> (i.e. publish-subscribe)</li>
-<li>Strong relation with the event sourcing approach (described later)</li>
-<li>Strong relation with the CQRS pattern (described later)</li>
+<li>
+<p>Strong relation with the <a href="https://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> (i.e. publish-subscribe)</p>
+</li>
+<li>
+<p>Strong relation with the <em>event sourcing</em> approach (described later)</p>
+</li>
+<li>
+<p>Strong relation with the <em>CQRS pattern</em> (described later)</p>
+</li>
 </ul>
 </section><section>
 <h2 id="domain-events-constraints">Domain Events (constraints)</h2>
 <ul>
 <li>
-<p>They are usually time-stamped value objects</p>
+<p>They are usually <em>time-stamped</em> value objects</p>
 </li>
 <li>
-<p>May be implemented as data-classes or records</p>
+<p>May be implemented as <em>data-classes</em> or <em>records</em></p>
 </li>
 <li>
-<p>They represent a relevant variation in the domain</p>
+<p>They represent a <em>relevant variation</em> in the domain</p>
 <ul>
-<li>e.g. a change in the state of some entity / repository</li>
+<li>e.g. a <em>change</em> in the <em>state</em> of some entity / repository</li>
 </ul>
 </li>
 <li>
 <p>Event sources &amp; listeners shall be identified too</p>
 <ul>
-<li>who is generating the event?</li>
-<li>who is consuming the event?</li>
+<li>who is <em>generating</em> the event?</li>
+<li>who is <em>consuming</em> the event?</li>
 </ul>
 </li>
 <li>
-<p>Infrastructural components may be devoted to propagate events across contexts</p>
+<p><em>Infrastructural components</em> may be devoted to <em>propagate</em> events across contexts</p>
 <ul>
 <li>e.g. a message broker, a message queue, etc.</li>
+</ul>
+</li>
+<li>
+<p>[Teacher’s Suggestion]: prefer <em>neutral</em> names for event classes in the model</p>
+<ul>
+<li>e.g. <code>OrderEventArgs</code> instead of <code>OrderPerformedEventArgs</code></li>
+<li>e.g. <code>OrderEvent</code> instead of <code>OrderPerformedEvent</code></li>
+<li>the reason: the same OOP type may be used to represent different events:
+<ul>
+<li>e.g. <code>orderIssued</code>, <code>orderConfirmed</code>, <code>orderCancelled</code>, etc.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -949,10 +993,10 @@ note right of OrderManagementService: service</p>
 <h3 id="further-notions-involving-__contexts__">Further notions involving <strong>contexts</strong></h3>
 <ul>
 <li>
-<p><strong>Bounded Context</strong>: enforce a model’s boundaries &amp; make them explicit</p>
+<p><strong>Bounded Context</strong>: enforce a model’s <em>boundaries</em> &amp; make them explicit</p>
 </li>
 <li>
-<p><strong>Context Map</strong>: providing a global view on the domain and its contexts</p>
+<p><strong>Context Map</strong>: providing a <em>global view</em> on the domain and its contexts</p>
 </li>
 </ul>
 </section><section>
@@ -987,7 +1031,7 @@ This is helpful from several perspectives:</p>
 <h2 id="bounded-contexts--context-maps-best-practices">Bounded Contexts &amp; Context Maps (best practices)</h2>
 <ul>
 <li>
-<p>Clearly <em>identify &amp; represent</em>_ <em>boundaries</em> among contexts</p>
+<p>Clearly <em>identify &amp; represent</em> <strong>boundaries</strong> among contexts</p>
 </li>
 <li>
 <p><em>Avoid</em> <strong>responsibility diffusion</strong> over a single context</p>
@@ -1283,7 +1327,7 @@ This is helpful from several perspectives:</p>
 </li>
 </ul>
 
-<figure id="plantuml-figure-7" class="plantuml" alt="" style="width: 70%;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-7" class="plantuml" alt="" style="width: 100%;height: 50vh;max-width: 95vw;max-height: 80vh;">
     
 top to bottom direction
 
