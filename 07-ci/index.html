@@ -24,7 +24,7 @@
 
     <section><h1 id="continuous-integration">Continuous Integration</h1>
 <!-- this file includes generated content. Do not edit. Edit content/07-ci/generator.md, instead. -->
-<h2 id="hahahugoshortcode9s0hbhb">Software Process Engineering</h2>
+<h2 id="hahahugoshortcode7s0hbhb">Software Process Engineering</h2>
 <br>
 <h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
@@ -1047,6 +1047,13 @@ with a pre-populated text area</li>
 
 
   
+    
+  
+  
+
+  
+    
+  
   
 
   
@@ -1103,10 +1110,31 @@ with a pre-populated text area</li>
   
   
 
-  
-  
 
 
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({"fontFamily":"Inconsolata","gitGraph":{"mainBranchName":"master","rotateCommitLabel":true},"startOnLoad":false,"theme":"default","useMaxWidth":false});
+
+    let render = (event) => {
+      let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+      if (!mermaidElems.length){
+          return
+      }
+      mermaidElems.forEach(mermaidElem => {
+          let processed = mermaidElem.getAttribute('data-processed');
+          if (!processed){
+              
+              mermaid.init(undefined, mermaidElem);
+          }
+      });
+    };
+    
+    render({currentSlide: Reveal.getCurrentSlide()});
+
+    Reveal.on('slidechanged', render);
+    Reveal.on('ready', render);
+  </script>
 
 
 
