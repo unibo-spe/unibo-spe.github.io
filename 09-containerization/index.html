@@ -26,6 +26,12 @@
 .reveal blockquote {
     font-family: 'Georgia';
 }
+.reveal blockquote::before{
+    content: "";
+}
+.reveal blockquote::after{
+    content: "";
+}
 </style>
 <h1 id="containerisation-and-orchestration">Containerisation and Orchestration</h1>
 <h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
@@ -139,9 +145,7 @@
 <li>they <em>start</em> the task,</li>
 <li>they are interested in <em>interacting</em> with the service
 <ul>
-<li>e.g. via the shell</li>
-<li>e.g. via some graphical user interface</li>
-<li>e.g. via some Web client</li>
+<li>e.g. via the shell, via some GUI, via the browser, etc.</li>
 </ul>
 </li>
 </ul>
@@ -247,38 +251,38 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </ul>
 </section><section>
 <h2 id="how-to-achieve-encapsulation-pt-2">How to achieve encapsulation? (pt. 2)</h2>
-<h3 id="virtual-machines-and-hypervisors">Virtual machines and hypervisors</h3>
+<h3 id="virtual-machines-and-hypervisors-vmh">Virtual machines and hypervisors (VMH)</h3>
 <ul>
 <li>
-<p>VMH run on/as the OS of a bare-metal machine, abstracting HW and SW peculiarities away</p>
+<p>VMH run <em>on/as</em> the <em>OS</em> of a bare-metal machine, <strong>abstracting</strong> HW and SW peculiarities away</p>
 <ul>
-<li>VM have virtualised HW and SW resources, different from the host’s ones</li>
+<li>VM have <em>virtualised HW</em> and SW resources, different from the host’s ones</li>
 </ul>
 </li>
 <li>
-<p>VMH may instantiate multiple VM on the same machine</p>
+<p>VMH may instantiate <strong>multiple VM</strong> on the <em>same physical machine</em></p>
 <ul>
 <li>partitioning actual resources ahead of time</li>
 </ul>
 </li>
 <li>
-<p>each VM runs its own OS, and may host multiple applications</p>
+<p>each VM runs <strong>its own OS</strong>, and may host multiple applications</p>
 <ul>
-<li>in the eyes of the user, the VM is undistinguishable from a bare-metal machine</li>
+<li>in the eyes of the user, the VM is <em>undistinguishable</em> from a bare-metal machine</li>
 </ul>
 </li>
 <li>
-<p>VM may be paused, snapshot (into file), resumed, and possibly migrated</p>
+<p>VM may be <em>paused</em>, <em>snapshot</em> (into file), <em>resumed</em>, and possibly <em>migrated</em></p>
 <ul>
 <li>snapshots are files containing the whole file-system of the VM</li>
 </ul>
 </li>
 <li>
-<p>VM are coarse grained encapsulation units</p>
+<p>VM are <strong>coarse</strong>-grained <strong>encapsulation</strong> units</p>
 <ul>
-<li>they are heavy-weight (GBs)</li>
-<li>they are slow to start, run, migrate, snapshot</li>
-<li>VM commonly encapsulate multiple application-level components
+<li>they are <em>heavy</em>-weight (GBs)</li>
+<li>they are <em>slow</em> to start, run, migrate, snapshot</li>
+<li>VM commonly encapsulate <em>multiple application</em>-level components
 <ul>
 <li>database, server, plus all their runtimes and libraries, etc.</li>
 </ul>
@@ -286,7 +290,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </ul>
 </li>
 <li>
-<p>Many industry-ready technologies:</p>
+<p>Many industry-ready <strong>technologies</strong>:</p>
 <ul>
 <li>VMWare, VirtualBox, KVM, Xen, Hyper-V, QEMU, Proxmox, etc.</li>
 </ul>
@@ -297,48 +301,44 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <h3 id="containers-and-container-engines-ce">Containers and container engines (CE)</h3>
 <ul>
 <li>
-<p>CE run on/as the OS of a bare-metal/virtual machine, abstracting the runtime, storage, and network environment away</p>
+<p>CE run <em>on</em> the <em>OS</em> of a <em>bare-metal/virtual</em> machine, <strong>abstracting</strong> the runtime, storage, and network environment away</p>
 <ul>
 <li>the CPU, memory, OS kernel, drivers, and hardware are <strong>not virtualised</strong></li>
 </ul>
 </li>
 <li>
-<p>one may instantiate multiple containers on the same machine</p>
+<p>one may instantiate <strong>multiple containers</strong> on the same machine</p>
 <ul>
-<li>sharing the actual resources dynamically (overbooking support)</li>
+<li>sharing the actual resources dynamically (<em>overbooking</em> support)</li>
 </ul>
 </li>
 <li>
-<p>each container shares the OS kernel of the host, yet having its own runtime(s), storage, and network facilities</p>
+<p>each container <strong>shares the OS kernel</strong> of the host, yet having its own runtime(s), storage, and network facilities</p>
 <ul>
-<li>in the eyes of the user, the container is a process running on top of a minimal OS</li>
+<li>in the eyes of the user, the container is a <em>process</em> running on top of a <em>minimal OS</em></li>
 </ul>
 </li>
 <li>
-<p>each container is instance of an image, i.e. a read-only template containing deployment instructions</p>
+<p>each container is <em>instance</em> of an <strong>image</strong>, i.e. a <em>read-only template</em> containing deployment instructions</p>
 <ul>
-<li>differences w.r.t. that image constitute the state of the container
-<ul>
-<li>these can be snapshot into file of minimal size</li>
-</ul>
-</li>
+<li>differences w.r.t. that image constitute the <em>state of the container</em> (these can be <em>snapshot</em> into file of minimal size)</li>
 </ul>
 </li>
 <li>
-<p>containers are fine-grained encapsulation units</p>
+<p>containers are <strong>fine</strong>-grained <strong>encapsulation</strong> units</p>
 <ul>
-<li>they are light-weight (MBs)</li>
-<li>they are fast to start, run, snapshot</li>
-<li>they are commonly used to encapsulate single application-level components
+<li>they are <em>light</em>-weight (MBs)</li>
+<li>they are <em>fast</em> to start, run, snapshot</li>
+<li>they are commonly used to encapsulate <em>single application</em>-level components
 <ul>
 <li>e.g. a database instance, a web-server instance, etc.</li>
-<li>the final application should consist of several, inter-communicating containers</li>
+<li>the final application should consist of <em>several</em>, inter-communicating <em>containers</em></li>
 </ul>
 </li>
 </ul>
 </li>
 <li>
-<p>Many industry-ready technologies:</p>
+<p>Many industry-ready <strong>technologies</strong>:</p>
 <ul>
 <li>Docker, LXC, LXD, Podman, etc.</li>
 </ul>
@@ -367,13 +367,13 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </section><section>
 <h2 id="scaling-up-to-the-cluster-level">Scaling up to the cluster level</h2>
 <blockquote>
-<p><strong>Cluster</strong> $:=$ a set of <em>similarly configured</em> <strong>machines</strong> (a.k.a. <strong>nodes</strong>) <strong>interconnected</strong> via a <strong>network</strong> in order to let users exploit their <strong>joint</strong> computational power</p>
+<p><strong>Cluster</strong> $\approx$ a set of <em>similarly configured</em> <strong>machines</strong> (a.k.a. <strong>nodes</strong>) <strong>interconnected</strong> via a <strong>network</strong> in order to let users exploit their <strong>joint</strong> computational power</p>
 </blockquote>
 <ul>
 <li>
-<p>Users may want to deploy their applications on the cluster</p>
+<p>Users may want to <strong>deploy</strong> their applications on the <em>cluster</em></p>
 <ul>
-<li>by means of a single access point
+<li>by means of a <em>single access point</em>
 <ul>
 <li>e.g. a Web dashboard, or a CLI</li>
 </ul>
@@ -381,21 +381,21 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </ul>
 </li>
 <li>
-<p>Deployment shall allocate tasks on the cluster in an efficient way</p>
+<p>Deployment shall <strong>allocate</strong> tasks on the cluster <em>efficiently</em></p>
 <ul>
-<li>meeting the tasks’ computational requirements</li>
-<li>balancing the load among the nodes</li>
-<li>matching requirements on actual capabilities of nodes</li>
+<li>meeting the tasks’ <em>computational requirements</em></li>
+<li><em>balancing</em> the <em>load</em> among the nodes</li>
+<li><em>matching requirements</em> on actual capabilities of nodes</li>
 </ul>
 </li>
 <li>
-<p>Infrastructure-as-a-service (IaaS) cloud technologies support deploying tasks on clusters, as VM</p>
+<p><strong>Infrastructure-as-a-service</strong> (IaaS) cloud technologies support deploying tasks on clusters, <em>as VM</em></p>
 <ul>
 <li>e.g. OpenStack, VSphere, etc.</li>
 </ul>
 </li>
 <li>
-<p>Container orchestrator support deploying tasks on clusters, as containers</p>
+<p><strong>Container orchestrators</strong> support deploying tasks on clusters, <em>as containers</em></p>
 <ul>
 <li>e.g. Kubernetes, Docker Swarm, etc.</li>
 </ul>
@@ -432,10 +432,10 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <h2 id="containerisation-vs-orchestration">Containerisation vs. Orchestration</h2>
 <ul>
 <li>
-<p><strong>Containerisation</strong> $:=$ the process of <em>encapsulating</em> an application into a <em>container</em></p>
+<p><strong>Containerisation</strong> $\approx$ the process of <em>encapsulating</em> an application into a <em>container</em></p>
 </li>
 <li>
-<p><strong>Orchestration</strong> $:=$ the process of <em>deploying</em> one or more container onto <em>one or more</em> machines</p>
+<p><strong>Orchestration</strong> $\approx$ the process of <em>deploying</em> one or more container onto <em>one or more</em> machines</p>
 </li>
 <li>
 <p><strong>Containerisation</strong> is a <em>pre-requisite</em> for <strong>orchestration</strong></p>
@@ -461,7 +461,10 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <li><strong>Volume</strong>: a bridge for letting containers share data with the host</li>
 <li><strong>Engine</strong> (a.k.a. <strong>daemon</strong>): the software running on the host, managing containers, images, volumes, layers, and networks</li>
 </ul>
-<h3 id="orchestration-level">Orchestration level</h3>
+
+
+<span class="fragment ">
+  <h3 id="orchestration-level">Orchestration level</h3>
 <ul>
 <li><strong>Cluster</strong>: a set of machines, joint together by the same container orchestrator</li>
 <li><strong>Node</strong>: a machine in the cluster (each one acting as a host, and running the container engine)</li>
@@ -469,6 +472,9 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <li><strong>Stack</strong>: a set of inter-related services</li>
 <li><strong>Secret</strong>: encrypted information to be made available on containers</li>
 </ul>
+
+</span>
+
 </section><section>
 <h2 id="about-technologies">About technologies</h2>
 <p><strong>Docker</strong>: the most famous container technology, actually consisting of several components</p>
@@ -528,7 +534,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <h2 id="running-containers">Running containers</h2>
 <ol>
 <li>Pull an image: <code>docker pull adoptopenjdk</code></li>
-<li>Run a container! <code>docker run adoptopenjdk</code></li>
+<li>Run a container: <code>docker run adoptopenjdk</code></li>
 </ol>
 <p>Every image provides a <em>default command</em>, running without options runs such default in a <em>non-interactive</em> terminal.</p>
 <p>Running in interactive mode can be achieved with the <code>-i</code> option</p>
@@ -574,10 +580,20 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </section><section>
 <h2 id="creating-docker-images">Creating Docker images</h2>
 <p>Docker images are written in a <code>Dockerfile</code></p>
+<ul>
+<li>
 <p>Every command inside a Dockerfile generates a new <em>layer</em></p>
+</li>
+<li>
 <p>The final stack of layers creates the final <em>image</em></p>
-<p>The <code>docker build</code> command interprets the Dockerfile commands to produce a sequence of layers</p>
-<p>Changes to a layer do not invalidate previous layers</p>
+</li>
+<li>
+<p>The <code>docker build</code> command interprets the <code>Dockerfile</code> commands to produce a <em>sequence of layers</em></p>
+</li>
+<li>
+<p>Changes to a layer do <em>not</em> invalidate previous layers</p>
+</li>
+</ul>
 </section><section>
 
 
@@ -605,12 +621,21 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </ul>
 </section><section>
 <h2 id="content-of-the-pathtomynodejsproject-directory">Content of the <code>path/to/my/nodejs/project</code> DIRECTORY</h2>
-<ol>
-<li><code>Dockerfile</code> as for the previous slide</li>
-</ol>
 <div class="multiCol">
-<div class="col  ">
-    <ol start="2">
+<div class="col col-4 ">
+    <ol>
+<li>
+<p><code>Dockerfile</code> as for the previous slide</p>
+</li>
+<li>
+<p>File <code>.dockerignore</code></p>
+</li>
+</ol>
+<pre tabindex="0"><code class="nohighlight" data-noescape="">node_modules/
+</code></pre>
+</div>
+<div class="col col-4 ">
+    <ol start="3">
 <li>File <code>package.json</code></li>
 </ol>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>{
@@ -629,11 +654,8 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
 </div>
-<div class="col  ">
-    <pre tabindex="0"><code></code></pre>
-</div>
-<div class="col  ">
-    <ol start="3">
+<div class="col col-4 ">
+    <ol start="4">
 <li>File <code>index.mjs</code></li>
 </ol>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> { env } from <span style="color:#d20;background-color:#fff0f0">'process'</span>
@@ -659,36 +681,40 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </code></pre>
 </div>
 </div>
-<ol start="4">
-<li>File <code>.dockerignore</code></li>
-</ol>
-<pre tabindex="0"><code class="nohighlight" data-noescape="">node_modules/
-</code></pre>
+
 </section>
 </section><section>
 <h2 id="layers-and-caching-pt-1">Layers and caching (pt. 1)</h2>
-<p>Every line in a <code>Dockerfile</code> generates a new layer:</p>
+<p>Every <em>line</em> in a <code>Dockerfile</code> generates a <em>new layer</em>:</p>
 <p><img src="./layers-1.png" alt=""></p>
 <p>A layer is a <em>diff</em> w.r.t. the previous one</p>
 <p>In other words, Docker keeps track of what information is added to the image at each step</p>
 </section><section>
 <h2 id="layers-and-caching-pt-2">Layers and caching (pt. 2)</h2>
-<p>When a <code>Dockerfile</code> is built, Docker checks whether the layer has already been built in the recent past</p>
-<p>If so, it reuses the cached layer, and skips the execution of the corresponding command</p>
+<p>When a <code>Dockerfile</code> is built, Docker checks whether the layer has already been built in the <em>recent past</em></p>
+<p>If so, it reuses the <strong>cached layer</strong>, and skips the execution of the corresponding command</p>
 <p><img src="./layers-2.png" alt=""></p>
 </section><section>
 <h2 id="layers-and-caching-pt-3">Layers and caching (pt. 3)</h2>
-<p>When the container is run, the images layers are <code>read-only</code>, and the container has a <code>read-write</code> layer on top of them</p>
+<p>When the container is run, the images layers are <em>read-only</em>, and the container has a <em>read-write</em> layer on top of them</p>
 <p><img src="./rw-layer.png" alt=""></p>
 <p>So, when a container is stopped, the read-write layer is discarded, and the image layers are kept</p>
 <p>In this way, the <em>space occupied</em> by the container is <em>minimal</em></p>
 </section><section>
 <h2 id="naming-images">Naming images</h2>
-<p>Image naming is done via <em>tags</em></p>
+<p>Image naming is done via <strong>tags</strong></p>
+<ul>
+<li>
 <p>The easiest way to do so is assigning tags at <em>build time</em> with the <code>-t</code> options of <code>docker build</code></p>
+</li>
+<li>
 <p>The option can be repeated multiple times to make multiple tags</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>docker build -t <span style="color:#d20;background-color:#fff0f0">"myImage:latest"</span> -t <span style="color:#d20;background-color:#fff0f0">"myImage:0.1.0"</span> PATH
-</span></span></code></pre></div><p><code>latest</code> is usually used to identify the most recent version of some image</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>docker build -t <span style="color:#d20;background-color:#fff0f0">"myImage:latest"</span> -t <span style="color:#d20;background-color:#fff0f0">"myImage:0.1.0"</span> /path/to/Dockerfile/container
+</span></span></code></pre></div></li>
+<li>
+<p><code>latest</code> is usually used to identify the most recent version of some image</p>
+</li>
+<li>
 <p>For instance, you may build the image from a few slides ago with:</p>
 <ul>
 <li><code>docker build -t my-service path/to/my/nodejs/project</code>
@@ -697,28 +723,53 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 </section><section>
 <h2 id="publishing-docker-images">Publishing Docker images</h2>
-<p>Images get published in <em>registries</em></p>
+<p>Images get published in <strong>registries</strong></p>
+<ul>
+<li>
 <p>The most famous, free for publicly available images, is <em>Docker Hub</em></p>
+</li>
+<li>
 <p>By default, Docker uses Docker Hub as registry (both for <code>pull</code> and <code>push</code> operations)</p>
+</li>
+<li>
 <p>Docker Hub requires registration and CLI login:</p>
 <ul>
 <li><code>docker login docker.io</code></li>
 </ul>
+</li>
+<li>
 <p>Once done, publication is performed via <code>push</code>:</p>
 <ul>
 <li><code>docker push &lt;image name&gt;</code></li>
 </ul>
+</li>
+</ul>
 </section><section>
 <h2 id="building-docker-images-in-ci">Building Docker images in CI</h2>
+<ul>
+<li>
 <p>Of course, as any other software, <em>custom docker images should get built in CI</em></p>
-<p>Several integrators use containers as build environments: it is possible to <em>build a container using a container</em></p>
-<p>More in general, there is <em>no inherent limit to nesting containers</em></p>
+</li>
+<li>
+<p>Several integrators use <em>containers</em> as <strong>build environments</strong>:</p>
+<ul>
+<li>it is possible to <em>build a container using a container</em></li>
+</ul>
+</li>
+<li>
+<p>More in general: there is <em>no inherent limit to nesting containers</em></p>
+</li>
+<li>
 <p>For instance:</p>
 <ul>
 <li>you may run DIND (Docker-in-Docker) via: <code>docker run --privileged --rm -it docker:dind</code></li>
 <li>you may use the Docker CLI in a container: <code>docker run -it --rm docker:cli</code></li>
+</ul>
+</li>
 </ul>
 </section><section>
 <h2 id="volumes">Volumes</h2>
@@ -732,10 +783,9 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </ul>
 </section><section>
 <h2 id="sorts-of-volumes-pt-1">Sorts of volumes (pt. 1)</h2>
-<p><img src="./volume-types.png" alt=""></p>
+<p><img src="./volume-types-bind.png" alt=""></p>
 <ul>
-<li>
-<p><strong>Bind mount</strong>: a host directory is <strong>mounted</strong> into the container</p>
+<li><strong>Bind mount</strong>: a host directory is <strong>mounted</strong> into the container
 <ul>
 <li>the host directory is specified as <code>&lt;host path&gt;:&lt;guest path&gt;</code> (both must be <strong>absolute paths</strong>)
 <ul>
@@ -750,8 +800,12 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </li>
 </ul>
 </li>
-<li>
-<p><strong>Named volume</strong>: virtual drives managed by Docker</p>
+</ul>
+</section><section>
+<h2 id="sorts-of-volumes-pt-2">Sorts of volumes (pt. 2)</h2>
+<p><img src="./volume-types-named.png" alt=""></p>
+<ul>
+<li><strong>Named volume</strong>: virtual drives managed by Docker
 <ul>
 <li>they are created with <code>docker volume create &lt;name&gt;</code></li>
 <li>they are mounted into containers as <code>&lt;name&gt;:&lt;guest path&gt;</code></li>
@@ -770,8 +824,8 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </li>
 </ul>
 </section><section>
-<h2 id="sorts-of-volumes-pt-2">Sorts of volumes (pt. 2)</h2>
-<p><img src="./volume-types.png" alt=""></p>
+<h2 id="sorts-of-volumes-pt-3">Sorts of volumes (pt. 3)</h2>
+<p><img src="./volume-types-temp.png" alt=""></p>
 <ul>
 <li><strong>Tmpfs mount</strong> [Linux-only]: a temporary file system, living only as long as the container is alive
 <ul>
@@ -939,7 +993,7 @@ drwxr-xr-x    1 root     root          4096 Nov  2 10:15 ..
 <li>
 <p>Alternatively, let’s find where the volume is stored on the host</p>
 <ul>
-<li>`docker volume inspect my-volume</li>
+<li><code>docker volume inspect my-volume</code></li>
 </ul>
 </li>
 <li>
@@ -956,6 +1010,11 @@ drwxr-xr-x    1 root     root          4096 Nov  2 10:15 ..
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>]
 </span></span></code></pre></div></li>
+</ol>
+</section><section>
+<h2 id="example-sharing-data-with-named-volumes-pt-4">Example: sharing data with named volumes (pt. 4)</h2>
+<h3 id="accessing-the-volume-from-the-host-1">Accessing the volume from the host</h3>
+<ol start="5">
 <li>
 <p>The <code>Mountpoint</code> entry reveals the location of the volume on the host’s file system</p>
 </li>
@@ -983,11 +1042,15 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 </ol>
 </section><section>
 <h2 id="how-to-retain-space-from-a-volume">How to retain space from a volume?</h2>
-<p>Volumes are not automatically cleaned up when containers are deleted</p>
+<p>Volumes are NOT automatically <em>cleaned up</em> when containers are <em>deleted</em></p>
+<ul>
+<li>
 <p>Volumes must be <strong>explicitly</strong> deleted by the user</p>
 <ul>
 <li><code>docker volume rm &lt;volume name&gt;</code></li>
 </ul>
+</li>
+<li>
 <p>In our example, remember to delete <code>my-volume</code>:</p>
 <ul>
 <li><code>docker volume rm my-volume</code>
@@ -996,13 +1059,15 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 </section><section>
 <h2 id="sudo-powered-containers">Sudo-powered containers</h2>
 <ul>
 <li>
-<p>Sometimes one may be willing to let a container access the Docker daemon of its host</p>
+<p>Sometimes one may be willing to let a container access the <em>Docker daemon</em> <strong>of its host</strong></p>
 <ul>
-<li>this is useful for running containers that can: create/delete other containers, handle images, etc.</li>
+<li>this is useful for running containers that will: <em>create/delete</em> other containers, handle images, etc.</li>
 </ul>
 </li>
 <li>
@@ -1012,10 +1077,10 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 </ul>
 </li>
 <li>
-<p>Explanation</p>
+<p>Explanation:</p>
 <ul>
-<li>on the host, the Docker daemon is just a service listening for commands on a <a href="https://en.wikipedia.org/wiki/Unix_domain_socket">Unix socket</a></li>
-<li>the socket is usually reified as a file on the host’s file system, at <code>/var/run/docker.sock</code></li>
+<li>on the host, the Docker daemon is just a <em>service</em> listening for commands on a <a href="https://en.wikipedia.org/wiki/Unix_domain_socket">Unix socket</a></li>
+<li>the socket is usually reified as a <em>file</em> on the host’s file system, at <code>/var/run/docker.sock</code></li>
 <li>the <code>docker</code> command is just a CLI program writing/reading to/from the socket to govern the daemon</li>
 </ul>
 </li>
@@ -1040,24 +1105,30 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 </ul>
 </section><section>
 <h2 id="networks">Networks</h2>
-<p>Docker may virtualise container’s networking facilities</p>
+<p>Docker may virtualise container’s <strong>networking facilities</strong></p>
 <ol>
 <li>network interfaces</li>
 <li>IP addresses</li>
 <li>layer-4 ports</li>
 </ol>
 <br>
-<p>This is useful for letting containers communicate with any external entity</p>
+<p>This is useful to let containers <strong>communicate</strong> with any external entity
+<br>most commonly, other containers or the host</p>
+
+
+<span class="fragment ">
+  <br>
+<blockquote>
+<p><strong>Networks</strong> are virtual entities managed by Docker</p>
 <ul>
-<li>most commonly, other containers or the host</li>
+<li>they mimic the notion of <em>layer-3 network</em></li>
+<li>in the eyes of the single container, they are <em>virtual network interfaces</em></li>
+<li>overall, their purpose is to <em>delimit</em> the <strong>communication scope</strong> for containers</li>
 </ul>
-<br>
-<p>Networks are virtual entities managed by Docker</p>
-<ul>
-<li>they mimic the notion of <strong>layer-3 network</strong></li>
-<li>in the eyes of the single container, they are <strong>virtual network interfaces</strong></li>
-<li>overall, their purpose is to <strong>delimit</strong> the scope of communication for containers</li>
-</ul>
+</blockquote>
+
+</span>
+
 </section><section>
 <h2 id="sorts-of-networks-pt-1">Sorts of networks (pt. 1)</h2>
 <p>Different sorts of networks are available in Docker, depending on the <strong>driver</strong>:</p>
@@ -1299,7 +1370,7 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 </li>
 </ol>
 </section><section>
-<h2 id="exposing-ports">Exposing ports</h2>
+<h2 id="exposing-ports-pt-1">Exposing ports (pt. 1)</h2>
 <ul>
 <li>
 <p>When a container wraps a <strong>service</strong> listening on <strong>layer-4 port</strong>…</p>
@@ -1323,6 +1394,10 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 7a14f3bf95cc   my-service   "/bin/sh -c 'npm run…"   1 second ago   Up Less than a second   8080/tcp   wonderful_goldwasser
 </code></pre><p>(look at the <code>PORTS</code> column)</p>
 </li>
+</ul>
+</section><section>
+<h2 id="exposing-ports-pt-2">Exposing ports (pt. 2)</h2>
+<ul>
 <li>
 <p>When <em>running</em> a Docker <em>container</em>, the exposed port can be mapped to host’s ports via <code>-P</code> option</p>
 <ul>
@@ -1397,7 +1472,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <div class="multiCol">
     
 
-<div class="col  ">
+<div class="col col-6 ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3.9</span><span style="color:#bbb">                    </span><span style="color:#888"># version of the specification</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">                       </span><span style="color:#888"># section defining services composing the stack</span><span style="color:#bbb">
@@ -1446,7 +1521,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span></code></pre></div>
 </div>
 
-<div class="col  ">
+<div class="col col-6 ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">                   </span><span style="color:#888"># section for volumes to be created in the stack</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db-data</span>:<span style="color:#bbb">                 </span><span style="color:#888"># name of the volume, to be referenced by services</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">driver_opts</span>:<span style="color:#bbb">
@@ -1508,18 +1583,15 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <h3 id="configs">Configs</h3>
 <p>From <a href="https://docs.docker.com/compose/compose-file/08-configs/">Docker Compose documentation</a>:</p>
 <ul>
-<li>
-<p><strong>configs</strong> are <em>files</em> containing <em>configuration data</em> that can be <em>injected</em> into services upon instantiation</p>
-</li>
-<li>
-<p>they allow users to configure their services’ behaviour <em>without</em> the need to <strong>(re)build a (new) image</strong></p>
-</li>
-<li>
-<p>they are <em>read-only</em> files, mounted into services’ containers, similarly to <em>read-only</em> <strong>volumes</strong></p>
-</li>
-<li>
-<p>they are declared in the <code>configs</code> section of the <code>docker-compose.yml</code> file</p>
-</li>
+<li><strong>configs</strong> are <em>files</em> containing <em>configuration data</em> that can be <em>injected</em> into services upon instantiation</li>
+<li>they allow users to configure their services’ behaviour <em>without</em> the need to <strong>(re)build a (new) image</strong></li>
+<li>they are <em>read-only</em> files, mounted into services’ containers, similarly to <em>read-only</em> <strong>volumes</strong></li>
+<li>they are declared in the <code>configs</code> section of the <code>docker-compose.yml</code> file</li>
+</ul>
+</section><section>
+<h2 id="orchestration-level-notions-pt-3">Orchestration-level notions (pt. 3)</h2>
+<h3 id="configs-1">Configs</h3>
+<ul>
 <li>
 <p>one config may either be created <strong>stack-wise</strong> out of a <strong>local file</strong> from the <em>host</em>…</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">
@@ -1527,7 +1599,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>/path/to/config/on/the/host<span style="color:#bbb">
 </span></span></span></code></pre></div></li>
 <li>
-<p>… or it can be <strong>manually created</strong> by means of the <code>docker config create [OPTIONS] NAME PATH|-</code> command</p>
+<p>… or it can be <strong>manually created</strong> by means of the <code>docker config create [OPTIONS] NAME PATH</code> command</p>
 <ul>
 <li>in this case they can be referenced in several <code>docker-compose.yml</code> files:
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">
@@ -1549,7 +1621,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span></code></pre></div></li>
 </ul>
 </section><section>
-<h2 id="orchestration-level-notions-pt-3">Orchestration-level notions (pt. 3)</h2>
+<h2 id="orchestration-level-notions-pt-3-1">Orchestration-level notions (pt. 3)</h2>
 <h3 id="secrets">Secrets</h3>
 <p>From <a href="https://docs.docker.com/compose/compose-file/09-secrets/">Docker Compose documentation</a>:</p>
 <ul>
@@ -1954,7 +2026,7 @@ b304d1ae5404   bridge               bridge    local
 <p>Docker Compose is also useful for software <strong>testing</strong></p>
 </li>
 <li>
-<p>E.g. whenever the system under test relied on some infrastructural component</p>
+<p>E.g. whenever the system under test relies on some <em>infrastructural component</em></p>
 <ul>
 <li>e.g. a database, a message broker, a cache, etc.</li>
 </ul>
@@ -1975,7 +2047,7 @@ b304d1ae5404   bridge               bridge    local
 <h2 id="example-docker-compose-for-testing--junit-pt-1">Example: Docker Compose for testing + JUnit (pt. 1)</h2>
 <h3 id="domain-model">Domain model</h3>
 
-<figure id="plantuml-figure-11" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-13" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
     
 interface Customer {
     + id: CustomerID
@@ -2023,14 +2095,14 @@ CustomerRepository o-r- Customer
 
 </customer></customer></figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-11");
+    handlePlantumlFigureByID("plantuml-figure-13");
 </script>
 
 </section><section>
 <h2 id="example-docker-compose-for-testing--junit-pt-2">Example: Docker Compose for testing + JUnit (pt. 2)</h2>
 <h3 id="implementation-details">Implementation details</h3>
 
-<figure id="plantuml-figure-12" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-14" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
     
 
 interface CustomerRepository {
@@ -2077,7 +2149,7 @@ package "java sql" {
 
 </customer></customer></figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-12");
+    handlePlantumlFigureByID("plantuml-figure-14");
 </script>
 
 </section><section>
