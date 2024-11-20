@@ -273,16 +273,86 @@ not just a “plain” CI/CD pipeline</p>
 and many are developed by the community.</p>
 </section><section>
 <h2 id="workflow-minimal-example">Workflow minimal example</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># This is a basic workflow to help you get started with Actions</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Example workflow<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#888"># Controls when the workflow will run</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">on</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">push</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">tags</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'*'</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">branches-ignore</span>:<span style="color:#bbb"> </span><span style="color:#888"># Pushes on these branches won't start a build</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">'autodelivery**'</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">'bump-**'</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">'renovate/**'</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">paths-ignore</span>:<span style="color:#bbb"> </span><span style="color:#888"># Pushes that change only these file won't start the workflow</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">'README.md'</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">'CHANGELOG.md'</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">'LICENSE'</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">pull_request</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">branches</span>:<span style="color:#bbb"> </span><span style="color:#888"># Only pull requests based on these branches will start the workflow</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- master<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#888"># Allows you to run this workflow manually from the Actions tab</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span>workflow_dispatch:</span></span></code></pre></div>
 </section><section>
 <h2 id="workflow-minimal-example-1">Workflow minimal example</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># A workflow run is made up of one or more jobs that can run sequentially or in parallel</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#888"># This workflow contains a single job called "build"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Default-Example</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># The type of runner that the job will run on</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>macos-latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># Steps represent a sequence of tasks that will be executed as part of the job</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@cbb722410c2e876e24abbe8de2cc27693e501dcb<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># Runs a single command using the runners shell</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Run a one-line script<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo Hello from a ${{ runner.os }} machine!<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># Runs a set of commands using the runners shell</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Run a multi-line script<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>|<span style="color:#d20;background-color:#fff0f0">
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          echo Add other actions to build,
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          echo test, and deploy your project.</span><span style="color:#bbb">          </span></span></span></code></pre></div>
 </section><section>
 <h2 id="workflow-minimal-example-2">Workflow minimal example</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Explore-GitHub-Actions</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Check out repository code<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v4<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo "💡 The ${{ github.repository }} repository has been cloned to the runner."<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo "🖥️ The workflow is now ready to test your code on the runner."<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>List files in the repository<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>ls ${{ github.workspace }}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo "🍏 This job's status is ${{ job.status }}."<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># Steps can be executed conditionally</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Skipped conditional step<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>runner.os == 'Windows'<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo this step won't run, it has been excluded!<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>|<span style="color:#d20;background-color:#fff0f0">
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          echo This is
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          echo a multi-line
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          echo script.</span><span style="color:#bbb">          </span></span></span></code></pre></div>
 </section><section>
 <h2 id="workflow-minimal-example-3">Workflow minimal example</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Conclusion</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>windows-latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># Jobs may require other jobs</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">needs</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span>Default-Example, Explore-GitHub-Actions ]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># Typically, steps that follow failed steps won't execute.</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># However, this behavior can be changed by using the built-in function "always()"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>always()<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Run something on powershell<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo By default, ${{ runner.os }} runners execute with powershell<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Run something on bash<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>echo However, it is allowed to force the shell type and there is a bash available for ${{ runner.os }} too.<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      
+</span></span></span></code></pre></div>
 </section><section>
 <h2 id="gha-expressions">GHA expressions</h2>
 <p>GitHub Actions allows <em>expressions</em> to be included in the workflow file</p>
@@ -428,7 +498,8 @@ and many are developed by the community.</p>
 </li>
 </ul>
 <p>It is a <em>common</em> and <em>non-trivial</em> operation (the checked out version must be the version originating the workflow), thus GitHub provides an action:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Check out repository code<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v4</span></span></code></pre></div>
 <p>Since actions typically do not need the entire history of the project, by default the action checks out <em>only the commit that originated the workflow</em> (<code>--depth=1</code> when cloning)</p>
 <ul>
 <li><em>Shallow cloning</em> has better <em>performance</em></li>
@@ -441,7 +512,16 @@ and many are developed by the community.</p>
 <p>Also, <em><strong>tags</strong> don’t get checked out</em></p>
 </section><section>
 <h2 id="checking-out-the-whole-history">Checking out the whole history</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with default token<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v4.2.2<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>inputs.token == ''<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">submodules</span>:<span style="color:#bbb"> </span>recursive<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Fetch tags<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>git fetch --tags -f<span style="color:#bbb">
+</span></span></span></code></pre></div>
 <p>(code from a custom action, ignore the <code>if</code>)</p>
 <ul>
 <li>Check out the repo with the maximum <em>depth</em></li>
@@ -458,7 +538,25 @@ The simplest way to send commands is to print on standard output a message in th
 <p>In particular, actions can set outputs by printing:
 <br>
 <code>::set-output name={name}::{value}</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Build</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>danysk/action-checkout@0.2.22<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">id</span>:<span style="color:#bbb"> </span>branch-name<span style="color:#bbb"> </span><span style="color:#888"># Custom id</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>tj-actions/branch-names@v8<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">id</span>:<span style="color:#bbb"> </span>output-from-shell<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>ruby -e 'puts "dice=#{rand(1..6)}"' &gt;&gt; $GITHUB_OUTPUT<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>|<span style="color:#d20;background-color:#fff0f0">
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          echo "The dice roll resulted in number ${{ steps.output-from-shell.outputs.dice }}"
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          if ${{ steps.branch-name.outputs.is_tag }} ; then
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">            echo "This is tag ${{ steps.branch-name.outputs.tag }}"
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          else
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">            echo "This is branch ${{ steps.branch-name.outputs.current_branch }}"
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">            echo "Is this branch the default one? ${{ steps.branch-name.outputs.is_default }}"
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          fi</span><span style="color:#bbb">          
+</span></span></span></code></pre></div>
 </section><section>
 <h2 id="build-matrix">Build matrix</h2>
 <p>Most software products are meant to be <em>portable</em></p>
@@ -483,7 +581,33 @@ The simplest way to send commands is to print on standard output a message in th
 </ul>
 </section><section>
 <h2 id="build-matrix-in-gha">Build matrix in GHA</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Build</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">strategy</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">matrix</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">os</span>:<span style="color:#bbb"> </span>[windows, macos, ubuntu]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">jvm_version</span>:<span style="color:#bbb"> </span>[<span style="color:#00d;font-weight:bold">8</span>,<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">11</span>,<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">15</span>,<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">16</span>]<span style="color:#bbb"> </span><span style="color:#888"># Arbitrarily-made and arbitrarily-valued variables</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">ruby_version</span>:<span style="color:#bbb"> </span>[<span style="color:#00d;font-weight:bold">2.7</span>,<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3.0</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">python_version</span>:<span style="color:#bbb"> </span>[<span style="color:#00d;font-weight:bold">3.7</span>,<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3.9.12</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>${{ matrix.os }}-latest<span style="color:#bbb"> </span><span style="color:#888">## The string is computed interpolating a variable value</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/setup-java@v4<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">distribution</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'adopt'</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">java-version</span>:<span style="color:#bbb"> </span>${{ matrix.jvm_version }}<span style="color:#bbb"> </span><span style="color:#888"># "${{ }}" contents are interpreted by the github actions runner</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/setup-python@v5<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">python-version</span>:<span style="color:#bbb"> </span>${{ matrix.python_version }} <span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>ruby/setup-ruby@v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">ruby-version</span>:<span style="color:#bbb"> </span>${{ matrix.ruby_version }}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>java -version<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>ruby --version<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>python --version<span style="color:#bbb">
+</span></span></span></code></pre></div>
 </section><section>
 <h2 id="private-data-and-continuous-integration">Private data and continuous integration</h2>
 <p>We would like the CI to be able to</p>
@@ -654,12 +778,42 @@ the alternative is to <em>install a private key in the runner</em></p>
 </span></span></span></code></pre></div></section><section>
 <h2 id="composite-actions-example">Composite actions: example</h2>
 <p>The action is contained in its metadata descriptor <code>action.yml</code>root, e.g.:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'Checkout the whole repository'</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'Checkout all commits, all tags, and initialize all submodules.'</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">inputs</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">token</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span>The token to use when checking out the repository<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">required</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">default</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">''</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">runs</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">using</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"composite"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with custom token<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v4.2.2<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>inputs.token != ''<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">submodules</span>:<span style="color:#bbb"> </span>recursive<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">token</span>:<span style="color:#bbb"> </span>${{ inputs.token }}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout with default token<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>actions/checkout@v4.2.2<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">if</span>:<span style="color:#bbb"> </span>inputs.token == ''<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">with</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">fetch-depth</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">submodules</span>:<span style="color:#bbb"> </span>recursive<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Fetch tags<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">shell</span>:<span style="color:#bbb"> </span>bash<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span>git fetch --tags -f<span style="color:#bbb">
+</span></span></span></code></pre></div>
 <p>From: <a href="https://github.com/DanySK/action-checkout">https://github.com/DanySK/action-checkout</a></p>
 </section><section>
 <h2 id="composite-actions-usage">Composite actions: usage</h2>
 <p>It can be used with:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># Checkout the repository</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Checkout<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">uses</span>:<span style="color:#bbb"> </span>danysk/action-checkout@0.2.22</span></span></code></pre></div>
 </section><section>
 <h2 id="composite-actions-limitations">Composite actions: limitations</h2>
 <ul>
@@ -1072,11 +1226,7 @@ with a pre-populated text area</li>
   
 
   
-  
-
-  
-  
-
+    
   
   
 
@@ -1104,6 +1254,14 @@ with a pre-populated text area</li>
   
   
 
+  
+  
+
+  
+  
+
+  
+    
   
   
 
