@@ -24,11 +24,11 @@
 
     <section><h1 id="continuous-integration">Continuous Integration</h1>
 <!-- this file includes generated content. Do not edit. Edit content/07-ci/generator.md, instead. -->
-<h2 id="hahahugoshortcode8s0hbhb">Software Process Engineering</h2>
+<h2 id="hahahugoshortcode9s0hbhb">Software Process Engineering</h2>
 <br>
 <h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2024-11-27
+<p>Compiled on: 2024-11-28
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -208,7 +208,7 @@ creating “<em>self-hosted runners</em>”. Self-hosted and GitHub-hosted runne
 </ul>
 </section><section>
 <h2 id="convention-over-configuration">Convention over configuration</h2>
-<p>Several CI systems inherit the “<em>convention over configuration</em> principle.</p>
+<p>Several CI systems inherit the “<em>convention over configuration</em>” principle.</p>
 <p>For instance, by default (with an empty configuration file) Travis CI builds a Ruby project using <code>rake</code>.</p>
 <p>GitHub actions <strong>does not</strong> adhere to the principle:
 if left unconfigured, the runner does nothing
@@ -257,7 +257,10 @@ not just a “plain” CI/CD pipeline</p>
 </span></span></span></code></pre></div></section><section>
 <h2 id="github-actions-actions">GitHub Actions’ actions</h2>
 <p>GHA’s YAML parser <em>does not support standard YAML anchors and merge keys</em></p>
-<p>(it is a well-known limit with <a href="https://github.com/actions/runner/issues/1182">an issue report open since ages</a>)</p>
+<ul>
+<li>it is a well-known limit with <a href="https://github.com/actions/runner/issues/1182">an issue report open since ages</a></li>
+<li>there is a <a href="https://github.com/DanySK/true-yaml-actions">workaround</a> but it is very custom</li>
+</ul>
 <p>GHA achieves reuse via:</p>
 <ul>
 <li>“<strong>actions</strong>”: <em>reusable parameterizable <strong>steps</strong></em>
@@ -537,7 +540,9 @@ The simplest way to send commands is to print on standard output a message in th
 <code>::workflow-command parameter1={data},parameter2={data}::{command value}</code></p>
 <p>In particular, actions can set outputs by printing:
 <br>
-<code>::set-output name={name}::{value}</code></p>
+<del><code>::set-output name={name}::{value}</code></del> deprecated in favor of:
+<br>
+<code>echo "{name}={value}" &gt;&gt; "$GITHUB_OUTPUT"</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">jobs</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">Build</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">runs-on</span>:<span style="color:#bbb"> </span>ubuntu-latest<span style="color:#bbb">
@@ -1226,8 +1231,6 @@ with a pre-populated text area</li>
   
 
   
-    
-  
   
 
   
@@ -1260,8 +1263,6 @@ with a pre-populated text area</li>
   
   
 
-  
-    
   
   
 
