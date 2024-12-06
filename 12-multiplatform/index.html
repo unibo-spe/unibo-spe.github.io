@@ -34,11 +34,11 @@
 }
 </style>
 <h1 id="multi-platform-programming">Multi-platform programming</h1>
-<h2 id="hahahugoshortcode2s0hbhb">Software Process Engineering</h2>
+<h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
 <br>
 <h3 id="giovanni-ciatto-----giovanniciattouniboitmailtogiovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2024-12-03
+<p>Compiled on: 2024-12-06
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -1913,6 +1913,7 @@ AbstractRow &lt;|-d- DefaultRecord</p>
 <p>class DefaultTable {
 + constructor(header: Header, records: Iterable&lt;Record&gt;)
 }</p>
+<p>interface Table</p>
 </code><p><code>Table &lt;|– DefaultTable
 </code></p></pre><p></p>
 <p>}</p>
@@ -1989,7 +1990,7 @@ AbstractRow &lt;|-d- DefaultRecord</p>
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">get</span>() = <span style="color:#080;font-weight:bold">super</span>.values
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">get</span>(column: String): String =
-</span></span><span style="display:flex;"><span>        header.indexOf(column).takeIf { <span style="color:#080;font-weight:bold">it</span> <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">0.</span>.&lt; size }?.let { values[<span style="color:#080;font-weight:bold">it</span>] }
+</span></span><span style="display:flex;"><span>        header.indexOf(column).takeIf { <span style="color:#080;font-weight:bold">it</span> <span style="color:#080;font-weight:bold">in</span> <span style="color:#00d;font-weight:bold">0</span> ..&lt; size }?.let { values[<span style="color:#080;font-weight:bold">it</span>] }
 </span></span><span style="display:flex;"><span>            ?: <span style="color:#080;font-weight:bold">throw</span> NoSuchElementException(<span style="color:#d20;background-color:#fff0f0">"No such column: </span><span style="color:#33b;background-color:#fff0f0">$column</span><span style="color:#d20;background-color:#fff0f0">"</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">toString</span>(): String = toString(<span style="color:#d20;background-color:#fff0f0">"Record"</span>)
