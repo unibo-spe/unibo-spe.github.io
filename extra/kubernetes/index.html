@@ -55,7 +55,7 @@
 since its introduction in 2014,
 Kubernetes has grown to be on of the largest and most popular <em>open source</em> project in the world.</p>
 <br>
-<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/3523_RC02/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"Docker Swarm","geo":"","time":"2015-01-01 2023-01-01"},{"keyword":"Kubernetes","geo":"","time":"2015-01-01 2023-01-01"}],"category":0,"property":""}, {"exploreQuery":"date=2015-01-01%202023-01-01&q=Docker%20Swarm,Kubernetes","guestPath":"https://trends.google.com:443/trends/embed/"}); </script>
+<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/3523_RC02/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"Docker Swarm","geo":"","time":"2015-01-01 2025-01-01"},{"keyword":"Kubernetes","geo":"","time":"2015-01-01 2025-01-01"}],"category":0,"property":""}, {"exploreQuery":"date=2015-01-01%202023-01-01&q=Docker%20Swarm,Kubernetes","guestPath":"https://trends.google.com:443/trends/embed/"}); </script>
 </section><section>
 <h2 id="long-story-short-1">Long story short</h2>
 <p>Built for <em>distributed systems</em> suitable for <em>cloud developers</em> of all scales,
@@ -65,8 +65,8 @@ it is meant to support <em>reliable</em> and <em>scalable</em> software systems.
 <span class="fragment ">
   <ul>
 <li><strong>Reliability</strong>: Services cannot fail, they must maintain <em>availability</em> even during software rollouts</li>
-<li><strong>Scalability</strong>: Services must grow their capacity to keep up with ever-increasing usage without redesigning the distributed system. Obviously, this includes both a scale-up and a scale-down of the service.</li>
-<li><strong>Distributed Systems</strong>: Pieces of software that together make up the service; they may run on different machines connected, and coordinating, via the network.</li>
+<li><strong>Scalability</strong>: Services can adapt their capacity to keep up with the usage, without redesigning the distributed system. This includes both a <em>scale-up</em> and a <em>scale-down</em> of the service.</li>
+<li><strong>Distributed System</strong>: Pieces of software the service is composed of; they may run on different machines (connected to each-other), and may coordinate their behaviour through the network.</li>
 </ul>
 
 </span>
@@ -76,18 +76,23 @@ it is meant to support <em>reliable</em> and <em>scalable</em> software systems.
 <ul>
 <li>Immutability</li>
 <li>Everything is a declarative configuration object</li>
-<li>Broader range of object to create, and manage, the production environment</li>
-<li>Automatic scaling (up and down)</li>
+<li>Broader range of object to create, and manage, the production environment with respect to Docker Swarm</li>
+<li>Automatic scaling of resources (horizontal, vertical, increasing and decreasing)</li>
 <li>Built-in monitoring</li>
 <li>Security</li>
 </ul>
 </section><section>
 <h2 id="immutability">Immutability</h2>
-<p>Just like Docker Swarm, Kubernetes is a container orchestrator.
-Containers represent a declarative way to package and run applications, giving an immutable environment that can be deployed anywhere.</p>
+<p>Just like Docker Swarm, Kubernetes is a container orchestrator.</p>
+<ul>
+<li>Containers represent a declarative way to package and run applications</li>
+<li>Containers can be deployed anywhere</li>
+<li>They are meant to be stateless, thus changed at any time</li>
+</ul>
 <br>
-<p><strong>So, why Docker Swarm is not enough?</strong></p>
-<p>Docker Swarm is not meant to support large production deployments at scale.</p>
+<p><strong>Why Docker Swarm is not enough?</strong></p>
+<p>Docker Swarm do support large production deployments at scale,
+while Kubernetes natively support it.</p>
 </section><section>
 <h2 id="declarative-configuration-objects">Declarative configuration objects</h2>
 
@@ -95,24 +100,24 @@ Containers represent a declarative way to package and run applications, giving a
     <div class="col  ">
     <h3 id="docker-swarm">Docker Swarm</h3>
 <ul>
-<li>stuck to the docker ecosystem,
+<li>makes use of the docker ecosystem:
 <ul>
 <li>it does not support other container runtimes,</li>
-<li>it requires docker primitives to be used to manage the environment.</li>
+<li>relies on docker primitives to be used to manage the environment.</li>
 </ul>
 </li>
-<li>the only way to manage the environment is through the <code>docker-compose.yml</code> file.</li>
+<li>the environment is managed through the <code>docker-compose.yml</code> file.</li>
 </ul>
 <h3 id="example-with-a-docker-stack">Example with a Docker Stack:</h3>
 <pre tabindex="0"><code>docker stack deploy -c docker-compose.yml &lt;stack_name&gt;
-</code></pre><p><strong>Docker primitives required to build the environment</strong></p>
+</code></pre><p><strong>Docker primitives to build the environment</strong></p>
 </div> 
 <div class="col  ">
     <h3 id="kubernetes">Kubernetes</h3>
 <ul>
-<li><strong>“everything is an object”</strong>
+<li>Adheres to the principle <strong>“everything is an object”</strong>
 <ul>
-<li>broader range of objects to customise the production environment,</li>
+<li>broader range of objects to shape the production environment,</li>
 <li>external declarative tool, named <code>kubectl</code>, to manage the environment.</li>
 </ul>
 </li>
@@ -120,7 +125,7 @@ Containers represent a declarative way to package and run applications, giving a
 </ul>
 <h3 id="example-with-a-kubernetes-deployment">Example with a Kubernetes Deployment:</h3>
 <pre tabindex="0"><code>kubectl create -f configuration-file.yaml
-</code></pre><p><strong>Command valid for every resource in the Kubernetes ecosystem</strong></p>
+</code></pre><p><strong>Instruction valid for every resource in the Kubernetes ecosystem</strong></p>
 </div>
 
 </div>
@@ -182,10 +187,10 @@ Containers represent a declarative way to package and run applications, giving a
 <div class="col  ">
     <h3 id="kubernetes">Kubernetes</h3>
 <ul>
-<li>Can scale up and down the replicas of a resource,
+<li>Can scale up and down replicas of a resource,
 <ul>
-<li>both automatically and after a manual intervention,</li>
-<li>the automatic scaling can be configured to be based on observed metrics (i.e. the usage of the CPU/Memory).</li>
+<li>both automatically and with a manual intervention,</li>
+<li>the automatic scaling can be configured on the observation of <em>metrics</em> (i.e. the usage of the CPU/Memory).</li>
 </ul>
 </li>
 <li>The cluster can grow its capacity,
@@ -197,7 +202,7 @@ Containers represent a declarative way to package and run applications, giving a
 </ul>
 <br>
 <ul>
-<li><strong>Replicas and metrics are managed by resource objects too</strong></li>
+<li><strong>Replicas and metrics are resource objects too</strong></li>
 </ul>
 </div>
 
@@ -238,6 +243,23 @@ Containers represent a declarative way to package and run applications, giving a
 
 </section><section>
 <h2 id="metrics-in-kubernetes">Metrics in Kubernetes</h2>
+<ul>
+<li><em>Metrics Registry</em> is the component of the Kubernetes’ Control Plane that exposes <strong>API</strong> to watch for cluster’s metrics.
+<ul>
+<li><em>Metrics Server</em> is the built-in implementation of this service</li>
+<li>there are external Metrics Servers which can be adopted instead of it.</li>
+</ul>
+</li>
+<li>There are mainly three kinds of metrics:
+<ul>
+<li><strong>Resource Metrics</strong>: concerning <em>memory</em> and <em>cpu</em> of Kubernetes’ resource objects.</li>
+<li><strong>Custom Metrics</strong>: other information about Kubernetes’ resource objecs.</li>
+<li><strong>External Metrics</strong>: metrics not related with Kubernetes’ resources (i.e. number of incoming HTTP requests)</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="metrics-in-kubernetes-1">Metrics in Kubernetes</h2>
 <br>
 <img src="hpa2.png" width="60%">
 </section><section>
@@ -270,7 +292,7 @@ Containers represent a declarative way to package and run applications, giving a
 </ul>
 </li>
 <li>
-<p>Resources management is performed using the <code>kubectl</code> tool,</p>
+<p>Resources are externally managed with <code>kubectl</code> tool,</p>
 <ul>
 <li>it connects remotely to a cluster =&gt; no need to access a cluster node</li>
 <li>it is configured with specific user credentials
@@ -311,7 +333,7 @@ Containers represent a declarative way to package and run applications, giving a
 <ul>
 <li>Runs one (or more) containers
 <ul>
-<li>this allow to deploy toghether two different containers that are symbiotic between themself
+<li>Pods allow to deploy toghether two different containers that are symbiotic between themself
 <ul>
 <li>for example, a web server container and the git synchronizer one that keeps it updated</li>
 <li>this is not the case of a web server and its database, which can be deployed in two different nodess</li>
@@ -460,7 +482,7 @@ Containers represent a declarative way to package and run applications, giving a
    <div class="resources"></div>
 </div>
 </section><section>
-<h2 id="metrics-in-kubernetes-1">Metrics in Kubernetes</h2>
+<h2 id="metrics-in-kubernetes-2">Metrics in Kubernetes</h2>
 
 <div class="multiCol">
     <div class="col  ">
@@ -541,11 +563,11 @@ You can also use the power-of-two equivalents, such as Ei, Pi, Ti, Gi, Mi, Ki. <
 <div class="col  ">
     <br>
 <br>
-<p><code>Pods</code> are not directly managed by the user, but through by a higher-level object called <code>Deployment</code>.</p>
+<p><code>Pods</code> are not directly managed by the user, but through higher-level objects called <code>Deployment</code>.</p>
 <ul>
 <li>They exist to manage the release of a new version of the application</li>
 <li>Avoid downtime during the update process of a Pod</li>
-<li>Entity that ties together a <code>ReplicaSets</code> and <code>Pods</code></li>
+<li>Ties together <code>ReplicaSets</code> and <code>Pods</code></li>
 </ul>
 </div>
 
@@ -583,7 +605,7 @@ You can also use the power-of-two equivalents, such as Ei, Pi, Ti, Gi, Mi, Ki. <
 <div class="col  ">
     <br>
 <br>
-<p>The connection between the <code>Deployment</code> and the <code>Pods</code> is done using the <code>selector</code> field</p>
+<p>The connection between <code>Deployments</code> and <code>Pods</code> is done using the <code>selector</code> field</p>
 <ul>
 <li>they are unique labels that identify the <code>Pods</code> that the <code>Deployment</code> will manage</li>
 </ul>
@@ -592,16 +614,16 @@ You can also use the power-of-two equivalents, such as Ei, Pi, Ti, Gi, Mi, Ki. <
 </div>
 
 </section><section>
-<h2 id="kubernetes-objects-replicaset">Kubernetes objects: ReplicaSet</h2>
-<p>They are the objects that manage the <code>Pod</code> number</p>
+<h2 id="kubernetes-objects-replicasets">Kubernetes objects: ReplicaSets</h2>
+<p>The object that manages the <code>Pod</code> number</p>
 <ul>
-<li>they usually are not managed directly by the user, but through a <code>Deployment</code></li>
-<li>they let to scale the number of <code>Pods</code> up and down</li>
+<li>usually not directly managed by the user, but through a <code>Deployment</code></li>
+<li>allows to scale the number of <code>Pods</code> up and down</li>
 </ul>
 <br>
 <br>
 <div class="center">
-Since a <code>Deployment</code> object manages a <code>ReplicaSet</code> one, users can scale dynamically the <code>Pod</code>'s number using:
+Since a <code>Deployment</code> object manages a <code>ReplicaSet</code>, users can scale dynamically the <code>Pod</code>'s number using:
 </div>
 <div class="custom">
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl scale deployment &lt;name&gt; --replicas=&lt;number&gt;
@@ -616,17 +638,17 @@ Since a <code>Deployment</code> object manages a <code>ReplicaSet</code> one, us
 <div class="col  ">
     <br>
 <br>
-<p>Service discovery in Kubernetes starts with the <em>Service</em> object.</p>
+<p>Service discovery in Kubernetes is done with <em>Service</em> objects.</p>
 <ul>
-<li>They are the entry-point for the application</li>
+<li>They are the entry-point of the application</li>
 <li>They redirect requests to the Pods in the cluster nodes
 <ul>
-<li>Don’t forget that Pods are ephemeral, so they can be moved between nodes, and their IP address can change</li>
+<li><strong>why?</strong> Pods are ephemeral, so they can be moved between nodes, and their IP address is subject to changes</li>
 </ul>
 </li>
 <li>They group Pods in a network
 <ul>
-<li>meaning that Services know which Pods are replicas</li>
+<li>meaning that Services know how many replicas exist for one Pod</li>
 </ul>
 </li>
 </ul>
@@ -657,16 +679,16 @@ There are three main types of Services:
       </tr>
       <tr>
           <td><code>NodePort</code></td>
-          <td>Exposes the Service on each Node’s IP at a static port.</td>
+          <td>Exposes the Service on the Node’s IP with a fixed port.</td>
       </tr>
       <tr>
           <td><code>LoadBalancer</code></td>
-          <td>Exposes the server externally using a load balancer. <br> This type of Service is not offered directly from Kubernetes.</td>
+          <td>Exposes the server <em>externally</em> using a load balancer. <br> This type of Service is not offered directly from Kubernetes.</td>
       </tr>
   </tbody>
 </table>
 </section><section>
-<p><code>Deployments</code> are not the only road:</p>
+<p><code>Deployments</code> are not the only solution:</p>
 
 <div class="multiCol">
     <div class="col  ">
@@ -700,12 +722,12 @@ As nodes are removed from the cluster, those Pods are garbage collected.</p>
 
 </section><section>
 <h2 id="access-control">Access Control</h2>
-<p>Enforced through the <code>Service Account</code> resource object</p>
+<p>Enforced through the <code>Service Account</code> resource object, which:</p>
 <ul>
 <li>represents a distinct identity in the cluster</li>
-<li>each one of them is <em>bound</em> to a specific <code>Namespace</code></li>
-<li>grants access to the API server</li>
-<li>grants permissions through the <em>RBAC</em> mechanism</li>
+<li>is <em>bound</em> to a specific <code>Namespace</code></li>
+<li>grants access to the Kubernetes’ API server</li>
+<li>grants permissions with <em>RBAC</em> to users</li>
 <li>can be used to configure the authentication within <code>kubectl</code></li>
 </ul>
 </section><section>
