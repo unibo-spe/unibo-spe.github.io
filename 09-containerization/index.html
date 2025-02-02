@@ -38,14 +38,13 @@
 <br>
 <h3 id="giovanni-ciatto-----giovanniciattouniboitmailtogiovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2025-02-01
+<p>Compiled on: 2025-02-02
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
 <h2 id="preliminaries">Preliminaries</h2>
 <blockquote>
-<p>[Software] <strong>Deployment</strong> $:=$ all of the activities that make a software system available for use</p>
-</blockquote>
+<p>[Software] <strong>Deployment</strong> $:=$ all of the activities that make a software system available for use</p></blockquote>
 <ul>
 <li><a href="https://www.mlsu.ac.in/econtents/16_EBOOK-7th_ed_software_engineering_a_practitioners_approach_by_roger_s._pressman_.pdf"><em>Software Engineering: A Practitioner’s Approach</em>, Roger S. Pressman</a></li>
 </ul>
@@ -96,8 +95,7 @@
 <h2 id="what-to-deploy-pt-2">What to deploy? (pt. 2)</h2>
 <h3 id="short-lived-tasks">Short-lived tasks</h3>
 <blockquote>
-<p><strong>Short-lived</strong> tasks are bare computational activities aimed at <strong>processing/generating</strong> some data</p>
-</blockquote>
+<p><strong>Short-lived</strong> tasks are bare computational activities aimed at <strong>processing/generating</strong> some data</p></blockquote>
 <ul>
 <li>
 <p>Pure <strong>algorithms</strong> <em>accepting data</em> as input and/or <em>producing data</em> as output.</p>
@@ -124,8 +122,7 @@
 <h2 id="what-to-deploy-pt-3">What to deploy? (pt. 3)</h2>
 <h3 id="long-lived-tasks">Long-lived tasks</h3>
 <blockquote>
-<p><strong>Long-lived</strong> are computational activities which are <strong>not meant to terminate</strong> automatically (unless <em>explicitly stopped</em>)</p>
-</blockquote>
+<p><strong>Long-lived</strong> are computational activities which are <strong>not meant to terminate</strong> automatically (unless <em>explicitly stopped</em>)</p></blockquote>
 <ul>
 <li>
 <p>Infinite <em>loops</em>, just <em>waiting</em> for <em>requests</em>, and <em>serving</em> them as soon as possible</p>
@@ -191,8 +188,7 @@
 <!-- > __Encapsulation__ is the __hiding__ of the __implementation details__ of a __component__ from its __clients__.
 > Encapsulated components have a clear __interface__ which is the only way to interact with them. -->
 <blockquote>
-<p>Why can’t we simply configure bare-metal machines to host our tasks?</p>
-</blockquote>
+<p>Why can’t we simply configure bare-metal machines to host our tasks?</p></blockquote>
 <ul>
 <li>
 <p>Need for <strong>multi-tenancy</strong> (i.e. sharing) on computational resources</p>
@@ -237,8 +233,7 @@
 <p>Some abstraction is needed to encapsulate applications, and their computational environment, into a single unit</p>
 <blockquote>
 <p><strong>Encapsulation</strong> is the <strong>hiding</strong> of the <strong>implementation details</strong> of a <strong>component</strong> from its <strong>clients</strong>.
-Encapsulated components have a clear <strong>interface</strong> which is the only way to interact with them.</p>
-</blockquote>
+Encapsulated components have a clear <strong>interface</strong> which is the only way to interact with them.</p></blockquote>
 </section><section>
 <h2 id="how-to-achieve-encapsulation-pt-1">How to achieve encapsulation? (pt. 1)</h2>
 <ul>
@@ -367,8 +362,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </section><section>
 <h2 id="scaling-up-to-the-cluster-level">Scaling up to the cluster level</h2>
 <blockquote>
-<p><strong>Cluster</strong> $\approx$ a set of <em>similarly configured</em> <strong>machines</strong> (a.k.a. <strong>nodes</strong>) <strong>interconnected</strong> via a <strong>network</strong> in order to let users exploit their <strong>joint</strong> computational power</p>
-</blockquote>
+<p><strong>Cluster</strong> $\approx$ a set of <em>similarly configured</em> <strong>machines</strong> (a.k.a. <strong>nodes</strong>) <strong>interconnected</strong> via a <strong>network</strong> in order to let users exploit their <strong>joint</strong> computational power</p></blockquote>
 <ul>
 <li>
 <p>Users may want to <strong>deploy</strong> their applications on the <em>cluster</em></p>
@@ -528,8 +522,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <p>Subsequent examples work on Linux, but they should work on any platform</p>
 <ul>
 <li>provided that a <code>bash</code> or <code>zsh</code> shell is available</li>
-</ul>
-</blockquote>
+</ul></blockquote>
 </section><section>
 <h2 id="running-containers">Running containers</h2>
 <ol>
@@ -1124,8 +1117,7 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 <li>they mimic the notion of <em>layer-3 network</em></li>
 <li>in the eyes of the single container, they are <em>virtual network interfaces</em></li>
 <li>overall, their purpose is to <em>delimit</em> the <strong>communication scope</strong> for containers</li>
-</ul>
-</blockquote>
+</ul></blockquote>
 
 </span>
 
@@ -1424,8 +1416,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </section><section>
 <h2 id="do-we-need-orchestration">Do we need orchestration?</h2>
 <blockquote>
-<p>Operating containers manually is error prone and low-level</p>
-</blockquote>
+<p>Operating containers manually is error prone and low-level</p></blockquote>
 <ul>
 <li>
 <p>Docker Compose lets you increase the <strong>abstraction level</strong> on the <strong>single machine</strong></p>
@@ -1809,8 +1800,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </li>
 </ul>
 <blockquote>
-<p>All commands assume a <code>docker-compose.yml</code> file is present in the <strong>current working directory</strong></p>
-</blockquote>
+<p>All commands assume a <code>docker-compose.yml</code> file is present in the <strong>current working directory</strong></p></blockquote>
 </section><section>
 <h2 id="working-example-pt-1">Working example (pt. 1)</h2>
 
@@ -1868,8 +1858,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 
 <div class="col  ">
     <blockquote>
-<p><strong>Beware</strong>: this is unsafe as passwords are in clear text!</p>
-</blockquote>
+<p><strong>Beware</strong>: this is unsafe as passwords are in clear text!</p></blockquote>
 <br>
 <h3 id="todo">TODO</h3>
 <ol>
@@ -2586,8 +2575,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </section><section>
 <h2 id="labelling-nodes">Labelling nodes</h2>
 <blockquote>
-<p>Nodes may be <strong>labelled</strong> with <code>key=value</code> pairs</p>
-</blockquote>
+<p>Nodes may be <strong>labelled</strong> with <code>key=value</code> pairs</p></blockquote>
 <ul>
 <li>
 <p>Labels may be used to <strong>mark nodes</strong> with respect to their <strong>properties</strong></p>
@@ -2820,8 +2808,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 
 <div class="col  ">
     <blockquote>
-<p>Volumes are <strong>always local</strong> w.r.t. the node the current container is deployed onto</p>
-</blockquote>
+<p>Volumes are <strong>always local</strong> w.r.t. the node the current container is deployed onto</p></blockquote>
 <br>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
