@@ -24,9 +24,9 @@
 
     <section><h1 id="kotlin">Kotlin</h1>
 <h2 id="for-scala-developers"><em>(for Scala developers)</em></h2>
-<h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
+<h2 id="hahahugoshortcode2s0hbhb">Software Process Engineering</h2>
 <br>
-<h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
+<h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
 <p>Compiled on: 2025-02-17
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
@@ -450,7 +450,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Warning: local functions often hinder clarity</p>
 </section><section>
-<h1 id="kotlin-101----flow-control">Kotlin 101 – Flow control</h1>
+<h1 id="kotlin-101--flow-control">Kotlin 101 – Flow control</h1>
 <h2 id="if"><code>if</code></h2>
 <ul>
 <li><code>if</code>/<code>else</code> is an expression and works just as in Scala</li>
@@ -459,7 +459,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 <li><strong>No</strong> <em>partial functions</em>!</li>
 </ul>
 </section><section>
-<h1 id="kotlin-101----flow-control-1">Kotlin 101 – Flow control</h1>
+<h1 id="kotlin-101--flow-control-1">Kotlin 101 – Flow control</h1>
 <h3 id="for"><code>for</code></h3>
 <ul>
 <li><strong>No classic</strong> <code>for(init; condition; then) { block }</code> loop</li>
@@ -468,7 +468,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 <li><em>Rarely used</em> (I think I might have used it twice in my career)</li>
 </ul>
 </section><section>
-<h1 id="kotlin-101----flow-control-2">Kotlin 101 – Flow control</h1>
+<h1 id="kotlin-101--flow-control-2">Kotlin 101 – Flow control</h1>
 <h3 id="while-and-dowhile"><code>while</code> and <code>do</code>/<code>while</code></h3>
 <ul>
 <li>Same as Java, but with <em>visibility of variables defined in the <code>do</code>-block</em></li>
@@ -482,7 +482,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 </span></span><span style="display:flex;"><span>} <span style="color:#080;font-weight:bold">while</span> (draw != lucky) <span style="color:#888">// draw is visible here
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>println(<span style="color:#d20;background-color:#fff0f0">"Launched </span><span style="color:#33b;background-color:#fff0f0">$attempts</span><span style="color:#d20;background-color:#fff0f0"> dice before a lucky shot"</span>)
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-101----flow-control-3">Kotlin 101 – Flow control</h1>
+<h1 id="kotlin-101--flow-control-3">Kotlin 101 – Flow control</h1>
 <h3 id="when"><code>when</code></h3>
 <p>Kotlin <em>does not support pattern matching</em> as Scala does (unfortunately)
 <br>
@@ -498,7 +498,7 @@ The base version (without subject) is a more elegant “<code>if</code>/<code>el
 <li><code>when</code> is an expression in any case</li>
 </ul>
 </section><section>
-<h1 id="kotlin-101----flow-control-4">Kotlin 101 – Flow control</h1>
+<h1 id="kotlin-101--flow-control-4">Kotlin 101 – Flow control</h1>
 <h3 id="when-subject"><code>when (subject)</code></h3>
 <p>Checks if the value of subjects is the same of the expression on the right</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">baseForSingleDigitOrNull</span>(digit: UInt) = <span style="color:#080;font-weight:bold">when</span>(digit) {
@@ -519,7 +519,7 @@ The base version (without subject) is a more elegant “<code>if</code>/<code>el
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">else</span> -&gt; TODO()
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
-<h2 id="kotlin-101----flow-control-5">Kotlin 101 – Flow control</h2>
+<h2 id="kotlin-101--flow-control-5">Kotlin 101 – Flow control</h2>
 <h3 id="jumping">Jumping</h3>
 <p><strong>Jumping is awful, imperative, and you should not use it</strong>
 <br>
@@ -542,7 +542,7 @@ The base version (without subject) is a more elegant “<code>if</code>/<code>el
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop">Kotlin 102 – OOP</h1>
 <h2 id="classes">Classes</h2>
 <ul>
 <li>Similar to Scala, the keyword <code>class</code> introduces a class definition</li>
@@ -556,7 +556,7 @@ The base version (without subject) is a more elegant “<code>if</code>/<code>el
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>
 </span></span><span style="display:flex;"><span>Foo() <span style="color:#888">// a new Foo is created, no new keyword
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-1">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-1">Kotlin 102 – OOP</h1>
 <h2 id="classes-and-members">Classes and members</h2>
 <p>Kotlin classes have two types of members: <strong>methods</strong> and <strong>properties</strong></p>
 <table>
@@ -601,7 +601,7 @@ The base version (without subject) is a more elegant “<code>if</code>/<code>el
 <li><strong>properties</strong> are instead invoked <em>without parentheses</em></li>
 </ul>
 </section><section>
-<h1 id="kotlin-102----oop-2">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-2">Kotlin 102 – OOP</h1>
 <h2 id="properties-vs-fields">Properties vs. fields</h2>
 <p>Properties and fields are conceptually different</p>
 <ul>
@@ -612,7 +612,7 @@ The base version (without subject) is a more elegant “<code>if</code>/<code>el
 and provide access only via <code>get</code>/<code>set</code> methods: the actual state representation may change with no change to the API.</p>
 <p>In Kotlin, fields are entirely hidden, and cannot be exposed in any way, enforcing the aforementioned convention at the language level.</p>
 </section><section>
-<h1 id="kotlin-102----oop-3">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-3">Kotlin 102 – OOP</h1>
 <h2 id="defining-properties-for-classes">Defining properties for classes</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span> = <span style="color:#00d;font-weight:bold">1</span>
@@ -631,7 +631,7 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 </span></span><span style="display:flex;"><span>foo.stringRepresentation<span class="fragment " style="color: #888;"> // empty string</span>
 </span></span><span style="display:flex;"><span>foo.stringRepresentation = <span style="color:#d20;background-color:#fff0f0">"zed"</span><span class="fragment " style="color: #888;"> // 'custom: zed'</span>
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-4">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-4">Kotlin 102 – OOP</h1>
 <h2 id="backing-fields">Backing fields</h2>
 <p>The keyword <code>field</code> allows access to a backing field of a property
 <br>
@@ -644,7 +644,7 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span></code></pre></div><p>When designing with Kotlin, you must consider methods and properties, and forget about fields.</p>
 </section><section>
-<h1 id="kotlin-102----oop-5">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-5">Kotlin 102 – OOP</h1>
 <h2 id="defining-methods">Defining methods</h2>
 <p>Methods are defined as <code>fun</code>ctions within the scope of a class</p>
 <ul>
@@ -667,7 +667,7 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">baz</span> = foo.plus(bar)
 </span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${baz.real}</span><span style="color:#d20;background-color:#fff0f0">+</span><span style="color:#33b;background-color:#fff0f0">${baz.imaginary}</span><span style="color:#d20;background-color:#fff0f0">i"</span><span class="fragment " style="color: #888;"> // 5.1+2.1i</span>
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-6">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-6">Kotlin 102 – OOP</h1>
 <h2 id="interfaces">Interfaces</h2>
 <ul>
 <li>Similar to Java 8+</li>
@@ -691,7 +691,7 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">B</span> : A <span style="color:#888">// error: an interface cannot inherit from a class
 </span></span></span></code></pre></div><p>So, no mixins</p>
 </section><section>
-<h1 id="kotlin-102----oop-7">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-7">Kotlin 102 – OOP</h1>
 <h2 id="implementing-interfaces">Implementing interfaces</h2>
 <p>Much like Java. Subtyping keyword is <code>:</code>, overrides <em>must</em> be marked with <code>override</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Shape</span> {
@@ -711,7 +711,7 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-8">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-8">Kotlin 102 – OOP</h1>
 <h2 id="superclass-disambiguation">Superclass disambiguation</h2>
 <p>A call to <code>super</code> can be qualified to disambiguate between conflincting interface declarations:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">A</span> {
@@ -725,7 +725,7 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>C().foo()<span class="fragment " style="color: #888;"> // foobar</span>
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-9">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-9">Kotlin 102 – OOP</h1>
 <h2 id="primary-constructors-and-init">Primary constructors and <code>init</code></h2>
 <p>Similar to Scala, but code in the class body is not part of a constructor
 <br>
@@ -741,7 +741,7 @@ Primary constructor code (if any) must be in an <code>init</code> block</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>Foo(<span style="color:#d20;background-color:#fff0f0">"bar"</span>, <span style="color:#00d;font-weight:bold">0</span>)
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-10">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-10">Kotlin 102 – OOP</h1>
 <h2 id="secondary-constructors">Secondary <code>constructor</code>s</h2>
 <p>More constructors can be added to a class, but they:</p>
 <ol>
@@ -757,7 +757,7 @@ Primary constructor code (if any) must be in an <code>init</code> block</p>
 </span></span></span></code></pre></div><p>The primary constructor can be written in a longer form with the <code>constructor</code> keyword as well</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span> <span style="color:#080;font-weight:bold">constructor</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bar</span>: String) <span style="color:#888">// OK
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-11">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-11">Kotlin 102 – OOP</h1>
 <h2 id="nullability-and-lateinit">Nullability and <code>lateinit</code></h2>
 <p>It is possible that some <code>var</code> property needs to get initialized after the object construction:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span>: Father)
@@ -778,7 +778,7 @@ Primary constructor code (if any) must be in an <code>init</code> block</p>
 </span></span><span style="display:flex;"><span>father.son = son
 </span></span><span style="display:flex;"><span>father.son.father <span style="color:#888">// OK!
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-12">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-12">Kotlin 102 – OOP</h1>
 <blockquote>
 <p><strong>Design and document for inheritance or else prohibit it</strong>
 <cite>J. Bloch, Effective Java, Item 17</cite></p></blockquote>
@@ -792,7 +792,7 @@ Primary constructor code (if any) must be in an <code>init</code> block</p>
 <br>
 Differently than Scala, such invocation <em>always requires parentheses</em></p>
 </section><section>
-<h1 id="kotlin-102----oop-13">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-13">Kotlin 102 – OOP</h1>
 <h2 id="abstract-vs-open"><code>abstract</code> vs. <code>open</code></h2>
 <p>The same effect of <code>open</code> can be achieved with <code>abstract</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
@@ -809,7 +809,7 @@ Differently than Scala, such invocation <em>always requires parentheses</em></p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>Open() <span style="color:#888">// OK
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>Abstract() <span style="color:#888">// error: cannot create an instance of an abstract class
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-14">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-14">Kotlin 102 – OOP</h1>
 <h2 id="singleton-objects">Singleton <code>object</code>s</h2>
 <p>Same as Scala, but with explicit <code>companion</code>s
 <br>
@@ -824,7 +824,7 @@ In Scala</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">A</span> <span style="color:#888">// This is an independent object
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>A <span style="color:#888">// refers to the previously defined object
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-15">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-15">Kotlin 102 – OOP</h1>
 <h2 id="information-hiding">Information hiding</h2>
 <p>Simpler than Scala, more coherent than Java</p>
 <ul>
@@ -838,7 +838,7 @@ In Scala</p>
 <li><code>private</code> – visible inside this class and its members</li>
 </ul>
 </section><section>
-<h1 id="kotlin-102----oop-16">Kotlin 102 – OOP</h1>
+<h1 id="kotlin-102--oop-16">Kotlin 102 – OOP</h1>
 <h2 id="visibility-control">Visibility control</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Visibility</span> <span style="color:#080;font-weight:bold">internal</span> <span style="color:#080;font-weight:bold">constructor</span>( <span style="color:#888">// constructor is required to apply visibility restrictionss
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: Int <span style="color:#888">// Same as Scala
@@ -847,7 +847,7 @@ In Scala</p>
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">set</span> <span style="color:#888">// visibility restriction for properties in get/set methods
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-conventions">Kotlin 102 – OOP Conventions</h1>
+<h1 id="kotlin-102--oop-conventions">Kotlin 102 – OOP Conventions</h1>
 <h2 id="equality-hashing-string-version">Equality, hashing, string version</h2>
 <p>Same as Java, but for equality:</p>
 <ul>
@@ -868,7 +868,7 @@ In Scala</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>a.toLong() == b <span style="color:#888">// true
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>a == b.toInt() <span style="color:#888">// true
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-conventions-1">Kotlin 102 – OOP Conventions</h1>
+<h1 id="kotlin-102--oop-conventions-1">Kotlin 102 – OOP Conventions</h1>
 <h2 id="infix-calls"><code>infix</code> calls</h2>
 <p>Kotlin is less permissive than Scala:</p>
 <ul>
@@ -890,7 +890,7 @@ In Scala</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>Infix() with <span style="color:#d20;background-color:#fff0f0">"Foo"</span> + <span style="color:#d20;background-color:#fff0f0">"Bar"</span> <span class="fragment " style="color: #888;"> // in... FooBar ...fix</span>
 </span></span><span style="display:flex;"><span>Infix() with <span style="color:#d20;background-color:#fff0f0">"Foo"</span> + <span style="color:#d20;background-color:#fff0f0">"Bar"</span> + Infix() with <span style="color:#d20;background-color:#fff0f0">"Baz"</span> <span class="fragment " style="color: #888;"> // error: unresolved reference: with</span>
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-conventions-2">Kotlin 102 – OOP Conventions</h1>
+<h1 id="kotlin-102--oop-conventions-2">Kotlin 102 – OOP Conventions</h1>
 <h2 id="operator-creation">Operator creation</h2>
 <p>In Scala, operator names are valid method names, and infix calls are automatic:</p>
 <ul>
@@ -912,7 +912,7 @@ In Scala</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> { <span style="color:#080;font-weight:bold">infix</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">`~+#-`</span>(other: A) = <span style="color:#d20;background-color:#fff0f0">"I'm an arcane operator"</span> }
 </span></span><span style="display:flex;"><span>A() <span style="color:#a61717;background-color:#e3d2d2">`</span>~+<span style="color:#a61717;background-color:#e3d2d2">#</span>-<span style="color:#a61717;background-color:#e3d2d2">`</span> A() <span style="color:#888">// I'm an arcane operator
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-conventions-3">Kotlin 102 – OOP Conventions</h1>
+<h1 id="kotlin-102--oop-conventions-3">Kotlin 102 – OOP Conventions</h1>
 <h2 id="operator-overloading">Operator overloading</h2>
 <p>Kotlin allows for a limited set of operators to be defined/overloaded</p>
 <ul>
@@ -930,7 +930,7 @@ In Scala</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>Complex(<span style="color:#00d;font-weight:bold">1.0</span>, <span style="color:#00d;font-weight:bold">1.0</span>) + <span style="color:#00d;font-weight:bold">3.4</span> <span style="color:#888">// 4.4+1.0i
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-102----oop-conventions-4">Kotlin 102 – OOP Conventions</h1>
+<h1 id="kotlin-102--oop-conventions-4">Kotlin 102 – OOP Conventions</h1>
 <h2 id="unary-operator-overloading-table">Unary Operator overloading table</h2>
 <table>
   <thead>
@@ -987,7 +987,7 @@ In Scala</p>
 <br>
 This will turn useful in future…</p>
 </section><section>
-<h1 id="kotlin-102----oop-conventions-5">Kotlin 102 – OOP Conventions</h1>
+<h1 id="kotlin-102--oop-conventions-5">Kotlin 102 – OOP Conventions</h1>
 <h2 id="binary-operator-overloading-arithmetic">Binary Operator overloading: arithmetic</h2>
 <table>
   <thead>
@@ -1026,7 +1026,7 @@ This will turn useful in future…</p>
   </tbody>
 </table>
 </section><section>
-<h1 id="kotlin-102----oop-conventions-6">Kotlin 102 – OOP Conventions</h1>
+<h1 id="kotlin-102--oop-conventions-6">Kotlin 102 – OOP Conventions</h1>
 <h2 id="binary-operator-overloading-assignment">Binary Operator overloading: assignment</h2>
 <table>
   <thead>
@@ -1073,7 +1073,7 @@ This will turn useful in future…</p>
 </li>
 </ul>
 </section><section>
-<h1 id="kotlin-102----oop-conventions-7">Kotlin 102 – OOP Conventions</h1>
+<h1 id="kotlin-102--oop-conventions-7">Kotlin 102 – OOP Conventions</h1>
 <h2 id="binary-operator-overloading-comparison">Binary Operator overloading: comparison</h2>
 <table>
   <thead>
@@ -1117,7 +1117,7 @@ This will turn useful in future…</p>
   </tbody>
 </table>
 </section><section>
-<h1 id="kotlin-102----oop-conventions-8">Kotlin 102 – OOP Conventions</h1>
+<h1 id="kotlin-102--oop-conventions-8">Kotlin 102 – OOP Conventions</h1>
 <h2 id="binary-operator-overloading-others">Binary Operator overloading: others</h2>
 <table>
   <thead>
@@ -1156,7 +1156,7 @@ This will turn useful in future…</p>
   </tbody>
 </table>
 </section><section>
-<h1 id="kotlin-102----oop-conventions-9">Kotlin 102 – OOP Conventions</h1>
+<h1 id="kotlin-102--oop-conventions-9">Kotlin 102 – OOP Conventions</h1>
 <h2 id="ternary-operator-overloading">Ternary Operator overloading</h2>
 <table>
   <thead>
@@ -1185,7 +1185,7 @@ This will turn useful in future…</p>
   </tbody>
 </table>
 </section><section>
-<h1 id="kotlin-102----oop-conventions-10">Kotlin 102 – OOP Conventions</h1>
+<h1 id="kotlin-102--oop-conventions-10">Kotlin 102 – OOP Conventions</h1>
 <h2 id="n-ary-operator-overloading">n-ary Operator overloading</h2>
 <table>
   <thead>
@@ -1214,7 +1214,7 @@ This will turn useful in future…</p>
   </tbody>
 </table>
 </section><section>
-<h1 id="kotlin-103----generics">Kotlin 103 – Generics</h1>
+<h1 id="kotlin-103--generics">Kotlin 103 – Generics</h1>
 <h2 id="compared-with-java-and-scala">Compared with Java and Scala</h2>
 <p>Kotlin’s type system supports generics</p>
 <ul>
@@ -1233,7 +1233,7 @@ This will turn useful in future…</p>
 <li>Generic type reification via inlining (not found in Java, somewhat obtainable in Scala 3)</li>
 </ul>
 </section><section>
-<h1 id="kotlin-103----generics-1">Kotlin 103 – Generics</h1>
+<h1 id="kotlin-103--generics-1">Kotlin 103 – Generics</h1>
 <h2 id="base-syntax">Base syntax</h2>
 <p>Syntax similar to Java generics</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>&lt;A, B : CharSequence&gt;
@@ -1249,7 +1249,7 @@ This will turn useful in future…</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>&gt; <span style="color:#06b;font-weight:bold">className</span>(<span style="color:#080;font-weight:bold">receiver</span>: T) = <span style="color:#080;font-weight:bold">receiver</span>::<span style="color:#080;font-weight:bold">class</span>.simpleName
 </span></span><span style="display:flex;"><span><span style="color:#888">// error: expression in a class literal has a nullable type 'T', use !! to make the type non-nullable
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-103----generics-2">Kotlin 103 – Generics</h1>
+<h1 id="kotlin-103--generics-2">Kotlin 103 – Generics</h1>
 <h2 id="where"><code>where</code></h2>
 <p>In case multiple bounds are present, the definition can become cumbersome
 <br>
@@ -1270,7 +1270,7 @@ Kotlin provides a <code>where</code> keyword to specify type bounds separately f
 </span></span><span style="display:flex;"><span>          L : ConvexGeometricShape&lt;P, A&gt;,
 </span></span><span style="display:flex;"><span>          N : ConvexGeometricShape&lt;P, A&gt; = TODO()
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-103----generics-3">Kotlin 103 – Generics</h1>
+<h1 id="kotlin-103--generics-3">Kotlin 103 – Generics</h1>
 <h2 id="variance-and-type-projection">Variance and type projection</h2>
 <p>Kotlin supports (co/contro)variance using:</p>
 <ul>
@@ -1290,7 +1290,7 @@ Kotlin provides a <code>where</code> keyword to specify type bounds separately f
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">produce2</span>(): X = TODO()<span class="fragment " style="color: #888;"> // X is declared as 'in' but occurs in 'out' position</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-103----generics-4">Kotlin 103 – Generics</h1>
+<h1 id="kotlin-103--generics-4">Kotlin 103 – Generics</h1>
 <h2 id="type-reification">Type reification</h2>
 <p>Generics at runtime can be dealt with two strategies:</p>
 <ul>
@@ -1312,7 +1312,7 @@ In inlined functions, <em>types can be locally monomorphized</em>!
 <br>
 Local monomorphization is expressed with the <code>reified</code> keyword.</p>
 </section><section>
-<h1 id="kotlin-103----generics-5">Kotlin 103 – Generics</h1>
+<h1 id="kotlin-103--generics-5">Kotlin 103 – Generics</h1>
 <h2 id="type-reification-example">Type reification example</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">inline</span> <span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#080;font-weight:bold">reified</span> <span style="color:#b06;font-weight:bold">T</span>&gt; <span style="color:#06b;font-weight:bold">checkIsType</span>(a: Any): Boolean = a <span style="color:#080;font-weight:bold">is</span> T <span style="color:#888">// instance check on a generic!
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>checkIsType&lt;Long&gt;(<span style="color:#00d;font-weight:bold">1</span>) <span style="color:#888">// false
@@ -1329,7 +1329,7 @@ the function code is <em>copied</em> on call site, and the compiler must know ho
 <li>or a wrapper must be provided</li>
 </ul>
 </section><section>
-<h1 id="kotlin-103----collections">Kotlin 103 – Collections</h1>
+<h1 id="kotlin-103--collections">Kotlin 103 – Collections</h1>
 <p>Similar to Scala, but based (for the JVM target) on the Java implementation</p>
 <ul>
 <li>No <code>toJava()</code>/<code>toScala()</code> equivalent</li>
@@ -1352,7 +1352,7 @@ the function code is <em>copied</em> on call site, and the compiler must know ho
 <li>Creation usually via functions <code>flowOf</code>/<code>listOf</code>/<code>mapOf</code>/<code>sequenceOf</code>/<code>setOf</code></li>
 </ul>
 </section><section>
-<h1 id="kotlin-201----advanced-oop">Kotlin 201 – Advanced OOP</h1>
+<h1 id="kotlin-201--advanced-oop">Kotlin 201 – Advanced OOP</h1>
 <h2 id="data-classes">Data classes</h2>
 <p>Very similar to Scala’s <code>case class</code>es:</p>
 <ul>
@@ -1365,7 +1365,7 @@ the function code is <em>copied</em> on call site, and the compiler must know ho
 <br>
 (<code>Tuple4</code>, <code>Tuple5</code>, and so on are not in standard library as opposed as Scala)</p>
 </section><section>
-<h1 id="kotlin-201----advanced-oop-1">Kotlin 201 – Advanced OOP</h1>
+<h1 id="kotlin-201--advanced-oop-1">Kotlin 201 – Advanced OOP</h1>
 <h2 id="destructuring-declarations">Destructuring declarations</h2>
 <p>If a class has <code>operator</code> functions named called <code>componentX</code> with <code>X</code> an integer from <code>1</code>,
 they can be “destructured”.
@@ -1388,7 +1388,7 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#a61717;background-color:#e3d2d2">(</span><span style="color:#369;font-weight:bold">a</span>, b, c) = A()
 </span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$a$b$c</span><span style="color:#d20;background-color:#fff0f0">"</span>
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-201----advanced-oop-2">Kotlin 201 – Advanced OOP</h1>
+<h1 id="kotlin-201--advanced-oop-2">Kotlin 201 – Advanced OOP</h1>
 <h2 id="sealed-hierarchies">Sealed hierarchies</h2>
 <p>Similar to Scala’s <code>sealed trait</code>s:</p>
 <ul>
@@ -1408,7 +1408,7 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>goGetMeSome(<span style="color:#b06;font-weight:bold">Booze</span>.Rum)
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-201----advanced-oop-3">Kotlin 201 – Advanced OOP</h1>
+<h1 id="kotlin-201--advanced-oop-3">Kotlin 201 – Advanced OOP</h1>
 <h2 id="nested-and-inner-classes">Nested and inner classes</h2>
 <ul>
 <li>Nesting a class inside another does not allow access to outer members
@@ -1433,7 +1433,7 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 </span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">Outer</span>.Inner() <span style="color:#888">// error: constructor of inner class Inner can be called only with receiver of containing class
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>Outer().Inner() <span style="color:#888">// OK
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-201----advanced-oop-4">Kotlin 201 – Advanced OOP</h1>
+<h1 id="kotlin-201--advanced-oop-4">Kotlin 201 – Advanced OOP</h1>
 <h2 id="enum-classes">Enum classes</h2>
 <p>Same as Java, with Kotlin syntax</p>
 <h2 id="object-expressions">Object expressions</h2>
@@ -1447,7 +1447,7 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">second</span>() { }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-201----advanced-oop-5">Kotlin 201 – Advanced OOP</h1>
+<h1 id="kotlin-201--advanced-oop-5">Kotlin 201 – Advanced OOP</h1>
 <h2 id="type-aliases">Type aliases</h2>
 <ul>
 <li>Types can be aliased</li>
@@ -1465,7 +1465,7 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">`</span>f1 <span style="color:#00d;font-weight:bold">2020</span><span style="color:#a61717;background-color:#e3d2d2">`</span> <span style="color:#888">// Map&lt;String, Pair&lt;String, Pair&lt;String, String&gt;&gt;&gt;
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-201----advanced-oop-6">Kotlin 201 – Advanced OOP</h1>
+<h1 id="kotlin-201--advanced-oop-6">Kotlin 201 – Advanced OOP</h1>
 <h2 id="delegation">Delegation</h2>
 <blockquote>
 <p><strong>Favour composition over inheritance</strong><br>
@@ -1486,7 +1486,7 @@ Delegation is often verbose and very mechanic in implementation</p>
 </span></span><span style="display:flex;"><span>    ... <span style="color:#888">// BOOOOOOORING
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-201----advanced-oop-7">Kotlin 201 – Advanced OOP</h1>
+<h1 id="kotlin-201--advanced-oop-7">Kotlin 201 – Advanced OOP</h1>
 <h2 id="delegation-via-by">Delegation via <code>by</code></h2>
 <p>Kotlin supports delegation at the language level</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">surname</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: String)
@@ -1500,7 +1500,7 @@ Delegation is often verbose and very mechanic in implementation</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>exam.clear()
 </span></span><span style="display:flex;"><span>exam <span style="color:#888">// []
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-201----advanced-oop-8">Kotlin 201 – Advanced OOP</h1>
+<h1 id="kotlin-201--advanced-oop-8">Kotlin 201 – Advanced OOP</h1>
 <h2 id="delegated-properties-and-variables">Delegated properties and variables</h2>
 <p>Properties and variables can be delegated as well
 <br>
@@ -1512,7 +1512,7 @@ some delegates are built-in, e.g. <code>lazy</code></p>
 </span></span><span style="display:flex;"><span>println(<span style="color:#d20;background-color:#fff0f0">"Doing stuff"</span>)
 </span></span><span style="display:flex;"><span>println(someLazyString) <span style="color:#888">// "I'm initializing myself" gets printed here
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-201----advanced-oop-9">Kotlin 201 – Advanced OOP</h1>
+<h1 id="kotlin-201--advanced-oop-9">Kotlin 201 – Advanced OOP</h1>
 <h2 id="delegation-via-maps">Delegation via maps</h2>
 <p>Class properties can be stored in an appropriate <code>Map</code>
 <br>
@@ -1525,7 +1525,7 @@ Useful when dealing with dynamic languages or untyped serialization (e.g. JSON o
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>Person(fromJson)
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-201----advanced-oop-10">Kotlin 201 – Advanced OOP</h1>
+<h1 id="kotlin-201--advanced-oop-10">Kotlin 201 – Advanced OOP</h1>
 <h2 id="delegation-via-maps-and-mutability">Delegation via maps and mutability</h2>
 <p>In case of mutable properties, a <code>MutableMap</code> is required as delegate</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">janesJson</span>: MutableMap&lt;String, Any&gt; = mutableMapOf(<span style="color:#d20;background-color:#fff0f0">"name"</span> to <span style="color:#d20;background-color:#fff0f0">"Jane Smith"</span>, <span style="color:#d20;background-color:#fff0f0">"birthYear"</span> to <span style="color:#00d;font-weight:bold">1999</span>)
@@ -1540,7 +1540,7 @@ Useful when dealing with dynamic languages or untyped serialization (e.g. JSON o
 </span></span><span style="display:flex;"><span>jane.toString()
 </span></span><span style="display:flex;"><span>janesJson <span style="color:#888">// Does it change? <span class="fragment " style="color: #888;">{name=Janet Smitherson, birthYear=1999} -- YES! Bidirectional</span>
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-201----advanced-oop-11">Kotlin 201 – Advanced OOP</h1>
+<h1 id="kotlin-201--advanced-oop-11">Kotlin 201 – Advanced OOP</h1>
 <h2 id="custom-delegates">Custom delegates</h2>
 <p>A valid delegate for a <code>val</code> is a <code>class</code> with a method:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">getValue</span>(thisRef: T, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;): R
@@ -1549,7 +1549,7 @@ Useful when dealing with dynamic languages or untyped serialization (e.g. JSON o
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setValue</span>(thisRef: T, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;, <span style="color:#080;font-weight:bold">value</span>: P): R
 </span></span></code></pre></div><p>where T and R are the same as in <code>getValue</code>, and P is a supertype of R</p>
 </section><section>
-<h1 id="kotlin-202----functional-kotlin">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="lambda-expressions">Lambda expressions</h2>
 <p>Kotlin lambda expression’s syntax is inspired by Groovy
 <br>
@@ -1571,7 +1571,7 @@ and is similar to Smalltalk / Ceylon / Xtend / Ruby as well</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>whatsMyReturnType() <span style="color:#888">// Guess <span class="fragment " style="color: #888;">Subtle, but the compiler raises warnings</span>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>whatsMyReturnType()() <span style="color:#888">// Guess <span class="fragment " style="color: #888;">A string</span>
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-1">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-1">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="function-type-literals">Function type literals</h2>
 <p>Just as Scala, Kotlin supports function type literals
 <br>
@@ -1587,7 +1587,7 @@ No need for verbose interfaces such as <code>Function&lt;T, R&gt;</code>, <code>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> &lt;<span style="color:#b06;font-weight:bold">T</span>, <span style="color:#b06;font-weight:bold">I</span>, <span style="color:#b06;font-weight:bold">R</span>&gt; <span style="color:#06b;font-weight:bold">compose</span>(f: (I) -&gt; R, g: (T) -&gt; I): (T) -&gt; R = { f(g(<span style="color:#080;font-weight:bold">it</span>)) }
 </span></span><span style="display:flex;"><span>compose({v: Int -&gt; v * v}, {v: Double -&gt; v.toInt()})(<span style="color:#00d;font-weight:bold">3.9</span>) <span style="color:#888">// 9
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-2">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-2">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="function-references">Function references</h2>
 <p>Functions can be referred by using <code>::</code>
 <br>
@@ -1599,7 +1599,7 @@ the right operand is the function name</p>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">floor</span>(v: Double) = v.toInt()
 </span></span><span style="display:flex;"><span>compose(::square, ::floor)(<span style="color:#00d;font-weight:bold">3.9</span>)
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-3">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-3">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="the-trailing-lambda-convention">The <strong>trailing lambda</strong> convention</h2>
 <p>A simple special rule that enables very elegant syntactic forms:
 <br>
@@ -1620,7 +1620,7 @@ the right operand is the function name</p>
 </span></span><span style="display:flex;"><span>delayed(<span style="color:#00d;font-weight:bold">300</span>) { println(<span style="color:#d20;background-color:#fff0f0">"I wait less"</span>) }
 </span></span><span style="display:flex;"><span>println(<span style="color:#d20;background-color:#fff0f0">"Finished"</span>)
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-4">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-4">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="closures">Closures</h2>
 <p>Closures are supported
 <br>
@@ -1634,7 +1634,7 @@ They are allowed on <code>var</code>s as well as on <code>val</code>s</p>
 </span></span><span style="display:flex;"><span>sum
 </span></span><span style="display:flex;"><span>sum == (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">100</span>).sum()
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-5">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-5">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="flow-control-with-lambdas">Flow control with lambdas</h2>
 <p>Kotlin rule: <code>return</code> returns from the closest <em>named</em> <code>fun</code>ction</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">breakingFlow</span>(): List&lt;Int&gt; = (<span style="color:#00d;font-weight:bold">0.</span>.<span style="color:#00d;font-weight:bold">10</span>).toList().map {
@@ -1653,7 +1653,7 @@ They are allowed on <code>var</code>s as well as on <code>val</code>s</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>breakingFlow()
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-6">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-6">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="destructuring-lambda-parameters">Destructuring lambda parameters</h2>
 <p>Lambda parameters can be destructured</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>mapOf(<span style="color:#00d;font-weight:bold">46</span> to <span style="color:#d20;background-color:#fff0f0">"Rossi"</span>, <span style="color:#00d;font-weight:bold">4</span> to <span style="color:#d20;background-color:#fff0f0">"Dovizioso"</span>).map { (number, rider) -&gt;
@@ -1661,7 +1661,7 @@ They are allowed on <code>var</code>s as well as on <code>val</code>s</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$rider</span><span style="color:#d20;background-color:#fff0f0"> has number </span><span style="color:#33b;background-color:#fff0f0">$number</span><span style="color:#d20;background-color:#fff0f0">"</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-7">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-7">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="extension-functions">Extension functions</h2>
 <p>Kotlin allows to extend any type capabilities from anywhere
 <br>
@@ -1679,7 +1679,7 @@ Namely, <em>the receiver type is determined at compile time</em>.</p>
 <p><strong>IMPORTANT/2</strong>: Extensions cannot shadow members,
 <em>members always take priority</em></p>
 </section><section>
-<h1 id="kotlin-202----functional-kotlin-8">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-8">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="extension-properties">Extension properties</h2>
 <p>Same as functions, but for properties</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">String</span>.containsBatman <span style="color:#080;font-weight:bold">get</span>(): Boolean = <span style="color:#d20;background-color:#fff0f0">".*b.*a.*t.*m.*a.*n.*"</span>.toRegex().matches(<span style="color:#080;font-weight:bold">this</span>)
@@ -1691,7 +1691,7 @@ Namely, <em>the receiver type is determined at compile time</em>.</p>
 their behaviour is entirely specified by <code>get</code> and <code>set</code> accessors.</li>
 </ol>
 </section><section>
-<h1 id="kotlin-202----functional-kotlin-9">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-9">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="extension-function-type-literals">Extension function type literals</h2>
 <p>Extensions functions are… functions, like any other
 <br>
@@ -1714,7 +1714,7 @@ as such, their type can be legally expressed by:</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>…sounds easy to write DSLs…</p>
 </section><section>
-<h1 id="kotlin-202----functional-kotlin-10">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-10">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="extension-members-and-implicit-receivers">Extension members and implicit receivers</h2>
 <p>When extensions are defined as members, there are multiple <em>implicit recevers</em>:</p>
 <ol>
@@ -1731,7 +1731,7 @@ as such, their type can be legally expressed by:</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.withBatman() = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$this</span><span style="color:#d20;background-color:#fff0f0"> </span><span style="color:#33b;background-color:#fff0f0">${ this@Batman.name }</span><span style="color:#d20;background-color:#fff0f0">!"</span> <span style="color:#888">// Qualified this access to the dispatch receiver
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-11">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-11">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="dsl-scope-control-via-extension-members">DSL scope control via extension members</h2>
 <p>Extension members are visible only when the dispatch receiver is the type where the extensions were defined
 <br>
@@ -1750,7 +1750,7 @@ This enables a powerful form of <em>scope control</em></p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#b06;font-weight:bold">String</span>.intro.withBatman() <span style="color:#888">// OK!
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-12">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-12">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="scope-functions">Scope functions</h2>
 <p>Kotlin provides a number of built-in functions that run a lambda expression in a custom scope:</p>
 <ul>
@@ -1759,7 +1759,7 @@ This enables a powerful form of <em>scope control</em></p>
 <li>by changing the return type</li>
 </ul>
 </section><section>
-<h1 id="kotlin-202----functional-kotlin-13">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-13">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="scope-functions-1">Scope functions</h2>
 <h4 id="let--tt---r---r"><code>let</code> : <code>T.((T) -&gt; R) -&gt; R</code></h4>
 <p>Can be invoked on an object, passing a lambda expression.
@@ -1770,7 +1770,7 @@ the return type is the result of the function</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">1.l</span>et { <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${it + 1}</span><span style="color:#d20;background-color:#fff0f0">1"</span> } <span style="color:#888">// 21: String
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">1.l</span>et { one -&gt; <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${one + 1}</span><span style="color:#d20;background-color:#fff0f0">1"</span> } <span style="color:#888">// Same as above: it's a normal lambda
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-14">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-14">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="scope-functions-2">Scope functions</h2>
 <h4 id="run--tt---r---r"><code>run</code> : <code>T.(T.() -&gt; R) -&gt; R</code></h4>
 <p>Can be invoked on an object, passing a lambda expression.
@@ -1780,7 +1780,7 @@ The method receiver is bound to the implicit receiver <code>this</code>
 the return type is the result of the function</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">1.</span>run { <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${this + 1}</span><span style="color:#d20;background-color:#fff0f0">1"</span> } <span style="color:#888">// 21: String
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-15">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-15">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="scope-functions-3">Scope functions</h2>
 <h4 id="with--t---r---r"><code>with</code> : <code>(T.() -&gt; R) -&gt; R</code></h4>
 <p>Non-extension version of <code>run</code>,
@@ -1791,7 +1791,7 @@ The method receiver is bound to the implicit receiver <code>this</code>
 the return type is the result of the function</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>with(<span style="color:#00d;font-weight:bold">1</span>) { <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${this + 1}</span><span style="color:#d20;background-color:#fff0f0">1"</span> } <span style="color:#888">// 21: String
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-16">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-16">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="scope-functions-4">Scope functions</h2>
 <h4 id="apply--tt---unit---t"><code>apply</code> : <code>T.(T.() -&gt; Unit) -&gt; T</code></h4>
 <p>Similar to <code>run</code>,
@@ -1804,7 +1804,7 @@ and returning the original object</p>
 </span></span><span style="display:flex;"><span>    addAll((<span style="color:#00d;font-weight:bold">1.</span>.<span style="color:#00d;font-weight:bold">10</span>).toList())
 </span></span><span style="display:flex;"><span>} <span style="color:#888">// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-202----functional-kotlin-17">Kotlin 202 – Functional Kotlin</h1>
+<h1 id="kotlin-202--functional-kotlin-17">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="scope-functions-5">Scope functions</h2>
 <h4 id="also--tt---unit---t"><code>also</code> : <code>T.((T) -&gt; Unit) -&gt; T</code></h4>
 <p>Similar to <code>apply</code>, but does not change the context,
@@ -1829,9 +1829,9 @@ Used to cause side effects and returning the original object</p>
 </section><section>
 <h1 id="kotlin-1">Kotlin</h1>
 <h2 id="for-scala-developers-1"><em>(for Scala developers)</em></h2>
-<h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
+<h2 id="hahahugoshortcode2s0hbhb">Software Process Engineering</h2>
 <br>
-<h3 id="danilo-pianini-----danilopianiniuniboitmailtodanilopianiniuniboit"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
+<h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
 <p>Compiled on: 2025-02-17
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>

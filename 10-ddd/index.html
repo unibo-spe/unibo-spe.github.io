@@ -36,9 +36,9 @@
 }
 </style>
 <h1 id="domain-driven-design">Domain Driven Design</h1>
-<h2 id="hahahugoshortcode11s0hbhb">Software Process Engineering</h2>
+<h2 id="hahahugoshortcode12s0hbhb">Software Process Engineering</h2>
 <br>
-<h3 id="giovanni-ciatto-----giovanniciattouniboitmailtogiovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
+<h3 id="giovanni-ciatto"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
 <p>Compiled on: 2025-02-17
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
@@ -211,14 +211,14 @@
 </li>
 </ul>
 </section><section>
-<h2 id="the-_domain_">The <em>Domain</em></h2>
+<h2 id="the-domain">The <em>Domain</em></h2>
 <blockquote>
 <p>A well established sphere of knowledge, influence or activity</p></blockquote>
 <ul>
 <li>e.g. some university (department, faculty, HR, etc.), linear algebra, etc.</li>
 </ul>
 </section><section>
-<h2 id="_contexts_"><em>Contexts</em></h2>
+<h2 id="contexts"><em>Contexts</em></h2>
 <blockquote>
 <p>A <em>portion</em> of the domain with a clear <em>boundary</em>:</p>
 <ul>
@@ -230,17 +230,17 @@
 <li>e.g. departments, divisions, complex numbers, etc.</li>
 </ul>
 </section><section>
-<h2 id="domain-_vs_-context">Domain <em>vs.</em> Context</h2>
+<h2 id="domain-vs-context">Domain <em>vs.</em> Context</h2>
 <p><img src="./domain.png" alt="Domain and context"></p>
 </section><section>
-<h2 id="the-domain-_model_">The domain <em>Model</em></h2>
+<h2 id="the-domain-model">The domain <em>Model</em></h2>
 <blockquote>
 <p>Set of <strong>software</strong> abstractions mapping relevant <em>concepts</em> of the domain</p></blockquote>
 <ul>
 <li>e.g. Java/Kotlin/Scala projects, packages, interfaces, classes, records, methods, etc.</li>
 </ul>
 </section><section>
-<h2 id="the-_ubiquitous-language_">The <em>Ubiquitous Language</em></h2>
+<h2 id="the-ubiquitous-language">The <em>Ubiquitous Language</em></h2>
 <blockquote>
 <ul>
 <li>A <em>language</em> structured around the domain model
@@ -980,7 +980,7 @@ note right of OrderManagementService: service</p>
 <h1 id="ddd-patterns">DDD Patterns</h1>
 </section><section>
 <h2 id="towards-ddd-patterns">Towards DDD patterns</h2>
-<h3 id="further-notions-involving-__contexts__">Further notions involving <strong>contexts</strong></h3>
+<h3 id="further-notions-involving-contexts">Further notions involving <strong>contexts</strong></h3>
 <ul>
 <li>
 <p><strong>Bounded Context</strong>: enforce a model’s <em>boundaries</em> &amp; make them explicit</p>
@@ -1145,7 +1145,7 @@ This is helpful from several perspectives:</p>
 </li>
 </ul>
 </section><section>
-<h2 id="customer--supplier">Customer–Supplier</h2>
+<h2 id="customersupplier">Customer–Supplier</h2>
 <p><img src="./customer-supplier.jpg" alt="Customer–supplier concept"></p>
 <ul>
 <li>
@@ -1397,7 +1397,7 @@ product -u-|&gt; mq
 <li>Reconstructing the (current) state costs <em>time</em></li>
 </ul>
 </section><section>
-<h2 id="command--query-responsibility-segregation-__cqrs__">Command–Query Responsibility Segregation (<strong>CQRS</strong>)</h2>
+<h2 id="commandquery-responsibility-segregation-cqrs">Command–Query Responsibility Segregation (<strong>CQRS</strong>)</h2>
 <ul>
 <li>
 <p>Advanced pattern for building <em>highly-scalable</em> applications</p>
@@ -1470,7 +1470,7 @@ product -u-|&gt; mq
 </li>
 </ol>
 </section><section>
-<h2 id="cqrs----when-are-commands-reified">CQRS – When are commands reified?</h2>
+<h2 id="cqrs--when-are-commands-reified">CQRS – When are commands reified?</h2>
 <blockquote>
 <p><strong>Reification</strong>: is the process of computing the state of the system at time $t$ by applying of commands recorded up to time $t$
 <br></p></blockquote>
@@ -1500,7 +1500,7 @@ product -u-|&gt; mq
 
 
 <section data-shortcode-section="">
-<h2 id="exercise-1----simple-store-pt-1">Exercise 1 – Simple Store (pt. 1)</h2>
+<h2 id="exercise-1--simple-store-pt-1">Exercise 1 – Simple Store (pt. 1)</h2>
 <p>A simple domain keeping track of: <em>customers</em>, <em>products</em>, and <em>orders</em>.</p>
 <h3 id="customers">Customers</h3>
 <ul>
@@ -1536,7 +1536,7 @@ product -u-|&gt; mq
 </li>
 </ul>
 </section><section>
-<h2 id="exercise-1----simple-store-pt-2">Exercise 1 – Simple Store (pt. 2)</h2>
+<h2 id="exercise-1--simple-store-pt-2">Exercise 1 – Simple Store (pt. 2)</h2>
 <h3 id="money-and-exchange-rates">Money and exchange rates</h3>
 <ul>
 <li>
@@ -1565,7 +1565,7 @@ product -u-|&gt; mq
 </li>
 </ul>
 </section><section>
-<h2 id="exercise-1----simple-store-pt-3">Exercise 1 – Simple Store (pt. 3)</h2>
+<h2 id="exercise-1--simple-store-pt-3">Exercise 1 – Simple Store (pt. 3)</h2>
 <h3 id="orders">Orders</h3>
 <ul>
 <li>
@@ -1594,7 +1594,7 @@ product -u-|&gt; mq
 </li>
 </ul>
 </section><section>
-<h2 id="exercise-1----simple-store-pt-4">Exercise 1 – Simple Store (pt. 4)</h2>
+<h2 id="exercise-1--simple-store-pt-4">Exercise 1 – Simple Store (pt. 4)</h2>
 <h3 id="to-do">TO-DO</h3>
 <ol>
 <li><strong>Read</strong> informal domain description</li>
@@ -1625,7 +1625,7 @@ product -u-|&gt; mq
 
 
 <section data-shortcode-section="">
-<h2 id="exercise-2----trivial-cqrs-pt-1">Exercise 2 – Trivial CQRS (pt. 1)</h2>
+<h2 id="exercise-2--trivial-cqrs-pt-1">Exercise 2 – Trivial CQRS (pt. 1)</h2>
 <ul>
 <li>Very simple repository type: the <code>Counter</code></li>
 <li>It contains 1 <code>long</code> number, initially set to <code>0</code></li>
@@ -1634,7 +1634,7 @@ product -u-|&gt; mq
 <li>However, the repository only memorises the <em>current</em> value of the counter</li>
 </ul>
 </section><section>
-<h2 id="exercise-2----trivial-cqrs-pt-2">Exercise 2 – Trivial CQRS (pt. 2)</h2>
+<h2 id="exercise-2--trivial-cqrs-pt-2">Exercise 2 – Trivial CQRS (pt. 2)</h2>
 <h3 id="to-do">TO-DO</h3>
 <ol>
 <li>Switch the design towards <strong>event sourcing</strong>, by memorising variations instead of snapshots.</li>
@@ -1656,7 +1656,7 @@ product -u-|&gt; mq
 
 
 <section data-shortcode-section="">
-<h2 id="exercise-3----anti-corruption-layer-pt-1">Exercise 3 – Anti corruption layer (pt. 1)</h2>
+<h2 id="exercise-3--anti-corruption-layer-pt-1">Exercise 3 – Anti corruption layer (pt. 1)</h2>
 <ul>
 <li>
 <p>Very simple domain: <code>Table</code>s</p>
@@ -1682,7 +1682,7 @@ product -u-|&gt; mq
 </li>
 </ul>
 </section><section>
-<h2 id="exercise-3----anti-corruption-layer-pt-2">Exercise 3 – Anti corruption layer (pt. 2)</h2>
+<h2 id="exercise-3--anti-corruption-layer-pt-2">Exercise 3 – Anti corruption layer (pt. 2)</h2>
 <h3 id="to-do">TO-DO</h3>
 <ol>
 <li>Extend the model of our domain with new <strong>interfaces</strong> supporting <strong>CSV parsing / writing functionalities</strong></li>
