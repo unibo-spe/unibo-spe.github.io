@@ -3897,23 +3897,23 @@ AbstractParser &lt;|-- StringParser
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#555">@jpype.JImplementationFor</span>(<span style="color:#d20;background-color:#fff0f0">"java.lang.Iterable"</span>)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">_JIterable</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__jclass_init__</span>(self):
-</span></span><span style="display:flex;"><span>        Iterable.register(self) <span style="color:#888"># makes this class a subtype of Iterable, to speed up isinstance checks </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__jclass_init__</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        Iterable.register(<span style="color:#038">self</span>) <span style="color:#888"># makes this class a subtype of Iterable, to speed up isinstance checks </span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> __iter__(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.iterator()
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__iter__</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.iterator()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#555">@jpype.JImplementationFor</span>(<span style="color:#d20;background-color:#fff0f0">"java.util.Collection"</span>)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">_JCollection</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> __len__(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.size()      <span style="color:#888"># supports "len(coll)" syntax</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__len__</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.size()      <span style="color:#888"># supports "len(coll)" syntax</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> __delitem__(self, i):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.remove(i)   <span style="color:#888"># supports "del coll[i]" syntax</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__delitem__</span>(<span style="color:#038">self</span>, i):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.remove(i)   <span style="color:#888"># supports "del coll[i]" syntax</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> __contains__(self, i):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.contains(i) <span style="color:#888"># supports "i in coll" syntax</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__contains__</span>(<span style="color:#038">self</span>, i):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.contains(i) <span style="color:#888"># supports "i in coll" syntax</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#888"># __iter__ is inherited from _JIterable</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#888"># because in Java: Collection extends Iterable</span>
@@ -3921,14 +3921,14 @@ AbstractParser &lt;|-- StringParser
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#555">@jpype.JImplementationFor</span>(<span style="color:#d20;background-color:#fff0f0">'java.util.List'</span>)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">_JList</span>(<span style="color:#038">object</span>):
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__jclass_init__</span>(self):
-</span></span><span style="display:flex;"><span>        Sequence.register(self) <span style="color:#888"># makes this class a subtype of Sequence, to speed up isinstance checks</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__jclass_init__</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        Sequence.register(<span style="color:#038">self</span>) <span style="color:#888"># makes this class a subtype of Sequence, to speed up isinstance checks</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> __getitem__(self, ndx):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.get(ndx)   <span style="color:#888"># supports "list[i]" syntax</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__getitem__</span>(<span style="color:#038">self</span>, ndx):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.get(ndx)   <span style="color:#888"># supports "list[i]" syntax</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">append</span>(self, obj):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.add(obj)   <span style="color:#888"># supports "list.append(obj)" syntax</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">append</span>(<span style="color:#038">self</span>, obj):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.add(obj)   <span style="color:#888"># supports "list.append(obj)" syntax</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#888"># __len__, __delitem__, __contains__, __iter__ are inherited from _JCollection</span>
 </span></span></code></pre></div><p>this is taken directly from <a href="https://github.com/jpype-project/jpype/blob/7363ce8a357d0b64f537c31849bd4e43732d9cdf/jpype/_jcollection.py">JPype’s codebase</a></p>
@@ -4111,20 +4111,20 @@ AbstractParser &lt;|-- StringParser
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#555">@jpype.JImplementationFor</span>(<span style="color:#d20;background-color:#fff0f0">"io.github.gciatto.csv.Row"</span>)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">_Row</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> __len__(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.getSize()
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__len__</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.getSize()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> __getitem__(self, item):
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__getitem__</span>(<span style="color:#038">self</span>, item):
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> <span style="color:#038">isinstance</span>(item, <span style="color:#038">int</span>) <span style="color:#080">and</span> item &lt; <span style="color:#00d;font-weight:bold">0</span>:
-</span></span><span style="display:flex;"><span>            item = <span style="color:#038">len</span>(self) + item
+</span></span><span style="display:flex;"><span>            item = <span style="color:#038">len</span>(<span style="color:#038">self</span>) + item
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">try</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">return</span> self.get(item)
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.get(item)
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">except</span> _java.IndexOutOfBoundsException <span style="color:#080;font-weight:bold">as</span> e:
 </span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">raise</span> <span style="color:#b06;font-weight:bold">IndexError</span>(<span style="color:#d20;background-color:#fff0f0">f</span><span style="color:#d20;background-color:#fff0f0">"index </span><span style="color:#33b;background-color:#fff0f0">{</span>item<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0"> out of range"</span>) <span style="color:#080;font-weight:bold">from</span> <span style="color:#b06;font-weight:bold">e</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">size</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">len</span>(self)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">size</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">len</span>(<span style="color:#038">self</span>)
 </span></span></code></pre></div><ul>
 <li>supporting the syntax <code>len(row)</code> instead of <code>row.getSize()</code></li>
 <li>supporting the syntax <code>row[i]</code> instead of <code>row.get(i)</code></li>
@@ -4142,14 +4142,14 @@ AbstractParser &lt;|-- StringParser
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#555">@jpype.JImplementationFor</span>(<span style="color:#d20;background-color:#fff0f0">"io.github.gciatto.csv.Header"</span>)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">_Header</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">columns</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> [<span style="color:#038">str</span>(c) <span style="color:#080;font-weight:bold">for</span> c <span style="color:#080">in</span> self.getColumns()]
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">columns</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> [<span style="color:#038">str</span>(c) <span style="color:#080;font-weight:bold">for</span> c <span style="color:#080">in</span> <span style="color:#038">self</span>.getColumns()]
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> __contains__(self, item):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.contains(item)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__contains__</span>(<span style="color:#038">self</span>, item):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.contains(item)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">index_of</span>(self, column):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.indexOf(column)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">index_of</span>(<span style="color:#038">self</span>, column):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.indexOf(column)
 </span></span></code></pre></div><ul>
 <li>supporting the syntax <code>header.columns</code> instead of <code>header.getColumns()</code></li>
 <li>supporting the syntax <code>column in header</code> instead of <code>header.contains(column)</code></li>
@@ -4165,15 +4165,15 @@ AbstractParser &lt;|-- StringParser
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#555">@jpype.JImplementationFor</span>(<span style="color:#d20;background-color:#fff0f0">"io.github.gciatto.csv.Record"</span>)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">_Record</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">header</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.getHeader()
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">header</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.getHeader()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">values</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> [<span style="color:#038">str</span>(v) <span style="color:#080;font-weight:bold">for</span> v <span style="color:#080">in</span> self.getValues()]
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">values</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> [<span style="color:#038">str</span>(v) <span style="color:#080;font-weight:bold">for</span> v <span style="color:#080">in</span> <span style="color:#038">self</span>.getValues()]
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> __contains__(self, item):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.contains(item)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__contains__</span>(<span style="color:#038">self</span>, item):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.contains(item)
 </span></span></code></pre></div><ul>
 <li>supporting the syntax <code>record.header</code> instead of <code>record.getHeader()</code></li>
 <li>supporting the syntax <code>record.values</code> instead of <code>record.getValues()</code></li>
@@ -4189,27 +4189,27 @@ AbstractParser &lt;|-- StringParser
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#555">@jpype.JImplementationFor</span>(<span style="color:#d20;background-color:#fff0f0">"io.github.gciatto.csv.Table"</span>)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">_Table</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">header</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.getHeader()
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">header</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.getHeader()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> __len__(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.getSize()
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__len__</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.getSize()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> __getitem__(self, item):
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__getitem__</span>(<span style="color:#038">self</span>, item):
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> <span style="color:#038">isinstance</span>(item, <span style="color:#038">int</span>) <span style="color:#080">and</span> item &lt; <span style="color:#00d;font-weight:bold">0</span>:
-</span></span><span style="display:flex;"><span>            item = <span style="color:#038">len</span>(self) + item
+</span></span><span style="display:flex;"><span>            item = <span style="color:#038">len</span>(<span style="color:#038">self</span>) + item
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">try</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">return</span> self.get(item)
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.get(item)
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">except</span> _java.IndexOutOfBoundsException <span style="color:#080;font-weight:bold">as</span> e:
 </span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">raise</span> <span style="color:#b06;font-weight:bold">IndexError</span>(<span style="color:#d20;background-color:#fff0f0">f</span><span style="color:#d20;background-color:#fff0f0">"index </span><span style="color:#33b;background-color:#fff0f0">{</span>item<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0"> out of range"</span>) <span style="color:#080;font-weight:bold">from</span> <span style="color:#b06;font-weight:bold">e</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">records</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> self.getRecords()
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">records</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">self</span>.getRecords()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@property</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">size</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">len</span>(self)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">size</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">len</span>(<span style="color:#038">self</span>)
 </span></span></code></pre></div><ul>
 <li>supporting the syntax <code>table.header</code> instead of <code>table.getHeader()</code></li>
 <li>supporting the syntax <code>len(table)</code> instead of <code>table.getSize()</code></li>
@@ -4275,7 +4275,7 @@ AbstractParser &lt;|-- StringParser
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">from</span> <span style="color:#b06;font-weight:bold">pathlib</span> <span style="color:#080;font-weight:bold">import</span> Path
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888"># the directory where csv.jar is placed</span>
-</span></span><span style="display:flex;"><span>CLASSPATH = Path(__file__).parent
+</span></span><span style="display:flex;"><span>CLASSPATH = Path(<span style="color:#369">__file__</span>).parent
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888"># the list of all .jar files in CLASSPATH</span>
 </span></span><span style="display:flex;"><span>JARS = [<span style="color:#038">str</span>(j.resolve()) <span style="color:#080;font-weight:bold">for</span> j <span style="color:#080">in</span> CLASSPATH.glob(<span style="color:#d20;background-color:#fff0f0">'*.jar'</span>)]
