@@ -28,7 +28,7 @@
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2025-05-07
+<p>Compiled on: 2025-05-08
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -1764,7 +1764,7 @@ This enables a powerful form of <em>scope control</em></p>
 <h4 id="let--tt---r---r"><code>let</code> : <code>T.((T) -&gt; R) -&gt; R</code></h4>
 <p>Can be invoked on an object, passing a lambda expression.
 <br>
-The method receiver is bound to the lambda parameter
+The lambda parameter is bound to the <code>let</code> receiver
 <br>
 the return type is the result of the function</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">1.l</span>et { <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${it + 1}</span><span style="color:#d20;background-color:#fff0f0">1"</span> } <span style="color:#888">// 21: String
@@ -1782,7 +1782,7 @@ the return type is the result of the function</p>
 </span></span></span></code></pre></div></section><section>
 <h1 id="kotlin-202--functional-kotlin-15">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="scope-functions-3">Scope functions</h2>
-<h4 id="with--t---r---r"><code>with</code> : <code>(T.() -&gt; R) -&gt; R</code></h4>
+<h4 id="with--t-t---r---r"><code>with</code> : <code>(T, T.() -&gt; R) -&gt; R</code></h4>
 <p>Non-extension version of <code>run</code>,
 the context object is passed as first parameter
 <br>
@@ -1833,7 +1833,7 @@ Used to cause side effects and returning the original object</p>
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2025-05-07
+<p>Compiled on: 2025-05-08
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section>
