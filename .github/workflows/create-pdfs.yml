@@ -35,7 +35,7 @@ jobs:
         id: version-compute
         run: echo "version=${{ steps.commit-counter.outputs.commits }}.$(date +"%Y.%-m%d")" >> "$GITHUB_OUTPUT"
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.243.0
+        uses: ruby/setup-ruby@v1.244.0
         with:
           working-directory: shared-slides
       - name: Setup Chrome
