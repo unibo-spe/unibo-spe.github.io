@@ -140,9 +140,11 @@
 </ul>
 </li>
 <li>Deploy automation via <em>containerization</em> and/or <em>orchestration</em></li>
-<li>Technically involve <em>2+ platforms</em>
+<li>Technically involve <em>2+ <strong>target</strong> platforms</em>
 <ul>
 <li>e.g., JVM, NodeJS, Python, C, C++, Rust, Go, etc.</li>
+<li>two targets are different if they run on a different runtime (e.g., native + JVM)</li>
+<li>two targets are <em>likely</em> different if they use different build systems (but there are exceptions: Scala/sbt + Java/Gradle are not considered different targets)</li>
 </ul>
 </li>
 </ul>
