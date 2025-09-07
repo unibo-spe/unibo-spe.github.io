@@ -1338,7 +1338,7 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 <li>
 <p>let’s restart a Docker-in-Docker daemon, using the <code>docker</code> hostname:</p>
 <ul>
-<li><code>docker run --privileged -d --rm --network my-network --name dind --hostname docker docker:dind dockerd --host=tcp://0.0.0.0:2375</code></li>
+<li><code>docker run --privileged -d --rm --network my-network --name dind --hostname docker:dind dockerd --host=tcp://0.0.0.0:2375</code></li>
 <li>in general, it would be better to both <code>--name X</code> and <code>--hostname X</code>
 <ul>
 <li>same name and hostname to avoid confusion!</li>
@@ -2513,7 +2513,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <p>let’s use <code>software-process-engineering</code> as password for the <code>admin</code> user</p>
 </section><section>
 <h2 id="portainers-home-page">Portainer’s Home Page</h2>
-<p>Upon login, one is presented with the <em>home page</em>, asking you to select one <strong>enviroment</strong></p>
+<p>Upon login, one is presented with the <em>home page</em>, asking you to select one <strong>environment</strong></p>
 <ul>
 <li><strong>environments</strong> are clusters (one Portainer instance may manage multiple clusters)</li>
 </ul>
