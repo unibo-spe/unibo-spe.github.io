@@ -28,18 +28,20 @@
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2025-09-10
+<p>Compiled on: 2025-09-15
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
 <h1 id="why-kotlin">Why Kotlin</h1>
 <p>JetBrains-made modern programming language</p>
 <ul>
-<li>Focused on “practical use” (whatever that means)</li>
+<li>Focused on “practical use”</li>
 </ul>
-<p>Gaining momentum since Google adopted is as <em>official Android language</em>
-<br>
-(along with Java and C++)</p>
+<p>Gaining momentum since Google adopted is as <em>official Android language</em></p>
+<ul>
+<li>initially along with Java and C++</li>
+<li>now Android is Kotlin-first</li>
+</ul>
 <p>Clearly inspired by a mixture of Java, C#, Scala, and Groovy</p>
 <p><strong>In this course</strong> – we’ll need it for Gradle and <em>internal</em> domain specific languages</p>
 </section><section>
@@ -61,10 +63,9 @@
 <li>Born in industry, for the industry</li>
 <li>Many more “core” constructs and keywords than Scala</li>
 <li>Focused on getting productive quickly and reducing programming errors</li>
-<li>Focus on multi-target (can compile towards JVM, JavaScript, and native)
+<li>Focus on multi-target (can compile towards JVM, JavaScript, WASM and native, including iOS)
 <ul>
-<li>Scala can as well by the way</li>
-<li>Kotlin puts more care into bidirectional compatibility</li>
+<li>With care to bidirectional compatibility</li>
 </ul>
 </li>
 </ul>
@@ -173,7 +174,7 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-101-7">Kotlin 101</h1>
 <h3 id="elvis-operator-">Elvis operator <code>?:</code></h3>
-<p>Yeah it’s actually named after Elvis Presley due to his haircut 😉
+<p>Named after Elvis Presley’s haircut 🕺
 <br></p>
 <ul>
 <li>Returns the left operand if it’s not <code>null</code>, otherwise the right one</li>
@@ -358,7 +359,7 @@ Consider the following Scala code:</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#00d;font-weight:bold">0xFFFF</span>_FFFF_FFFFu <span style="color:#888">// ULong
 </span></span></span></code></pre></div></section><section>
 <h1 id="kotlin-101-17">Kotlin 101</h1>
-<h2 id="strings-and-templating">Strings and templating</h2>
+<h2 id="strings-and-string-templates">Strings and string templates</h2>
 <p>Spiced up version of Java strings, Groovy-style templating:</p>
 <ul>
 <li><code>$</code> begins a template expression</li>
@@ -377,11 +378,7 @@ Consider the following Scala code:</p>
 <li><code>\</code> is a normal character</li>
 <li>newlines are intended as part of the string</li>
 <li>Very handy for writing regular expressions</li>
-<li><code>$</code>-templating still works
-<ul>
-<li>writing a dollar symbols requires some tricks</li>
-</ul>
-</li>
+<li><code>$</code>-templating still works</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">dante</span> = <span style="color:#d20;background-color:#fff0f0">"""
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    Tanto gentile e tanto onesta pare
@@ -389,10 +386,43 @@ Consider the following Scala code:</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    ch'ogne lingua devèn, tremando, muta
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    e li occhi non l'ardiscon di guardare.
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    """</span>.trimIndent() <span style="color:#888">// Indentation can be trimmed
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">finalWordsEndingInA</span> = <span style="color:#d20;background-color:#fff0f0">"""\W*(\w*a)\W*</span><span style="color:#33b;background-color:#fff0f0">${'$'}</span><span style="color:#d20;background-color:#fff0f0">"""</span>.toRegex(<span style="color:#b06;font-weight:bold">RegexOption</span>.MULTILINE) <span style="color:#888">// '$' escaped
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">finalWordsEndingInA</span> = <span style="color:#d20;background-color:#fff0f0">"""\W*(\w*a)\W*$"""</span>.toRegex(<span style="color:#b06;font-weight:bold">RegexOption</span>.MULTILINE) <span style="color:#888">// '$' escaped
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>finalWordsEndingInA.findAll(dante).map { <span style="color:#080;font-weight:bold">it</span>.groups[<span style="color:#00d;font-weight:bold">1</span>]?.<span style="color:#080;font-weight:bold">value</span> }.toList() <span class="fragment " style="color: #888;"> // [saluta, muta]</span>
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-101-19">Kotlin 101</h1>
+<h2 id="multi-dollar-string-interpolation-since-kotlin-2220">Multi-dollar string interpolation (since Kotlin 2.2.20)</h2>
+<ul>
+<li>Writing dollar symbols in strings is cumbersome (requires escaping with <code>${'$'}</code>)
+<ul>
+<li>can become a nightmare when writing e.g., JSON schemas</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">jsonSchema</span> : String
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">get</span>() = <span style="color:#d20;background-color:#fff0f0">"""
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    {
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">      "${'$'}schema": "https://json-schema.org/draft/2020-12/schema",
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">      "${'$'}id": "https://example.com/product.schema.json",
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">      "${'$'}dynamicAnchor": "meta",
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">      "title": "${findTitle()}",
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">      "type": "object"
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    """</span>
+</span></span></code></pre></div><ul>
+<li>Specify how many consecutive dollar signs are required to trigger interpolation by prefixing them to the (multiline) string literal</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">jsonSchema</span> : String
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">get</span>() = <span style="color:#a61717;background-color:#e3d2d2">$$</span><span style="color:#d20;background-color:#fff0f0">"""
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    {
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">      "$schema": "https://json-schema.org/draft/2020-12/schema",
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">      "$id": "https://example.com/product.schema.json",
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">      "$dynamicAnchor": "meta",
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">      "title": "$</span><span style="color:#33b;background-color:#fff0f0">${findTitle()}</span><span style="color:#d20;background-color:#fff0f0">",
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">      "type": "object"
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    """</span>
+</span></span></code></pre></div></section><section>
+<h1 id="kotlin-101-20">Kotlin 101</h1>
 <h2 id="packages-and-imports">Packages and imports</h2>
 <p>Same as Java, plus aliasing.
 <br>
@@ -404,7 +434,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">it.unibo.spe.ddd.Entity</span> <span style="color:#888">// Available as Entity locally
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.company.someproduct.Entity</span> <span style="color:#080;font-weight:bold">as</span> SomeProductEntity <span style="color:#888">// name aliasing
 </span></span></span></code></pre></div></section><section>
-<h1 id="kotlin-101-20">Kotlin 101</h1>
+<h1 id="kotlin-101-21">Kotlin 101</h1>
 <h2 id="varargs">Varargs</h2>
 <p>Functions can have a parameter marked as <code>vararg</code>, accepting multiple entries</p>
 <ul>
@@ -416,7 +446,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span><span style="display:flex;"><span>printall(<span style="color:#d20;background-color:#fff0f0">"Lorem"</span>, <span style="color:#d20;background-color:#fff0f0">"ipsum"</span>, <span style="color:#d20;background-color:#fff0f0">"dolor"</span>, <span style="color:#d20;background-color:#fff0f0">"sit"</span>, <span style="color:#d20;background-color:#fff0f0">"amet"</span>)
 </span></span></code></pre></div></section><section>
-<h2 id="kotlin-101-21">Kotlin 101</h2>
+<h2 id="kotlin-101-22">Kotlin 101</h2>
 <h3 id="naming-in-kotlin">Naming in Kotlin</h3>
 <p>Kotlin is less permissive than Scala:</p>
 <ul>
@@ -429,15 +459,16 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">`val`</span> = <span style="color:#d20;background-color:#fff0f0">"Hey look I can name things with keywords!"</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">`names can also contain spaces`</span> = <span style="color:#00d;font-weight:bold">1</span>
 </span></span></code></pre></div><ul>
-<li>General rule: <strong>avoid it</strong></li>
+<li>General rule: <strong>avoid it</strong>, but in tests</li>
 <li>It might be needed for interoperability with other languages, e.g. if a Java field is named <code>val</code></li>
-<li>Tolerated in tests with Junit (but Kotlin-native suites as Kotest do not need it)</li>
+<li>Tests using kotlin.test can use them:</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">JunitTest</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#555">@Test</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">`404 errors should cause a wait and retry`</span>() = TODO() <span style="color:#888">// Nice and very clear name
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">WebAgentTest</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#555">@Test</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">`404 errors should cause a wait and retry`</span>() = TODO() <span style="color:#888">// Nice and very clear name
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-101-22">Kotlin 101</h1>
+<h1 id="kotlin-101-23">Kotlin 101</h1>
 <h2 id="local-functions">Local functions</h2>
 <p>Functions can contain other functions (as in Scala)</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">factorial</span>(n: UInt): ULong {
@@ -465,7 +496,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 <li><strong>No classic</strong> <code>for(init; condition; then) { block }</code> loop</li>
 <li>Only available as <code>for</code>/<code>in</code>: <code>for (element in collection) { block }</code></li>
 <li><strong>Not a powerful combinator</strong> like Scala’s <code>for</code></li>
-<li><em>Rarely used</em> (I think I might have used it twice in my career)</li>
+<li><em>Seldom used</em></li>
 </ul>
 </section><section>
 <h1 id="kotlin-101--flow-control-2">Kotlin 101 – Flow control</h1>
@@ -670,15 +701,12 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 <h1 id="kotlin-102--oop-6">Kotlin 102 – OOP</h1>
 <h2 id="interfaces">Interfaces</h2>
 <ul>
-<li>Similar to Java 8+</li>
-<li>Methods can be implemented</li>
-<li>Can host properties
+<li>Can host <em>methods</em> and <em>properties</em>
 <ul>
-<li>And their accessors can be implemented</li>
+<li>Both can be implemented</li>
 <li>Properties in interfaces <em>do not have backing fields</em></li>
 </ul>
 </li>
-<li>Both properties and methods can be implemented there</li>
 <li>Scala-like mixins not supported
 <ul>
 <li>A Kotlin <code>interface</code> cannot be a subclass of a Kotlin <code>class</code></li>
@@ -1541,14 +1569,30 @@ Useful when dealing with dynamic languages or untyped serialization (e.g. JSON o
 </span></span><span style="display:flex;"><span>janesJson <span style="color:#888">// Does it change? <span class="fragment " style="color: #888;">{name=Janet Smitherson, birthYear=1999} -- YES! Bidirectional</span>
 </span></span></span></code></pre></div></section><section>
 <h1 id="kotlin-201--advanced-oop-11">Kotlin 201 – Advanced OOP</h1>
-<h2 id="custom-delegates">Custom delegates</h2>
-<p>A valid delegate for a <code>val</code> is a <code>class</code> with a method:</p>
+<h2 id="delegated-properties-and-custom-delegates">Delegated properties and custom delegates</h2>
+<p>They represent <em>kinds</em> of properties whose get/set behavior is defined once and for all, e.g.:</p>
+<ul>
+<li>lazy properties</li>
+<li>observable properties</li>
+</ul>
+<p>Any class with a method:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">getValue</span>(thisRef: T, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;): R
-</span></span></code></pre></div><p>where T is the “owner” type, and R is the type of the property</p>
+</span></span></code></pre></div><p>is a valid delegate for a <code>val</code> is a <code>class</code>
+where T is the “owner” type, and R is the type of the property</p>
 <p>A valid delegate for a <code>var</code> must also have a <code>setValue</code> method:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setValue</span>(thisRef: T, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;, <span style="color:#080;font-weight:bold">value</span>: P): R
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setValue</span>(thisRef: T, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;, <span style="color:#080;font-weight:bold">value</span>: P): Unit
 </span></span></code></pre></div><p>where T and R are the same as in <code>getValue</code>, and P is a supertype of R</p>
-</section><section>
+<p><strong>Note</strong>: that this is a form of structural typing, exceptional with the Kotlin type system (typically nominal)</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">OwnName</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">getValue</span>(thisRef: Any?, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;): String = <span style="color:#080;font-weight:bold">property</span>.name
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">myName</span> <span style="color:#080;font-weight:bold">by</span> OwnName <span style="color:#888">// "myName"
+</span></span></span><span style="display:flex;"><span><span style="color:#888">// can be class if you need to provide parameters
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">RepeatName</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">times</span>: Int) {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">getValue</span>(thisRef: Any?, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;): String = <span style="color:#080;font-weight:bold">property</span>.name.repeat(times)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">tac</span> <span style="color:#080;font-weight:bold">by</span> RepeatName(<span style="color:#00d;font-weight:bold">3</span>) <span style="color:#888">// "tactactac"
+</span></span></span></code></pre></div></section><section>
 <h1 id="kotlin-202--functional-kotlin">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="lambda-expressions">Lambda expressions</h2>
 <p>Kotlin lambda expression’s syntax is inspired by Groovy
@@ -1833,7 +1877,7 @@ Used to cause side effects and returning the original object</p>
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2025-09-10
+<p>Compiled on: 2025-09-15
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section>
