@@ -74,24 +74,6 @@ from <em>source</em> code</p>
 <li><em>Delivery</em></li>
 </ul>
 </section><section>
-<h2 id="lifecycle-styles">Lifecycle styles</h2>
-<ul>
-<li>
-<p><strong>Custom</strong>: select some phases that the product needs and perform them.</p>
-<ul>
-<li><em>Flexible and configurable</em>: tailored on each project’s needs</li>
-<li><em>Hard to adapt and port</em></li>
-</ul>
-</li>
-<li>
-<p><strong>Standard</strong>: run a sequence of pre-defined actions/phases.</p>
-<ul>
-<li><em>Portable and easy to understand</em>: replicated on every product</li>
-<li><em>Limited configuration options</em></li>
-</ul>
-</li>
-</ul>
-</section><section>
 <h2 id="build-automation-1">Build automation</h2>
 <p>Automation of the build lifecycle</p>
 <ul>
@@ -104,23 +86,24 @@ from <em>source</em> code</p>
 </ul>
 </section><section>
 <h2 id="build-automation-basics-and-styles">Build automation: basics and styles</h2>
-<p>Different lifecycle types generate different build automation <strong>styles</strong></p>
-<p><strong>Imperative</strong>: write a script that tells the system what to do to get
+<p><strong>Imperative</strong>/<strong>Custom</strong>: write a script that tells the system what to do to get
 from code to artifacts</p>
 <ul>
 <li><em>Examples</em>: make, cmake, Apache Ant</li>
 <li><em>Abstraction gap</em>: verbose, repetitive</li>
 <li>Configuration (<em>declarative</em>) and actionable (<em>imperative</em>) logics <em>mixed</em> together</li>
-<li>Highly <em>configurable</em></li>
+<li>Highly <em>configurable</em> and <em>flexible</em></li>
+<li>Difficult to <em>adapt</em> and <em>port</em> across projects</li>
 </ul>
-<p><strong>Declarative</strong>: adhere to some convention, customizing some settings</p>
+<p><strong>Declarative</strong>/<strong>Standard</strong>: adhere to some convention, customizing some settings</p>
 <ul>
-<li><em>Examples</em>: Apache Maven</li>
+<li><em>Examples</em>: Apache Maven, Python Poetry</li>
 <li>Separation between <em>what</em> to do and <em>how</em> to do it
 <ul>
 <li>The build system decides how to do the stuff</li>
 </ul>
 </li>
+<li>Easy to <em>adapt</em> and <em>port</em> across projects</li>
 <li><em>Configuration limited</em> by the provided options</li>
 </ul>
 </section><section>
