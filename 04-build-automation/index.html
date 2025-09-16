@@ -23,13 +23,13 @@
   
 
     <section><h1 id="build-automation">Build Automation</h1>
-<h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
-<br>
-<h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
-<br>
-<p>Compiled on: 2025-09-16
- — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
-<p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
+<p>&lt;h2 id="hahahugoshortcode1s0hbhb"&gt;Software Process Engineering&lt;/h2&gt;
+&lt;br&gt;
+&lt;h3 id="danilo-pianini"&gt;&lt;a href="mailto:danilo.pianini@unibo.it"&gt;Danilo Pianini &amp;mdash; &lt;code&gt;danilo.pianini@unibo.it&lt;/code&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;br&gt;
+&lt;p&gt;Compiled on: 2025-09-16
+&amp;mdash; &lt;a href="?print-pdf&amp;amp;pdfSeparateFragments=false"&gt;&lt;i class="fa fa-print" aria-hidden="true"&gt;&lt;/i&gt; printable version&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=".."&gt;&lt;i class="fa fa-undo" aria-hidden="true"&gt;&lt;/i&gt; back&lt;/a&gt;&lt;/p&gt;</p>
 </section><section>
 <h1 id="overview">Overview</h1>
 <ul>
@@ -415,16 +415,160 @@ to a known good set.</p>
 <li><strong>Build and publish</strong>: Supports building and publishing packages to PyPI or other repositories.</li>
 </ul>
 </section><section>
-<h2 id="the-apache-maven-build-lifecycle">The Apache Maven build lifecycle</h2>
-<p>A build lifecycle typical of <em>declarative automators</em>:</p>
+<h2 id="pythons-conflicting-standards">Python’s conflicting standards</h2>
+<p><img src="https://imgs.xkcd.com/comics/python_environment.png" alt="xkcd"></p>
+<p>Since there were no standard management systems originally,
+multiple tools <em>proliferated</em></p>
+<ul>
+<li>
+<p>The Python Packaging Authority (PyPA) is inconsistent in its suggestions:</p>
+<ul>
+<li>Recommends <a href="https://docs.python.org/3/library/venv.html"><code>venv</code></a></li>
+<li>Also recommends <a href="https://pipenv.pypa.io/en/latest/">Pipenv</a> , which uses <a href="https://virtualenv.pypa.io/en/latest/"><code>virtualenv</code></a></li>
+<li>Also endorses <a href="https://python-poetry.org/">Poetry</a></li>
+</ul>
+</li>
+<li>
+<p>Many Python developers also rely on <a href="https://github.com/pyenv/pyenv">PyEnv</a></p>
+</li>
+<li>
+<p>Many data scientists use <a href="https://www.anaconda.com/">Anaconda</a></p>
+</li>
+</ul>
+</section><section>
+<h2 id="python-ecosystem">Python ecosystem</h2>
 <ol>
-<li><code>validate</code> - validate the project is correct and all necessary information is available</li>
-<li><code>compile</code> - compile the source code of the project</li>
-<li><code>test</code> - test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed</li>
-<li><code>package</code> - take the compiled code and package it in its distributable format, such as a JAR.</li>
-<li><code>verify</code> - run any checks on results of integration tests to ensure quality criteria are met</li>
-<li><code>install</code> - install the package into the local repository, for use as a dependency in other projects locally</li>
-<li><code>deploy</code> - done in the build environment, copies the final package to the remote repository for sharing with other developers and projects.</li>
+<li>
+<p>By default, Python is installed <em>system-wide</em></p>
+<ul>
+<li>i.e. there should be <em>one</em> (and <strong>only</strong> one) Python interpreter on the system</li>
+<li><strong>Problem 1</strong>: two different projects cannot use different versions of Python!</li>
+</ul>
+</li>
+<li>
+<p>All Python installations come with <code>pip</code>, the <em>package installer</em> for Python</p>
+<ul>
+<li>Python packages are supposed to be installed <em>system-wide</em> with <code>pip install PACKAGE_NAME</code></li>
+<li><strong>Problem 2</strong>: Two different projects cannot use different versions of the same package!</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>
+<p><code>PyEnv</code> is a tool to manage <em>multiple</em> Python <strong>installations</strong> <em>on the same system</em></p>
+<ul>
+<li><em>tackles Problem 1</em></li>
+<li><strong>Poetry</strong> checks that the right Python version is used, but does not manage Python installations</li>
+</ul>
+</li>
+<li>
+<p><code>virtualenv</code> and <code>venv</code> create <em>virtual</em> Python installations <em>on the same system</em></p>
+<ul>
+<li><code>virtualenv</code> is a <em>third-party</em> tool, <code>venv</code> is <em>built-in</em> in Python 3.3 and later</li>
+<li><em>tackles Problem 2</em></li>
+<li><strong>Poetry</strong> automatically creates and manages virtual environments for each project</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="poetrys-canonical-project-structure">Poetry’s canonical project structure</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>root-directory/
+</span></span><span style="display:flex;"><span>├── main_package/
+</span></span><span style="display:flex;"><span>│   ├── __init__.py
+</span></span><span style="display:flex;"><span>│   ├── sub_module.py
+</span></span><span style="display:flex;"><span>│   └── sub_package/ 
+</span></span><span style="display:flex;"><span>│       ├── __init__.py 
+</span></span><span style="display:flex;"><span>│       └── sub_sub_module.py 
+</span></span><span style="display:flex;"><span>├── test/
+</span></span><span style="display:flex;"><span>│   ├── test_something.py
+</span></span><span style="display:flex;"><span>│   └── test_something_else.py/ 
+</span></span><span style="display:flex;"><span>├── pyproject.toml <span style="color:#888"># File where project configuration (metadata, dependencies, etc.) is stored</span>
+</span></span><span style="display:flex;"><span>├── poetry.toml <span style="color:#888"># File where Poetry configuration is stored</span>
+</span></span><span style="display:flex;"><span>├── poetry.lock <span style="color:#888"># File where Poetry locks the dependencies</span>
+</span></span><span style="display:flex;"><span>└── README.md
+</span></span></code></pre></div><p>If you already use Python, notice:</p>
+<ul>
+<li>no <code>requirements.txt</code> nor <code>requirements-dev.txt</code></li>
+<li><code>pyproject.toml</code>, <code>poetry.toml</code>, and <code>poetry.lock</code> are <strong>Poetry-specific</strong></li>
+<li><code>poetry.lock</code> is generated <em>automatically</em> by Poetry, and you should not be manually edited</li>
+</ul>
+</section><section>
+<h2 id="a-python-calculator">A Python <a href="https://github.com/unibo-dtm-se/calculator"><code>calculator</code></a></h2>
+<p>(courtesy of Giovanni Ciatto)</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>[tool.poetry]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888"># publication metadata</span>
+</span></span><span style="display:flex;"><span>name = <span style="color:#d20;background-color:#fff0f0">"unibo-dtm-se-calculator"</span>
+</span></span><span style="display:flex;"><span>packages = [ <span style="color:#888"># files to be included for publication</span>
+</span></span><span style="display:flex;"><span>    { include = <span style="color:#d20;background-color:#fff0f0">"calculator"</span> },
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>version = <span style="color:#d20;background-color:#fff0f0">"0.1.1"</span>
+</span></span><span style="display:flex;"><span>description = <span style="color:#d20;background-color:#fff0f0">"A simple calculator toolkit written in Python, with several UIs."</span>
+</span></span><span style="display:flex;"><span>authors = [<span style="color:#d20;background-color:#fff0f0">"Giovanni Ciatto &lt;giovanni.ciatto@unibo.it&gt;"</span>]
+</span></span><span style="display:flex;"><span>license = <span style="color:#d20;background-color:#fff0f0">"Apache 2.0"</span>
+</span></span><span style="display:flex;"><span>readme = <span style="color:#d20;background-color:#fff0f0">"README.md"</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888"># dependencies (notice that Python is considered a dependency)</span>
+</span></span><span style="display:flex;"><span>[tool.poetry.dependencies] 
+</span></span><span style="display:flex;"><span>python = <span style="color:#d20;background-color:#fff0f0">"^3.10.0"</span>
+</span></span><span style="display:flex;"><span>Kivy = <span style="color:#d20;background-color:#fff0f0">"^2.3.0"</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888"># development dependencies</span>
+</span></span><span style="display:flex;"><span>[tool.poetry.group.dev.dependencies]
+</span></span><span style="display:flex;"><span>poetry = <span style="color:#d20;background-color:#fff0f0">"^1.7.0"</span>
+</span></span><span style="display:flex;"><span>pytest = <span style="color:#d20;background-color:#fff0f0">"^8.1.0"</span>
+</span></span><span style="display:flex;"><span>coverage = <span style="color:#d20;background-color:#fff0f0">"^7.4.0"</span>
+</span></span><span style="display:flex;"><span>mypy = <span style="color:#d20;background-color:#fff0f0">"^1.9.0"</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888"># executable commands that will be created then installing this package</span>
+</span></span><span style="display:flex;"><span>[tool.poetry.scripts]
+</span></span><span style="display:flex;"><span>calculator-gui = <span style="color:#d20;background-color:#fff0f0">"calculator.ui.gui:start_app"</span>
+</span></span><span style="display:flex;"><span>calculator = <span style="color:#d20;background-color:#fff0f0">"calculator.ui.cli:start_app"</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888"># where to download the dependencies from</span>
+</span></span><span style="display:flex;"><span>[[tool.poetry.source]]
+</span></span><span style="display:flex;"><span>name = <span style="color:#d20;background-color:#fff0f0">"PyPI"</span>
+</span></span><span style="display:flex;"><span>priority = <span style="color:#d20;background-color:#fff0f0">"primary"</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888"># packaging dependencies</span>
+</span></span><span style="display:flex;"><span>[build-system]
+</span></span><span style="display:flex;"><span>requires = [<span style="color:#d20;background-color:#fff0f0">"poetry-core"</span>]
+</span></span><span style="display:flex;"><span>build-backend = <span style="color:#d20;background-color:#fff0f0">"poetry.core.masonry.api"</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888"># the project-specific environment will be created in the local .venv folder</span>
+</span></span><span style="display:flex;"><span>[virtualenvs]
+</span></span><span style="display:flex;"><span>in-project = <span style="color:#080;font-weight:bold">true</span> 
+</span></span></code></pre></div><p>Pure TOML: completely declarative</p>
+</section><section>
+<h2 id="poetry-build-lifecycle">Poetry: build lifecycle</h2>
+<p>Poetry is used via the <code>poetry</code> command line tool:</p>
+<ul>
+<li><code>poetry install</code> – resolves and installs dependencies</li>
+<li><code>poetry run &lt;command&gt;</code> – runs a command within the virtual environment</li>
+</ul>
+<h3 id="actual-behavior-of-poetry-install">Actual behavior of <code>poetry install</code></h3>
+<ol>
+<li><em>Validate</em> the project is correct and all necessary information is available</li>
+<li><em>Verify</em> the version of Python is correct</li>
+<li><em>Resolve</em> the dependencies, or use the ones in <code>poetry.lock</code> if already available</li>
+<li><em>Retrieve</em> the dependencies from the specified sources</li>
+<li><em>Create</em> a virtual environment if not already available</li>
+<li><em>Install</em> the dependencies in the virtual environment</li>
+</ol>
+<p>Subsequent lifecycle phases are managed by the <code>poetry run</code> command, and are thus custom.</p>
+<p>❗ Except for <code>install</code>, Poetry does not provide a predefined lifecycle</p>
+</section><section>
+<h2 id="a-structured-build-lifecycle-apache-maven">A structured build lifecycle: Apache Maven</h2>
+<p>A build lifecycle typical of <em>declarative automators</em>, composed by <em>phases</em>.</p>
+<p>⚠️ Selecting a phase implies executing all previous phases.</p>
+<ol>
+<li><code>validate</code> – validate the project is correct and all necessary information is available</li>
+<li><code>compile</code> – compile the source code of the project</li>
+<li><code>test</code> – test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed</li>
+<li><code>package</code> – take the compiled code and package it in its distributable format, such as a JAR.</li>
+<li><code>verify</code> – run any checks on results of integration tests to ensure quality criteria are met</li>
+<li><code>install</code> – install the package into the local repository, for use as a dependency in other projects locally</li>
+<li><code>deploy</code> – done in the build environment, copies the final package to the remote repository for sharing with other developers and projects.</li>
 </ol>
 <ul>
 <li>Phases are made of <em>plugin goals</em></li>
@@ -433,7 +577,7 @@ to a known good set.</p>
 </ul>
 <p>What if there is no plugin for something peculiar of the project?</p>
 </section><section>
-<h2 id="a-lifecycle-for-build-lifecycles">A lifecycle for build lifecycles</h2>
+<h2 id="a-meta-build-lifecycle-a-lifecycle-for-build-lifecycles">A meta-build lifecycle: a lifecycle for build lifecycles</h2>
 <ol>
 <li><strong>Initialization</strong>: understand what is part of a build</li>
 <li><strong>Configuration</strong>: create the necessary phases / goals and configure them
@@ -452,118 +596,20 @@ to a known good set.</p>
 <p>Rather than declaratively fit the build into a predefined lifecycle, declaratively define a build lifecycle</p>
 <p>$\Rightarrow$ Typical of <em>hybrid automators</em></p>
 </section><section>
-<h2 id="a-declarative-automator-poetry">A declarative automator: Poetry</h2>
-</section><section>
-<h3 id="poetry-typical-workflow">Poetry: Typical Workflow</h3>
-<ol>
-<li><strong>Project creation</strong></li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>poetry new my-project
-</span></span><span style="display:flex;"><span><span style="color:#038">cd</span> my-project
-</span></span></code></pre></div><ol start="2">
-<li><strong>Add dependencies</strong></li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>poetry add requests
-</span></span><span style="display:flex;"><span>poetry add --dev pytest
-</span></span></code></pre></div><ol start="3">
-<li><strong>Install dependencies</strong></li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>poetry install
-</span></span></code></pre></div><ol start="4">
-<li><strong>Run scripts or commands</strong></li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>poetry run python my_project/main.py
-</span></span><span style="display:flex;"><span>poetry run pytest
-</span></span></code></pre></div><ol start="5">
-<li><strong>Build and publish</strong></li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>poetry build
-</span></span><span style="display:flex;"><span>poetry publish
-</span></span></code></pre></div></section><section>
-<h3 id="poetry-pyprojecttoml-example">Poetry: pyproject.toml Example</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>[tool.poetry]
-</span></span><span style="display:flex;"><span>name = <span style="color:#d20;background-color:#fff0f0">"my-project"</span>
-</span></span><span style="display:flex;"><span>version = <span style="color:#d20;background-color:#fff0f0">"0.1.0"</span>
-</span></span><span style="display:flex;"><span>description = <span style="color:#d20;background-color:#fff0f0">"A sample Python project"</span>
-</span></span><span style="display:flex;"><span>authors = [<span style="color:#d20;background-color:#fff0f0">"Your Name &lt;you@example.com&gt;"</span>]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[tool.poetry.dependencies]
-</span></span><span style="display:flex;"><span>python = <span style="color:#d20;background-color:#fff0f0">"^3.10"</span>
-</span></span><span style="display:flex;"><span>requests = <span style="color:#d20;background-color:#fff0f0">"^2.28.0"</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[tool.poetry.dev-dependencies]
-</span></span><span style="display:flex;"><span>pytest = <span style="color:#d20;background-color:#fff0f0">"^7.0.0"</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[build-system]
-</span></span><span style="display:flex;"><span>requires = [<span style="color:#d20;background-color:#fff0f0">"poetry-core"</span>]
-</span></span><span style="display:flex;"><span>build-backend = <span style="color:#d20;background-color:#fff0f0">"poetry.core.masonry.api"</span>
-</span></span></code></pre></div></section><section>
-<h3 id="poetry-vs-other-build-tools">Poetry vs. Other Build Tools</h3>
-<table>
-  <thead>
-      <tr>
-          <th>Feature</th>
-          <th>Poetry</th>
-          <th>pip/setuptools</th>
-          <th>Gradle/Maven (JVM)</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Declarative config</td>
-          <td>pyproject.toml</td>
-          <td>setup.py</td>
-          <td>build.gradle/pom</td>
-      </tr>
-      <tr>
-          <td>Dependency locking</td>
-          <td>poetry.lock</td>
-          <td>requirements.txt</td>
-          <td>lockfiles</td>
-      </tr>
-      <tr>
-          <td>Virtualenv management</td>
-          <td>Built-in</td>
-          <td>External tools</td>
-          <td>N/A</td>
-      </tr>
-      <tr>
-          <td>Build &amp; publish</td>
-          <td>Built-in</td>
-          <td>Manual</td>
-          <td>Built-in</td>
-      </tr>
-      <tr>
-          <td>Plugin system</td>
-          <td>Limited</td>
-          <td>N/A</td>
-          <td>Extensive</td>
-      </tr>
-  </tbody>
-</table>
-<ul>
-<li><strong>Poetry</strong> brings Python closer to the declarative, reproducible builds typical of JVM and Node.js ecosystems.</li>
-</ul>
-</section><section>
-<h3 id="when-to-use-poetry">When to Use Poetry</h3>
-<ul>
-<li>For <strong>modern Python projects</strong> needing reproducible builds and dependency management.</li>
-<li>When you want <strong>declarative configuration</strong> and minimal imperative scripting.</li>
-<li>If you need <strong>isolated environments</strong> and easy publishing to PyPI.</li>
-</ul>
-</section><section>
 <h2 id="gradle">Gradle</h2>
 <p>A paradigmatic example of a hybrid automator:</p>
 <ul>
 <li>Written mostly in Java</li>
-<li>with an outer Groovy DSL</li>
-<li>…and, more recently, a Kotlin DSL</li>
+<li>with an outer Groovy layer and DSL</li>
+<li>…and, more recently, a Kotlin layer and DSL</li>
 </ul>
 <h3 id="our-approach-to-gradle">Our approach to Gradle</h3>
 <ul>
 <li>We are <strong>not</strong> going to learn “how to <em>use</em> Gradle”</li>
-<li>We are going to <em>learn how to Gradle</em>
+<li>We are going to <em>explore how to drive Gradle from scratch</em>
 <ul>
+<li>Gradle is flexible enough to allow an exploration of its core concepts</li>
+<li>It will work as an exemplary case for most hybrid automators</li>
 <li>Other automation systems can be driven similarly once the basics are understood</li>
 </ul>
 </li>
@@ -787,8 +833,8 @@ Any <code>open class</code> implementing <a href="https://docs.gradle.org/curren
 <li>Invoke <code>javac -d destination &lt;files&gt;</code></li>
 </ol>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
-</span></span><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) {
-</span></span><span style="display:flex;"><span>    val sources = findSources() <span style="color:#888">//
+</span></span><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) { <span style="color:#888">// This is a Kotlin lambda with receiver!
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    val sources = findSources() <span style="color:#888">//
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">if</span> (sources.<span style="color:#369">isNotEmpty</span>())  { <span style="color:#888">// If the folder exists and there are files
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        val javacExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javacExecutable</span>.<span style="color:#369">absolutePath</span> <span style="color:#888">// Use the current JVM's javac
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        commandLine(
