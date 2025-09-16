@@ -123,7 +123,300 @@ from code to artifacts</p>
 <li>How to structure multiple logical and interdependent parts?</li>
 </ul>
 </section><section>
+<!-- this file includes generated content. Do not edit. Edit content/04-build-automation/_generator.md, instead. -->
+<h2 id="dependencies-in-software">Dependencies in software</h2>
+<blockquote>
+<p>nos esse quasi nanos gigantium humeris insidentes
+<cite>Bernard of Chartres</cite></p></blockquote>
+<p>All modern software depends on other software!</p>
+<ul>
+<li>the operating system</li>
+<li>the runtime environment (e.g., the Java Virtual Machine, the Python interpreter…)</li>
+<li>the base libraries</li>
+<li>third-party libraries</li>
+<li>external resources (icons, sounds, application data)</li>
+</ul>
+<p>All the software we build and use depends on other software</p>
+<ul>
+<li>Which depends on other software
+<ul>
+<li>Which depends on other software
+<ul>
+<li>Which depends on other software
+<ul>
+<li>Which depends on other software
+<ul>
+<li>Which depends on other software
+<ul>
+<li>Which depends on other software
+<ul>
+<li>Which depends on other software
+<ul>
+<li>…</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>$\Rightarrow$ Applications have a <strong>dependency</strong> tree!</p>
+</section><section>
+<h2 id="transitive-dependencies">Transitive dependencies</h2>
+<p>Indirect dependencies (dependencies of dependencies) are called <em>transitive</em></p>
+<p>In non-toy projects, transitive dependencies are the <em>majority</em></p>
+<ul>
+<li>It’s very easy to end up with more than 50 dependencies</li>
+</ul>
+<h4 id="complexity-quickly-gets-out-of-hand">Complexity quickly gets out of hand!</h4>
+<p>We need a tool that can:</p>
+<ul>
+<li><em>Find</em> (for example in known archives) the libraries we need</li>
+<li><em>Download</em> them (if found)</li>
+<li>Include them into a discoverable path</li>
+</ul>
+<p>To do this, however, we need to know some repositories and how to refer and locate artifacts</p>
+<ul>
+<li>We need a <em>name</em> and a <em>version</em> for each library</li>
+<li>There is no standard, <strong>every ecosystem has its own conventions</strong>
+<ul>
+<li>Some created with the programming language (e.g., Rust)</li>
+<li>Some evolved later with the ecosystem (Maven for Java, npm for JavaScript…)</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="transitive-dependency-conflicts">Transitive dependency conflicts</h2>
+<p>When two libraries depend on different versions of the same library, we have a <em>conflict</em></p>
+<ul>
+<li>e.g.: dependency <code>A</code> requires <code>B</code> at version <code>1</code>, dependency <code>C</code> requires <code>B</code> at version <code>2</code></li>
+<li>How would you solve this conflict?
+<ul>
+<li>Pick the latest and hope for the best?</li>
+<li>Pick the earliest and hope for the best?</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="dependency-ranges">Dependency ranges</h2>
+<p>To reduce the risk of conflicts, some systems allow specifying <em>ranges</em> of acceptable versions</p>
+<ul>
+<li>A range is a <em>relaxed constraint</em> on the version specification</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<ul>
+<li><strong>Maven</strong> (Java)
+<ul>
+<li><code>[1.2,2.0)</code> means “from <code>1.2</code> (inclusive) to <code>2.0</code> (exclusive)”</li>
+<li><code>[1.2,1.3)</code> means “from <code>1.2</code> (inclusive) to <code>1.3</code> (exclusive)”</li>
+<li><code>[1.2,1.3]</code> means “from <code>1.2</code> (inclusive) to <code>1.3</code> (inclusive)”</li>
+<li><code>(,1.3]</code> means “up to <code>1.3</code> (inclusive)”</li>
+<li><code>[1.2,)</code> means “from <code>1.2</code> (inclusive) onwards”</li>
+</ul>
+</li>
+<li><strong>Gradle</strong> (Java, Kotlin, multiple languages)
+<ul>
+<li>Same syntax as Maven, plus “rich versions”: <code>1.2+</code> means “any <code>1.2</code> version”, i.e., <code>&gt;=1.2.0 &lt;1.3.0</code></li>
+</ul>
+</li>
+<li><strong>npm</strong> / <strong>pnpm</strong> / <strong>yarn</strong> (JavaScript/TypeScript)
+<ul>
+<li><code>^1.2.3</code> means “compatible with <code>1.2.3</code>”, i.e., <code>&gt;=1.2.3 &lt;2.0.0</code></li>
+<li><code>~1.2.3</code> means “approximately <code>1.2.3</code>”, i.e., <code>&gt;=1.2.3 &lt;1.3.0</code></li>
+<li><code>1.2.x</code> means “any <code>1.2</code> version”, i.e., <code>&gt;=1.2.0 &lt;1.3.0</code></li>
+</ul>
+</li>
+<li><strong>Python</strong> (PEP 440)
+<ul>
+<li><code>&gt;=1.2, &lt;2.0</code> means “from <code>1.2</code> (inclusive) to <code>2.0</code> (exclusive)”</li>
+<li><code>&gt;=1.2, &lt;1.3</code> means “from <code>1.2</code> (inclusive) to <code>1.3</code> (exclusive)”</li>
+<li><code>&gt;=1.2, &lt;=1.3</code> means “from <code>1.2</code> (inclusive) to <code>1.3</code> (inclusive)”</li>
+<li><code>&lt;1.3</code> means “up to <code>1.3</code> (exclusive)”</li>
+<li><code>&gt;=1.2</code> means “from <code>1.2</code> (inclusive) onwards”</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="dependency-ranges-resolution">Dependency ranges resolution</h2>
+<p>When multiple ranges are specified for the same dependency, the system must find a version that satisfies all constraints.</p>
+<p>The resolver typically relies on a <strong>dependency graph</strong>:</p>
+<ul>
+<li>Input: <em>roots</em> (direct dependencies) with version ranges, and <em>recursive dependencies</em> with version ranges</li>
+<li>Build a <em>graph</em>: nodes are dependencies, edges are “depends on”</li>
+<li>Traverse the graph, starting from the roots (or the most constrained nodes), and <em>reduce the ranges</em> removing incompatible versions</li>
+<li>If a node ends up with an <em>empty range</em>, there is a <strong>conflict that cannot be resolved</strong></li>
+<li>Otherwise, all nodes have non-empty ranges, <em>pick a version for each node</em> (typically the latest in the range)</li>
+</ul>
+</section><section>
+<h2 id="dependency-locking">Dependency locking</h2>
+<p>Introducing ranges leads to the <strong>explosion of the version combinations</strong> space.</p>
+<ul>
+<li>Testing all combinations is <em>impossible</em>!</li>
+<li>Different tests may resolve to different versions, leading to <em>inconsistent results</em></li>
+</ul>
+<p><strong>Dependency locking</strong> is a technique to fix the versions of all dependencies (including transitive ones)
+to a known good set.</p>
+<ul>
+<li>The <em>specified versions</em> are typically <em>ranges</em>, in the main project manifest</li>
+<li>The <em>locked versions</em> are stored in a <em>dedicated file</em></li>
+</ul>
+<h4 id="there-is-a-trade-off-between-flexibility-and-reproducibility">There is a trade-off between flexibility and reproducibility!</h4>
+<p><strong>exact pins</strong> trade <em>low maintenance risk</em> for <em>high ongoing cost</em> and <em>poor ecosystem fit</em>:</p>
+<ul>
+<li>Libraries become uncomposable. If two libs pin different exact transitives, resolvers can’t find a common graph</li>
+<li>Pins don’t freeze transitives anyway. Without a lock you still get drift downstream</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Ranges, no lock</th>
+          <th>Ranges + lock</th>
+          <th>Fixed versions (exact pins)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Updates</td>
+          <td><em>Instant</em></td>
+          <td>Manual (regenerate lock file)</td>
+          <td>Manual (change version)</td>
+      </tr>
+      <tr>
+          <td>Reproducibility</td>
+          <td>Low</td>
+          <td><em>Maximum</em> (transitive dependencies are locked)</td>
+          <td>High (transitive drift remains)</td>
+      </tr>
+      <tr>
+          <td>Reliability</td>
+          <td>Low (uncontrolled updates)</td>
+          <td>Medium (testing all ranges is impossible)</td>
+          <td><em>High</em> (controlled updates, transitive drift)</td>
+      </tr>
+  </tbody>
+</table>
+</section><section>
+<h2 id="imperative-build-tool-example-cmake">Imperative build tool example: CMake</h2>
+<p><a href="https://cmake.org/">CMake</a> is a widely used <em>imperative</em> build automation tool, especially in C and C++ projects.</p>
+<ul>
+<li><strong>Imperative configuration</strong>: Build instructions are specified in <code>CMakeLists.txt</code> using CMake’s own scripting language.</li>
+<li><strong>Cross-platform</strong>: Generates native build files for various platforms (Makefiles, Visual Studio projects, etc.).</li>
+<li><strong>Dependency management</strong>: Supports finding and linking against external libraries.</li>
+<li><strong>Build targets</strong>: Allows defining multiple build targets (executables, libraries) within a single project.</li>
+<li><strong>Custom commands</strong>: Supports custom build commands and scripts for specialized tasks.</li>
+</ul>
+</section><section>
+<p><a href="https://github.com/krux02/minimal_cmake_example/blob/master/CMakeLists.txt">CMake build file example</a></p>
+<p>CMake version and project name, declarative:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#038">cmake_minimum_required</span>(<span style="color:#d20;background-color:#fff0f0">VERSION</span> <span style="color:#d20;background-color:#fff0f0">3.0</span>) <span style="color:#888"># setting this is required
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">project</span>(<span style="color:#d20;background-color:#fff0f0">example_project</span>)            <span style="color:#888"># this sets the project name
+</span></span></span></code></pre></div><p>File globbing: search of what to build is manual/imperative:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># These instructions search the directory tree when cmake is
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># invoked and put all files that match the pattern in the variables 
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># `sources` and `data`.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">GLOB_RECURSE</span> <span style="color:#d20;background-color:#fff0f0">sources</span>      <span style="color:#d20;background-color:#fff0f0">src/main/*.cpp</span> <span style="color:#d20;background-color:#fff0f0">src/main/*.h</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">GLOB_RECURSE</span> <span style="color:#d20;background-color:#fff0f0">sources_test</span> <span style="color:#d20;background-color:#fff0f0">src/test/*.cpp</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">GLOB_RECURSE</span> <span style="color:#d20;background-color:#fff0f0">data</span> <span style="color:#d20;background-color:#fff0f0">resources/*</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># You can use set(sources src/main.cpp) etc if you don't want to
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># use globbing to find files automatically.
+</span></span></span></code></pre></div><p>Target definitions, imperative:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># The data is just added to the executable, because in some IDEs (QtCreator) 
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># files are invisible when they are not explicitly part of the project.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">add_executable</span>(<span style="color:#d20;background-color:#fff0f0">example</span> ${<span style="color:#369">sources</span>} ${<span style="color:#369">data</span>})<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Just for example add some compiler flags.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">target_compile_options</span>(<span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> <span style="color:#d20;background-color:#fff0f0">-std=c++1y</span> <span style="color:#d20;background-color:#fff0f0">-Wall</span> <span style="color:#d20;background-color:#fff0f0">-Wfloat-conversion</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># This allows to include files relative to the root of the src directory with a &lt;&gt; pair
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">target_include_directories</span>(<span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> <span style="color:#d20;background-color:#fff0f0">src/main</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># This copies all resource files in the build directory.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># We need this, because we want to work with paths relative to the executable.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">COPY</span> ${<span style="color:#369">data</span>} <span style="color:#d20;background-color:#fff0f0">DESTINATION</span> <span style="color:#d20;background-color:#fff0f0">resources</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span></code></pre></div></section><section>
+<p>Depedency management, imperative:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># This defines the variables Boost_LIBRARIES that containts all library names
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># that we need to link into the program.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">find_package</span>(<span style="color:#d20;background-color:#fff0f0">Boost</span> <span style="color:#d20;background-color:#fff0f0">1.36.0</span> <span style="color:#d20;background-color:#fff0f0">COMPONENTS</span> <span style="color:#d20;background-color:#fff0f0">filesystem</span> <span style="color:#d20;background-color:#fff0f0">system</span> <span style="color:#d20;background-color:#fff0f0">REQUIRED</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#038">target_link_libraries</span>(<span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span>
+</span></span><span style="display:flex;"><span>  ${<span style="color:#369">Boost_LIBRARIES</span>}
+</span></span><span style="display:flex;"><span>  <span style="color:#888"># here you can add any library dependencies
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span></code></pre></div><p>Testing with googletest, imperative:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#038">find_package</span>(<span style="color:#d20;background-color:#fff0f0">GTest</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#038">if</span>(<span style="color:#d20;background-color:#fff0f0">GTEST_FOUND</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span>  <span style="color:#038">add_executable</span>(<span style="color:#d20;background-color:#fff0f0">unit_tests</span> ${<span style="color:#369">sources_test</span>} ${<span style="color:#369">sources</span>})<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span>  <span style="color:#888"># This define is added to prevent collision with the main.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>  <span style="color:#888"># It might be better solved by not adding the source with the main to the
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>  <span style="color:#888"># testing target.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>  <span style="color:#038">target_compile_definitions</span>(<span style="color:#d20;background-color:#fff0f0">unit_tests</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> <span style="color:#d20;background-color:#fff0f0">UNIT_TESTS</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span>  <span style="color:#888"># This allows us to use the executable as a link library, and inherit all 
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>  <span style="color:#888"># linker options and library dependencies from it, by simply adding it as dependency.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>  <span style="color:#038">set_target_properties</span>(<span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">PROPERTIES</span> <span style="color:#d20;background-color:#fff0f0">ENABLE_EXPORTS</span> <span style="color:#d20;background-color:#fff0f0">on</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span>  <span style="color:#038">target_link_libraries</span>(<span style="color:#d20;background-color:#fff0f0">unit_tests</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> ${<span style="color:#369">GTEST_BOTH_LIBRARIES</span>} <span style="color:#d20;background-color:#fff0f0">example</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span>  <span style="color:#038">target_include_directories</span>(<span style="color:#d20;background-color:#fff0f0">unit_tests</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> ${<span style="color:#369">GTEST_INCLUDE_DIRS</span>})<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#038">endif</span>()<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span></code></pre></div></section><section>
+<p>Packaging with CPack, mostly imperative with some declarative parts:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># All install commands get the same destination. this allows us to use paths
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># relative to the executable.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">install</span>(<span style="color:#d20;background-color:#fff0f0">TARGETS</span> <span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">DESTINATION</span> <span style="color:#d20;background-color:#fff0f0">example_destination</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># This is basically a repeat of the file copy instruction that copies the
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># resources in the build directory, but here we tell cmake that we want it
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># in the package.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">install</span>(<span style="color:#d20;background-color:#fff0f0">DIRECTORY</span> <span style="color:#d20;background-color:#fff0f0">resources</span> <span style="color:#d20;background-color:#fff0f0">DESTINATION</span> <span style="color:#d20;background-color:#fff0f0">example_destination</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Now comes everything we need, to create a package
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># there are a lot more variables you can set, and some
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># you need to set for some package types, but we want to
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># be minimal here.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">set</span>(<span style="color:#d20;background-color:#fff0f0">CPACK_PACKAGE_NAME</span> <span style="color:#d20;background-color:#fff0f0">"MyExample"</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#038">set</span>(<span style="color:#d20;background-color:#fff0f0">CPACK_PACKAGE_VERSION</span> <span style="color:#d20;background-color:#fff0f0">"1.0.0"</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># We don't want to split our program up into several incomplete pieces.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">set</span>(<span style="color:#d20;background-color:#fff0f0">CPACK_MONOLITHIC_INSTALL</span> <span style="color:#d20;background-color:#fff0f0">1</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># This must be last
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">include</span>(<span style="color:#d20;background-color:#fff0f0">CPack</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span></code></pre></div></section><section>
+<h2 id="declarative-build-tool-example-python-poetry">Declarative build tool example: Python Poetry</h2>
+<p><a href="https://python-poetry.org/">Poetry</a> is a modern, <em>declarative</em> build and dependency management tool for Python.</p>
+<ul>
+<li><strong>Declarative configuration</strong>: All project metadata, dependencies, and build instructions are specified in <code>pyproject.toml</code>.
+<ul>
+<li>Declarative build tools tend to favor markup files over scripts:
+<ul>
+<li>XML (Maven)</li>
+<li>TOML (Poetry, Rust’s Cargo)</li>
+<li>JSON (Node.js’s npm)</li>
+<li>YAML (JetBrains’ Amper)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Scripted tasks</strong>: Allows definition of custom scripts for automation.</li>
+<li><strong>Dependency resolution</strong>: Handles dependency resolution and locking via <code>poetry.lock</code>.</li>
+<li><strong>Virtual environments</strong>: Automatically manages isolated Python environments per project.</li>
+<li><strong>Build and publish</strong>: Supports building and publishing packages to PyPI or other repositories.</li>
+</ul>
+</section><section>
 <h2 id="the-apache-maven-build-lifecycle">The Apache Maven build lifecycle</h2>
+<p>A build lifecycle typical of <em>declarative automators</em>:</p>
 <ol>
 <li><code>validate</code> - validate the project is correct and all necessary information is available</li>
 <li><code>compile</code> - compile the source code of the project</li>
@@ -158,6 +451,106 @@ from code to artifacts</p>
 </ol>
 <p>Rather than declaratively fit the build into a predefined lifecycle, declaratively define a build lifecycle</p>
 <p>$\Rightarrow$ Typical of <em>hybrid automators</em></p>
+</section><section>
+<h2 id="a-declarative-automator-poetry">A declarative automator: Poetry</h2>
+</section><section>
+<h3 id="poetry-typical-workflow">Poetry: Typical Workflow</h3>
+<ol>
+<li><strong>Project creation</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>poetry new my-project
+</span></span><span style="display:flex;"><span><span style="color:#038">cd</span> my-project
+</span></span></code></pre></div><ol start="2">
+<li><strong>Add dependencies</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>poetry add requests
+</span></span><span style="display:flex;"><span>poetry add --dev pytest
+</span></span></code></pre></div><ol start="3">
+<li><strong>Install dependencies</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>poetry install
+</span></span></code></pre></div><ol start="4">
+<li><strong>Run scripts or commands</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>poetry run python my_project/main.py
+</span></span><span style="display:flex;"><span>poetry run pytest
+</span></span></code></pre></div><ol start="5">
+<li><strong>Build and publish</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>poetry build
+</span></span><span style="display:flex;"><span>poetry publish
+</span></span></code></pre></div></section><section>
+<h3 id="poetry-pyprojecttoml-example">Poetry: pyproject.toml Example</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>[tool.poetry]
+</span></span><span style="display:flex;"><span>name = <span style="color:#d20;background-color:#fff0f0">"my-project"</span>
+</span></span><span style="display:flex;"><span>version = <span style="color:#d20;background-color:#fff0f0">"0.1.0"</span>
+</span></span><span style="display:flex;"><span>description = <span style="color:#d20;background-color:#fff0f0">"A sample Python project"</span>
+</span></span><span style="display:flex;"><span>authors = [<span style="color:#d20;background-color:#fff0f0">"Your Name &lt;you@example.com&gt;"</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[tool.poetry.dependencies]
+</span></span><span style="display:flex;"><span>python = <span style="color:#d20;background-color:#fff0f0">"^3.10"</span>
+</span></span><span style="display:flex;"><span>requests = <span style="color:#d20;background-color:#fff0f0">"^2.28.0"</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[tool.poetry.dev-dependencies]
+</span></span><span style="display:flex;"><span>pytest = <span style="color:#d20;background-color:#fff0f0">"^7.0.0"</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[build-system]
+</span></span><span style="display:flex;"><span>requires = [<span style="color:#d20;background-color:#fff0f0">"poetry-core"</span>]
+</span></span><span style="display:flex;"><span>build-backend = <span style="color:#d20;background-color:#fff0f0">"poetry.core.masonry.api"</span>
+</span></span></code></pre></div></section><section>
+<h3 id="poetry-vs-other-build-tools">Poetry vs. Other Build Tools</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Feature</th>
+          <th>Poetry</th>
+          <th>pip/setuptools</th>
+          <th>Gradle/Maven (JVM)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Declarative config</td>
+          <td>pyproject.toml</td>
+          <td>setup.py</td>
+          <td>build.gradle/pom</td>
+      </tr>
+      <tr>
+          <td>Dependency locking</td>
+          <td>poetry.lock</td>
+          <td>requirements.txt</td>
+          <td>lockfiles</td>
+      </tr>
+      <tr>
+          <td>Virtualenv management</td>
+          <td>Built-in</td>
+          <td>External tools</td>
+          <td>N/A</td>
+      </tr>
+      <tr>
+          <td>Build &amp; publish</td>
+          <td>Built-in</td>
+          <td>Manual</td>
+          <td>Built-in</td>
+      </tr>
+      <tr>
+          <td>Plugin system</td>
+          <td>Limited</td>
+          <td>N/A</td>
+          <td>Extensive</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li><strong>Poetry</strong> brings Python closer to the declarative, reproducible builds typical of JVM and Node.js ecosystems.</li>
+</ul>
+</section><section>
+<h3 id="when-to-use-poetry">When to Use Poetry</h3>
+<ul>
+<li>For <strong>modern Python projects</strong> needing reproducible builds and dependency management.</li>
+<li>When you want <strong>declarative configuration</strong> and minimal imperative scripting.</li>
+<li>If you need <strong>isolated environments</strong> and easy publishing to PyPI.</li>
+</ul>
 </section><section>
 <h2 id="gradle">Gradle</h2>
 <p>A paradigmatic example of a hybrid automator:</p>
@@ -1501,30 +1894,6 @@ We want to inject our plugin into the distribution.</p>
 <p>These toolchains <em>should be controlled indipendently</em>!</p>
 <p>You may want to use Java 16 to run Gradle, but compile in a Java 8-compatible bytecode, and then test on Java 11.</p>
 </section><section>
-<h2 id="build-vs-compile-vs-test-toolchains-1">Build vs. Compile vs. Test toolchains</h2>
-<p>We now have three different runtimes at play:</p>
-<ol>
-<li>One or more <strong>compilation targets</strong>
-<ul>
-<li>In case of JVM projects, the target bytecode version</li>
-<li>In case of .NET projects, the target .NET</li>
-<li>In case of native projects, the target OS / architecture</li>
-</ul>
-</li>
-<li>One or more <strong>runtime targets</strong>
-<ul>
-<li>In case of JVM or .NET projects the virtual machines we want to support</li>
-</ul>
-</li>
-<li>A <strong>built-time runtime</strong>
-<ul>
-<li>In case of Gradle, the JVM running the build system</li>
-</ul>
-</li>
-</ol>
-<p>These toolchains <em>should be controlled indipendently</em>!</p>
-<p>You may want to use Java 16 to run Gradle, but compile in a Java 8-compatible bytecode, and then test on Java 11.</p>
-</section><section>
 <h2 id="gradle-and-the-toolchains">Gradle and the toolchains</h2>
 <p>Default behaviour: Gradle uses <em>the same JVM it is running in</em> as:</p>
 <ul>
@@ -2092,14 +2461,6 @@ once done, an <strong>API Key</strong> will be available from the web interface,
 </span></span><span style="display:flex;"><span>        uploadInBackground = !<span style="color:#b06;font-weight:bold">System</span>.getenv(<span style="color:#d20;background-color:#fff0f0">"CI"</span>).toBoolean()
 </span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
 </section><section>
-<h1 id="build-automation-2">Build Automation</h1>
-<h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
-<br>
-<h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
-<br>
-<p>Compiled on: 2025-09-16
- — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
-<p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section>
 
   
