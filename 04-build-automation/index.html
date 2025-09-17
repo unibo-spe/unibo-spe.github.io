@@ -829,21 +829,19 @@ Any <code>open class</code> implementing <a href="https://docs.gradle.org/curren
 </span></span><span style="display:flex;"><span>OpenJDK 64-Bit Server VM (build 11.0.8+10, mixed mode)
 </span></span><span style="display:flex;"><span>/usr/lib/jvm/java-11-openjdk/bin/java invocation <span style="color:#038">complete</span>
 </span></span></code></pre></div></section><section>
-<h2 id="gradle-principle-of-automation">Gradle: principle of automation</h2>
-<p>Let’s try something more involved: compiling some Java source located in <code>src</code>.
-<br></p>
-<h4 id="principle"><strong>PRINCIPLE</strong></h4>
+<h2 id="automate-everything">Automate everything</h2>
 <blockquote>
 <p><em>If you know how to do it, then you can instruct a machine to do it</em></p></blockquote>
+<p><em>Once you learn how some product is built, and you know how to build it by hand</em>
+<br>
+<strong>you have all the knowledge required to automate its construction</strong></p>
+<p>Let’s try something more involved: compiling some Java source located in <code>src</code>.</p>
 <p>Compiling a Java source is just matter of invoking the <code>javac</code> compiler:</p>
 <ul>
 <li>Passing the files to be compiled</li>
 <li>Passing an appropriate classpath where to look for dependencies</li>
 <li>Passing where to put generated files</li>
 </ul>
-<p><em>Once you learn how some product is built, and you know how to build it by hand</em>
-<br>
-<strong>you have all the knowledge required to automate its construction</strong></p>
 </section><section>
 <h2 id="gradle-compiling-from-scratch">Gradle: compiling from scratch</h2>
 <p>Let’s compile a simple <code>src/HelloWorld.java</code>:</p>
@@ -854,48 +852,75 @@ Any <code>open class</code> implementing <a href="https://docs.gradle.org/curren
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
 </span></span></span></code></pre></div><p>Build logic:</p>
 <ol>
+<li>Find the Java compiler executable</li>
 <li>Find the sources to be compiled</li>
-<li>If any, find <code>javac</code></li>
 <li>Invoke <code>javac -d destination &lt;files&gt;</code></li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
-</span></span><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) { <span style="color:#888">// This is a Kotlin lambda with receiver!
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    val sources = findSources() <span style="color:#888">//
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">if</span> (sources.<span style="color:#369">isNotEmpty</span>())  { <span style="color:#888">// If the folder exists and there are files
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        val javacExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javacExecutable</span>.<span style="color:#369">absolutePath</span> <span style="color:#888">// Use the current JVM's javac
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        commandLine(
-</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"$javacExecutable"</span>,
-</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"-d"</span>, <span style="color:#d20;background-color:#fff0f0">"$buildDir/bin"</span>, <span style="color:#888">// destination folder: the output directory of Gradle, inside "bin"
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            *sources
-</span></span><span style="display:flex;"><span>        )
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#888">// the task's doLast is inherited from Exec
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
-</span></span></code></pre></div></section><section>
-<h2 id="gradle-compiling-from-scratch-1">Gradle: compiling from scratch</h2>
-<p>Here is the <code>findSources()</code> function:</p>
+<p>Which step should be in configuration, and which in execution?</p>
+<p><strong>General rule</strong>: move as much as possible to execution</p>
 <ul>
-<li>Pure Kotlin</li>
-<li>Single expression</li>
-<li>Fluent safe call chaining</li>
+<li>The less is done at configuration time, the faster the build when the task is not executed</li>
+<li>Delaying to execution allows for more flexible configuration</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>(): Array&lt;String&gt; = projectDir <span style="color:#888">// From the project
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    .listFiles { <span style="color:#080;font-weight:bold">it</span>: File -&gt; <span style="color:#080;font-weight:bold">it</span>.isDirectory &amp;&amp; <span style="color:#080;font-weight:bold">it</span>.name == <span style="color:#d20;background-color:#fff0f0">"src"</span> } <span style="color:#888">// Find a folder named 'src'
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?.firstOrNull() <span style="color:#888">// If it's not there we're done
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?.walk() <span style="color:#888">// If it's there, iterate all its content (returns a Sequence&lt;File&gt;)
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?.filter { <span style="color:#080;font-weight:bold">it</span>.extension == <span style="color:#d20;background-color:#fff0f0">"java"</span> } <span style="color:#888">// Pick all Java files
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?.map { <span style="color:#080;font-weight:bold">it</span>.absolutePath } <span style="color:#888">// Map them to their absolute path
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?.toList() <span style="color:#888">// Sequences can't get converted to arrays, we must go through lists
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?.toTypedArray() <span style="color:#888">// Convert to Array&lt;String&gt;
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    ?: emptyArray() <span style="color:#888">// Yeah if anything's missing there are no sources
-</span></span></span></code></pre></div><p>Execution:</p>
+</section><section>
+<h2 id="lazy-configuration-in-gradle">Lazy configuration in Gradle</h2>
+<p>Gradle supports the construction of <em>lazy</em> properties and providers:</p>
+<ol>
+<li>Wire together Gradle components without worrying about values, just knowing their <em>provider</em>.
+<ul>
+<li>Configuration happens <em>before</em> execution, some values are unknown</li>
+<li>yet their provider is known at configuration time</li>
+</ul>
+</li>
+</ol>
+<h4 id="in-the-gradle-api">In the gradle API</h4>
+<p><code>Provider</code> – a value that can only be queried and cannot be changed</p>
+<ul>
+<li>Transformable through a <code>map</code> method</li>
+<li>Easily built via <code>project.provider { ... }</code> (<code>project</code> can be omitted in build scripts)</li>
+</ul>
+<p><code>Property</code> – a value that can be queried and also changed</p>
+<ul>
+<li>Subtype of Provider</li>
+<li>Can be <code>set</code> by passing a value or a <code>Provider</code></li>
+<li>A new property can be created via <code>project.objects.property&lt;Type&gt;()</code> (<code>project</code> can be omitted in build scripts)</li>
+</ul>
+</section><section>
+<p>inputs and outputs</p>
+</section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) { <span style="color:#888">// This is a Kotlin lambda with receiver!
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    val sourceDir = projectDir.<span style="color:#369">resolve</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>)
+</span></span><span style="display:flex;"><span>    inputs.<span style="color:#369">dir</span>(sourceDir)
+</span></span><span style="display:flex;"><span>    val outputDir = layout.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>.<span style="color:#369">absolutePath</span>
+</span></span><span style="display:flex;"><span>    outputs.<span style="color:#369">dir</span>(outputDir)
+</span></span><span style="display:flex;"><span>    val javacExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javacExecutable</span>.<span style="color:#369">absolutePath</span> <span style="color:#888">// Use the current JVM's javac
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    executable(javacExecutable)
+</span></span><span style="display:flex;"><span>    doFirst { <span style="color:#888">// We need to compute the sources and classpath as late as possible
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        val sources = sourceDir.<span style="color:#369">walkTopDown</span>().<span style="color:#369">filter</span> { it.<span style="color:#369">isFile</span> &amp;&amp; it.<span style="color:#369">extension</span> == <span style="color:#d20;background-color:#fff0f0">"java"</span> }.<span style="color:#369">toList</span>()
+</span></span><span style="display:flex;"><span>        println(sources)
+</span></span><span style="display:flex;"><span>        when {
+</span></span><span style="display:flex;"><span>            sources.<span style="color:#369">isEmpty</span>() -&gt; {
+</span></span><span style="display:flex;"><span>                println(<span style="color:#d20;background-color:#fff0f0">"No source files found, skipping compilation."</span>)
+</span></span><span style="display:flex;"><span>                args(<span style="color:#d20;background-color:#fff0f0">"-version"</span>)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">else</span> -&gt; args(
+</span></span><span style="display:flex;"><span>                <span style="color:#888">// destination folder: the output directory of Gradle, inside "bin"
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, outputDir,
+</span></span><span style="display:flex;"><span>                *sources.<span style="color:#369">toTypedArray</span>(),
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Execution:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle compileJava
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>BUILD SUCCESSFUL in 693ms
 </span></span></code></pre></div><p>Compiled files are in <code>build/bin</code>!</p>
 </section><section>
 <h2 id="gradle-dependency-management">Gradle: dependency management</h2>
-<p>Dependency management in Gradle depends from two fundamental concepts:</p>
+<p>Dependency management in Gradle is rooted in two fundamental concepts:</p>
 <ul>
 <li><strong>Dependency</strong>, a resource of some kind, possibly having other (<em>transitive</em>) dependencies</li>
 <li><strong>Configuration</strong>, a <em>resolvable</em> (mappable to actual resources) set of dependencies
@@ -1649,7 +1674,7 @@ e.g., <code>it.unibo.spe.greetings</code></p>
 </li>
 </ul>
 </section><section>
-<h2 id="lazy-configuration-in-gradle">Lazy configuration in Gradle</h2>
+<h2 id="lazy-configuration-in-gradle-1">Lazy configuration in Gradle</h2>
 <p>Some properties need to be <em>lazy</em>:</p>
 <ol>
 <li>Wire together Gradle components without worrying about values, just knowing their <em>provider</em>.
@@ -1665,7 +1690,7 @@ e.g., <code>it.unibo.spe.greetings</code></p>
 </li>
 <li>Performance: resource intensive work is not in the configuration phase</li>
 </ol>
-<h4 id="in-the-gradle-api">In the gradle API</h4>
+<h4 id="in-the-gradle-api-1">In the gradle API</h4>
 <p><code>Provider</code> – a value that can only be queried and cannot be changed</p>
 <ul>
 <li>Transformable with a <code>map</code> method!</li>
@@ -2631,6 +2656,8 @@ once done, an <strong>API Key</strong> will be available from the web interface,
   
   
 
+  
+    
   
   
 
