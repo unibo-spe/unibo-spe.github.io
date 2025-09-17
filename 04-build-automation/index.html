@@ -305,6 +305,31 @@ to a known good set.</p>
   </tbody>
 </table>
 </section><section>
+<h2 id="dependency-scopes">Dependency scopes</h2>
+<p>Dependencies may be needed in different contexts:</p>
+<ul>
+<li><strong>Compile-time</strong>: needed to compile the code (e.g., libraries whose types are used in method signatures)</li>
+<li><strong>Runtime</strong>: needed to run the code (e.g., libraries whose types are used in method bodies)
+<ul>
+<li>Note: it is common for runtime dependencies to be a <em>superset</em> of compile-time dependencies
+(some dependencies are runtime-only, e.g., JDBC drivers)</li>
+<li>Note: even though most of the time runtime dependencies are also compile-time dependencies,
+this is not always the case (e.g., some components of ANTLR4…)</li>
+</ul>
+</li>
+<li><strong>Test</strong>: needed to compile and run tests (e.g., testing frameworks)</li>
+<li><strong>Test runtime</strong>: needed to run tests (e.g., mocking frameworks)
+<ul>
+<li>Note: similar to the runtime scope, test runtime dependencies are often a <em>superset</em> of test dependencies</li>
+</ul>
+</li>
+<li><strong>Build time</strong>: needed to build the code (e.g., code generators, linters, documentation tools)</li>
+<li>…</li>
+</ul>
+<p>Scopes are typically <em>pre-defined in <strong>declarative</strong> build systems</em> and <em>manually defined in <strong>imperative</strong> ones</em>
+(there are exceptions to this rule).</p>
+<p><em><strong>Hybrid</strong> automators</em> often provide <em>pre-defined scopes</em> and <em>ways to define additional custom scopes</em>.</p>
+</section><section>
 <h2 id="imperative-build-tool-example-cmake">Imperative build tool example: CMake</h2>
 <p><a href="https://cmake.org/">CMake</a> is a widely used <em>imperative</em> build automation tool, especially in C and C++ projects.</p>
 <ul>
@@ -2606,8 +2631,6 @@ once done, an <strong>API Key</strong> will be available from the web interface,
   
 
   
-    
-  
   
 
   
@@ -2640,8 +2663,6 @@ once done, an <strong>API Key</strong> will be available from the web interface,
   
   
 
-  
-    
   
   
 
