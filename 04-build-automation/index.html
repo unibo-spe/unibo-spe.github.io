@@ -27,7 +27,7 @@
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2025-09-23
+<p>Compiled on: 2025-09-24
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -515,7 +515,7 @@ multiple tools <em>proliferated</em></p>
 <ul>
 <li>no <code>requirements.txt</code> nor <code>requirements-dev.txt</code></li>
 <li><code>pyproject.toml</code>, <code>poetry.toml</code>, and <code>poetry.lock</code> are <strong>Poetry-specific</strong></li>
-<li><code>poetry.lock</code> is generated <em>automatically</em> by Poetry, and you should not be manually edited</li>
+<li><code>poetry.lock</code> is generated <em>automatically</em> by Poetry, and should not be edited manually</li>
 </ul>
 </section><section>
 <h2 id="a-python-calculator">A Python <a href="https://github.com/unibo-dtm-se/calculator"><code>calculator</code></a></h2>
@@ -807,9 +807,10 @@ Only later, when a task is invoked, the block gets <em>actually executed</em></p
 <p>Gradle offers some facilities to make writing new tasks easier
 <br>
 An example is the <a href="https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/Exec.html"><code>org.gradle.api.Exec</code></a> task type, representing a command to be executed on the underlying command line</p>
-<p>At task registration time, it is possible to specify the task type.
+<p>The task type can be specified at task registration time.
 <br>
-Any <code>open class</code> implementing <a href="https://docs.gradle.org/current/javadoc/org/gradle/api/Task.html"><code>org.gradle.api.Task</code></a> can be instanced</p>
+Any <code>open class</code> implementing <a href="https://docs.gradle.org/current/javadoc/org/gradle/api/Task.html"><code>org.gradle.api.Task</code></a> can be instanced.</p>
+<p>Tasks of unspecified type are plain <code>BaseTask</code>s</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span> <span style="color:#888">// Jvm is part of the Gradle API
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"printJavaVersion"</span>) { <span style="color:#888">// Do you Recognize this? inline function with reified type!
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#888">// Configuration action is of type T.() -&gt; Unit, in this case Exec.T() -&gt; Unit
@@ -861,6 +862,28 @@ Any <code>open class</code> implementing <a href="https://docs.gradle.org/curren
 <ul>
 <li>The less is done at configuration time, the faster the build when the task is not executed</li>
 <li>Delaying to execution allows for more flexible configuration</li>
+</ul>
+</section><section>
+<h2 id="lazy-configuration-inputs-outputs">Lazy configuration, inputs, outputs</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888">// Computed at configuration time</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>val<span style="color:#bbb"> </span>sources<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>TODO(<span style="color:#d20;background-color:#fff0f0">"assume this is expensive"</span>)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888">// configuration that needs "sources"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>doFirst<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#888">// We need to compute the sources and classpath as late as possible!</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>sources.<span style="color:#369">forEach</span><span style="color:#bbb"> </span>{<span style="color:#bbb"> </span>...<span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span></code></pre></div><ul>
+<li>Problem: we need to run the <em>expensive</em> operation even if the task is <em>not executed</em>!
+<ul>
+<li>We must <strong>delay</strong> the execution as much as possible</li>
+</ul>
+</li>
+<li>Problem: other tasks may <em>generate sources</em>, and should thus run before
+<ul>
+<li>We must understand that the output of some tasks is the input of other tasks</li>
+</ul>
+</li>
 </ul>
 </section><section>
 <h2 id="lazy-configuration-in-gradle">Lazy configuration in Gradle</h2>
