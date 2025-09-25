@@ -131,18 +131,17 @@
 <ul>
 <li>Examples of domains and the contexts composing them
 <ul>
-<li>some university (department, faculty, HR, etc.)</li>
-<li>some given company (manufacturing, marketing, HR, etc.)</li>
-<li>linear algebra (matrices, complex numbers, polynoms, etc.)</li>
-<li>machine learning (classification, regression, feature selection, etc.)</li>
+<li>some <strong>university</strong> (department, faculty, HR, etc.)</li>
+<li>some given <strong>company</strong> (manufacturing, marketing, HR, etc.)</li>
+<li><strong>linear algebra</strong> (matrices, complex numbers, polynoms, etc.)</li>
+<li><strong>machine learning</strong> (classification, regression, feature selection, etc.)</li>
 </ul>
 </li>
 </ul>
 </section><section>
 <h2 id="ddd-philosophy-pt-1">DDD Philosophy (pt. 1)</h2>
 <ul>
-<li>
-<p><em>Software</em> will represent a <em>solution</em> to a <em>problem</em> in some <strong>business domain</strong></p>
+<li><em>Software</em> will represent a <em>solution</em> to a <em>problem</em> in some <strong>business domain</strong>
 <ul>
 <li>it should be <em>modelled</em> &amp; <em>implemented</em> to match that domain
 <ul>
@@ -152,11 +151,13 @@
 </li>
 </ul>
 </li>
-<li>
-<p>Words do not have meaning per se, but rather w.r.t. a domain</p>
+</ul>
+<br>
 <ul>
-<li>i.e. the <em>same word</em> may have <em>different meanings</em> in different domains</li>
-<li>each domain comes with a particular language characterising it
+<li><strong>Words do not have meaning per se</strong>, <em>but rather w.r.t. a domain</em>
+<ul>
+<li>i.e. the <em>same word</em> may have <strong>different meanings</strong> in different domains</li>
+<li>each domain comes with a particular <strong>language</strong> characterising it
 <ul>
 <li><em>software components</em> (interfaces, classes, etc.) should be <em>named after</em> that language</li>
 </ul>
@@ -168,9 +169,9 @@
 </section><section>
 <h2 id="ddd-philosophy-pt-2">DDD Philosophy (pt. 2)</h2>
 <ul>
-<li>Software should stick to the domain, at any moment
+<li>Software should <em>adhere</em> to the <em>domain</em>, at any moment
 <ul>
-<li>archiecture and implementation should favour adherence to the domain
+<li>architecture and implementation should favour adherence to the domain
 <ul>
 <li>in spite of their evolution / modification</li>
 </ul>
@@ -181,7 +182,7 @@
 <br>
 <ul>
 <li>
-<p>Functionalities, structure, and UX should mirror the domain too</p>
+<p>Functionalities, structure, and UX should <em>mirror</em> the domain too</p>
 <ul>
 <li>using the libraries should be natural for developers</li>
 <li>UX should be natural for users</li>
@@ -709,7 +710,7 @@ CustomerFactory -u-&gt; Customer: creates</p>
 <li>Hiding (i.e. be backed by) some <em>database technology</em></li>
 <li>Possibly realising some sort of <a href="https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping">object-relational mapping (ORM)</a></li>
 <li><em>Storing</em> / <em>retrieving</em> aggregate roots as <em>wholes</em></li>
-<li>Supporting <em>CRUD</em> operations on aggregate roots
+<li>Supporting <em>CRUD</em> operations on aggregate roots, and/or <em>wrapping common queries</em>
 <ul>
 <li>Create, Read, Update, Delete</li>
 </ul>
@@ -820,19 +821,22 @@ CustomerRegistry –&gt; CustomerID: exploits</p>
 <li>
 <p>Commonly provide <em>procedures</em> to do business-related stuff</p>
 <ul>
-<li>e.g. a particular operation…
+<li>e.g. a <strong>complex operation</strong>…
 <ul>
-<li>… concerning some particular aggregate root</li>
-<li>… which does not support it directly through its methods</li>
-<li>… because the operation is use-case specific</li>
+<li>… concerning some particular <em>aggregate root</em></li>
+<li>… which does <u>not</u> support the operation directly through its methods
+<ul>
+<li>(maybe because the operation is use-case specific)</li>
 </ul>
 </li>
-<li>e.g. proxying an external service</li>
-<li>e.g. a complex operation involving several aggregates, repositories, factories, etc.</li>
+</ul>
+</li>
+<li>e.g. <strong>proxying</strong> an external service</li>
+<li>e.g. a complex operation spanning through <strong>several aggregates</strong>, repositories, factories, etc.</li>
 </ul>
 </li>
 <li>
-<p>Non-trivial implementations should take care of</p>
+<p><em>Non-trivial</em> implementations should take care of</p>
 <ul>
 <li>supporting <em>concurrent access</em> to the service’s facilities</li>
 <li>exposing <em>domain events</em> to the external world</li>
