@@ -982,71 +982,103 @@ namely, if it can be skipped because its inputs have not changed since the last 
 <h2 id="gradle-dependency-management-1">Gradle: dependency management</h2>
 <p>Conceptually, we want something like:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Gradle way to create a configuration
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating <span style="color:#888">// Delegation!
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> ... <span style="color:#888">// Delegation!
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>dependencies {
-</span></span><span style="display:flex;"><span>    forEachLibrary { <span style="color:#888">// this function does not exist, unfortunate...
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        compileClasspath(files(<span style="color:#080;font-weight:bold">it</span>))
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    compileClasspath.add(dir(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).files.filter { <span style="color:#080;font-weight:bold">it</span>.extension == <span style="color:#d20;background-color:#fff0f0">"jar"</span> })
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>To be consumed by our improved compile task:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#888">// Resolve the classpath configuration (in general, files could be remote and need fetching)
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">classpathFiles</span> = compileClasspath.resolve()
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">sources</span> = findSources() <span style="color:#888">// Find sources
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">if</span> (sources != <span style="color:#080;font-weight:bold">null</span>)  {
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">javacExecutable</span> = <span style="color:#b06;font-weight:bold">Jvm</span>.current().javacExecutable.absolutePath
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">separator</span> = <span style="color:#080;font-weight:bold">if</span> (<span style="color:#b06;font-weight:bold">Os</span>.isFamily(<span style="color:#b06;font-weight:bold">Os</span>.FAMILY_WINDOWS)) <span style="color:#d20;background-color:#fff0f0">";"</span> <span style="color:#080;font-weight:bold">else</span> <span style="color:#d20;background-color:#fff0f0">":"</span> <span style="color:#888">// Deal with Windows conventions
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        commandLine(
-</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$javacExecutable</span><span style="color:#d20;background-color:#fff0f0">"</span>, <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, classpathFiles.joinToString(separator = separator),
-</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"-d"</span>, <span style="color:#d20;background-color:#fff0f0">"bin"</span>, *sources
-</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">else</span> -&gt; args(
+</span></span><span style="display:flex;"><span>        <span style="color:#d20;background-color:#fff0f0">"-d"</span>, outputDir,
+</span></span><span style="display:flex;"><span>        <span style="color:#888">// classpath from the configuration
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${File.pathSeparator}${compileClasspath.asPath}</span><span style="color:#d20;background-color:#fff0f0">"</span>,
+</span></span><span style="display:flex;"><span>        *sources.toTypedArray(),
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="gradle-using-custom-configurations">Gradle: using custom configurations</h2>
+<p>A minimal DSL to simplify file access:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Minimal file access DSL
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>object AllFiles
+</span></span><span style="display:flex;"><span>val Project.<span style="color:#369">allFiles</span>: AllFiles get() = AllFiles <span style="color:#888">// We need this to prevent "Object AllFiles captures the script class instance" error
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>data <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">Finder</span>(val <span style="color:#369;font-style:italic">path:</span> File) {
+</span></span><span style="display:flex;"><span>    fun <span style="color:#06b;font-weight:bold">withExtension</span>(<span style="color:#369;font-style:italic">extension:</span> String): List&lt;File&gt; =
+</span></span><span style="display:flex;"><span>        path.<span style="color:#369">walkTopDown</span>().<span style="color:#369">filter</span> { it.<span style="color:#369">isFile</span> &amp;&amp; it.<span style="color:#369">extension</span> == extension }.<span style="color:#369">toList</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>fun AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#369;font-style:italic">path:</span> String) = Finder(projectDir.<span style="color:#369">resolve</span>(path))
+</span></span></code></pre></div><p>Dependency declaration (configuration time):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> <span style="color:#888">// Delegation!
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>
+</span></span><span style="display:flex;"><span>dependencies { <span style="color:#888">// built-in in Gradle
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Dependency use (execution time):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    doFirst { <span style="color:#888">// We need to compute the sources and classpath as late as possible
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        val sources = AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
+</span></span><span style="display:flex;"><span>        println(sources)
+</span></span><span style="display:flex;"><span>        when {
+</span></span><span style="display:flex;"><span>            sources.<span style="color:#369">isEmpty</span>() -&gt; {
+</span></span><span style="display:flex;"><span>                println(<span style="color:#d20;background-color:#fff0f0">"No source files found, skipping compilation."</span>)
+</span></span><span style="display:flex;"><span>                args(<span style="color:#d20;background-color:#fff0f0">"-version"</span>)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">else</span> -&gt; args(
+</span></span><span style="display:flex;"><span>                <span style="color:#888">// destination folder: the output directory of Gradle, inside "bin"
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, outputDir,
+</span></span><span style="display:flex;"><span>                <span style="color:#888">// classpath from the configuration
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${File.pathSeparator}${compileClasspath.asPath}"</span>,
+</span></span><span style="display:flex;"><span>                *sources.<span style="color:#369">toTypedArray</span>(),
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div></section><section>
+<h2 id="gradle-using-custom-configurations-1">Gradle: using custom configurations</h2>
+<p>Full example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> <span style="color:#888">// Delegation!
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>
+</span></span><span style="display:flex;"><span>dependencies { <span style="color:#888">// built-in in Gradle
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) { <span style="color:#888">// This is a Kotlin lambda with receiver!
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    inputs.<span style="color:#369">dir</span>(projectDir.<span style="color:#369">resolve</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>))
+</span></span><span style="display:flex;"><span>    val outputDir = layout.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>.<span style="color:#369">absolutePath</span>
+</span></span><span style="display:flex;"><span>    outputs.<span style="color:#369">dir</span>(outputDir)
+</span></span><span style="display:flex;"><span>    val javacExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javacExecutable</span>.<span style="color:#369">absolutePath</span> <span style="color:#888">// Use the current JVM's javac
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    executable(javacExecutable)
+</span></span><span style="display:flex;"><span>    doFirst { <span style="color:#888">// We need to compute the sources and classpath as late as possible
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        val sources = AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
+</span></span><span style="display:flex;"><span>        println(sources)
+</span></span><span style="display:flex;"><span>        when {
+</span></span><span style="display:flex;"><span>            sources.<span style="color:#369">isEmpty</span>() -&gt; {
+</span></span><span style="display:flex;"><span>                println(<span style="color:#d20;background-color:#fff0f0">"No source files found, skipping compilation."</span>)
+</span></span><span style="display:flex;"><span>                args(<span style="color:#d20;background-color:#fff0f0">"-version"</span>)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">else</span> -&gt; args(
+</span></span><span style="display:flex;"><span>                <span style="color:#888">// destination folder: the output directory of Gradle, inside "bin"
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, outputDir,
+</span></span><span style="display:flex;"><span>                <span style="color:#888">// classpath from the configuration
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${File.pathSeparator}${compileClasspath.asPath}"</span>,
+</span></span><span style="display:flex;"><span>                *sources.<span style="color:#369">toTypedArray</span>(),
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>We just need to write <code>forEachLibrary</code>, but that is just a Kotlin exercise…</p>
-</section><section>
-<h2 id="micro-exercise-in-kotlin">Micro exercise in Kotlin</h2>
-<p>…not particularly difficult to solve:</p>
-<ol>
-<li>It’s just something we need to do for each library</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">forEachLibrary</span>(todo: (String) -&gt; Unit) {
-</span></span><span style="display:flex;"><span>    findLibraries().forEach {
-</span></span><span style="display:flex;"><span>        todo(<span style="color:#080;font-weight:bold">it</span>)
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888">// Minimal file access DSL
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>object AllFiles
+</span></span><span style="display:flex;"><span>val Project.<span style="color:#369">allFiles</span>: AllFiles get() = AllFiles <span style="color:#888">// We need this to prevent "Object AllFiles captures the script class instance" error
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>data <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">Finder</span>(val <span style="color:#369;font-style:italic">path:</span> File) {
+</span></span><span style="display:flex;"><span>    fun <span style="color:#06b;font-weight:bold">withExtension</span>(<span style="color:#369;font-style:italic">extension:</span> String): List&lt;File&gt; =
+</span></span><span style="display:flex;"><span>        path.<span style="color:#369">walkTopDown</span>().<span style="color:#369">filter</span> { it.<span style="color:#369">isFile</span> &amp;&amp; it.<span style="color:#369">extension</span> == extension }.<span style="color:#369">toList</span>()
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ol start="2">
-<li><code>findLibraries()</code> is similar to <code>findSources()</code>, let’s refactor:</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"src"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"java"</span>) <span style="color:#888">// OK now we need findFiles()
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findLibraries</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"lib"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"jar"</span>) <span style="color:#888">// And we also need a way to invoke withExtension
-</span></span></span></code></pre></div><ol start="3">
-<li>Let’s use an intermediate class representing a search on a folder:</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findFilesIn</span>(directory: String) = FinderInFolder(directory)
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FinderInFolder</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">directory</span>: String) {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">withExtension</span>(extension: String): Array&lt;String&gt; = TODO()
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#888">// Now it compiles! We just need to write the actual method, but that's easy
-</span></span></span></code></pre></div></section><section>
-<h2 id="micro-exercise-in-kotlin-1">Micro exercise in Kotlin</h2>
-<p>Complete solution:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FinderInFolder</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">directory</span>: String) {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">withExtension</span>(extension: String): Array&lt;String&gt; = projectDir
-</span></span><span style="display:flex;"><span>        .listFiles { <span style="color:#080;font-weight:bold">it</span>: File -&gt; <span style="color:#080;font-weight:bold">it</span>.isDirectory &amp;&amp; <span style="color:#080;font-weight:bold">it</span>.name == directory }
-</span></span><span style="display:flex;"><span>        ?.firstOrNull()
-</span></span><span style="display:flex;"><span>        ?.walk()
-</span></span><span style="display:flex;"><span>        ?.filter { <span style="color:#080;font-weight:bold">it</span>.extension == extension }
-</span></span><span style="display:flex;"><span>        ?.map { <span style="color:#080;font-weight:bold">it</span>.absolutePath }
-</span></span><span style="display:flex;"><span>        ?.toList()
-</span></span><span style="display:flex;"><span>        ?.toTypedArray()
-</span></span><span style="display:flex;"><span>        ?: emptyArray()
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findFilesIn</span>(directory: String) = FinderInFolder(directory)
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"src"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findLibraries</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"lib"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"jar"</span>)
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">DependencyHandlerScope</span>.forEachLibrary(todo: <span style="color:#b06;font-weight:bold">DependencyHandlerScope</span>.(String) -&gt; Unit) {
-</span></span><span style="display:flex;"><span>    findLibraries().forEach { todo(<span style="color:#080;font-weight:bold">it</span>) }
-</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>fun AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#369;font-style:italic">path:</span> String) = Finder(projectDir.<span style="color:#369">resolve</span>(path))
 </span></span></code></pre></div></section><section>
 <h2 id="gradle-task-dependencies">Gradle: task dependencies</h2>
 <p>Next step: we can compile, why not executing the program as well?</p>
