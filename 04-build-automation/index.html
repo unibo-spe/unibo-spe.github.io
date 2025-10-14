@@ -27,7 +27,7 @@
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2025-10-12
+<p>Compiled on: 2025-10-14
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -886,6 +886,24 @@ Any <code>open class</code> implementing <a href="https://docs.gradle.org/curren
 </li>
 </ul>
 </section><section>
+<h2 id="task-inputs-and-outputs">Task inputs and outputs</h2>
+<p>How can Gradle determine which tasks some task depends on?</p>
+<ul>
+<li>Explicit dependencies (later)</li>
+<li>Implicit dependencies, via <em>inputs</em> and <em>outputs</em>
+<ul>
+<li>If a task <em>input</em> is the <em>output</em> of another task, then the first task depends on the second</li>
+</ul>
+</li>
+</ul>
+<p>Inputs and outputs can be configured via the <code>inputs</code> and <code>outputs</code> properties of a task.</p>
+<p>Inputs and outputs are also used by Gradle to determine if a task is <code>UP-TO-DATE</code>,
+namely, if it can be skipped because its inputs have not changed since the last execution.</p>
+<ul>
+<li>This is called <em>incremental build</em>.</li>
+<li>Large builds can be sped up significantly.</li>
+</ul>
+</section><section>
 <h2 id="lazy-configuration-in-gradle">Lazy configuration in Gradle</h2>
 <p>Gradle supports the construction of <em>lazy</em> properties and providers:</p>
 <ol>
@@ -908,8 +926,6 @@ Any <code>open class</code> implementing <a href="https://docs.gradle.org/curren
 <li>Can be <code>set</code> by passing a value or a <code>Provider</code></li>
 <li>A new property can be created via <code>project.objects.property&lt;Type&gt;()</code> (<code>project</code> can be omitted in build scripts)</li>
 </ul>
-</section><section>
-<p>inputs and outputs</p>
 </section><section>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
 </span></span><span style="display:flex;"><span>
