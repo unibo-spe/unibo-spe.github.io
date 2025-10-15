@@ -809,7 +809,8 @@ Primary constructor code (if any) must be in an <code>init</code> block</p>
 <h1 id="kotlin-102--oop-12">Kotlin 102 – OOP</h1>
 <blockquote>
 <p><strong>Design and document for inheritance or else prohibit it</strong>
-<cite>J. Bloch, Effective Java, Item 17</cite></p></blockquote>
+<cite>J. Bloch, Effective Java, Item 17</cite></p>
+</blockquote>
 <h2 id="closed-hierarchies-and-open">Closed hierarchies and <code>open</code></h2>
 <p>Kotlin enforces EJ-17 by design: all classes are final if the keyword <code>open</code> is not specified</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span>
@@ -1500,7 +1501,8 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 <code>A</code> should extend <code>B</code> only if <code>A</code> truly ‘is-a’ a <code>B</code>,
 if not, <em>use composition</em> instead,
 which means <code>A</code> should hold a reference of <code>B</code> and <em>expose a simpler API</em>.
-<cite> <em>J. Bloch, Effective Java, Item 16</em></cite></p></blockquote>
+<cite> <em>J. Bloch, Effective Java, Item 16</em></cite></p>
+</blockquote>
 <p><strong>Delegation</strong> is one of the mechanisms to implement composition,
 see the <a href="https://en.wikipedia.org/wiki/Delegation_pattern">delegation pattern</a>
 <br>
