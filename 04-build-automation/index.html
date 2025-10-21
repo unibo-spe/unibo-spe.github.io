@@ -23,11 +23,11 @@
   
 
     <section><h1 id="build-automation">Build Automation</h1>
-<h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
+<h2 id="hahahugoshortcode2s0hbhb">Software Process Engineering</h2>
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2025-10-20
+<p>Compiled on: 2025-10-21
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -1097,36 +1097,129 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </ul>
 </li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runtimeClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating {
-</span></span><span style="display:flex;"><span>    extendsFrom(compileClasspath) <span style="color:#888">// Built-in machinery to say that one configuration is another "plus stuff"
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
-</span></span><span style="display:flex;"><span>dependencies {
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>    runtimeClasspath(files(<span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$buildDir</span><span style="color:#d20;background-color:#fff0f0">/bin"</span>))
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span>
+</span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">runtimeClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> {
+</span></span><span style="display:flex;"><span>    extendsFrom(compileClasspath)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dependencies { <span style="color:#888">// built-in in Gradle
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ol start="2">
 <li>Let’s write the task</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"runJava"</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">classpathFiles</span> = runtimeClasspath.resolve()
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">mainClass</span> = <span style="color:#d20;background-color:#fff0f0">"PrintException"</span> <span style="color:#888">// Horribly hardcoded, we must do something
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">javaExecutable</span> = <span style="color:#b06;font-weight:bold">Jvm</span>.current().javaExecutable.absolutePath
-</span></span><span style="display:flex;"><span>    commandLine(javaExecutable, <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, classpathFiles.joinToString(separator = separator), mainClass)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"runJava"</span>) {
+</span></span><span style="display:flex;"><span>    inputs.<span style="color:#369">dir</span>(compilationDestination)
+</span></span><span style="display:flex;"><span>    dependsOn(compileJava) <span style="color:#888">// IMPORTANT! This is a task dependency, we must compile before running
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    executable(Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>.<span style="color:#369">absolutePath</span>)
+</span></span><span style="display:flex;"><span>    doFirst {
+</span></span><span style="display:flex;"><span>        args(
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${compilationDestination}${File.pathSeparator}${runtimeClasspath.asPath}"</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"HelloMath"</span>,
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
-<h2 id="gradle-task-dependencies-1">Gradle: task dependencies</h2>
-<p>Let’s run it!</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>❯ gradle runJava
+
+<div class="multiCol">
+    <div class="col  ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&gt; Task :runJava FAILED
-</span></span><span style="display:flex;"><span>Error: Could not find or load main class PrintException
-</span></span><span style="display:flex;"><span>Caused by: java.lang.ClassNotFoundException: PrintException
+</span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span>
+</span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">runtimeClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> {
+</span></span><span style="display:flex;"><span>    extendsFrom(compileClasspath)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dependencies { <span style="color:#888">// built-in in Gradle
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compilationDestination:</span> String = layout.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>.<span style="color:#369">absolutePath</span>
+</span></span><span style="display:flex;"><span>val compileJava = tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) { <span style="color:#888">// This is a Kotlin lambda with receiver!
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    inputs.<span style="color:#369">dir</span>(projectDir.<span style="color:#369">resolve</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>))
+</span></span><span style="display:flex;"><span>    outputs.<span style="color:#369">dir</span>(compilationDestination)
+</span></span><span style="display:flex;"><span>    val javacExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javacExecutable</span>.<span style="color:#369">absolutePath</span> <span style="color:#888">// Use the current JVM's javac
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    executable(javacExecutable)
+</span></span><span style="display:flex;"><span>    doFirst { <span style="color:#888">// We need to compute the sources and classpath as late as possible
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        val sources = AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
+</span></span><span style="display:flex;"><span>        println(sources)
+</span></span><span style="display:flex;"><span>        when {
+</span></span><span style="display:flex;"><span>            sources.<span style="color:#369">isEmpty</span>() -&gt; {
+</span></span><span style="display:flex;"><span>                println(<span style="color:#d20;background-color:#fff0f0">"No source files found, skipping compilation."</span>)
+</span></span><span style="display:flex;"><span>                args(<span style="color:#d20;background-color:#fff0f0">"-version"</span>)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">else</span> -&gt; args(
+</span></span><span style="display:flex;"><span>                <span style="color:#888">// destination folder: the output directory of Gradle, inside "bin"
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, compilationDestination,
+</span></span><span style="display:flex;"><span>                <span style="color:#888">// classpath from the configuration
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${File.pathSeparator}${compileClasspath.asPath}"</span>,
+</span></span><span style="display:flex;"><span>                *sources.<span style="color:#369">toTypedArray</span>(),
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"runJava"</span>) {
+</span></span><span style="display:flex;"><span>    inputs.<span style="color:#369">dir</span>(compilationDestination)
+</span></span><span style="display:flex;"><span>    dependsOn(compileJava) <span style="color:#888">// IMPORTANT! This is a task dependency, we must compile before running
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    executable(Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>.<span style="color:#369">absolutePath</span>)
+</span></span><span style="display:flex;"><span>    doFirst {
+</span></span><span style="display:flex;"><span>        args(
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${compilationDestination}${File.pathSeparator}${runtimeClasspath.asPath}"</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"HelloMath"</span>,
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</div>
+<div class="col  ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Minimal file access DSL
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>object AllFiles
+</span></span><span style="display:flex;"><span>val Project.<span style="color:#369">allFiles</span>: AllFiles get() = AllFiles <span style="color:#888">// We need this to prevent "Object AllFiles captures the script class instance" error
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>data <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">Finder</span>(val <span style="color:#369;font-style:italic">path:</span> File) {
+</span></span><span style="display:flex;"><span>    fun <span style="color:#06b;font-weight:bold">withExtension</span>(<span style="color:#369;font-style:italic">extension:</span> String): List&lt;File&gt; =
+</span></span><span style="display:flex;"><span>        path.<span style="color:#369">walkTopDown</span>().<span style="color:#369">filter</span> { it.<span style="color:#369">isFile</span> &amp;&amp; it.<span style="color:#369">extension</span> == extension }.<span style="color:#369">toList</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>fun AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#369;font-style:italic">path:</span> String) = Finder(projectDir.<span style="color:#369">resolve</span>(path))
+</span></span></code></pre></div>
+</div>
+
+</div>
+
+</section><section>
+<h2 id="gradle-task-dependencies-1">Gradle: task dependencies</h2>
+<p>Let us temporarily comment:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    dependsOn(compileJava) <span style="color:#888">// IMPORTANT! This is a task dependency, we must compile before running
+</span></span></span></code></pre></div><p>and run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>&gt; Task :runJava FAILED
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[Incubating] Problems report is available at: file:///home/danysk/LocalProjects/spe-slides/examples/run-java-deps/build/reports/problems/problems-report.html
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>FAILURE: Build failed with an exception.
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>* What went wrong:
-</span></span><span style="display:flex;"><span>Execution failed <span style="color:#080;font-weight:bold">for</span> task <span style="color:#d20;background-color:#fff0f0">':runJava'</span>.
-</span></span><span style="display:flex;"><span>&gt; Process <span style="color:#d20;background-color:#fff0f0">'command '</span>/usr/lib/jvm/java-11-openjdk/bin/java<span style="color:#d20;background-color:#fff0f0">''</span> finished with non-zero <span style="color:#038">exit</span> value <span style="color:#00d;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>A problem was found with the configuration of task <span style="color:#d20;background-color:#fff0f0">':runJava'</span> (<span style="color:#038">type</span> <span style="color:#d20;background-color:#fff0f0">'Exec'</span>).
+</span></span><span style="display:flex;"><span>  - Type <span style="color:#d20;background-color:#fff0f0">'org.gradle.api.tasks.Exec'</span> property <span style="color:#d20;background-color:#fff0f0">'$1'</span> specifies directory <span style="color:#d20;background-color:#fff0f0">'/home/danysk/LocalProjects/spe-slides/examples/run-java-deps/build/bin'</span> which doesn<span style="color:#d20;background-color:#fff0f0">'t exist.
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">    Reason: An input file was expected to be present but it doesn'</span>t exist.
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    Possible solutions:
+</span></span><span style="display:flex;"><span>      1. Make sure the directory exists before the task is called.
+</span></span><span style="display:flex;"><span>      2. Make sure that the task which produces the directory is declared as an input. <span style="color:#888"># &lt;&lt;&lt;&lt; OUR PROBLEM!!</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    For more information, please refer to https://docs.gradle.org/8.14/userguide/validation_problems.html#input_file_does_not_exist in the Gradle documentation.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>* Try:
+</span></span><span style="display:flex;"><span>&gt; Make sure the directory exists before the task is called
+</span></span><span style="display:flex;"><span>&gt; Make sure that the task which produces the directory is declared as an input
+</span></span><span style="display:flex;"><span>&gt; Run with --scan to get full insights.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>BUILD FAILED in 752ms
+</span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">1</span> actionable task: <span style="color:#00d;font-weight:bold">1</span> executed
 </span></span></code></pre></div><p>$\Rightarrow$ The code was not compiled!</p>
 <ul>
 <li>We need <code>runJava</code> to run after <code>compileJava</code></li>
@@ -1134,25 +1227,18 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </ul>
 </section><section>
 <h2 id="gradle-task-dependencies-2">Gradle: task dependencies</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Let's get a reference to the task
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileJava</span> = tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) {
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"runJava"</span>) {
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>    dependsOn(compileJava) <span style="color:#888">// runJava can run only if compileJava has been run
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
-</span></span></code></pre></div><p>Run now:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#369">TERM</span>=dumb gradle runJava
+<p>Run with the dependency correctly set:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span> ./gradlew runJava                                                                                                                                                                                <span style="color:#00d;font-weight:bold">1</span> ✘  3.4.7  
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>&gt; Task :compileJava
+</span></span><span style="display:flex;"><span>[/home/danysk/LocalProjects/spe-slides/examples/run-java-deps/src/HelloMath.java]
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>&gt; Task :runJava
-</span></span><span style="display:flex;"><span>java.lang.IllegalStateException
-</span></span><span style="display:flex;"><span>        at PrintException.main(PrintException.java:5)
+</span></span><span style="display:flex;"><span><span style="color:#369">avg</span>=3.0, std.dev=1.5811388300841898
+</span></span><span style="display:flex;"><span>regression: <span style="color:#369">y</span> = 2.0300000000000002 * x + -0.030000000000001137
+</span></span><span style="display:flex;"><span>R²=0.998957626296907
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Just printed a stacktrace, I<span style="color:#a61717;background-color:#e3d2d2">'</span>m fine actually
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>BUILD SUCCESSFUL in 775ms
+</span></span><span style="display:flex;"><span>BUILD SUCCESSFUL in 581ms
 </span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">2</span> actionable tasks: <span style="color:#00d;font-weight:bold">2</span> executed
 </span></span></code></pre></div></section><section>
 <h2 id="build-automation-dependencies-everywhere">Build automation: dependencies everywhere</h2>
@@ -1201,160 +1287,6 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </ul>
 <p>The Gradle wrapper is <em><strong>the</strong> correct way</em> to use gradle, and we’ll be using it from now on.</p>
 </section><section>
-<h2 id="cleaning-up">Cleaning up</h2>
-<p>A source of failures when building is <em>dirty status</em>.
-<br>
-For istance, in the previous example, before we introduced a dependency between tasks:</p>
-<ul>
-<li>clean execution fails</li>
-<li>execution after a <em>manual</em> execution of compile works
-<ul>
-<li><strong>false positive!</strong></li>
-</ul>
-</li>
-</ul>
-<p>We need a way to start clean.
-<br>
-This usually involves cleaning up the build directory - not so hard in our example</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.register(<span style="color:#d20;background-color:#fff0f0">"clean"</span>) { <span style="color:#888">// A generic task is fine
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    doLast {
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">if</span> (!buildDir.deleteRecursively()) {
-</span></span><span style="display:flex;"><span>            error(<span style="color:#d20;background-color:#fff0f0">"Cannot delete </span><span style="color:#33b;background-color:#fff0f0">$buildDir</span><span style="color:#d20;background-color:#fff0f0">"</span>)
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></section><section>
-<h2 id="build-hierarchies">Build hierarchies</h2>
-<p>Sometimes projects are <em>modular</em>
-<br>
-Where a module is a sub-project with a clear identity, possibly reusable elsewhere</p>
-<p>Examples:</p>
-<ul>
-<li>A smartphone application with:
-<ul>
-<li>A common library</li>
-<li>A software that uses such library for the actual app</li>
-</ul>
-</li>
-<li>Bluetooth control software comprising:
-<ul>
-<li>Platform-specific drivers</li>
-<li>A platform-agnostic bluetooth API and service</li>
-<li>A CLI interface to the library</li>
-<li>A Graphical interface</li>
-</ul>
-</li>
-</ul>
-<p>Modular software <em>simplifies maintenance</em> and <em>improves understandability</em>
-<br>
-Modules may <strong>depend</strong> on other modules
-<br>
-Some build tasks of some module may require build tasks <em>of other modules</em> to be complete before execution</p>
-</section><section>
-<h2 id="hierarchial-project">Hierarchial project</h2>
-<p>Let us split our project into two components:</p>
-<ul>
-<li>A base library</li>
-<li>A stand-alone application using the library</li>
-</ul>
-<p>We need to reorganize the build logic to something similar to</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>hierarchial-project
-</span></span><span style="display:flex;"><span>|__:library
-</span></span><span style="display:flex;"><span>\__:app
-</span></span></code></pre></div><p>Desiderata:</p>
-<ul>
-<li>We can compile any of the two projects from the root</li>
-<li>We can run the app from the root</li>
-<li>Calling a run of the app implies a compilation of the library</li>
-<li>We can clean both projects</li>
-</ul>
-</section><section>
-<h2 id="authoring-subprojects-in-gradle">Authoring subprojects in Gradle</h2>
-<p>Gradle (as many other build automators)
-offers built-in support for <em>hierarchial projects</em>.
-<br>
-Gradle is limited to <em>two levels</em>, other products such as Maven have no limitation</p>
-<p>Subprojects are listed in a <code>settings.gradle.kts</code> file
-<br>
-Incidentally, it’s the same place where the project name can be specified</p>
-<p>Subprojects <em>must have their own</em> <code>build.gradle.kts</code>
-<br>
-They can also have their own <code>settings.gradle.kts</code>, e.g. for selecting a name different than their folder</p>
-</section><section>
-<h2 id="authoring-subprojects-in-gradle-1">Authoring subprojects in Gradle</h2>
-<ol>
-<li>Create a settings.gradle.kts and declare your modules:</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>rootProject.<span style="color:#369">name</span> = <span style="color:#d20;background-color:#fff0f0">"project-with-hierarchy"</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>include(<span style="color:#d20;background-color:#fff0f0">":library"</span>) <span style="color:#888">// There must be a folder named "library"
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>include(<span style="color:#d20;background-color:#fff0f0">":app"</span>) <span style="color:#888">// There must be a folder named "app"
-</span></span></span></code></pre></div><ol start="2">
-<li>In the root project, configure the part common to <strong>all</strong> projects in a <code>allprojects</code> block
-<ul>
-<li>e.g., in our case, the <code>clean</code> task should be available for each project</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>allprojects {
-</span></span><span style="display:flex;"><span>    tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"clean"</span>) { <span style="color:#888">// A generic task is fine
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">if</span> (!buildDir.<span style="color:#369">deleteRecursively</span>()) {
-</span></span><span style="display:flex;"><span>            error(<span style="color:#d20;background-color:#fff0f0">"Cannot delete $buildDir"</span>)
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></section><section>
-<h2 id="authoring-subprojects-in-gradle-2">Authoring subprojects in Gradle</h2>
-<ol start="3">
-<li>Put the part shared by <em>solely the sub-projects</em> into a <code>subprojects</code> block
-<ul>
-<li>e.g., in our case, the <code>compileJava</code> task and the related utilities</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>subprojects {
-</span></span><span style="display:flex;"><span>    <span style="color:#888">// This must be there, as projectDir must refer to the *current* project
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FinderInFolder</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">directory</span>: String) ...
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findFilesIn</span>(directory: String) = FinderInFolder(directory)
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"src"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findLibraries</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"lib"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"jar"</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">DependencyHandlerScope</span>.forEachLibrary(todo: <span style="color:#b06;font-weight:bold">DependencyHandlerScope</span>.(String) -&gt; Unit) ...
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runtimeClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating { extendsFrom(compileClasspath) }
-</span></span><span style="display:flex;"><span>    dependencies { ... }
-</span></span><span style="display:flex;"><span>    tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) { ... }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></section><section>
-<h2 id="authoring-subprojects-in-gradle-3">Authoring subprojects in Gradle</h2>
-<ol start="4">
-<li>In each subproject’s <code>build.gradle.kts</code>, add further customization as necessary
-<ul>
-<li>e.g., in our case, the <code>runJava</code> task can live in the <code>:app</code> subroject</li>
-</ul>
-</li>
-<li>Connect configurations to each other using dependencies
-<ul>
-<li>in <code>app</code>’s <code>build.gradle.kts</code>, for instance:</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
-</span></span><span style="display:flex;"><span>    compileClasspath(project(<span style="color:#d20;background-color:#fff0f0">":library"</span>)) { <span style="color:#888">// My compileClasspath configuration depends on project library
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        targetConfiguration = <span style="color:#d20;background-color:#fff0f0">"runtimeClasspath"</span> <span style="color:#888">// Specifically, from its runtime
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ol start="6">
-<li>Declare inter-subproject task dependencies
-<ul>
-<li>Tasks may fail if ran out of order!</li>
-<li>Compiling <code>app</code> requires <code>library</code> to be compiled!</li>
-<li>inside <code>app</code>’s <code>build.gradle.kts</code>:</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">compileJava</span> { dependsOn(project(<span style="color:#d20;background-color:#fff0f0">":library"</span>).<span style="color:#369">tasks</span>.<span style="color:#369">compileJava</span>) }
-</span></span></code></pre></div><p><em>Note</em>: <code>library</code>’s <code>build.gradle.kts</code> is actually empty at the end of the process</p>
-</section><section>
 <h2 id="mixed-imperativity-and-declarativity">Mixed imperativity and declarativity</h2>
 <p>At the moment, we have part of the project that’s declarative, and part that’s imperative:</p>
 <ul>
@@ -1363,8 +1295,6 @@ They can also have their own <code>settings.gradle.kts</code>, e.g. for selectin
 <li>configurations and their relationships</li>
 <li>dependencies</li>
 <li>task dependencies</li>
-<li>project hierarchy definition</li>
-<li>some parts of the task configuration</li>
 </ul>
 </li>
 <li><strong>Imperative</strong>
@@ -1399,10 +1329,11 @@ They can also have their own <code>settings.gradle.kts</code>, e.g. for selectin
 <ul>
 <li>We have a number of “Java-related” tasks.</li>
 <li>All of them have a classpath</li>
-<li>One has an output directory</li>
-<li>One has a “main class”</li>
+<li>All of them have an executable that depend on the operation they perform</li>
+<li>One has an output directory and input sources</li>
+<li>One has a “main class” input</li>
 </ul>
-<div class="mermaid" data-processed="true" pre-rendered="true"><svg aria-roledescription="classDiagram" role="graphics-document document" viewBox="0 0 477.625 224" style="max-width: 477.625px;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="100%" id="my-svg"><style>#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg g.classGroup text{fill:#9370DB;stroke:none;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:10px;}#my-svg g.classGroup text .title{font-weight:bolder;}#my-svg .nodeLabel,#my-svg .edgeLabel{color:#131300;}#my-svg .edgeLabel .label rect{fill:#ECECFF;}#my-svg .label text{fill:#131300;}#my-svg .edgeLabel .label span{background:#ECECFF;}#my-svg .classTitle{font-weight:bolder;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#my-svg .divider{stroke:#9370DB;stroke-width:1;}#my-svg g.clickable{cursor:pointer;}#my-svg g.classGroup rect{fill:#ECECFF;stroke:#9370DB;}#my-svg g.classGroup line{stroke:#9370DB;stroke-width:1;}#my-svg .classLabel .box{stroke:none;stroke-width:0;fill:#ECECFF;opacity:0.5;}#my-svg .classLabel .label{fill:#9370DB;font-size:10px;}#my-svg .relation{stroke:#333333;stroke-width:1;fill:none;}#my-svg .dashed-line{stroke-dasharray:3;}#my-svg .dotted-line{stroke-dasharray:1 2;}#my-svg #compositionStart,#my-svg .composition{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#my-svg #compositionEnd,#my-svg .composition{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#my-svg #dependencyStart,#my-svg .dependency{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#my-svg #dependencyStart,#my-svg .dependency{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#my-svg #extensionStart,#my-svg .extension{fill:transparent!important;stroke:#333333!important;stroke-width:1;}#my-svg #extensionEnd,#my-svg .extension{fill:transparent!important;stroke:#333333!important;stroke-width:1;}#my-svg #aggregationStart,#my-svg .aggregation{fill:transparent!important;stroke:#333333!important;stroke-width:1;}#my-svg #aggregationEnd,#my-svg .aggregation{fill:transparent!important;stroke:#333333!important;stroke-width:1;}#my-svg #lollipopStart,#my-svg .lollipop{fill:#ECECFF!important;stroke:#333333!important;stroke-width:1;}#my-svg #lollipopEnd,#my-svg .lollipop{fill:#ECECFF!important;stroke:#333333!important;stroke-width:1;}#my-svg .edgeTerminals{font-size:11px;line-height:initial;}#my-svg .classTitleText{text-anchor:middle;font-size:18px;fill:#333;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="18" class="marker aggregation classDiagram" id="my-svg_classDiagram-aggregationStart"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="1" class="marker aggregation classDiagram" id="my-svg_classDiagram-aggregationEnd"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="18" class="marker extension classDiagram" id="my-svg_classDiagram-extensionStart"><path d="M 1,7 L18,13 V 1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="1" class="marker extension classDiagram" id="my-svg_classDiagram-extensionEnd"><path d="M 1,1 V 13 L18,7 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="18" class="marker composition classDiagram" id="my-svg_classDiagram-compositionStart"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="1" class="marker composition classDiagram" id="my-svg_classDiagram-compositionEnd"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="6" class="marker dependency classDiagram" id="my-svg_classDiagram-dependencyStart"><path d="M 5,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="13" class="marker dependency classDiagram" id="my-svg_classDiagram-dependencyEnd"><path d="M 18,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="13" class="marker lollipop classDiagram" id="my-svg_classDiagram-lollipopStart"><circle r="6" cy="7" cx="7" fill="transparent" stroke="black"></circle></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="1" class="marker lollipop classDiagram" id="my-svg_classDiagram-lollipopEnd"><circle r="6" cy="7" cx="7" fill="transparent" stroke="black"></circle></marker></defs><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-start="url(#my-svg_classDiagram-extensionStart)" style="fill:none" class="edge-pattern-solid relation" id="id_Exec_JavaTask_1" d="M78.375,112L79.542,112C80.708,112,83.042,112,88.375,112C93.708,112,102.042,112,106.208,112L110.375,112"></path><path marker-start="url(#my-svg_classDiagram-extensionStart)" style="fill:none" class="edge-pattern-solid relation" id="id_JavaTask_JavaCompile_2" d="M281.152,53.622L282.778,52.602C284.403,51.581,287.655,49.541,293.447,48.52C299.24,47.5,307.573,47.5,311.74,47.5L315.906,47.5"></path><path marker-start="url(#my-svg_classDiagram-extensionStart)" style="fill:none" class="edge-pattern-solid relation" id="id_JavaTask_JavaExecute_3" d="M281.152,170.378L282.778,171.398C284.403,172.419,287.655,174.459,294.929,175.48C302.203,176.5,313.5,176.5,319.148,176.5L324.797,176.5"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(34.1875, 112)" id="classId-Exec-0" class="node default"><rect height="57" width="52.375" y="-28.5" x="-26.1875" class="outer title-state" style=""></rect><line y2="1.5" y1="1.5" x2="26.1875" x1="-26.1875" class="divider"></line><line y2="17.5" y1="17.5" x2="26.1875" x1="-26.1875" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -18.6875, -21)" height="18" width="37.375" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Exec</span></div></foreignObject></g></g><g transform="translate(188.140625, 112)" id="classId-JavaTask-1" class="node default"><rect height="101" width="155.53125" y="-50.5" x="-77.765625" class="outer title-state" style=""></rect><line y2="-20.5" y1="-20.5" x2="77.765625" x1="-77.765625" class="divider"></line><line y2="39.5" y1="39.5" x2="77.765625" x1="-77.765625" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -35.4375, -43)" height="18" width="70.875" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">JavaTask</span></div></foreignObject><foreignObject transform="translate( -70.265625, -9)" height="18" width="140.53125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Set&lt;File&gt; classpath</span></div></foreignObject><foreignObject transform="translate( -70.265625, 13)" height="18" width="138.75"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">File javaExecutable</span></div></foreignObject></g></g><g transform="translate(392.765625, 47.5)" id="classId-JavaCompile-2" class="node default"><rect height="79" width="153.71875" y="-39.5" x="-76.859375" class="outer title-state" style=""></rect><line y2="-9.5" y1="-9.5" x2="76.859375" x1="-76.859375" class="divider"></line><line y2="28.5" y1="28.5" x2="76.859375" x1="-76.859375" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -49.359375, -32)" height="18" width="98.71875" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">JavaCompile</span></div></foreignObject><foreignObject transform="translate( -69.359375, 2)" height="18" width="138.71875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">File outputDirectory</span></div></foreignObject></g></g><g transform="translate(392.765625, 176.5)" id="classId-JavaExecute-3" class="node default"><rect height="79" width="135.9375" y="-39.5" x="-67.96875" class="outer title-state" style=""></rect><line y2="-9.5" y1="-9.5" x2="67.96875" x1="-67.96875" class="divider"></line><line y2="28.5" y1="28.5" x2="67.96875" x1="-67.96875" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -48.484375, -32)" height="18" width="96.96875" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">JavaExecute</span></div></foreignObject><foreignObject transform="translate( -60.46875, 2)" height="18" width="120.9375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">String mainClass</span></div></foreignObject></g></g></g></g></g></svg></div>
+<div class="mermaid" data-processed="true" pre-rendered="true"><svg aria-roledescription="classDiagram" role="graphics-document document" viewBox="0 0 679.1875 246" style="max-width: 679.1875px;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="100%" id="my-svg"><style>#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg g.classGroup text{fill:#9370DB;stroke:none;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:10px;}#my-svg g.classGroup text .title{font-weight:bolder;}#my-svg .nodeLabel,#my-svg .edgeLabel{color:#131300;}#my-svg .edgeLabel .label rect{fill:#ECECFF;}#my-svg .label text{fill:#131300;}#my-svg .edgeLabel .label span{background:#ECECFF;}#my-svg .classTitle{font-weight:bolder;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#my-svg .divider{stroke:#9370DB;stroke-width:1;}#my-svg g.clickable{cursor:pointer;}#my-svg g.classGroup rect{fill:#ECECFF;stroke:#9370DB;}#my-svg g.classGroup line{stroke:#9370DB;stroke-width:1;}#my-svg .classLabel .box{stroke:none;stroke-width:0;fill:#ECECFF;opacity:0.5;}#my-svg .classLabel .label{fill:#9370DB;font-size:10px;}#my-svg .relation{stroke:#333333;stroke-width:1;fill:none;}#my-svg .dashed-line{stroke-dasharray:3;}#my-svg .dotted-line{stroke-dasharray:1 2;}#my-svg #compositionStart,#my-svg .composition{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#my-svg #compositionEnd,#my-svg .composition{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#my-svg #dependencyStart,#my-svg .dependency{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#my-svg #dependencyStart,#my-svg .dependency{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#my-svg #extensionStart,#my-svg .extension{fill:transparent!important;stroke:#333333!important;stroke-width:1;}#my-svg #extensionEnd,#my-svg .extension{fill:transparent!important;stroke:#333333!important;stroke-width:1;}#my-svg #aggregationStart,#my-svg .aggregation{fill:transparent!important;stroke:#333333!important;stroke-width:1;}#my-svg #aggregationEnd,#my-svg .aggregation{fill:transparent!important;stroke:#333333!important;stroke-width:1;}#my-svg #lollipopStart,#my-svg .lollipop{fill:#ECECFF!important;stroke:#333333!important;stroke-width:1;}#my-svg #lollipopEnd,#my-svg .lollipop{fill:#ECECFF!important;stroke:#333333!important;stroke-width:1;}#my-svg .edgeTerminals{font-size:11px;line-height:initial;}#my-svg .classTitleText{text-anchor:middle;font-size:18px;fill:#333;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="18" class="marker aggregation classDiagram" id="my-svg_classDiagram-aggregationStart"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="1" class="marker aggregation classDiagram" id="my-svg_classDiagram-aggregationEnd"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="18" class="marker extension classDiagram" id="my-svg_classDiagram-extensionStart"><path d="M 1,7 L18,13 V 1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="1" class="marker extension classDiagram" id="my-svg_classDiagram-extensionEnd"><path d="M 1,1 V 13 L18,7 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="18" class="marker composition classDiagram" id="my-svg_classDiagram-compositionStart"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="1" class="marker composition classDiagram" id="my-svg_classDiagram-compositionEnd"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="6" class="marker dependency classDiagram" id="my-svg_classDiagram-dependencyStart"><path d="M 5,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="13" class="marker dependency classDiagram" id="my-svg_classDiagram-dependencyEnd"><path d="M 18,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="13" class="marker lollipop classDiagram" id="my-svg_classDiagram-lollipopStart"><circle r="6" cy="7" cx="7" fill="transparent" stroke="black"></circle></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="1" class="marker lollipop classDiagram" id="my-svg_classDiagram-lollipopEnd"><circle r="6" cy="7" cx="7" fill="transparent" stroke="black"></circle></marker></defs><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-start="url(#my-svg_classDiagram-extensionStart)" style="fill:none" class="edge-pattern-solid relation" id="id_Task_TaskWithClasspath_1" d="M76.281,128.5L77.448,128.5C78.615,128.5,80.948,128.5,86.281,128.5C91.615,128.5,99.948,128.5,104.115,128.5L108.281,128.5"></path><path marker-start="url(#my-svg_classDiagram-extensionStart)" style="fill:none" class="edge-pattern-solid relation" id="id_TaskWithClasspath_JavaCompileTask_2" d="M343.918,81.636L352.517,77.78C361.117,73.924,378.316,66.212,391.083,62.356C403.849,58.5,412.182,58.5,416.349,58.5L420.516,58.5"></path><path marker-start="url(#my-svg_classDiagram-extensionStart)" style="fill:none" class="edge-pattern-solid relation" id="id_TaskWithClasspath_JavaRunTask_3" d="M343.918,175.364L352.517,179.22C361.117,183.076,378.316,190.788,394.047,194.644C409.779,198.5,424.042,198.5,431.173,198.5L438.305,198.5"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(33.140625, 128.5)" id="classId-Task-0" class="node default"><rect height="57" width="50.28125" y="-28.5" x="-25.140625" class="outer title-state" style=""></rect><line y2="1.5" y1="1.5" x2="25.140625" x1="-25.140625" class="divider"></line><line y2="17.5" y1="17.5" x2="25.140625" x1="-25.140625" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -17.640625, -21)" height="18" width="35.28125" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Task</span></div></foreignObject></g></g><g transform="translate(239.3984375, 128.5)" id="classId-TaskWithClasspath-1" class="node default"><rect height="79" width="262.234375" y="-39.5" x="-131.1171875" class="outer title-state" style=""></rect><line y2="-9.5" y1="-9.5" x2="131.1171875" x1="-131.1171875" class="divider"></line><line y2="28.5" y1="28.5" x2="131.1171875" x1="-131.1171875" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -73.1328125, -32)" height="18" width="146.265625" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">TaskWithClasspath</span></div></foreignObject><foreignObject transform="translate( -123.6171875, 2)" height="18" width="247.234375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Property&lt;FileCollection&gt; classpath</span></div></foreignObject></g></g><g transform="translate(545.8515625, 58.5)" id="classId-JavaCompileTask-2" class="node default"><rect height="101" width="250.671875" y="-50.5" x="-125.3359375" class="outer title-state" style=""></rect><line y2="-20.5" y1="-20.5" x2="125.3359375" x1="-125.3359375" class="divider"></line><line y2="39.5" y1="39.5" x2="125.3359375" x1="-125.3359375" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -67, -43)" height="18" width="134" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">JavaCompileTask</span></div></foreignObject><foreignObject transform="translate( -117.8359375, -9)" height="18" width="235.671875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Property&lt;FileCollection&gt; sources</span></div></foreignObject><foreignObject transform="translate( -117.8359375, 13)" height="18" width="226.75"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">DirectoryProperty destinationDir</span></div></foreignObject></g></g><g transform="translate(545.8515625, 198.5)" id="classId-JavaRunTask-3" class="node default"><rect height="79" width="215.09375" y="-39.5" x="-107.546875" class="outer title-state" style=""></rect><line y2="-9.5" y1="-9.5" x2="107.546875" x1="-107.546875" class="divider"></line><line y2="28.5" y1="28.5" x2="107.546875" x1="-107.546875" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -50.9921875, -32)" height="18" width="101.984375" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">JavaRunTask</span></div></foreignObject><foreignObject transform="translate( -100.046875, 2)" height="18" width="200.09375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Property&lt;String&gt; mainClass</span></div></foreignObject></g></g></g></g></g></svg></div>
 
 </section><section>
 <h2 id="creating-a-new-task-type-in-gradle">Creating a new Task type in Gradle</h2>
@@ -1576,20 +1507,136 @@ to <em>annotate every public property</em> of a task with a marker annotation th
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><strong>Purely declarative, yay!</strong></p>
 </section><section>
-<h2 id="divide-conquer-encapsulate-adorn">Divide, conquer, encapsulate, adorn</h2>
-<p>General approach to a <em>new</em> build automation problem:</p>
-<p><strong>Divide</strong>: Identify the <em>base steps</em>, they could become your tasks</p>
+<h2 id="build-hierarchies">Build hierarchies</h2>
+<p>Sometimes projects are <em>modular</em>
+<br>
+Where a module is a sub-project with a clear identity, possibly reusable elsewhere</p>
+<p>Examples:</p>
 <ul>
-<li>Or any concept your build system exposes to model atomic operations</li>
-</ul>
-<p><strong>Conquer</strong>: Clearly express the <em>dependencies</em> among them</p>
+<li>A smartphone application with:
 <ul>
-<li>Build a <em>pipeline</em></li>
-<li>Implement them Providing a <em>clean API</em></li>
+<li>A common library</li>
+<li>A software that uses such library for the actual app</li>
 </ul>
-<p><strong>Encapsulate</strong>: confine imperative logic, make it an <em>implementation detail</em></p>
-<p><strong>Adorn</strong>: provide a DSL that makes the library <em>easy and intuitive</em></p>
-<p><em>Not very different than what’s usually done in (good) software development</em></p>
+</li>
+<li>Bluetooth control software comprising:
+<ul>
+<li>Platform-specific drivers</li>
+<li>A platform-agnostic bluetooth API and service</li>
+<li>A CLI interface to the library</li>
+<li>A Graphical interface</li>
+</ul>
+</li>
+</ul>
+<p>Modular software <em>simplifies maintenance</em> and <em>improves understandability</em>
+<br>
+Modules may <strong>depend</strong> on other modules
+<br>
+Some build tasks of some module may require build tasks <em>of other modules</em> to be complete before execution</p>
+</section><section>
+<h2 id="hierarchial-project">Hierarchial project</h2>
+<p>Let us split our project into two components:</p>
+<ul>
+<li>A base library</li>
+<li>A stand-alone application using the library</li>
+</ul>
+<p>We need to reorganize the build logic to something similar to</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>hierarchial-project
+</span></span><span style="display:flex;"><span>|__:library
+</span></span><span style="display:flex;"><span>\__:app
+</span></span></code></pre></div><p>Desiderata:</p>
+<ul>
+<li>We can compile any of the two projects from the root</li>
+<li>We can run the app from the root</li>
+<li>Calling a run of the app implies a compilation of the library</li>
+<li>We can clean both projects</li>
+</ul>
+</section><section>
+<h2 id="authoring-subprojects-in-gradle">Authoring subprojects in Gradle</h2>
+<p>Gradle (as many other build automators)
+offers built-in support for <em>hierarchial projects</em>.
+<br>
+Gradle is limited to <em>two levels</em>, other products such as Maven have no limitation</p>
+<p>Subprojects are listed in a <code>settings.gradle.kts</code> file
+<br>
+Incidentally, it’s the same place where the project name can be specified</p>
+<p>Subprojects <em>must have their own</em> <code>build.gradle.kts</code>
+<br>
+They can also have their own <code>settings.gradle.kts</code>, e.g. for selecting a name different than their folder</p>
+</section><section>
+<h2 id="authoring-subprojects-in-gradle-1">Authoring subprojects in Gradle</h2>
+<ol>
+<li>Create a settings.gradle.kts and declare your modules:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>rootProject.<span style="color:#369">name</span> = <span style="color:#d20;background-color:#fff0f0">"project-with-hierarchy"</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include(<span style="color:#d20;background-color:#fff0f0">":library"</span>) <span style="color:#888">// There must be a folder named "library"
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>include(<span style="color:#d20;background-color:#fff0f0">":app"</span>) <span style="color:#888">// There must be a folder named "app"
+</span></span></span></code></pre></div><ol start="2">
+<li>In the root project, configure the part common to <strong>all</strong> projects in a <code>allprojects</code> block
+<ul>
+<li>e.g., in our case, the <code>clean</code> task should be available for each project</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>allprojects {
+</span></span><span style="display:flex;"><span>    tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"clean"</span>) { <span style="color:#888">// A generic task is fine
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">if</span> (!buildDir.<span style="color:#369">deleteRecursively</span>()) {
+</span></span><span style="display:flex;"><span>            error(<span style="color:#d20;background-color:#fff0f0">"Cannot delete $buildDir"</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="authoring-subprojects-in-gradle-2">Authoring subprojects in Gradle</h2>
+<ol start="3">
+<li>Put the part shared by <em>solely the sub-projects</em> into a <code>subprojects</code> block
+<ul>
+<li>e.g., in our case, the <code>compileJava</code> task and the related utilities</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>subprojects {
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// This must be there, as projectDir must refer to the *current* project
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">FinderInFolder</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">directory</span>: String) ...
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findFilesIn</span>(directory: String) = FinderInFolder(directory)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findSources</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"src"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">findLibraries</span>() = findFilesIn(<span style="color:#d20;background-color:#fff0f0">"lib"</span>).withExtension(<span style="color:#d20;background-color:#fff0f0">"jar"</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">DependencyHandlerScope</span>.forEachLibrary(todo: <span style="color:#b06;font-weight:bold">DependencyHandlerScope</span>.(String) -&gt; Unit) ...
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runtimeClasspath</span> <span style="color:#080;font-weight:bold">by</span> configurations.creating { extendsFrom(compileClasspath) }
+</span></span><span style="display:flex;"><span>    dependencies { ... }
+</span></span><span style="display:flex;"><span>    tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) { ... }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></section><section>
+<h2 id="authoring-subprojects-in-gradle-3">Authoring subprojects in Gradle</h2>
+<ol start="4">
+<li>In each subproject’s <code>build.gradle.kts</code>, add further customization as necessary
+<ul>
+<li>e.g., in our case, the <code>runJava</code> task can live in the <code>:app</code> subroject</li>
+</ul>
+</li>
+<li>Connect configurations to each other using dependencies
+<ul>
+<li>in <code>app</code>’s <code>build.gradle.kts</code>, for instance:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+</span></span><span style="display:flex;"><span>    compileClasspath(project(<span style="color:#d20;background-color:#fff0f0">":library"</span>)) { <span style="color:#888">// My compileClasspath configuration depends on project library
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        targetConfiguration = <span style="color:#d20;background-color:#fff0f0">"runtimeClasspath"</span> <span style="color:#888">// Specifically, from its runtime
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="6">
+<li>Declare inter-subproject task dependencies
+<ul>
+<li>Tasks may fail if ran out of order!</li>
+<li>Compiling <code>app</code> requires <code>library</code> to be compiled!</li>
+<li>inside <code>app</code>’s <code>build.gradle.kts</code>:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">compileJava</span> { dependsOn(project(<span style="color:#d20;background-color:#fff0f0">":library"</span>).<span style="color:#369">tasks</span>.<span style="color:#369">compileJava</span>) }
+</span></span></code></pre></div><p><em>Note</em>: <code>library</code>’s <code>build.gradle.kts</code> is actually empty at the end of the process</p>
 </section><section>
 <h2 id="reusability-across-multiple-projects">Reusability across multiple projects</h2>
 <p>We now have a rudimental infrastructure for building and running Java projects
@@ -1620,6 +1667,21 @@ It usually includes:</p>
 </ul>
 </li>
 </ul>
+</section><section>
+<h2 id="divide-conquer-encapsulate-adorn">Divide, conquer, encapsulate, adorn</h2>
+<p>General approach to a <em>new</em> build automation problem:</p>
+<p><strong>Divide</strong>: Identify the <em>base steps</em>, they could become your tasks</p>
+<ul>
+<li>Or any concept your build system exposes to model atomic operations</li>
+</ul>
+<p><strong>Conquer</strong>: Clearly express the <em>dependencies</em> among them</p>
+<ul>
+<li>Build a <em>pipeline</em></li>
+<li>Implement them Providing a <em>clean API</em></li>
+</ul>
+<p><strong>Encapsulate</strong>: confine imperative logic, make it an <em>implementation detail</em></p>
+<p><strong>Adorn</strong>: provide a DSL that makes the library <em>easy and intuitive</em></p>
+<p><em>Not very different than what’s usually done in (good) software development</em></p>
 </section><section>
 <h2 id="using-a-plugin">Using a plugin</h2>
 <ul>
