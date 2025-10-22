@@ -2082,8 +2082,9 @@ e.g., <code>it.unibo.spe.greetings</code></p>
 <div class="multiCol">
     <div class="col  ">
     <p><code>HelloTask</code> implementation:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    <span style="color:#888">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#888">     * Just a template.
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>open <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloTask</span> : DefaultTask() {
+</span></span><span style="display:flex;"><span>    <span style="color:#888">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     * The author of the greeting, lazily set.
 </span></span></span><span style="display:flex;"><span><span style="color:#888">     */</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@Input</span>
 </span></span><span style="display:flex;"><span>    val <span style="color:#369;font-style:italic">author:</span> Property&lt;String&gt; = project.<span style="color:#369">objects</span>.<span style="color:#369">property</span>()
@@ -2095,7 +2096,7 @@ e.g., <code>it.unibo.spe.greetings</code></p>
 </span></span><span style="display:flex;"><span>    val <span style="color:#369;font-style:italic">message:</span> Provider&lt;String&gt; = author.<span style="color:#369">map</span> { <span style="color:#d20;background-color:#fff0f0">"Hello from $it"</span> }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#888">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#888">     * Just a template.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     * This is the code that is executed when the task is run.
 </span></span></span><span style="display:flex;"><span><span style="color:#888">     */</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@TaskAction</span>
 </span></span><span style="display:flex;"><span>    fun <span style="color:#06b;font-weight:bold">printMessage</span>() {
@@ -2106,8 +2107,9 @@ e.g., <code>it.unibo.spe.greetings</code></p>
 </div>
 <div class="col  ">
     <p><code>HelloExtension</code>, the DSL entrypoint:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    <span style="color:#888">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#888">     * Just a template.
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>open <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">HelloExtension</span>(<span style="color:#369;font-style:italic">objects:</span> ObjectFactory) {
+</span></span><span style="display:flex;"><span>    <span style="color:#888">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#888">     * This is where you write your DSL to control the plugin.
 </span></span></span><span style="display:flex;"><span><span style="color:#888">     */</span>
 </span></span><span style="display:flex;"><span>    val <span style="color:#369;font-style:italic">author:</span> Property&lt;String&gt; = objects.<span style="color:#369">property</span>()
 </span></span><span style="display:flex;"><span>}
@@ -2118,7 +2120,8 @@ e.g., <code>it.unibo.spe.greetings</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>open <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloGradle</span> : Plugin&lt;Project&gt; {
 </span></span><span style="display:flex;"><span>    override fun <span style="color:#06b;font-weight:bold">apply</span>(<span style="color:#369;font-style:italic">target:</span> Project) {
 </span></span><span style="display:flex;"><span>        val extension = target.<span style="color:#369">extensions</span>.<span style="color:#369">create</span>&lt;HelloExtension&gt;(<span style="color:#d20;background-color:#fff0f0">"hello"</span>)
-</span></span><span style="display:flex;"><span>        target.<span style="color:#369">tasks</span>.<span style="color:#369">register</span>&lt;HelloTask&gt;(<span style="color:#d20;background-color:#fff0f0">"hello"</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#888">// Enables `hello { ... }` in build.gradle.kts
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        target.<span style="color:#369">tasks</span>.<span style="color:#369">register</span>&lt;HelloTask&gt;(<span style="color:#d20;background-color:#fff0f0">"hello"</span>) {
 </span></span><span style="display:flex;"><span>            author.<span style="color:#369">set</span>(extension.<span style="color:#369">author</span>)
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
@@ -2984,8 +2987,6 @@ once done, an <strong>API Key</strong> will be available from the web interface,
   
 
   
-    
-  
   
 
   
@@ -3018,8 +3019,6 @@ once done, an <strong>API Key</strong> will be available from the web interface,
   
   
 
-  
-    
   
   
 
