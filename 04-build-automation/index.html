@@ -1481,7 +1481,7 @@ for gradle to mark it as an <em>input</em> or an <em>output</em>.</p>
     <div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">AbstractJvmExec</span> : TaskWithClasspath, Exec() {
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@get</span>:Classpath
-</span></span><span style="display:flex;"><span>    override val <span style="color:#369;font-style:italic">classpath:</span> Property&lt;FileCollection&gt; = project.<span style="color:#369">objects</span>.<span style="color:#369">property</span>&lt;FileCollection&gt;()
+</span></span><span style="display:flex;"><span>    override val <span style="color:#369;font-style:italic">classpath:</span> Property&lt;FileCollection&gt; = project.<span style="color:#369">objects</span>.<span style="color:#369">property</span>()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    init {
 </span></span><span style="display:flex;"><span>        executable(Jvm.<span style="color:#369">current</span>().<span style="color:#369">jvmExecutableForTask</span>().<span style="color:#369">absolutePath</span>)
@@ -1493,7 +1493,7 @@ for gradle to mark it as an <em>input</em> or an <em>output</em>.</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">JavaRun</span>() : JavaRunTask, AbstractJvmExec() {
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@get</span>:Input
-</span></span><span style="display:flex;"><span>    override val <span style="color:#369;font-style:italic">mainClass:</span> Property&lt;String&gt; = project.<span style="color:#369">objects</span>.<span style="color:#369">property</span>&lt;String&gt;()
+</span></span><span style="display:flex;"><span>    override val <span style="color:#369;font-style:italic">mainClass:</span> Property&lt;String&gt; = project.<span style="color:#369">objects</span>.<span style="color:#369">property</span>()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    override fun Jvm.<span style="color:#369">jvmExecutableForTask</span>(): File = javaExecutable
 </span></span><span style="display:flex;"><span>
@@ -1512,7 +1512,7 @@ for gradle to mark it as an <em>input</em> or an <em>output</em>.</p>
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">JavaCompile</span>: JavaCompileTask, AbstractJvmExec() {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@get</span>:InputFiles
-</span></span><span style="display:flex;"><span>    override val <span style="color:#369;font-style:italic">sources:</span> Property&lt;FileCollection&gt; = project.<span style="color:#369">objects</span>.<span style="color:#369">property</span>&lt;FileCollection&gt;()
+</span></span><span style="display:flex;"><span>    override val <span style="color:#369;font-style:italic">sources:</span> Property&lt;FileCollection&gt; = project.<span style="color:#369">objects</span>.<span style="color:#369">property</span>()
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@get</span>:OutputDirectory
 </span></span><span style="display:flex;"><span>    override val <span style="color:#369;font-style:italic">destinationDir:</span> DirectoryProperty = project.<span style="color:#369">objects</span>.<span style="color:#369">directoryProperty</span>()
 </span></span><span style="display:flex;"><span>
@@ -2353,8 +2353,7 @@ We want to inject our plugin into the distribution.</p>
 </ul>
 </section><section>
 <h2 id="using-the-default-catalog">Using the default catalog</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
-</span></span><span style="display:flex;"><span>    <span style="color:#a61717;background-color:#e3d2d2">`</span>java-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    <span style="color:#a61717;background-color:#e3d2d2">`</span>java-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
 </span></span><span style="display:flex;"><span>    alias(libs.plugins.dokka)
 </span></span><span style="display:flex;"><span>    alias(libs.plugins.gitSemVer)
 </span></span><span style="display:flex;"><span>    alias(libs.plugins.gradlePluginPublish)
@@ -2363,16 +2362,17 @@ We want to inject our plugin into the distribution.</p>
 </span></span><span style="display:flex;"><span>    alias(libs.plugins.kotlin.qa)
 </span></span><span style="display:flex;"><span>    alias(libs.plugins.publishOnCentral)
 </span></span><span style="display:flex;"><span>    alias(libs.plugins.multiJvmTesting)
-</span></span><span style="display:flex;"><span>    alias(libs.plugins.taskTree)</span></span></code></pre></div>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    jvmVersionForCompilation = oldestJavaSupportedByGradle
-</span></span><span style="display:flex;"><span>    maximumSupportedJvmVersion = latestJavaSupportedByGradle
+</span></span><span style="display:flex;"><span>    alias(libs.plugins.taskTree)
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    maximumSupportedJvmVersion = latestJavaSupportedByGradle
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    api(gradleApi())
 </span></span><span style="display:flex;"><span>    api(gradleKotlinDsl())
 </span></span><span style="display:flex;"><span>    api(kotlin(<span style="color:#d20;background-color:#fff0f0">"stdlib-jdk8"</span>))
-</span></span><span style="display:flex;"><span>    testImplementation(gradleTestKit())</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span>    testImplementation(gradleTestKit())
+</span></span><span style="display:flex;"><span>    testImplementation(libs.apache.commons.lang3)</span></span></code></pre></div>
 </section><section>
 <h2 id="build-vs-compile-vs-test-toolchains">Build vs. Compile vs. Test toolchains</h2>
 <p>We now have three different runtimes at play:</p>
