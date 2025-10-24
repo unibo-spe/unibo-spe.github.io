@@ -2420,7 +2420,7 @@ But at the moment we are stuck: we don’t know yet how to expose plugins to oth
 </span></span><span style="display:flex;"><span>OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 </span></span><span style="display:flex;"><span>OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </span></span></code></pre></div></section><section>
-<h1 id="maven-style-packaging">Maven style packaging</h1>
+<h1 id="maven-style-packaging">Maven-style packaging</h1>
 <p>JVM artifacts are normally shipped in form of jar archives
 <br>
 the de-facto convention is <em>inherited from Maven</em>:</p>
@@ -2450,7 +2450,7 @@ the de-facto convention is <em>inherited from Maven</em>:</p>
 </li>
 </ul>
 </section><section>
-<h1 id="setting-the-details">Setting the details</h1>
+<h2 id="setting-the-details">Setting the details</h2>
 <p>In order to create Maven-compatible artifacts, we need first to set the <strong>groupId</strong>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>group = <span style="color:#d20;background-color:#fff0f0">"it.unibo.firstplugin"</span>
 </span></span></code></pre></div><p>Many repositories require to register the group and associate developer identities to it</p>
@@ -2496,8 +2496,7 @@ once done, an <strong>API Key</strong> will be available from the web interface,
 <li>Via command line, using <code>-P</code> flags:</li>
 </ol>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>./gradlew -Pgradle.publish.key=&lt;key&gt; -Pgradle.publish.secret=&lt;secret&gt; publishPlugins
-</span></span></code></pre></div></section><section>
-<h1 id="actual-publication">Actual publication</h1>
+</span></span></code></pre></div><p>The result is a published plugin:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>❯ ./gradlew publishPlugins
 </span></span><span style="display:flex;"><span>&gt; Task :publishPlugins
 </span></span><span style="display:flex;"><span>Publishing plugin it.unibo.spe.greetings-plugin version 0.1.0-archeo+ea6b9d7
@@ -2506,99 +2505,49 @@ once done, an <strong>API Key</strong> will be available from the web interface,
 </span></span><span style="display:flex;"><span>Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7-javadoc.jar
 </span></span><span style="display:flex;"><span>Publishing artifact build/publish-generated-resources/pom.xml
 </span></span><span style="display:flex;"><span>Activating plugin it.unibo.spe.greetings-plugin version 0.1.0-archeo+ea6b9d7
-</span></span></code></pre></div><p><a href="https://plugins.gradle.org/plugin/it.unibo.spe.greetings-plugin">The result is a published plugin</a></p>
-</section><section>
-<h1 id="quality-control">Quality control</h1>
-<p>It is a good practice to set up some tools to validate the quality of the source code and testing.</p>
-<p>In the case of Kotlin, there are three useful tools:</p>
-<ol>
-<li>Setting the <strong>compiler</strong> into a “<em>warnings as errors</em>” mode</li>
-<li>Enabling a <em>coverage</em> tool such as <strong>Jacoco</strong></li>
-<li>Configuring <strong>Ktlint</strong>, a Pinterest-made tool similar to Checkstyle</li>
-<li>Configuring <strong>Detekt</strong>, a <em>static code analysis</em> tool similar to PMD</li>
-</ol>
+</span></span></code></pre></div></section><section>
+<h1 id="quality-control-beyond-testing">Quality control beyond testing</h1>
+<h3 id="static-analysis">Static analysis</h3>
+<p>Static analysis is the <strong>automatic inspection of source code</strong> to detect potential problems, without executing it.</p>
 <ul>
-<li>All quality control tasks are dependencies of the <code>check</code> task</li>
+<li>If you execute your code, it is called <em>dynamic analysis</em> (or, more frequently, <em>testing</em>)</li>
 </ul>
-<p>Moreover, we need a way to <em>inspect the results</em> of executing these controls, besides of course failing if too many things go wrong.</p>
-<p>(note: under Kotlin and Scala, I do not recommend to use Spotbugs: even though it works, it generates <em>way</em> too many false positives)</p>
-</section><section>
-<h2 id="build-reports-in-gradle">Build reports in Gradle</h2>
-<p>Tasks with a report module usually publish their results under <code>$buildDir/reports/$reportName</code></p>
+<h3 id="test-coverage">Test coverage</h3>
+<p>Test coverage tools measure <strong>how much of the code is executed while running tests</strong>.</p>
+<ul>
+<li>Helps identifying <em>untested</em> parts of the codebase</li>
+<li>
+
+<span class="fragment ">
+  Coverage cannot tell anything about the <strong>covered</strong> code, it can only spot <strong>uncovered</strong> fragments
+</span>
+</li>
+</ul>
+<h2 id="quality-control-in-gradle">Quality control in Gradle</h2>
+<p>If the <code>lifecycle</code> plugin is applied (it is auto-applied by most language-specific plugins), then a <code>check</code> task is available</p>
+<ul>
+<li><code>check</code> is meant to run all quality control tasks</li>
+<li>any additional quality-control task should be made a dependency of <code>check</code></li>
+<li>by default, <code>check</code> depends on <code>test</code></li>
+</ul>
+<p>QA tasks normally produce <em>reports</em> that can be inspected to understand what went wrong (if anything)</p>
+<ul>
+<li>Typically under <code>build/reports/</code>
 <ul>
 <li>For instance, <em>test results</em> are published in <code>$buildDir/reports/tests</code></li>
-<li>Other tools follow the same convention</li>
+</ul>
+</li>
 <li>If you want to write a reporting task, extend from <code>AbstractReportTask</code></li>
 </ul>
 </section><section>
-<h2 id="using-jacoco-with-kotest">Using Jacoco with Kotest</h2>
-<p>Jacoco works with Kotest out of the box</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
-</span></span><span style="display:flex;"><span>    <span style="color:#888">// Some plugins
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    jacoco
-</span></span><span style="display:flex;"><span>    <span style="color:#888">// Some plugins
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
-</span></span></code></pre></div><p>The plugin introduces two tasks:</p>
-<ul>
-<li><code>jacocoTestCoverageVerification</code></li>
-<li><code>jacocoTestReport</code></li>
-</ul>
-<p>The latter must be configured to produce readable reports:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.jacocoTestReport {
-</span></span><span style="display:flex;"><span>    reports {
-</span></span><span style="display:flex;"><span>        <span style="color:#888">// xml.isEnabled = true // Useful for processing results automatically
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        html.isEnabled = <span style="color:#080;font-weight:bold">true</span> <span style="color:#888">// Useful for human inspection
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Note: Jacoco does not work with the Gradle test kit, but <a href="https://github.com/koral--/jacoco-gradle-testkit-plugin">there are plugins</a> to work this around.</p>
-</section><section>
-<h2 id="aggressive-compiler-settings">Aggressive compiler settings</h2>
-<p>Can be configured for every <code>KotlinCompile</code> task</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">withType</span>&lt;org.<span style="color:#369">jetbrains</span>.<span style="color:#369">kotlin</span>.<span style="color:#369">gradle</span>.<span style="color:#369">tasks</span>.<span style="color:#369">KotlinCompile</span>&gt; {
-</span></span><span style="display:flex;"><span>    kotlinOptions {
-</span></span><span style="display:flex;"><span>        allWarningsAsErrors = <span style="color:#080;font-weight:bold">true</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></section><section>
-<h2 id="ktlint">Ktlint</h2>
-<ul>
-<li>Linter with <em>minimal configuration</em> options</li>
-<li>Configuration happens in a <code>.editorconfig</code> file</li>
-<li>Also <em>checks build files</em></li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
-</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"org.jlleitschuh.gradle.ktlint"</span>) version <span style="color:#d20;background-color:#fff0f0">"9.4.1"</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Adds the following tasks:</p>
-<ul>
-<li><code>ktlintApplyToIdea</code>, <code>ktlintApplyToIdeaGlobally</code> – Change the IntelliJ Idea configuration to adhere to the rules</li>
-<li><code>ktlintCheck</code>, <code>ktlintKotlinScriptCheck</code>, <code>ktlint&lt;SourceSetName&gt;SourceSetCheck</code>, – Apply rules and report errors</li>
-<li><code>ktlintFormat</code>, <code>ktlintKotlinScriptFormat</code>, <code>ktlint&lt;SourceSetName&gt;SourceSetFormat</code> – Lint code automatically</li>
-</ul>
-</section><section>
-<h2 id="detekt">Detekt</h2>
-<ul>
-<li>Configurable static source code analyzer</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
-</span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"io.gitlab.arturbosch.detekt"</span>) version <span style="color:#d20;background-color:#fff0f0">"1.14.1"</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>repositories {
-</span></span><span style="display:flex;"><span>    mavenCentral()
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>dependencies {
-</span></span><span style="display:flex;"><span>    <span style="color:#888">// Adds a configuration "detektPlugins"
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    detektPlugins(<span style="color:#d20;background-color:#fff0f0">"io.gitlab.arturbosch.detekt:detekt-formatting:1.14.1"</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>detekt {
-</span></span><span style="display:flex;"><span>    failFast = <span style="color:#080;font-weight:bold">true</span> <span style="color:#888">// fail build on any finding
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    buildUponDefaultConfig = <span style="color:#080;font-weight:bold">true</span> <span style="color:#888">// preconfigure defaults
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    config = files(<span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$projectDir</span><span style="color:#d20;background-color:#fff0f0">/config/detekt.yml"</span>) <span style="color:#888">// Custom additional rules
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
-</span></span></code></pre></div><p>Adds the <code>detekt</code> task, failing in case of violation</p>
-</section><section>
+<h2 id="qa-in-kotlingradle">QA in Kotlin+Gradle</h2>
+<p>Useful Kotlin tools:</p>
+<ol>
+<li>The <strong>Kotlin compiler</strong> can be set aggressively: “<em>warnings as errors</em>” mode</li>
+<li>The preferred <em>coverage</em> tool is <strong>Kover</strong>, but <strong>Jacoco</strong> also supports Kotlin</li>
+<li><strong>Ktlint</strong> is an opinionated style checker originally from Pinterest</li>
+<li><strong>Detekt</strong> runs further verification (e.g., known suboptimal programming patterns)</li>
+</ol>
 <h2 id="dry">DRY!</h2>
 <p>You know how to build and publish Gradle plugins: <strong>factorize the common part!</strong></p>
 <h3 id="example-preconfigured-kotlin-qa">Example: Preconfigured Kotlin QA</h3>
@@ -2609,50 +2558,39 @@ once done, an <strong>API Key</strong> will be available from the web interface,
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">"org.danilopianini.gradle-java-qa"</span>) version <span style="color:#d20;background-color:#fff0f0">"0.2.1"</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
-<h1 id="code-documentation">Code documentation</h1>
+<h2 id="code-documentation">Code documentation</h2>
 <p>It is a good practice to automate the generation of the API documentation.</p>
 <ul>
-<li>The <code>java[-library]</code> plugin adds a <code>javadoc</code> task for the Javadoc</li>
+<li>The <code>java[-library]</code> plugin adds a <code>javadoc</code> task to generate the Javadoc</li>
 <li>The <code>scala</code> plugin includes a task of type <code>ScalaDoc</code></li>
-<li>Documentation for Kotlin is generated by using the <strong>Dokka</strong> tool
+<li>Documentation for Kotlin can be generated using <a href=""><strong>Dokka</strong></a>
 <ul>
-<li>Jetbrains provides a plugin!</li>
+<li>A Gradle plugin is available: !</li>
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins { id(<span style="color:#d20;background-color:#fff0f0">"org.jetbrains.dokka"</span>) version <span style="color:#d20;background-color:#fff0f0">"1.4.10"</span> }
-</span></span></code></pre></div><p>Adds four tasks:</p>
+<p>In general:</p>
 <ul>
-<li><code>dokkaGfm</code>, <code>dokkaHtml</code>, <code>dokkaJavadoc</code>, <code>dokkaJekyll</code></li>
-<li>They differ by kind of documentation they generate</li>
+<li>documentation generation tasks produce artifacts that can be shipped along the main artifact</li>
+<li>most languages do provide tools for documentation generation</li>
+<li>well-maintained plugins may exist $\Rightarrow$ use them</li>
+<li>if they don’t, write them!</li>
 </ul>
 </section><section>
-<h1 id="creating-artifacts">Creating artifacts</h1>
-<p>The <code>java-library</code> and <code>java</code> plugins (applied behind the scenes by the <code>kotlin-jvm</code> plugin as well) automatically create an <code>assemble</code> task which generates a task of type <code>Jar</code> creating a non-executable jar with the project contents.</p>
+<h2 id="creating-artifacts">Creating artifacts</h2>
+<p>Software products are usually shipped as (possibly executable) <strong>archives</strong> of some sort.</p>
+<p>In the JVM world, the de-facto standard format is <strong>jar</strong> (Java ARchive)</p>
 <ul>
-<li>Further tasks of the same type can be defined for other archives
-<ul>
-<li>e.g., containing sources or documentation</li>
+<li>Gradle provides a task of type <code>Jar</code> to create such archives</li>
+<li>The <code>java-library</code> and <code>java</code> plugins (applied behind the scenes by the <code>kotlin-jvm</code> plugin as well)
+automatically create an <code>assemble</code> task which generates a task of type <code>Jar</code>
+creating a non-executable jar with the project contents.</li>
+<li>Runnable Jars can be created via the “shadowJar” third-party plugin</li>
+<li>Runnable software including the Java runtime can be created using JPackage</li>
 </ul>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">javadocJar</span> <span style="color:#080;font-weight:bold">by</span> tasks.registering(Jar::<span style="color:#080;font-weight:bold">class</span>) {
-</span></span><span style="display:flex;"><span>    archiveClassifier.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"javadoc"</span>)
-</span></span><span style="display:flex;"><span>    from(tasks.dokkaJavadoc.<span style="color:#080;font-weight:bold">get</span>().outputDirectory) <span style="color:#888">// Automatically makes it depend on dokkaJavadoc
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">sourceJar</span> <span style="color:#080;font-weight:bold">by</span> tasks.registering(Jar::<span style="color:#080;font-weight:bold">class</span>) {
-</span></span><span style="display:flex;"><span>    archiveClassifier.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"source"</span>)
-</span></span><span style="display:flex;"><span>    from(tasks.compileKotlin.<span style="color:#080;font-weight:bold">get</span>().outputDirectory)
-</span></span><span style="display:flex;"><span>    from(tasks.processResources.<span style="color:#080;font-weight:bold">get</span>().outputDirectory)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>generates a jar file with classifier <code>javadoc</code> inside the <code>build/libs</code> folder</p>
-</section><section>
 <h2 id="signing-artifacts">Signing artifacts</h2>
-<p>Many repositories require artifacts to be <strong>signed</strong> in order for them to be delivered/deployed</p>
-<ul>
-<li>e.g. Bintray, Maven Central</li>
-</ul>
-<p>If you do not have a signature yet, <a href="https://central.sonatype.org/pages/working-with-pgp-signatures.html">time to create one</a></p>
+<p>Many repositories require artifacts to be <strong>signed</strong> in order for them to be delivered/deployed
+If you do not have a signature yet, <a href="https://central.sonatype.org/pages/working-with-pgp-signatures.html">time to create one</a></p>
 <ul>
 <li>Creation: <code>gpg --gen-key</code></li>
 <li>List: <code>gpg --list-keys</code></li>
@@ -2664,162 +2602,93 @@ once done, an <strong>API Key</strong> will be available from the web interface,
 </span></span><span style="display:flex;"><span><span style="color:#369">signing.password</span> = <span style="color:#d20;background-color:#fff0f0">&lt;redacted&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#369">signing.secretKeyRingFile</span> = <span style="color:#d20;background-color:#fff0f0">&lt;your user home&gt;/.gnupg/secring.gpg</span>
 </span></span></code></pre></div></section><section>
-<h2 id="maven-central-and-other-software-repositories">Maven Central and other software repositories</h2>
-<p><a href="https://search.maven.org/">Maven Central</a> is one of the de-facto standard repositories for JVM (artifacts)</p>
+<h2 id="software-repositories">Software repositories</h2>
+<p>Software repositories are services hosting software artifacts for distribution</p>
 <ul>
-<li>It actually hosts any artifact compatible with the Maven conventional format</li>
-<li><strong>No-retract policy</strong>
+<li>They usually provide file hosting and metadata management in a format compatible with some build automation tool</li>
+<li>There’s typically one reference (de jure or de facto) such service per programming language/ecosystem</li>
+<li>It is important to learn the <em>retraction</em> and <em>update</em>/<em>yanking</em> policies before publishing</li>
+</ul>
+<h3 id="prominent-examples">Prominent examples</h3>
 <ul>
-<li><strong>Errors</strong> <a href="https://search.maven.org/artifact/commons-io/commons-io">stay there forever</a></li>
+<li><a href="https://search.maven.org/">Maven Central</a> is the de-facto standard repository for JVM artifacts
+<ul>
+<li>It can host any artifact compatible with the Maven format, including non-JVM artifacts, as far as packaged as jars</li>
+<li><strong>No-retract</strong>, <strong>no-yanking</strong> policy
+<ul>
+<li><strong>Errors</strong> <a href="https://central.sonatype.com/artifact/commons-io/commons-io/versions">stay there forever</a></li>
 </ul>
 </li>
-<li><em>Requires</em> both <em>sources</em> and <em>Javadoc</em> artifacts to get shipped</li>
-<li>Artifacts on Central should only depend from other artifacts on Central</li>
-<li>“Old” deployment management, requires some machinery</li>
-</ul>
-<p>Other notable repositories:</p>
+<li><em>Requires</em> both <em>sources</em> and <em>Javadoc</em> artifacts</li>
+<li>Artifacts on Central <em>should</em> only depend from other artifacts on Central
 <ul>
-<li><del><em>Bintray JCenter</em>: superset of Maven Central</del> (<strong>dismissed</strong>)</li>
-<li><em>Jitpack</em>: code hosting with (semi-)automatic packaging</li>
-<li><em>NPM</em>: for Javascript code</li>
-<li><em>PyPI</em>: for Python code</li>
-<li><em>RubyGems.org</em>: for Ruby code</li>
+<li>Not really enforced, but strongly recommended</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><em>NPM</em> for Javascript
+<ul>
+<li>Supports package <strong>retraction</strong> within *72-hours <em>if</em> there are <em>no dependents</em>, or after only if:
+<ul>
+<li>there are no dependents, fewer than 300 downloads last wee, and a single owner.</li>
+<li>retracted versions are banned</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><em>PyPI</em>: for Python code
+<ul>
+<li>Supports <strong>yanking</strong> (preferred), deletion is being discussed.
+<ul>
+<li>Yanked versions must be ignored by dependency resolvers when a non-yanked version satisfies the constraints</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><em>RubyGems.org</em>: for Ruby code
+<ul>
+<li><code>gem yank</code> retracts a package</li>
+</ul>
+</li>
 </ul>
 </section><section>
 <h2 id="publishing-artifacts-on-maven-central">Publishing artifacts on Maven Central</h2>
 <p><strong>Requirements</strong></p>
 <ul>
-<li>A valid public signature</li>
+<li>A valid <em>public signature</em></li>
 <li>A registered <strong>groupId</strong>
 <ul>
-<li>Registration is handled manually, <a href="https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&amp;pid=10134">open an issue</a></li>
-<li>You could register <code>io.github.yourghusername</code> as group id</li>
+<li>Registration of GitHub (<code>io.github.yourghusername</code>) domains is semi-automatic
+<ul>
+<li>The system verifies identity by asking for the creation of a repository named as a token</li>
 </ul>
 </li>
-<li>Complete project metadata in a <code>pom.xml</code> file
+<li>Custom domains are handled manually, contact service</li>
+</ul>
+</li>
+<li>Complete <em>project metadata</em> in a <code>pom.xml</code> file
 <ul>
 <li>Including developers, urls, project description, etc.</li>
 </ul>
 </li>
 </ul>
-<p><strong>Procedure</strong></p>
+<p>The submission procedures has been greatly simplified recently with the Gradle plugin portal:</p>
+<ol>
+<li>Create all artifact in a maven-repository-compatible layout</li>
+<li>Sign all artifacts</li>
+<li>Create a zip archive including the repository layout</li>
+<li>Upload to Maven Central Portal</li>
+</ol>
 <ul>
-<li><em>Sign</em> artifacts with your registered signature</li>
-<li><em>Upload</em> them to <code>oss.sonatype.org</code></li>
-<li><em>Close</em> the repository
+<li>Gradle plugins are available for automating publications via Gradle!
 <ul>
-<li>Automatically checks contents, structure, and signatures</li>
-</ul>
-</li>
-<li>Double check and then <em>Release</em>
-<ul>
-<li>There is <em>no turning back</em> after a mistake!</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="the-gradle-publish-plugin">The Gradle publish plugin</h2>
-<p>Gradle provides a <code>maven-publish</code> <em>plugin for automated delivery</em> to Maven repositories</p>
-<p>Requires some manual configuration:</p>
-<ul>
-<li>Explicit creation of a publication task</li>
-<li>Generation and attachment of sources and javadoc jars</li>
-<li>Configuration of the repository credentials</li>
-<li>Configuration of the <code>pom.xml</code> metadata</li>
-<li>Configuration of the signature</li>
-</ul>
-<p>If a publication <code>pubName</code> is created for a repository <code>RepoName</code>, then these tasks get created:</p>
-<ul>
-<li><code>publish&lt;PubName&gt;PublicationTo&lt;RepoName&gt;Repository</code></li>
-<li><code>publish&lt;PubName&gt;PublicationToMavenLocal</code></li>
-</ul>
-</section><section>
-<h2 id="the-gradle-publish-plugin-maven-central-example">The Gradle publish plugin: Maven Central example</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins { <span style="color:#a61717;background-color:#e3d2d2">`</span>maven-publish<span style="color:#a61717;background-color:#e3d2d2">`</span> }
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">javadocJar</span> <span style="color:#080;font-weight:bold">by</span> ...
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">sourceJar</span> <span style="color:#080;font-weight:bold">by</span> ...
-</span></span><span style="display:flex;"><span>publishing {
-</span></span><span style="display:flex;"><span>    maven {
-</span></span><span style="display:flex;"><span>        url = uri(<span style="color:#d20;background-color:#fff0f0">"https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">mavenCentralPwd</span>: String? <span style="color:#080;font-weight:bold">by</span> project <span style="color:#888">// Pass the pwd via -PmavenCentralPwd='yourPassword'
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        credentials {
-</span></span><span style="display:flex;"><span>            username = <span style="color:#d20;background-color:#fff0f0">"danysk"</span>
-</span></span><span style="display:flex;"><span>            password = mavenCentralPwd
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    publications {
-</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">publicationName</span> <span style="color:#080;font-weight:bold">by</span> creating(MavenPublication::<span style="color:#080;font-weight:bold">class</span>) {
-</span></span><span style="display:flex;"><span>            from(components[<span style="color:#d20;background-color:#fff0f0">"java"</span>]) <span style="color:#888">// add the jar produced by the java plugin
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            <span style="color:#888">// Warning: the gradle plugin-publish plugin already adds them to the java SoftwareComponent
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            artifact(javadocJar) <span style="color:#888">// add the javadoc jar to this publication
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            artifact(sourceJar) <span style="color:#888">// add the source jar to this publication
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            pom {
-</span></span><span style="display:flex;"><span>                name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"My Library"</span>)
-</span></span><span style="display:flex;"><span>                description.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"A concise description of my library"</span>)
-</span></span><span style="display:flex;"><span>                url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"http://www.example.com/library"</span>)
-</span></span><span style="display:flex;"><span>                licenses { license { name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"..."</span>) } }
-</span></span><span style="display:flex;"><span>                developers { developer { name.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"..."</span>) } }
-</span></span><span style="display:flex;"><span>                scm {
-</span></span><span style="display:flex;"><span>                    url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"..."</span>)
-</span></span><span style="display:flex;"><span>                    url.<span style="color:#080;font-weight:bold">set</span>(<span style="color:#d20;background-color:#fff0f0">"..."</span>)
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        signing { sign(publicationName) }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></section><section>
-<h2 id="preconfigured-central-publication">Preconfigured Central publication</h2>
-<p>I produced a plugin that pre-configures <code>maven-publish</code> to point to Maven Central</p>
-<ul>
-<li>Reacts to the application of <code>java</code>, <code>maven-publish</code>, and <code>signing</code> plugins</li>
-<li>Defines task types <code>SourcesJar</code> and <code>JavadocJar</code>
-<ul>
-<li>Supports both Javadoc and Dokka</li>
-</ul>
-</li>
-<li>Creates tasks to create the archives before delivery</li>
-<li>Requires credentials to be set as environment variables
-<ul>
-<li><code>MAVEN_CENTRAL_USERNAME</code></li>
-<li><code>MAVEN_CENTRAL_PASSWORD</code></li>
+<li><a href="https://central.sonatype.org/publish/publish-portal-gradle/">https://central.sonatype.org/publish/publish-portal-gradle/</a></li>
 </ul>
 </li>
 </ul>
 </section><section>
-<h2 id="preconfigured-central-publication-1">Preconfigured Central publication</h2>
-<p></p><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ProjectInfo</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">longName</span> = <span style="color:#d20;background-color:#fff0f0">"Gradle Publish On Maven Central Plugin"</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">projectDetails</span> = <span style="color:#d20;background-color:#fff0f0">"A Plugin for easily publishing artifacts on Maven Central"</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">website</span> = <span style="color:#d20;background-color:#fff0f0">"https://github.com/DanySK/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">"</span></span></span></code></pre></div>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>        showStackTraces = <span style="color:#080;font-weight:bold">true</span>
-</span></span><span style="display:flex;"><span>        events(
-</span></span><span style="display:flex;"><span>            *org.gradle.api.tasks.testing.logging.TestLogEvent
-</span></span><span style="display:flex;"><span>                .values(),
-</span></span><span style="display:flex;"><span>        )
-</span></span><span style="display:flex;"><span>        exceptionFormat = org.gradle.api.tasks.testing.logging.<span style="color:#b06;font-weight:bold">TestExceptionFormat</span>.FULL
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>gradlePlugin {
-</span></span><span style="display:flex;"><span>    plugins {
-</span></span><span style="display:flex;"><span>        website.<span style="color:#080;font-weight:bold">set</span>(info.website)
-</span></span><span style="display:flex;"><span>        vcsUrl.<span style="color:#080;font-weight:bold">set</span>(info.vcsUrl)
-</span></span><span style="display:flex;"><span>        create(<span style="color:#d20;background-color:#fff0f0">"PublishOnCentralPlugin"</span>) {
-</span></span><span style="display:flex;"><span>            id = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$group</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#33b;background-color:#fff0f0">${project.name}</span><span style="color:#d20;background-color:#fff0f0">"</span>
-</span></span><span style="display:flex;"><span>            displayName = info.longName
-</span></span><span style="display:flex;"><span>            description = project.description
-</span></span><span style="display:flex;"><span>            implementationClass = info.pluginImplementationClass
-</span></span><span style="display:flex;"><span>            tags.<span style="color:#080;font-weight:bold">set</span>(info.tags)
-</span></span><span style="display:flex;"><span>            description = info.projectDetails
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>publishOnCentral {</span></span></code></pre></div><p></p>
-</section><section>
-<h1 id="inspecting-dependencies">Inspecting dependencies</h1>
+<h2 id="inspecting-dependencies">Inspecting dependencies</h2>
 <p>In rich projects, most of the build-related issues are due to pesky stuff going on with <em>dependencies</em></p>
 <ul>
 <li>Transitive conflicts
@@ -2844,7 +2713,7 @@ once done, an <strong>API Key</strong> will be available from the web interface,
 </li>
 </ul>
 </section><section>
-<h1 id="inspecting-dependencies-among-tasks">Inspecting dependencies <em>among tasks</em></h1>
+<h2 id="inspecting-dependencies-among-tasks">Inspecting dependencies <em>among tasks</em></h2>
 <p>When developing plugins or rich builds, the issue of dependencies also affect <strong>tasks</strong></p>
 <p>Gradle <em>does not</em> provide tools to ispect the task graph graphically, but a plugin exists.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>
@@ -2852,7 +2721,7 @@ once done, an <strong>API Key</strong> will be available from the web interface,
 </span></span><span style="display:flex;"><span>plugins {</span></span></code></pre></div>
 <p>Generates a <code>taskTree</code> task printing the task tree of the tasks listed along with <code>taskTree</code>.</p>
 </section><section>
-<h1 id="build-reporting">Build reporting</h1>
+<h2 id="build-scans">Build scans</h2>
 <ul>
 <li>As any software, complex builds need rich inspection tools
 <ul>
@@ -2884,6 +2753,14 @@ once done, an <strong>API Key</strong> will be available from the web interface,
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
+<h1 id="build-automation-2">Build Automation</h1>
+<h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
+<br>
+<h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
+<br>
+<p>Compiled on: 2025-10-24
+ — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
+<p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section>
 
   
