@@ -23,7 +23,7 @@
   
 
     <section><h1 id="build-automation">Build Automation</h1>
-<h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
+<h2 id="hahahugoshortcode2s0hbhb">Software Process Engineering</h2>
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
@@ -2159,12 +2159,12 @@ e.g., <code>it.unibo.spe.greetings</code></p>
 </ol>
 <p>Gradle provides a <strong>test kit</strong>, to launch Gradle programmatically and inspect the execution results</p>
 </section><section>
-<h2 id="importing-gradle-test-kit-and-kotest">Importing Gradle test kit and Kotest</h2>
+<h2 id="importing-the-gradle-dependencies-and-the-test-kit">Importing the Gradle dependencies and the test kit</h2>
 <p>It’s just matter of pulling the right dependencies</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    implementation(gradleApi())
 </span></span><span style="display:flex;"><span>    implementation(gradleKotlinDsl())
-</span></span><span style="display:flex;"><span>    testImplementation(gradleTestKit()) <span style="color:#888">// Test implementation: available for testing compile and runtime
+</span></span><span style="display:flex;"><span>    testImplementation(gradleTestKit()) <span style="color:#888">// Test implementation: available for testing compile and testing runtime
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
 </span></span></code></pre></div><h3 id="plugin-classpath-injection">Plugin Classpath injection</h3>
 <p>By default, the Gradle test kit just runs Gradle.
@@ -2174,7 +2174,7 @@ We want to inject our plugin into the distribution:</p>
 <li>Make sure that the list is always up to date and ready before test execution</li>
 <li>Use such list as our classpath for running Gradle</li>
 </ol>
-<p>This operation is now build-in the test kit:</p>
+<p>This operation is now built-in the test kit:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Configure a Gradle runner
 </span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runner</span> = <span style="color:#b06;font-weight:bold">GradleRunner</span>.create()
 </span></span><span style="display:flex;"><span>    .withProjectDir()
@@ -2186,15 +2186,13 @@ We want to inject our plugin into the distribution:</p>
 </span></span><span style="display:flex;"><span>runner.output shouldContain <span style="color:#d20;background-color:#fff0f0">"Hello from Gradle"</span>
 </span></span></code></pre></div></section><section>
 <h2 id="dry-with-dependencies-declaration">DRY with dependencies declaration</h2>
-<p>Look at the following code:</p>
+<p>Look at the following example code:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-runner-junit5:4.2.5"</span>)
 </span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-assertions-core:4.2.5"</span>)
 </span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-assertions-core-jvm:4.2.5"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>It is <em>repetitive</em> and <em>fragile</em> (what if you change the version of a single kotest module?)</p>
-</section><section>
-<h2 id="dry-with-dependencies-declaration-1">DRY with dependencies declaration</h2>
 <p>Let’s patch all this fragility:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">kotestVersion</span> = <span style="color:#d20;background-color:#fff0f0">"4.2.5"</span>
@@ -2204,7 +2202,7 @@ We want to inject our plugin into the distribution:</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Still, quite repetitive…</p>
 </section><section>
-<h2 id="dry-with-dependencies-declaration-2">DRY with dependencies declaration</h2>
+<h2 id="dry-with-dependencies-declaration-1">DRY with dependencies declaration</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    val kotestVersion = <span style="color:#d20;background-color:#fff0f0">"4.2.5"</span>
 </span></span><span style="display:flex;"><span>    fun <span style="color:#06b;font-weight:bold">kotest</span>(<span style="color:#369;font-style:italic">module:</span> String) = <span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-$module:$kotestVersion"</span>
@@ -2716,9 +2714,9 @@ If you do not have a signature yet, <a href="https://central.sonatype.org/pages/
 <h2 id="inspecting-dependencies-among-tasks">Inspecting dependencies <em>among tasks</em></h2>
 <p>When developing plugins or rich builds, the issue of dependencies also affect <strong>tasks</strong></p>
 <p>Gradle <em>does not</em> provide tools to ispect the task graph graphically, but a plugin exists.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">```</span>groovy
-</span></span><span style="display:flex;"><span>plugins {</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+</span></span><span style="display:flex;"><span>    id <span style="color:#d20;background-color:#fff0f0">"com.dorongold.task-tree"</span> version <span style="color:#d20;background-color:#fff0f0">"4.0.1"</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
 <p>Generates a <code>taskTree</code> task printing the task tree of the tasks listed along with <code>taskTree</code>.</p>
 </section><section>
 <h2 id="build-scans">Build scans</h2>
@@ -2754,7 +2752,7 @@ If you do not have a signature yet, <a href="https://central.sonatype.org/pages/
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
 <h1 id="build-automation-2">Build Automation</h1>
-<h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
+<h2 id="hahahugoshortcode2s0hbhb">Software Process Engineering</h2>
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
@@ -2862,8 +2860,6 @@ If you do not have a signature yet, <a href="https://central.sonatype.org/pages/
   
   
 
-  
-    
   
   
 

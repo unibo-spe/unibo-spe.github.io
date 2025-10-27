@@ -24,7 +24,7 @@
 
     <section><h1 id="continuous-integration">Continuous Integration</h1>
 <!-- this file includes generated content. Do not edit. Edit content/07-ci/generator.md, instead. -->
-<h2 id="hahahugoshortcode9s0hbhb">Software Process Engineering</h2>
+<h2 id="hahahugoshortcode7s0hbhb">Software Process Engineering</h2>
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
@@ -256,9 +256,9 @@ not just a “plain” CI/CD pipeline</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">merged</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">foo</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">look: at, me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"I'm"</span><span style="color:#b06;font-weight:bold">, 'dancing' ] }, look: to, me</span>:<span style="color:#bbb"> </span>[<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"I'm"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'dancing'</span><span style="color:#bbb"> </span>]<span style="color:#bbb"> </span>}<span style="color:#bbb">
 </span></span></span></code></pre></div></section><section>
 <h2 id="github-actions-actions">GitHub Actions’ actions</h2>
-<p>GHA’s YAML parser <em>does not support standard YAML anchors and merge keys</em></p>
+<p>GHA’s YAML parser recently (<a href="https://github.com/actions/runner/issues/1182">and after a long time</a>)
+added support for <em>YAML anchors</em> but does <strong>not</strong> support <em>merge keys</em>.</p>
 <ul>
-<li>it is a well-known limit with <a href="https://github.com/actions/runner/issues/1182">an issue report open since ages</a></li>
 <li>there is a <a href="https://github.com/DanySK/true-yaml-actions">workaround</a> but it is very custom</li>
 </ul>
 <p>GHA achieves reuse via:</p>
@@ -954,7 +954,7 @@ the alternative is to <em>install a private key in the runner</em></p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">github-token</span>:<span style="color:#bbb"> </span>${{ secrets.GITHUB_TOKEN }}<span style="color:#bbb">
 </span></span></span></code></pre></div><p>$\Rightarrow$ <em>write <strong>workflows</strong></em>, <em>use <strong>jobs</strong></em></p>
 </section><section>
-<h1 id="stale-builds">Stale builds</h1>
+<h2 id="stale-builds">Stale builds</h2>
 <ol>
 <li>Stuff <em>works</em></li>
 <li><em>Nobody touches it</em> for months</li>
@@ -978,7 +978,67 @@ the alternative is to <em>install a private key in the runner</em></p>
 <li><strong>Warning</strong>: GitHub Actions disables <code>cron</code> CI jobs if there is no action on the repository, which makes the mechanism less useful</li>
 </ul>
 </section><section>
-<h2 id="additional-checks-and-reportings">Additional checks and reportings</h2>
+<h1 id="github-cli">GitHub CLI</h1>
+</section><section>
+<!-- this file includes generated content. Do not edit. Edit content/07-ci/generator.md, instead. -->
+<h2 id="github-cli-what-and-why">GitHub CLI: What and Why</h2>
+<ul>
+<li>
+<p><code>gh</code> is the official CLI for GitHub</p>
+</li>
+<li>
+<p>Targets GitHub features that <code>git</code> does not cover</p>
+<ul>
+<li>issues, pull requests, releases, workflows, notifications, secrets, API</li>
+</ul>
+</li>
+<li>
+<p>Works in terminals and scripts</p>
+</li>
+<li>
+<p>Auth once, reuse across repos and orgs</p>
+</li>
+</ul>
+<h3 id="setup-and-auth">Setup and Auth</h3>
+<p>Install from package manager, then:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh --version
+</span></span><span style="display:flex;"><span>gh auth login            <span style="color:#888"># guided OAuth or token</span>
+</span></span><span style="display:flex;"><span>gh auth status           <span style="color:#888"># verify</span>
+</span></span><span style="display:flex;"><span>gh config <span style="color:#038">set</span> prompt disabled <span style="color:#038">true</span>   <span style="color:#888"># non-interactive scripts</span>
+</span></span><span style="display:flex;"><span>gh <span style="color:#038">alias</span> <span style="color:#038">set</span> prd <span style="color:#d20;background-color:#fff0f0">'pr create -d -f'</span>   <span style="color:#888"># example alias</span>
+</span></span></code></pre></div><p>Multiple accounts:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh auth login --hostname github.com --scopes repo,workflow
+</span></span><span style="display:flex;"><span>gh auth switch --user &lt;handle&gt;
+</span></span></code></pre></div></section><section>
+<h2 id="daily-ops-issues-and-prs">Daily Ops: Issues and PRs</h2>
+<p>Issues:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh issue list --label bug --state open
+</span></span><span style="display:flex;"><span>gh issue create -t <span style="color:#d20;background-color:#fff0f0">"Crash on startup"</span> -b <span style="color:#d20;background-color:#fff0f0">"Steps…"</span> -l bug -a @me
+</span></span><span style="display:flex;"><span>gh issue view <span style="color:#00d;font-weight:bold">123</span> -w     <span style="color:#888"># open in browser</span>
+</span></span></code></pre></div><p>Pull requests:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh pr create -t <span style="color:#d20;background-color:#fff0f0">"Fix: null check"</span> -b <span style="color:#d20;background-color:#fff0f0">"…"</span> -B main -H feat/guard -r org/team
+</span></span><span style="display:flex;"><span>gh pr checks             <span style="color:#888"># status of CI</span>
+</span></span><span style="display:flex;"><span>gh pr review --approve
+</span></span><span style="display:flex;"><span>gh pr merge --auto --squash
+</span></span></code></pre></div><p>Releases and notifications:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh release create v1.2.0 dist/* -t <span style="color:#d20;background-color:#fff0f0">"v1.2.0"</span> -n <span style="color:#d20;background-color:#fff0f0">"Changelog…"</span>
+</span></span><span style="display:flex;"><span>gh notif list --unread
+</span></span></code></pre></div></section><section>
+<h2 id="cicd-secrets-and-raw-api">CI/CD, Secrets, and Raw API</h2>
+<p>Workflows:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh workflow list
+</span></span><span style="display:flex;"><span>gh run list
+</span></span><span style="display:flex;"><span>gh run watch --job <span style="color:#00d;font-weight:bold">123456789</span>
+</span></span><span style="display:flex;"><span>gh workflow run build.yml -f <span style="color:#369">ref</span>=main
+</span></span></code></pre></div><p>Secrets:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh secret <span style="color:#038">set</span> NPM_TOKEN --body <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#369">$NPM_TOKEN</span><span style="color:#d20;background-color:#fff0f0">"</span>              <span style="color:#888"># repo</span>
+</span></span><span style="display:flex;"><span>gh secret <span style="color:#038">set</span> PROD_KEY --org &lt;org&gt; --repos <span style="color:#d20;background-color:#fff0f0">'app-*'</span>       <span style="color:#888"># org with repo filter</span>
+</span></span></code></pre></div><p>REST access when features lag:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh api repos/{owner}/{repo}/actions/runs --paginate | jq <span style="color:#d20;background-color:#fff0f0">'.workflow_runs[].status'</span>
+</span></span><span style="display:flex;"><span>gh api graphql -f <span style="color:#369">query</span>=<span style="color:#d20;background-color:#fff0f0">'query { viewer { login } }'</span>
+</span></span></code></pre></div><p>Tip: compose <code>gh</code> with <code>jq</code>, <code>xargs</code>, and <code>bash</code> for reliable automation.</p>
+</section><section>
+<h2 id="additional-checks-and-reporting">Additional checks and reporting</h2>
 <p>There exist a number of recommended services that provide additional QA and reports.</p>
 <p>Non exhaustive list:</p>
 <ul>
@@ -1015,6 +1075,8 @@ the alternative is to <em>install a private key in the runner</em></p>
 <li>Releases a <em>badge</em> that can be added e.g. to the project homepage</li>
 </ul>
 </section><section>
+<h1 id="advanced-workflow-automation">Advanced workflow automation</h1>
+</section><section>
 <h2 id="automated-evolution">Automated evolution</h2>
 <p>A full-fledged CI system allows reasonably safe <em>automated evolution of software</em>
 <br>
@@ -1046,6 +1108,58 @@ here is a possible workflow for <strong>automatic</strong> dependency updates:</
 <li>Gemnasium (Ruby)</li>
 <li>Greenkeeper (NPM)</li>
 </ul>
+</section><section>
+<h2 id="copilot-coding-agent-what-it-is">Copilot coding agent: what it is</h2>
+<ul>
+<li>Cloud-hosted <em>autonomous LLM agent</em> inside GitHub.
+<ul>
+<li>Can be <em>assigned issues</em></li>
+<li>Spins up an isolated runner, clones the repo, makes changes, builds, and proceeds iteratively until the issue is solved.
+<ul>
+<li>(or Copilot <em>“thinks”</em> it is solved)</li>
+</ul>
+</li>
+<li>Responds with <em>a draft PR</em> for review.</li>
+</ul>
+</li>
+<li>Operates through GitHub Actions with full audit trail in commits and logs (consuming actions minutes).</li>
+</ul>
+<h2 id="how-to-use-it">How to use it</h2>
+<ul>
+<li>Start from: <strong>assign an Issue to Copilot</strong>.</li>
+<li>It <strong>opens a draft PR</strong>, and requests your review.
+<ul>
+<li>At the first assignment on a new repo, it will ask for an <strong>onboarding procedure</strong>
+<ul>
+<li>When onboarding, Copilot runs through the repository and prepares a document
+in <code>.github/copilot-instructions.md</code>
+for his future self with a summary of the codebase.</li>
+<li>On subsequent runs, this summary is used as context for Copilot, speeding up its understanding of the codebase.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Tag <code>@Copilot</code> in PR comments to guide it.</li>
+</ul>
+<h3 id="impact">Impact</h3>
+<p>The literature is emerging, initial results are mixed.</p>
+<ul>
+<li>GenAI seems to <em>speed up unexperieced</em> developers in <em>small and simple projects</em>.</li>
+<li><em>Experienced developers</em> on <em>large projects</em> seem to be <em>slowed down</em> (<strong>-19%</strong>) by the need to review AI-generated code.
+<ul>
+<li><a href="https://arxiv.org/abs/2507.09089">https://arxiv.org/abs/2507.09089</a>, <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/">https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/</a></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="productivity-evidence">Productivity evidence</h2>
+<ul>
+<li>RCT: developers completed a JS task <strong>55.8% faster</strong> with Copilot. Note: classic inline Copilot, not the coding agent, but directionally relevant. (<a href="https://arxiv.org/pdf/2302.06590v1?utm_source=chatgpt.com" title="The Impact of AI on Developer Productivity: Evidence from GitHub Copilot">arxiv.org</a>)</li>
+<li>Field experiments across <strong>1,974</strong> devs at Microsoft and Accenture report positive productivity effects from GenAI coding tools. Preprint. (<a href="https://mit-genai.pubpub.org/pub/v5iixksv?utm_source=chatgpt.com" title="The Productivity Effects of Generative AI: Evidence from a Field ...">An MIT Exploration of Generative AI</a>)</li>
+<li>Industry case study in a large automotive firm found productivity gains with Copilot in daily work. (<a href="https://aisel.aisnet.org/amcis2024/ai_aa/ai_aa/10/?utm_source=chatgpt.com" title="AIS Electronic Library (AISeL) - AMCIS 2024 Proceedings: The impact of ...">aisel.aisnet.org</a>)</li>
+<li>GitHub’s own mixed-methods study reports faster completion times and reduced cognitive load. Non-peer-reviewed. (<a href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/?utm_source=chatgpt.com" title="Research: quantifying GitHub Copilot’s impact on developer productivity ...">github.blog</a>)</li>
+</ul>
+<p><em>Caveat</em>: peer-reviewed results focus on autocomplete Copilot. Rigorous studies on the cloud coding agent are emerging.</p>
 </section><section>
 <h1 id="issue-and-pr-templating">Issue and PR templating</h1>
 </section><section>
@@ -1132,6 +1246,16 @@ with a pre-populated text area</li>
 </ul>
 </li>
 </ul>
+</section><section>
+<h1 id="continuous-integration-3">Continuous Integration</h1>
+<!-- this file includes generated content. Do not edit. Edit content/07-ci/generator.md, instead. -->
+<h2 id="hahahugoshortcode7s12hbhb">Software Process Engineering</h2>
+<br>
+<h3 id="danilo-pianini-1"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
+<br>
+<p>Compiled on: 2025-10-27
+ — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
+<p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section>
 
   
