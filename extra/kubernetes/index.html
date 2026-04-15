@@ -46,7 +46,7 @@
 
 
 </style>
-<h1 id="hahahugoshortcode18s0hbhb">Software Process Engineering</h1>
+<h1 id="hahahugoshortcode21s0hbhb">Software Process Engineering</h1>
 <h2 id="intoduction-to-kubernetes">Intoduction to Kubernetes</h2>
 <h3 id="martina-baiardi---mbaiardiuniboit"><a href="mailto:m.baiardi@unibo.it">Martina Baiardi - m.baiardi@unibo.it</a></h3>
 </section><section>
@@ -76,7 +76,7 @@ it is meant to support <em>reliable</em> and <em>scalable</em> software systems.
 <ul>
 <li>Immutability</li>
 <li>Everything is a declarative configuration object</li>
-<li>Broader range of object to create, and manage, the production environment with respect to Docker Swarm</li>
+<li>Broader range of objects to create, and manage, the production environment with respect to Docker Swarm</li>
 <li>Automatic scaling of resources (horizontal, vertical, increasing and decreasing)</li>
 <li>Built-in monitoring</li>
 <li>Security</li>
@@ -91,7 +91,7 @@ it is meant to support <em>reliable</em> and <em>scalable</em> software systems.
 </ul>
 <br>
 <p><strong>Why Docker Swarm is not enough?</strong></p>
-<p>Docker Swarm do support large production deployments at scale,
+<p>Docker Swarm does not support large production deployments at scale,
 while Kubernetes natively support it.</p>
 </section><section>
 <h2 id="declarative-configuration-objects">Declarative configuration objects</h2>
@@ -133,7 +133,7 @@ while Kubernetes natively support it.</p>
 </section><section>
 <h3 id="an-example-of-existing-kubernetes-resources-types">An example of existing Kubernetes resources types</h3>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>NAME                              SHORTNAMES   API VERSION                            NAMESPACED   KIND                   
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>NAME                              SHORTNAMES   API VERSION                            NAMESPACED   KIND                   
 </span></span><span style="display:flex;"><span>namespaces                        ns           v1                                     <span style="color:#038">false</span>        Namespace              
 </span></span><span style="display:flex;"><span>nodes                             no           v1                                     <span style="color:#038">false</span>        Node                   
 </span></span><span style="display:flex;"><span>persistentvolumeclaims            pvc          v1                                     <span style="color:#038">true</span>         PersistentVolumeClaim  
@@ -375,11 +375,11 @@ while Kubernetes natively support it.</p>
 </section><section>
 <h2 id="kubernetes-objects-pods-2">Kubernetes objects: Pods</h2>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello-world<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">containers</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>busybox:latest<span style="color:#bbb">
@@ -400,11 +400,11 @@ while Kubernetes natively support it.</p>
 </section><section>
 <h2 id="kubernetes-objects-pods-3">Kubernetes objects: Pods</h2>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello-world<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">containers</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>busybox:latest<span style="color:#bbb">
@@ -428,11 +428,11 @@ while Kubernetes natively support it.</p>
 </section><section>
 <h2 id="kubernetes-objects-pods-4">Kubernetes objects: Pods</h2>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello-world<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">containers</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>busybox:latest<span style="color:#bbb">
@@ -456,11 +456,11 @@ while Kubernetes natively support it.</p>
 </section><section>
 <h2 id="kubernetes-objects-pods-5">Kubernetes objects: Pods</h2>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello-world<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">containers</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>busybox:latest<span style="color:#bbb">
@@ -506,11 +506,11 @@ You can also use the power-of-two equivalents, such as Ei, Pi, Ti, Gi, Mi, Ki. <
 </section><section>
 <h2 id="kubernetes-objects-pods-6">Kubernetes objects: Pods</h2>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Pod<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">metadata</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello-world<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">spec</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">containers</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>hello<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>busybox:latest<span style="color:#bbb">
@@ -537,7 +537,7 @@ You can also use the power-of-two equivalents, such as Ei, Pi, Ti, Gi, Mi, Ki. <
 <div class="multiCol">
     <div class="col  ">
     <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: apps/v1
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: apps/v1
 </span></span><span style="display:flex;"><span>kind: Deployment
 </span></span><span style="display:flex;"><span>metadata:
 </span></span><span style="display:flex;"><span>  name: nginx-deployment
@@ -579,7 +579,7 @@ You can also use the power-of-two equivalents, such as Ei, Pi, Ti, Gi, Mi, Ki. <
 <div class="multiCol">
     <div class="col  ">
     <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: apps/v1
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: apps/v1
 </span></span><span style="display:flex;"><span>kind: Deployment
 </span></span><span style="display:flex;"><span>metadata:
 </span></span><span style="display:flex;"><span>  name: nginx-deployment
@@ -626,7 +626,7 @@ You can also use the power-of-two equivalents, such as Ei, Pi, Ti, Gi, Mi, Ki. <
 Since a <code>Deployment</code> object manages a <code>ReplicaSet</code>, users can scale dynamically the <code>Pod</code>'s number using:
 </div>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl scale deployment &lt;name&gt; --replicas=&lt;number&gt;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl scale deployment &lt;name&gt; --replicas=&lt;number&gt;
 </span></span></code></pre></div></div>
 </section><section>
 <h2 id="kubernetes-objects-services">Kubernetes objects: Services</h2>
@@ -772,7 +772,7 @@ As nodes are removed from the cluster, those Pods are garbage collected.</p>
 </section><section>
 <h2 id="minikube">Minikube</h2>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>minikube start --driver=<span style="color:#d20;background-color:#fff0f0">'virtualbox'</span> --extra-config=kubelet.housekeeping-interval=10s</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>minikube start --driver=<span style="color:#d20;background-color:#fff0f0">'virtualbox'</span> --extra-config=kubelet.housekeeping-interval=10s</span></span></code></pre></div>
 </div>
 <br>
 <blockquote>
@@ -788,7 +788,7 @@ As nodes are removed from the cluster, those Pods are garbage collected.</p>
 </section><section>
 <h2 id="minikube-1">Minikube</h2>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>$ minikube start
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>$ minikube start
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>😄  minikube v1.32.0 on Arch 23.1.0
 </span></span><span style="display:flex;"><span>✨  Using the virtualbox driver based on existing profile
@@ -864,7 +864,7 @@ Useful commands:
 <p>After a successful installation, you can verify that kubectl is correctly connected to our minikube cluster</p>
 <br>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>$ kubectl cluster-info
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>$ kubectl cluster-info
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Kubernetes control plane is running at https://192.168.59.101:8443
 </span></span><span style="display:flex;"><span>CoreDNS is running at https://192.168.59.101:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
@@ -885,7 +885,7 @@ Let's look into the <code>~/.kube/config</code> file, or also use <code>kubectl 
 The output is something like this:
 </div>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>$ kubectl config view
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>$ kubectl config view
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>apiVersion: v1
 </span></span><span style="display:flex;"><span>clusters:
@@ -923,7 +923,7 @@ The output is something like this:
 </section><section>
 <h2 id="kubectl-config-available-clusters">Kubectl config: available clusters</h2>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: v1
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: v1
 </span></span><span style="display:flex;"><span>clusters:
 </span></span><span style="display:flex;"><span>- cluster:
 </span></span><span style="display:flex;"><span>    certificate-authority: /home/anitvam/.minikube/ca.crt
@@ -962,7 +962,7 @@ The output is something like this:
 </section><section>
 <h2 id="kubectl-config-user-certificates">Kubectl config: user certificates</h2>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: v1
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: v1
 </span></span><span style="display:flex;"><span>clusters:
 </span></span><span style="display:flex;"><span>- cluster:
 </span></span><span style="display:flex;"><span>    certificate-authority: /home/anitvam/.minikube/ca.crt
@@ -1010,9 +1010,9 @@ The output is something like this:
 </li>
 </ul>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">clusters</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>- <span style="color:#b06;font-weight:bold">cluster</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">clusters</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>- <span style="color:#b06;font-weight:bold">cluster</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">certificate-authority</span>:<span style="color:#bbb"> </span>/home/anitvam/.minikube/ca.crt<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">extensions</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">extension</span>:<span style="color:#bbb">
@@ -1022,8 +1022,8 @@ The output is something like this:
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>cluster_info<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">server</span>:<span style="color:#bbb"> </span>https://192.168.59.101:8443<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">contexts</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>- <span style="color:#b06;font-weight:bold">context</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">contexts</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>- <span style="color:#b06;font-weight:bold">context</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">cluster</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">extensions</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">extension</span>:<span style="color:#bbb">
@@ -1034,11 +1034,11 @@ The output is something like this:
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">namespace</span>:<span style="color:#bbb"> </span>default<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">user</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">current-context</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Config<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">preferences</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">users</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">current-context</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Config<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">preferences</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">users</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">user</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">client-certificate</span>:<span style="color:#bbb"> </span>/home/anitvam/.minikube/profiles/minikube/client.crt<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">client-key</span>:<span style="color:#bbb"> </span>/home/anitvam/.minikube/profiles/minikube/client.key<span style="color:#bbb">
@@ -1078,7 +1078,7 @@ Two objects: A <code>Deployment</code> and a <code>Service</code>
 
 <div class="col  ">
     <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: apps/v1
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: apps/v1
 </span></span><span style="display:flex;"><span>kind: Deployment
 </span></span><span style="display:flex;"><span>metadata:
 </span></span><span style="display:flex;"><span>  name: php-apache
@@ -1107,7 +1107,7 @@ Two objects: A <code>Deployment</code> and a <code>Service</code>
 
 <div class="col  ">
     <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: v1
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: v1
 </span></span><span style="display:flex;"><span>kind: Service
 </span></span><span style="display:flex;"><span>metadata:
 </span></span><span style="display:flex;"><span>  name: php-apache
@@ -1131,7 +1131,7 @@ Two objects: A <code>Deployment</code> and a <code>Service</code>
 They can both be deployed using the <code>kubectl apply -f &lt;file&gt;</code> command.
 </div>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl apply -f https://k8s.io/examples/application/php-apache.yaml
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl apply -f https://k8s.io/examples/application/php-apache.yaml
 </span></span></code></pre></div></div>
 
 </span>
@@ -1142,7 +1142,7 @@ They can both be deployed using the <code>kubectl apply -f &lt;file&gt;</code> c
 We need to create an <code>Horizontal Pod Autoscaler</code>
 </div>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl autoscale deployment php-apache --cpu-percent=<span style="color:#00d;font-weight:bold">50</span> --min=<span style="color:#00d;font-weight:bold">1</span> --max=<span style="color:#00d;font-weight:bold">10</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl autoscale deployment php-apache --cpu=50% --min=<span style="color:#00d;font-weight:bold">1</span> --max=<span style="color:#00d;font-weight:bold">10</span>
 </span></span></code></pre></div></div>
 <br>
 <div class="center">
@@ -1157,7 +1157,7 @@ The minimum number of replicas that can be deployed is <em>1</em>, and the maxim
 <li><code>kubectl run</code> allows to create a Pod on-the-fly</li>
 </ul>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl run -it load-generator --rm --image=busybox:latest -- /bin/sh -c <span style="color:#d20;background-color:#fff0f0">"while sleep 0.01; do wget -q -O - http://php-apache; done"</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kubectl run -it load-generator --rm --image=busybox:latest -- /bin/sh -c <span style="color:#d20;background-color:#fff0f0">"while sleep 0.01; do wget -q -O - http://php-apache; done"</span>
 </span></span></code></pre></div></div>
 <br>
 <br>
@@ -1172,7 +1172,7 @@ What we get (waiting a few minutes) is something like this:
 </div>
 <br>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>$ kubectl get hpa php-apache --watch  
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>$ kubectl get hpa php-apache --watch  
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>NAME         REFERENCE               TARGETS    MINPODS   MAXPODS   REPLICAS   AGE
 </span></span><span style="display:flex;"><span>php-apache   Deployment/php-apache   0%/50%     <span style="color:#00d;font-weight:bold">1</span>         <span style="color:#00d;font-weight:bold">10</span>        <span style="color:#00d;font-weight:bold">1</span>          10m

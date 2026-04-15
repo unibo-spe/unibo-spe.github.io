@@ -38,7 +38,7 @@
 <br>
 <h3 id="giovanni-ciatto"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2025-11-21
+<p>Compiled on: 2026-04-15
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -599,22 +599,22 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 
 <section data-shortcode-section="">
 <h2 id="dockerfile-syntax">Dockerfile syntax</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, "scratch" can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">alpine:latest</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">RUN</span> apk update; apk add nodejs npm<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Copies a file/directory from the host into the image</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">COPY</span> path/to/my/nodejs/project /my-project<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Sets the working directory</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">WORKDIR</span><span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">/my-project</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">RUN</span> npm install<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Adds a new environment variable</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">ENV</span> <span style="color:#369">SERVICE_PORT</span>=<span style="color:#00d;font-weight:bold">8080</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># Pulls an image from docker hub with this name. Alternatively, "scratch" can be used for an empty container</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">alpine:latest</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">RUN</span> apk update; apk add nodejs npm<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># Copies a file/directory from the host into the image</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">COPY</span> path/to/my/nodejs/project /my-project<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># Sets the working directory</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">WORKDIR</span><span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">/my-project</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># Runs a command</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">RUN</span> npm install<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># Adds a new environment variable</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">ENV</span> <span style="color:#369">SERVICE_PORT</span>=<span style="color:#00d;font-weight:bold">8080</span>
 </span></span><span style="display:flex;"><span><span style="color:#888"># Exposes a port</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">EXPOSE</span><span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">8080</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Configures the default command to execute</span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#080;font-weight:bold">CMD</span> npm run service<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">EXPOSE</span><span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">8080</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># Configures the default command to execute</span><span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">CMD</span> npm run service<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span></code></pre></div><p>to be built by means of the command: <code>docker build -t PATH</code></p>
 <ul>
 <li><code>PATH</code> is the host path containing the <code>Dockerfile</code></li>
@@ -638,7 +638,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
     <ol start="3">
 <li>File <code>package.json</code></li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>{
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">"name"</span>: <span style="color:#d20;background-color:#fff0f0">"example"</span>,
 </span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">"version"</span>: <span style="color:#d20;background-color:#fff0f0">"1.0.0"</span>,
 </span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">"description"</span>: <span style="color:#d20;background-color:#fff0f0">"Example Express WS for exemplifying Docker usage"</span>,
@@ -658,14 +658,14 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
     <ol start="4">
 <li>File <code>index.mjs</code></li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> { env } from <span style="color:#d20;background-color:#fff0f0">'process'</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> { env } from <span style="color:#d20;background-color:#fff0f0">'process'</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> express from <span style="color:#d20;background-color:#fff0f0">'express'</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> { randomBytes } from <span style="color:#d20;background-color:#fff0f0">'crypto'</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> port = <span style="color:#d20;background-color:#fff0f0">'SERVICE_PORT'</span> <span style="color:#080;font-weight:bold">in</span> env ? env.SERVICE_PORT : <span style="color:#00d;font-weight:bold">8080</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> hostname = <span style="color:#d20;background-color:#fff0f0">'HOSTNAME'</span> <span style="color:#080;font-weight:bold">in</span> env ? env.HOSTNAME : <span style="color:#d20;background-color:#fff0f0">'localhost'</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> serverID = randomBytes(<span style="color:#00d;font-weight:bold">8</span>).toString(<span style="color:#d20;background-color:#fff0f0">'hex'</span>) <span style="color:#888">// 8-char random string
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> server = express()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">let</span> counter = <span style="color:#00d;font-weight:bold">0</span>
@@ -709,7 +709,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </li>
 <li>
 <p>The option can be repeated multiple times to make multiple tags</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>docker build -t <span style="color:#d20;background-color:#fff0f0">"myImage:latest"</span> -t <span style="color:#d20;background-color:#fff0f0">"myImage:0.1.0"</span> /path/to/Dockerfile/container
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>docker build -t <span style="color:#d20;background-color:#fff0f0">"myImage:latest"</span> -t <span style="color:#d20;background-color:#fff0f0">"myImage:0.1.0"</span> /path/to/Dockerfile/container
 </span></span></code></pre></div></li>
 <li>
 <p><code>latest</code> is usually used to identify the most recent version of some image</p>
@@ -891,12 +891,12 @@ drwxr-xr-x    1 root     root          4096 Nov  2 09:28 ..
 <li>named <code>container-&lt;i&gt;.txt</code></li>
 <li>containing random data from <code>/dev/random</code>, encoded in base64</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">for</span> i in <span style="color:#080;font-weight:bold">$(</span>seq <span style="color:#00d;font-weight:bold">1</span> 10<span style="color:#080;font-weight:bold">)</span>; <span style="color:#080;font-weight:bold">do</span> 
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">for</span> i in <span style="color:#080;font-weight:bold">$(</span>seq <span style="color:#00d;font-weight:bold">1</span> 10<span style="color:#080;font-weight:bold">)</span>; <span style="color:#080;font-weight:bold">do</span> 
 </span></span><span style="display:flex;"><span>    docker run --rm -d <span style="color:#04d;background-color:#fff0f0">\ </span>          <span style="color:#888"># detached mode</span>
 </span></span><span style="display:flex;"><span>        -v <span style="color:#080;font-weight:bold">$(</span><span style="color:#038">pwd</span><span style="color:#080;font-weight:bold">)</span>/shared:/data <span style="color:#04d;background-color:#fff0f0">\ </span>  <span style="color:#888"># bind mount</span>
 </span></span><span style="display:flex;"><span>        --hostname container-<span style="color:#369">$i</span> <span style="color:#04d;background-color:#fff0f0">\ </span> <span style="color:#888"># parametric hostname inside the container</span>
 </span></span><span style="display:flex;"><span>        alpine sh -c <span style="color:#04d;background-color:#fff0f0">\
-</span></span></span><span style="display:flex;"><span><span style="color:#04d;background-color:#fff0f0"></span>        <span style="color:#d20;background-color:#fff0f0">'cat /dev/random | head -n 1 | base64 &gt; /data/$(hostname).txt'</span>  
+</span></span></span><span style="display:flex;"><span>        <span style="color:#d20;background-color:#fff0f0">'cat /dev/random | head -n 1 | base64 &gt; /data/$(hostname).txt'</span>  
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">done</span>
 </span></span></code></pre></div></li>
 <li>
@@ -945,12 +945,12 @@ drwxr-xr-x 79 user    user    12288  2 nov 10.56 ..
 </li>
 <li>
 <p>Same 10 containers as before, but using the named volume instead of the bind mount</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">for</span> i in <span style="color:#080;font-weight:bold">$(</span>seq <span style="color:#00d;font-weight:bold">1</span> 10<span style="color:#080;font-weight:bold">)</span>; <span style="color:#080;font-weight:bold">do</span> 
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">for</span> i in <span style="color:#080;font-weight:bold">$(</span>seq <span style="color:#00d;font-weight:bold">1</span> 10<span style="color:#080;font-weight:bold">)</span>; <span style="color:#080;font-weight:bold">do</span> 
 </span></span><span style="display:flex;"><span>    docker run --rm -d <span style="color:#04d;background-color:#fff0f0">\ </span>          <span style="color:#888"># detached mode</span>
 </span></span><span style="display:flex;"><span>        -v my-volume:/data <span style="color:#04d;background-color:#fff0f0">\ </span>      <span style="color:#888"># reference to volume my-volume</span>
 </span></span><span style="display:flex;"><span>        --hostname container-<span style="color:#369">$i</span> <span style="color:#04d;background-color:#fff0f0">\ </span> <span style="color:#888"># parametric hostname inside the container</span>
 </span></span><span style="display:flex;"><span>        alpine sh -c <span style="color:#04d;background-color:#fff0f0">\
-</span></span></span><span style="display:flex;"><span><span style="color:#04d;background-color:#fff0f0"></span>        <span style="color:#d20;background-color:#fff0f0">'cat /dev/random | head -n 1 | base64 &gt; /data/$(hostname).txt'</span>  
+</span></span></span><span style="display:flex;"><span>        <span style="color:#d20;background-color:#fff0f0">'cat /dev/random | head -n 1 | base64 &gt; /data/$(hostname).txt'</span>  
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">done</span>
 </span></span></code></pre></div></li>
 <li>
@@ -998,7 +998,7 @@ drwxr-xr-x    1 root     root          4096 Nov  2 10:15 ..
 </li>
 <li>
 <p>Let’s analyse the JSON description of the volume:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>[
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>[
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        <span style="color:#b06;font-weight:bold">"CreatedAt"</span>: <span style="color:#d20;background-color:#fff0f0">"2023-11-02T11:13:56+01:00"</span>,
 </span></span><span style="display:flex;"><span>        <span style="color:#b06;font-weight:bold">"Driver"</span>: <span style="color:#d20;background-color:#fff0f0">"local"</span>,
@@ -1173,7 +1173,7 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 </li>
 <li>
 <p>Example: <code>docker run --network none -it --rm alpine sh</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>/ <span style="color:#888"># ping 8.8.8.8</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>/ <span style="color:#888"># ping 8.8.8.8</span>
 </span></span><span style="display:flex;"><span>PING 8.8.8.8 (8.8.8.8): <span style="color:#00d;font-weight:bold">56</span> data bytes
 </span></span><span style="display:flex;"><span>ping: sendto: Network unreachable
 </span></span></code></pre></div></li>
@@ -1473,9 +1473,9 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
     
 
 <div class="col col-6 ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3.9</span><span style="color:#bbb">                    </span><span style="color:#888"># version of the specification</span><span style="color:#bbb">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3.9</span><span style="color:#bbb">                    </span><span style="color:#888"># version of the specification</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">                       </span><span style="color:#888"># section defining services composing the stack</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">                       </span><span style="color:#888"># section defining services composing the stack</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">frontend</span>:<span style="color:#bbb">                     </span><span style="color:#888"># name of the first service (frontend)</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>example/webapp      <span style="color:#bbb"> </span><span style="color:#888"># image to use for the first service</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">depends_on</span>:<span style="color:#bbb">                 </span><span style="color:#888"># section for def</span><span style="color:#bbb">
@@ -1522,25 +1522,25 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </div>
 
 <div class="col col-6 ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">                   </span><span style="color:#888"># section for volumes to be created in the stack</span><span style="color:#bbb">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">                   </span><span style="color:#888"># section for volumes to be created in the stack</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db-data</span>:<span style="color:#bbb">                 </span><span style="color:#888"># name of the volume, to be referenced by services</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">driver_opts</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"none"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">o</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"bind"</span><span style="color:#bbb">            </span><span style="color:#888"># this volume is a bind mount</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">device</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"/path/to/db/data/on/the/host"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">                   </span><span style="color:#888"># section for configuration files to be created in the stack</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">                   </span><span style="color:#888"># section for configuration files to be created in the stack</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">httpd-config</span>:<span style="color:#bbb">            </span><span style="color:#888"># name of the configuration file, to be referenced by services</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>path/to/http/configuration/file/on/the/host<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">                   </span><span style="color:#888"># section for secrets to be created in the stack</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">                   </span><span style="color:#888"># section for secrets to be created in the stack</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">server-certificate</span>:<span style="color:#bbb">      </span><span style="color:#888"># name of the secret, to be referenced by services</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>path/to/certificate/file/on/the/host<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db-credentials</span>:<span style="color:#bbb">          </span><span style="color:#888"># name of the secret, to be referenced by services</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">         </span><span style="color:#888"># this secret is not created by the stack, but it is expected to be created by the user</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>my-db-creds     <span style="color:#bbb"> </span><span style="color:#888"># name of the secret, as created by the user </span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#888"># The presence of these objects is sufficient to define them</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">front-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">back-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
@@ -1594,7 +1594,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <ul>
 <li>
 <p>one config may either be created <strong>stack-wise</strong> out of a <strong>local file</strong> from the <em>host</em>…</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">config_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>/path/to/config/on/the/host<span style="color:#bbb">
 </span></span></span></code></pre></div></li>
@@ -1602,7 +1602,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <p>… or it can be <strong>manually created</strong> by means of the <code>docker config create [OPTIONS] NAME PATH</code> command</p>
 <ul>
 <li>in this case they can be referenced in several <code>docker-compose.yml</code> files:
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">config_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"the name used when creating the config"</span><span style="color:#bbb">
@@ -1612,7 +1612,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </li>
 <li>
 <p>in any case, the config’s mount point should be specified at the service level:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">my-service</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>...<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">configs</span>:<span style="color:#bbb">
@@ -1633,7 +1633,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </li>
 <li>
 <p>one secret may be either be created <strong>stack-wise</strong> out of a <strong>local file</strong> or an <strong>environment variable</strong> from the <em>host</em>…</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">                                            </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">                                            </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secret_name</span>:<span style="color:#bbb">                                        </span><span style="color:#b06;font-weight:bold">secret_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"/path/to/secret/on/the/host"</span><span style="color:#bbb">                 </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"NAME_OF_THE_VARIABLE_ON_THE_HOST"</span><span style="color:#bbb">
 </span></span></span></code></pre></div></li>
@@ -1641,7 +1641,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <p>… or it can be <strong>manually created</strong> by means of the <code>docker secret create [OPTIONS] NAME PATH|-</code> command</p>
 <ul>
 <li>in this case they can be referenced in several <code>docker-compose.yml</code> files:
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secret_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"the name used when creating the secret"</span><span style="color:#bbb">
@@ -1651,7 +1651,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </li>
 <li>
 <p>in any case, the secret’s mount point should be specified at the service level:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">my-service</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>...<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
@@ -1684,7 +1684,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <li>volumes in compose are no different than the ones we have already discussed</li>
 <li>they are declared in the <code>volumes</code> section of the <code>docker-compose.yml</code> file</li>
 <li>one volume may be created <strong>stack-wise</strong> out of a <strong>local folder</strong> from the <em>host</em>…
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volume_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver</span>:<span style="color:#bbb"> </span>local<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver_opts</span>:<span style="color:#bbb">
@@ -1693,7 +1693,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#b06;font-weight:bold">device</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"/path/to/folder/on/the/host"</span><span style="color:#bbb">
 </span></span></span></code></pre></div></li>
 <li>… or maybe some remote folder exposed by some <a href="https://en.wikipedia.org/wiki/Network_File_System">NFS</a> service on the network
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volume_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver</span>:<span style="color:#bbb"> </span>local<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver_opts</span>:<span style="color:#bbb">
@@ -1711,7 +1711,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <p>… or it can be <strong>manually created</strong> by means of the <code>docker volume create [OPTIONS] NAME</code> command</p>
 <ul>
 <li>in this case they can be referenced in several <code>docker-compose.yml</code> files:
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volume_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"the name used when creating the volume"</span><span style="color:#bbb">
@@ -1721,7 +1721,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </li>
 <li>
 <p>in any case, the volume’s mount point should be specified at the service level:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">my-service</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>...<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
@@ -1747,7 +1747,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </li>
 <li>
 <p>one network may be created <strong>stack-wise</strong> out of a <strong>local folder</strong> from the <em>host</em>…</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">network_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver</span>:<span style="color:#bbb"> </span>overlay<span style="color:#bbb"> </span><span style="color:#888"># default choice in swarm</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver_opts</span>:<span style="color:#bbb"> 
@@ -1757,7 +1757,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <p>… or it can be <strong>manually created</strong> by means of the <code>docker network create [OPTIONS] NAME</code> command</p>
 <ul>
 <li>in this case they can be referenced in several <code>docker-compose.yml</code> files:
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">network_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"the name used when creating the network"</span><span style="color:#bbb">
@@ -1767,7 +1767,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </li>
 <li>
 <p>in any case, the network’s mount point should be specified at the service level:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">my-service</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>...<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
@@ -1818,9 +1818,9 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
     
 
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>mariadb:latest<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">command</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'--default-authentication-plugin=mysql_native_password'</span><span style="color:#bbb">
@@ -1858,10 +1858,10 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_USER</span>:<span style="color:#bbb"> </span>wordpress_user<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_PASSWORD</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">",,Password2,,"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_NAME</span>:<span style="color:#bbb"> </span>wordpress_db<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">back-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>
@@ -1979,9 +1979,9 @@ b304d1ae5404   bridge               bridge    local
 </div>
 
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb">
@@ -2002,14 +2002,14 @@ b304d1ae5404   bridge               bridge    local
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db_password<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">back-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_password</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>db_password.txt<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_root_password</span>:<span style="color:#bbb">
@@ -2159,7 +2159,7 @@ package "java sql" {
     
 
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">TestMariaDBCustomerRepository</span> {
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">TestMariaDBCustomerRepository</span> {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">companion</span> <span style="color:#080;font-weight:bold">object</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#555">@BeforeClass</span> <span style="color:#555">@JvmStatic</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setUpMariaDb</span>() { TODO(<span style="color:#d20;background-color:#fff0f0">"start MariaDB via Docker Compose"</span>) }
@@ -2385,7 +2385,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <h2 id="troubleshouting-example-on-windows">Troubleshouting example on Windows</h2>
 <h3 id="opening-ports-on-windows-defender">Opening ports on Windows Defender</h3>
 <p>On an administrator Powershell, run the following commands:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>netsh advfirewall firewall add rule name=<span style="color:#d20;background-color:#fff0f0">"Docker Swarm Intra-manager"</span> dir=<span style="color:#080;font-weight:bold">in</span> action=allow protocol=TCP localport=<span style="color:#00d;font-weight:bold">2377</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>netsh advfirewall firewall add rule name=<span style="color:#d20;background-color:#fff0f0">"Docker Swarm Intra-manager"</span> dir=<span style="color:#080;font-weight:bold">in</span> action=allow protocol=TCP localport=<span style="color:#00d;font-weight:bold">2377</span>
 </span></span><span style="display:flex;"><span>netsh advfirewall firewall add rule name=<span style="color:#d20;background-color:#fff0f0">"Docker Swarm Overlay Network Discovery TCP"</span> dir=<span style="color:#080;font-weight:bold">in</span> action=allow protocol=TCP localport=<span style="color:#00d;font-weight:bold">7946</span>
 </span></span><span style="display:flex;"><span>netsh advfirewall firewall add rule name=<span style="color:#d20;background-color:#fff0f0">"Docker Swarm Overlay Network Discovery UDP"</span> dir=<span style="color:#080;font-weight:bold">in</span> action=allow protocol=UDP localport=<span style="color:#00d;font-weight:bold">7946</span>
 </span></span><span style="display:flex;"><span>netsh advfirewall firewall add rule name=<span style="color:#d20;background-color:#fff0f0">"Docker Swarm Overlay Network Traffic"</span> dir=<span style="color:#080;font-weight:bold">in</span> action=allow protocol=UDP localport=<span style="color:#00d;font-weight:bold">4789</span>
@@ -2394,7 +2394,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </ul>
 <h3 id="forwarding-ports-on-windows">Forwarding ports on Windows</h3>
 <p>On an administrator Powershell, run the following commands:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>netsh interface portproxy add v4tov4 listenport=<span style="color:#00d;font-weight:bold">2377</span> listenaddress=<span style="color:#369">$ACTUAL_IP</span> connectport=<span style="color:#00d;font-weight:bold">2377</span> connectaddress=<span style="color:#369">$NODE_ADDRESS</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>netsh interface portproxy add v4tov4 listenport=<span style="color:#00d;font-weight:bold">2377</span> listenaddress=<span style="color:#369">$ACTUAL_IP</span> connectport=<span style="color:#00d;font-weight:bold">2377</span> connectaddress=<span style="color:#369">$NODE_ADDRESS</span>
 </span></span><span style="display:flex;"><span>netsh interface portproxy add v4tov4 listenport=<span style="color:#00d;font-weight:bold">7946</span> listenaddress=<span style="color:#369">$ACTUAL_IP</span> connectport=<span style="color:#00d;font-weight:bold">7946</span> connectaddress=<span style="color:#369">$NODE_ADDRESS</span>
 </span></span><span style="display:flex;"><span>netsh interface portproxy add v4tov4 listenport=<span style="color:#00d;font-weight:bold">4789</span> listenaddress=<span style="color:#369">$ACTUAL_IP</span> connectport=<span style="color:#00d;font-weight:bold">4789</span> connectaddress=<span style="color:#369">$NODE_ADDRESS</span>
 </span></span></code></pre></div><ul>
@@ -2442,9 +2442,9 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
     
 
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'3.2'</span><span style="color:#bbb">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'3.2'</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">agent</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>portainer/agent:latest<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
@@ -2473,12 +2473,12 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.role == manager<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">agents_network</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">driver</span>:<span style="color:#bbb"> </span>overlay<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">attachable</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">portainer_data</span>:<span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>
@@ -2628,9 +2628,9 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
     
 
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>mariadb:latest<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
@@ -2649,10 +2649,10 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.capabilities.web==yes<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">back-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>
@@ -2720,7 +2720,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </li>
 <li>
 <p>General case:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">service-name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
@@ -2751,9 +2751,9 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
     
 
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">ws</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>pikalab/hitcounter:latest<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
@@ -2769,7 +2769,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <ol start="2">
 <li>
 <p>Try to query it multiple times:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">while</span> true; <span style="color:#080;font-weight:bold">do</span>                                                                                                                                                                     INT ✘ 
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">while</span> true; <span style="color:#080;font-weight:bold">do</span>                                                                                                                                                                     INT ✘ 
 </span></span><span style="display:flex;"><span>    curl http://clusters.almaai.unibo.it:8890; 
 </span></span><span style="display:flex;"><span>    <span style="color:#038">echo</span> 
 </span></span><span style="display:flex;"><span>    sleep <span style="color:#00d;font-weight:bold">1</span>
@@ -2823,9 +2823,9 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <p>Volumes are <strong>always local</strong> w.r.t. the node the current container is deployed onto</p>
 </blockquote>
 <br>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.9"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">simulation</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>pikalab/fakesim:latest<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">restart</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">on</span>-failure<span style="color:#bbb">
@@ -2839,7 +2839,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span>volume<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">source</span>:<span style="color:#bbb"> </span>shared_volume<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">target</span>:<span style="color:#bbb"> </span>/data<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">shared_volume</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>

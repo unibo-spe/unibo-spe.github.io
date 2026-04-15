@@ -27,7 +27,7 @@
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2025-11-21
+<p>Compiled on: 2026-04-15
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -343,82 +343,82 @@ this is not always the case (e.g., some components of ANTLR4…)</li>
 </section><section>
 <p><a href="https://github.com/krux02/minimal_cmake_example/blob/master/CMakeLists.txt">CMake build file example</a></p>
 <p>CMake version and project name, declarative:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#038">cmake_minimum_required</span>(<span style="color:#d20;background-color:#fff0f0">VERSION</span> <span style="color:#d20;background-color:#fff0f0">3.0</span>) <span style="color:#888"># setting this is required
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">project</span>(<span style="color:#d20;background-color:#fff0f0">example_project</span>)            <span style="color:#888"># this sets the project name
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#038">cmake_minimum_required</span>(<span style="color:#d20;background-color:#fff0f0">VERSION</span> <span style="color:#d20;background-color:#fff0f0">3.0</span>) <span style="color:#888"># setting this is required
+</span></span></span><span style="display:flex;"><span><span style="color:#038">project</span>(<span style="color:#d20;background-color:#fff0f0">example_project</span>)            <span style="color:#888"># this sets the project name
 </span></span></span></code></pre></div><p>File globbing: search of what to build is manual/imperative:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># These instructions search the directory tree when cmake is
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># These instructions search the directory tree when cmake is
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># invoked and put all files that match the pattern in the variables 
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># `sources` and `data`.
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">GLOB_RECURSE</span> <span style="color:#d20;background-color:#fff0f0">sources</span>      <span style="color:#d20;background-color:#fff0f0">src/main/*.cpp</span> <span style="color:#d20;background-color:#fff0f0">src/main/*.h</span>)<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">GLOB_RECURSE</span> <span style="color:#d20;background-color:#fff0f0">sources_test</span> <span style="color:#d20;background-color:#fff0f0">src/test/*.cpp</span>)<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">GLOB_RECURSE</span> <span style="color:#d20;background-color:#fff0f0">data</span> <span style="color:#d20;background-color:#fff0f0">resources/*</span>)<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># You can use set(sources src/main.cpp) etc if you don't want to
+</span></span></span><span style="display:flex;"><span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">GLOB_RECURSE</span> <span style="color:#d20;background-color:#fff0f0">sources</span>      <span style="color:#d20;background-color:#fff0f0">src/main/*.cpp</span> <span style="color:#d20;background-color:#fff0f0">src/main/*.h</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">GLOB_RECURSE</span> <span style="color:#d20;background-color:#fff0f0">sources_test</span> <span style="color:#d20;background-color:#fff0f0">src/test/*.cpp</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">GLOB_RECURSE</span> <span style="color:#d20;background-color:#fff0f0">data</span> <span style="color:#d20;background-color:#fff0f0">resources/*</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># You can use set(sources src/main.cpp) etc if you don't want to
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># use globbing to find files automatically.
 </span></span></span></code></pre></div><p>Target definitions, imperative:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># The data is just added to the executable, because in some IDEs (QtCreator) 
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># The data is just added to the executable, because in some IDEs (QtCreator) 
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># files are invisible when they are not explicitly part of the project.
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">add_executable</span>(<span style="color:#d20;background-color:#fff0f0">example</span> ${<span style="color:#369">sources</span>} ${<span style="color:#369">data</span>})<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#038">add_executable</span>(<span style="color:#d20;background-color:#fff0f0">example</span> ${<span style="color:#369">sources</span>} ${<span style="color:#369">data</span>})<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Just for example add some compiler flags.
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">target_compile_options</span>(<span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> <span style="color:#d20;background-color:#fff0f0">-std=c++1y</span> <span style="color:#d20;background-color:#fff0f0">-Wall</span> <span style="color:#d20;background-color:#fff0f0">-Wfloat-conversion</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># Just for example add some compiler flags.
+</span></span></span><span style="display:flex;"><span><span style="color:#038">target_compile_options</span>(<span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> <span style="color:#d20;background-color:#fff0f0">-std=c++1y</span> <span style="color:#d20;background-color:#fff0f0">-Wall</span> <span style="color:#d20;background-color:#fff0f0">-Wfloat-conversion</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># This allows to include files relative to the root of the src directory with a &lt;&gt; pair
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">target_include_directories</span>(<span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> <span style="color:#d20;background-color:#fff0f0">src/main</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># This allows to include files relative to the root of the src directory with a &lt;&gt; pair
+</span></span></span><span style="display:flex;"><span><span style="color:#038">target_include_directories</span>(<span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> <span style="color:#d20;background-color:#fff0f0">src/main</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># This copies all resource files in the build directory.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># This copies all resource files in the build directory.
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># We need this, because we want to work with paths relative to the executable.
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">COPY</span> ${<span style="color:#369">data</span>} <span style="color:#d20;background-color:#fff0f0">DESTINATION</span> <span style="color:#d20;background-color:#fff0f0">resources</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">COPY</span> ${<span style="color:#369">data</span>} <span style="color:#d20;background-color:#fff0f0">DESTINATION</span> <span style="color:#d20;background-color:#fff0f0">resources</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span></code></pre></div></section><section>
 <p>Depedency management, imperative:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># This defines the variables Boost_LIBRARIES that containts all library names
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># This defines the variables Boost_LIBRARIES that containts all library names
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># that we need to link into the program.
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">find_package</span>(<span style="color:#d20;background-color:#fff0f0">Boost</span> <span style="color:#d20;background-color:#fff0f0">1.36.0</span> <span style="color:#d20;background-color:#fff0f0">COMPONENTS</span> <span style="color:#d20;background-color:#fff0f0">filesystem</span> <span style="color:#d20;background-color:#fff0f0">system</span> <span style="color:#d20;background-color:#fff0f0">REQUIRED</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#038">find_package</span>(<span style="color:#d20;background-color:#fff0f0">Boost</span> <span style="color:#d20;background-color:#fff0f0">1.36.0</span> <span style="color:#d20;background-color:#fff0f0">COMPONENTS</span> <span style="color:#d20;background-color:#fff0f0">filesystem</span> <span style="color:#d20;background-color:#fff0f0">system</span> <span style="color:#d20;background-color:#fff0f0">REQUIRED</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#038">target_link_libraries</span>(<span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#038">target_link_libraries</span>(<span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span>
 </span></span><span style="display:flex;"><span>  ${<span style="color:#369">Boost_LIBRARIES</span>}
 </span></span><span style="display:flex;"><span>  <span style="color:#888"># here you can add any library dependencies
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span></code></pre></div><p>Testing with googletest, imperative:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#038">find_package</span>(<span style="color:#d20;background-color:#fff0f0">GTest</span>)<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#038">if</span>(<span style="color:#d20;background-color:#fff0f0">GTEST_FOUND</span>)<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span>  <span style="color:#038">add_executable</span>(<span style="color:#d20;background-color:#fff0f0">unit_tests</span> ${<span style="color:#369">sources_test</span>} ${<span style="color:#369">sources</span>})<span style="color:#a61717;background-color:#e3d2d2">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#038">find_package</span>(<span style="color:#d20;background-color:#fff0f0">GTest</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#038">if</span>(<span style="color:#d20;background-color:#fff0f0">GTEST_FOUND</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span>  <span style="color:#038">add_executable</span>(<span style="color:#d20;background-color:#fff0f0">unit_tests</span> ${<span style="color:#369">sources_test</span>} ${<span style="color:#369">sources</span>})<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span>  <span style="color:#888"># This define is added to prevent collision with the main.
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>  <span style="color:#888"># It might be better solved by not adding the source with the main to the
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>  <span style="color:#888"># testing target.
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>  <span style="color:#038">target_compile_definitions</span>(<span style="color:#d20;background-color:#fff0f0">unit_tests</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> <span style="color:#d20;background-color:#fff0f0">UNIT_TESTS</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span>  <span style="color:#888"># This define is added to prevent collision with the main.
+</span></span></span><span style="display:flex;"><span>  <span style="color:#888"># It might be better solved by not adding the source with the main to the
+</span></span></span><span style="display:flex;"><span>  <span style="color:#888"># testing target.
+</span></span></span><span style="display:flex;"><span>  <span style="color:#038">target_compile_definitions</span>(<span style="color:#d20;background-color:#fff0f0">unit_tests</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> <span style="color:#d20;background-color:#fff0f0">UNIT_TESTS</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span>  <span style="color:#888"># This allows us to use the executable as a link library, and inherit all 
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>  <span style="color:#888"># linker options and library dependencies from it, by simply adding it as dependency.
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>  <span style="color:#038">set_target_properties</span>(<span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">PROPERTIES</span> <span style="color:#d20;background-color:#fff0f0">ENABLE_EXPORTS</span> <span style="color:#d20;background-color:#fff0f0">on</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span>  <span style="color:#888"># This allows us to use the executable as a link library, and inherit all 
+</span></span></span><span style="display:flex;"><span>  <span style="color:#888"># linker options and library dependencies from it, by simply adding it as dependency.
+</span></span></span><span style="display:flex;"><span>  <span style="color:#038">set_target_properties</span>(<span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">PROPERTIES</span> <span style="color:#d20;background-color:#fff0f0">ENABLE_EXPORTS</span> <span style="color:#d20;background-color:#fff0f0">on</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span>  <span style="color:#038">target_link_libraries</span>(<span style="color:#d20;background-color:#fff0f0">unit_tests</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> ${<span style="color:#369">GTEST_BOTH_LIBRARIES</span>} <span style="color:#d20;background-color:#fff0f0">example</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span>  <span style="color:#038">target_link_libraries</span>(<span style="color:#d20;background-color:#fff0f0">unit_tests</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> ${<span style="color:#369">GTEST_BOTH_LIBRARIES</span>} <span style="color:#d20;background-color:#fff0f0">example</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span>  <span style="color:#038">target_include_directories</span>(<span style="color:#d20;background-color:#fff0f0">unit_tests</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> ${<span style="color:#369">GTEST_INCLUDE_DIRS</span>})<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#038">endif</span>()<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span>  <span style="color:#038">target_include_directories</span>(<span style="color:#d20;background-color:#fff0f0">unit_tests</span> <span style="color:#d20;background-color:#fff0f0">PUBLIC</span> ${<span style="color:#369">GTEST_INCLUDE_DIRS</span>})<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#038">endif</span>()<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span></code></pre></div></section><section>
 <p>Packaging with CPack, mostly imperative with some declarative parts:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># All install commands get the same destination. this allows us to use paths
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># All install commands get the same destination. this allows us to use paths
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># relative to the executable.
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">install</span>(<span style="color:#d20;background-color:#fff0f0">TARGETS</span> <span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">DESTINATION</span> <span style="color:#d20;background-color:#fff0f0">example_destination</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#038">install</span>(<span style="color:#d20;background-color:#fff0f0">TARGETS</span> <span style="color:#d20;background-color:#fff0f0">example</span> <span style="color:#d20;background-color:#fff0f0">DESTINATION</span> <span style="color:#d20;background-color:#fff0f0">example_destination</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># This is basically a repeat of the file copy instruction that copies the
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># This is basically a repeat of the file copy instruction that copies the
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># resources in the build directory, but here we tell cmake that we want it
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># in the package.
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">install</span>(<span style="color:#d20;background-color:#fff0f0">DIRECTORY</span> <span style="color:#d20;background-color:#fff0f0">resources</span> <span style="color:#d20;background-color:#fff0f0">DESTINATION</span> <span style="color:#d20;background-color:#fff0f0">example_destination</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#038">install</span>(<span style="color:#d20;background-color:#fff0f0">DIRECTORY</span> <span style="color:#d20;background-color:#fff0f0">resources</span> <span style="color:#d20;background-color:#fff0f0">DESTINATION</span> <span style="color:#d20;background-color:#fff0f0">example_destination</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># Now comes everything we need, to create a package
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># Now comes everything we need, to create a package
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># there are a lot more variables you can set, and some
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># you need to set for some package types, but we want to
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># be minimal here.
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">set</span>(<span style="color:#d20;background-color:#fff0f0">CPACK_PACKAGE_NAME</span> <span style="color:#d20;background-color:#fff0f0">"MyExample"</span>)<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#038">set</span>(<span style="color:#d20;background-color:#fff0f0">CPACK_PACKAGE_VERSION</span> <span style="color:#d20;background-color:#fff0f0">"1.0.0"</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#038">set</span>(<span style="color:#d20;background-color:#fff0f0">CPACK_PACKAGE_NAME</span> <span style="color:#d20;background-color:#fff0f0">"MyExample"</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#038">set</span>(<span style="color:#d20;background-color:#fff0f0">CPACK_PACKAGE_VERSION</span> <span style="color:#d20;background-color:#fff0f0">"1.0.0"</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># We don't want to split our program up into several incomplete pieces.
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">set</span>(<span style="color:#d20;background-color:#fff0f0">CPACK_MONOLITHIC_INSTALL</span> <span style="color:#d20;background-color:#fff0f0">1</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># We don't want to split our program up into several incomplete pieces.
+</span></span></span><span style="display:flex;"><span><span style="color:#038">set</span>(<span style="color:#d20;background-color:#fff0f0">CPACK_MONOLITHIC_INSTALL</span> <span style="color:#d20;background-color:#fff0f0">1</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#888"># This must be last
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#038">include</span>(<span style="color:#d20;background-color:#fff0f0">CPack</span>)<span style="color:#a61717;background-color:#e3d2d2">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># This must be last
+</span></span></span><span style="display:flex;"><span><span style="color:#038">include</span>(<span style="color:#d20;background-color:#fff0f0">CPack</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span></code></pre></div></section><section>
 <h2 id="declarative-build-tool-example-python-poetry">Declarative build tool example: Python Poetry</h2>
 <p><a href="https://python-poetry.org/">Poetry</a> is a modern, <em>declarative</em> build and dependency management tool for Python.</p>
@@ -498,7 +498,7 @@ multiple tools <em>proliferated</em></p>
 </ul>
 </section><section>
 <h2 id="poetrys-canonical-project-structure">Poetry’s canonical project structure</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>root-directory/
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>root-directory/
 </span></span><span style="display:flex;"><span>├── main_package/
 </span></span><span style="display:flex;"><span>│   ├── __init__.py
 </span></span><span style="display:flex;"><span>│   ├── sub_module.py
@@ -521,7 +521,7 @@ multiple tools <em>proliferated</em></p>
 </section><section>
 <h2 id="a-python-calculator">A Python <a href="https://github.com/unibo-dtm-se/calculator"><code>calculator</code></a></h2>
 <p>(courtesy of Giovanni Ciatto)</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>[tool.poetry]
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>[tool.poetry]
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888"># publication metadata</span>
 </span></span><span style="display:flex;"><span>name = <span style="color:#d20;background-color:#fff0f0">"unibo-dtm-se-calculator"</span>
@@ -678,7 +678,7 @@ multiple tools <em>proliferated</em></p>
 </section><section>
 <h2 id="gradle-from-scratch-empty-project">Gradle from scratch: empty project</h2>
 <p>Let’s start as empty as possible, just point your terminal to an empty folder and:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>touch build.gradle.kts
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>touch build.gradle.kts
 </span></span><span style="display:flex;"><span>gradle tasks
 </span></span></code></pre></div><p>Stuff happens: if nothing is specified,
 <br>
@@ -687,7 +687,7 @@ multiple tools <em>proliferated</em></p>
 <em>The project name matches the folder name</em></p>
 <p>Let’s understand what:
 <br></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Welcome to Gradle &lt;version&gt;!
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Welcome to Gradle &lt;version&gt;!
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Here are the highlights of this release:
 </span></span><span style="display:flex;"><span> - Blah blah blah
@@ -697,7 +697,7 @@ multiple tools <em>proliferated</em></p>
 Gradle uses a background service to speed up cacheable operations</p>
 </section><section>
 <h2 id="gradle-from-scratch-empty-project-1">Gradle from scratch: empty project</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>&gt; Task :tasks
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>&gt; Task :tasks
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>------------------------------------------------------------
 </span></span><span style="display:flex;"><span>Tasks runnable from root project
@@ -712,7 +712,7 @@ They are built-in.
 Let’s ignore them for now.</p>
 </section><section>
 <h2 id="gradle-from-scratch-empty-project-2">Gradle from scratch: empty project</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Help tasks
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Help tasks
 </span></span><span style="display:flex;"><span>----------
 </span></span><span style="display:flex;"><span>buildEnvironment - Displays all buildscript dependencies declared in root project <span style="color:#d20;background-color:#fff0f0">'00-empty'</span>.
 </span></span><span style="display:flex;"><span>components - Displays the components produced by root project <span style="color:#d20;background-color:#fff0f0">'00-empty'</span>. [incubating]
@@ -731,11 +731,11 @@ Let’s ignore them for now.</p>
 <p>It is time to create our first <em>task</em>
 <br>
 Create a <code>build.gradle.kts</code> file as follows:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"brokenTask"</span>) { <span style="color:#888">// creates a new task
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    println(<span style="color:#d20;background-color:#fff0f0">"this is executed at CONFIGURATION time!"</span>)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"brokenTask"</span>) { <span style="color:#888">// creates a new task
+</span></span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">"this is executed at CONFIGURATION time!"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Now launch gradle with <code>gradle brokenTask</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle broken
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle broken
 </span></span><span style="display:flex;"><span>this is executed at CONFIGURATION time!
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>BUILD SUCCESSFUL in 378ms
@@ -746,7 +746,7 @@ Create a <code>build.gradle.kts</code> file as follows:</p>
 <ul>
 <li>We do not expect our task to run, we are launching something else</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>❯ gradle tasks
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>❯ gradle tasks
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>&gt; Task :tasks
 </span></span><span style="display:flex;"><span>
@@ -763,13 +763,13 @@ Only later, when a task is invoked, the block gets <em>actually executed</em></p
 </section><section>
 <h2 id="gradle-configuration-vs-execution-2">Gradle: configuration vs execution</h2>
 <p>Let’s write a <em>correct</em> task</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"helloWorld"</span>) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"helloWorld"</span>) {
 </span></span><span style="display:flex;"><span>    doLast { <span style="color:#888">// This method takes as argument a Task.() -&gt; Unit
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        println(<span style="color:#d20;background-color:#fff0f0">"Hello, World!"</span>)
+</span></span></span><span style="display:flex;"><span>        println(<span style="color:#d20;background-color:#fff0f0">"Hello, World!"</span>)
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Execution with <code>gradle helloWorld</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle helloWorld
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle helloWorld
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>&gt; Task :helloWorld
 </span></span><span style="display:flex;"><span>Hello, World!
@@ -789,19 +789,19 @@ Only later, when a task is invoked, the block gets <em>actually executed</em></p
 </ul>
 <p>Delaying the execution allows for <em>more flexible configuration</em></p>
 <p>This will be especially useful when <em>modifying existing behavior</em></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val helloWorld = tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"helloWorld"</span>) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val helloWorld = tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"helloWorld"</span>) {
 </span></span><span style="display:flex;"><span>    doLast { <span style="color:#888">// This method takes as argument a Task.() -&gt; Unit
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        println(<span style="color:#d20;background-color:#fff0f0">"Hello, World!"</span>)
+</span></span></span><span style="display:flex;"><span>        println(<span style="color:#d20;background-color:#fff0f0">"Hello, World!"</span>)
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>helloWorld.<span style="color:#369">configure</span> { <span style="color:#888">// Note the `configure` method: late configuration of the task
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    doFirst {
+</span></span></span><span style="display:flex;"><span>    doFirst {
 </span></span><span style="display:flex;"><span>        println(<span style="color:#d20;background-color:#fff0f0">"About to say hello..."</span>)
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>output of <code>gradle helloWorld</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Configuring task: helloWorld
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Configuring task: helloWorld
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>&gt; Task :helloWorld
 </span></span><span style="display:flex;"><span>About to say hello...
@@ -820,14 +820,14 @@ task configuration happens for <em>all</em> tasks declared in the build script.<
 
 <div class="multiCol">
     <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val helloWorld = tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"helloWorld"</span>) {
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val helloWorld = tasks.<span style="color:#369">register</span>(<span style="color:#d20;background-color:#fff0f0">"helloWorld"</span>) {
 </span></span><span style="display:flex;"><span>    doLast { <span style="color:#888">// This method takes as argument a Task.() -&gt; Unit
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        println(<span style="color:#d20;background-color:#fff0f0">"Hello, World!"</span>)
+</span></span></span><span style="display:flex;"><span>        println(<span style="color:#d20;background-color:#fff0f0">"Hello, World!"</span>)
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>helloWorld.<span style="color:#369">configure</span> { <span style="color:#888">// Note the `configure` method: late configuration of the task
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    doFirst {
+</span></span></span><span style="display:flex;"><span>    doFirst {
 </span></span><span style="display:flex;"><span>        println(<span style="color:#d20;background-color:#fff0f0">"About to say hello..."</span>)
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
@@ -845,7 +845,7 @@ task configuration happens for <em>all</em> tasks declared in the build script.<
 </div>
 <div class="col  ">
     <p><code>gradle helloWorld</code> output:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Configuring task: helloWorld
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Configuring task: helloWorld
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>&gt; Task :helloWorld
 </span></span><span style="display:flex;"><span>Starting task: helloWorld
@@ -856,7 +856,7 @@ task configuration happens for <em>all</em> tasks declared in the build script.<
 </span></span><span style="display:flex;"><span>BUILD SUCCESSFUL in 395ms
 </span></span><span style="display:flex;"><span>1 actionable task: 1 executed
 </span></span></code></pre></div><p><code>gradle tasks</code> output:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Configuring task: tasks
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Configuring task: tasks
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>&gt; Task :tasks
 </span></span><span style="display:flex;"><span>Starting task: tasks
@@ -885,19 +885,19 @@ An example is the <a href="https://docs.gradle.org/current/javadoc/org/gradle/ap
 <br>
 Any <code>open class</code> implementing <a href="https://docs.gradle.org/current/javadoc/org/gradle/api/Task.html"><code>org.gradle.api.Task</code></a> can be instanced.</p>
 <p>Tasks of unspecified type are plain <code>DefaultTask</code>s</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span> <span style="color:#888">// Jvm is part of the Gradle API
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"printJavaVersion"</span>) { <span style="color:#888">// Do you Recognize this? inline function with reified type!
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#888">// Configuration action is of type T.() -&gt; Unit, in this case Exec.T() -&gt; Unit
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    val javaExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>.<span style="color:#369">absolutePath</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span> <span style="color:#888">// Jvm is part of the Gradle API
+</span></span></span><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"printJavaVersion"</span>) { <span style="color:#888">// Do you Recognize this? inline function with reified type!
+</span></span></span><span style="display:flex;"><span>    <span style="color:#888">// Configuration action is of type T.() -&gt; Unit, in this case Exec.T() -&gt; Unit
+</span></span></span><span style="display:flex;"><span>    val javaExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>.<span style="color:#369">absolutePath</span>
 </span></span><span style="display:flex;"><span>    commandLine( <span style="color:#888">// this is a method of class org.gradle.api.Exec
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        javaExecutable, <span style="color:#d20;background-color:#fff0f0">"-version"</span>
+</span></span></span><span style="display:flex;"><span>        javaExecutable, <span style="color:#d20;background-color:#fff0f0">"-version"</span>
 </span></span><span style="display:flex;"><span>    )
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// There is no need of doLast / doFirst, actions are already configured
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#888">// Still, we may want to do something before or after the task has been executed
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    doLast { println(<span style="color:#d20;background-color:#fff0f0">"$javaExecutable invocation complete"</span>) }
+</span></span></span><span style="display:flex;"><span>    <span style="color:#888">// Still, we may want to do something before or after the task has been executed
+</span></span></span><span style="display:flex;"><span>    doLast { println(<span style="color:#d20;background-color:#fff0f0">"$javaExecutable invocation complete"</span>) }
 </span></span><span style="display:flex;"><span>    doFirst { println(<span style="color:#d20;background-color:#fff0f0">"Ready to invoke $javaExecutable"</span>) }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>&gt; Task :printJavaVersion
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>&gt; Task :printJavaVersion
 </span></span><span style="display:flex;"><span>Ready to invoke /usr/lib/jvm/java-11-openjdk/bin/java
 </span></span><span style="display:flex;"><span>openjdk version <span style="color:#d20;background-color:#fff0f0">"11.0.8"</span> 2020-07-14
 </span></span><span style="display:flex;"><span>OpenJDK Runtime Environment (build 11.0.8+10)
@@ -906,11 +906,11 @@ Any <code>open class</code> implementing <a href="https://docs.gradle.org/curren
 </span></span></code></pre></div></section><section>
 <h2 id="gradle-compiling-from-scratch">Gradle: compiling from scratch</h2>
 <p>Let’s compile a simple <code>src/HelloWorld.java</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloWorld</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">main</span>(String...<span style="color:#bbb"> </span>args)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">"Hello, World!"</span>);<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span></code></pre></div><p>Build logic:</p>
 <ol>
 <li>Find the Java compiler executable</li>
@@ -925,14 +925,14 @@ Any <code>open class</code> implementing <a href="https://docs.gradle.org/curren
 </ul>
 </section><section>
 <h2 id="lazy-configuration-inputs-outputs">Lazy configuration, inputs, outputs</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888">// Computed at configuration time</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>val<span style="color:#bbb"> </span>sources<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>TODO(<span style="color:#d20;background-color:#fff0f0">"assume this is expensive"</span>)<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888">// configuration that needs "sources"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>doFirst<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#888">// We need to compute the sources and classpath as late as possible!</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>sources.<span style="color:#369">forEach</span><span style="color:#bbb"> </span>{<span style="color:#bbb"> </span>...<span style="color:#bbb"> </span>}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span></code></pre></div><ul>
 <li>Problem: we need to run the <em>expensive</em> operation even if the task is <em>not executed</em>!
 <ul>
@@ -987,17 +987,17 @@ namely, if it can be skipped because its inputs have not changed since the last 
 <li>A new property can be created via <code>project.objects.property&lt;Type&gt;()</code> (<code>project</code> can be omitted in build scripts)</li>
 </ul>
 </section><section>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) { <span style="color:#888">// This is a Kotlin lambda with receiver!
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    val sourceDir = projectDir.<span style="color:#369">resolve</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>)
+</span></span></span><span style="display:flex;"><span>    val sourceDir = projectDir.<span style="color:#369">resolve</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>)
 </span></span><span style="display:flex;"><span>    inputs.<span style="color:#369">dir</span>(sourceDir)
 </span></span><span style="display:flex;"><span>    val outputDir = layout.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>.<span style="color:#369">absolutePath</span>
 </span></span><span style="display:flex;"><span>    outputs.<span style="color:#369">dir</span>(outputDir)
 </span></span><span style="display:flex;"><span>    val javacExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javacExecutable</span>.<span style="color:#369">absolutePath</span> <span style="color:#888">// Use the current JVM's javac
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    executable(javacExecutable)
+</span></span></span><span style="display:flex;"><span>    executable(javacExecutable)
 </span></span><span style="display:flex;"><span>    doFirst { <span style="color:#888">// We need to compute the sources and classpath as late as possible
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        val sources = sourceDir.<span style="color:#369">walkTopDown</span>().<span style="color:#369">filter</span> { it.<span style="color:#369">isFile</span> &amp;&amp; it.<span style="color:#369">extension</span> == <span style="color:#d20;background-color:#fff0f0">"java"</span> }.<span style="color:#369">toList</span>()
+</span></span></span><span style="display:flex;"><span>        val sources = sourceDir.<span style="color:#369">walkTopDown</span>().<span style="color:#369">filter</span> { it.<span style="color:#369">isFile</span> &amp;&amp; it.<span style="color:#369">extension</span> == <span style="color:#d20;background-color:#fff0f0">"java"</span> }.<span style="color:#369">toList</span>()
 </span></span><span style="display:flex;"><span>        println(sources)
 </span></span><span style="display:flex;"><span>        when {
 </span></span><span style="display:flex;"><span>            sources.<span style="color:#369">isEmpty</span>() -&gt; {
@@ -1006,14 +1006,14 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">else</span> -&gt; args(
 </span></span><span style="display:flex;"><span>                <span style="color:#888">// destination folder: the output directory of Gradle, inside "bin"
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, outputDir,
+</span></span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, outputDir,
 </span></span><span style="display:flex;"><span>                *sources.<span style="color:#369">toTypedArray</span>(),
 </span></span><span style="display:flex;"><span>            )
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Execution:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle compileJava
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle compileJava
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>BUILD SUCCESSFUL in 693ms
 </span></span></code></pre></div><p>Compiled files are in <code>build/bin</code>!</p>
@@ -1041,43 +1041,43 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </section><section>
 <h2 id="gradle-dependency-management-1">Gradle: dependency management</h2>
 <p>Conceptually, we want something like:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Gradle way to create a configuration
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> ... <span style="color:#888">// Delegation!
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>dependencies {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Gradle way to create a configuration
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">compileClasspath</span> ... <span style="color:#888">// Delegation!
+</span></span></span><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    compileClasspath.add(dir(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).files.filter { <span style="color:#080;font-weight:bold">it</span>.extension == <span style="color:#d20;background-color:#fff0f0">"jar"</span> })
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>To be consumed by our improved compile task:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.register&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) {
 </span></span><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">else</span> -&gt; args(
 </span></span><span style="display:flex;"><span>        <span style="color:#d20;background-color:#fff0f0">"-d"</span>, outputDir,
 </span></span><span style="display:flex;"><span>        <span style="color:#888">// classpath from the configuration
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${File.pathSeparator}${compileClasspath.asPath}</span><span style="color:#d20;background-color:#fff0f0">"</span>,
+</span></span></span><span style="display:flex;"><span>        <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${File.pathSeparator}${compileClasspath.asPath}</span><span style="color:#d20;background-color:#fff0f0">"</span>,
 </span></span><span style="display:flex;"><span>        *sources.toTypedArray(),
 </span></span><span style="display:flex;"><span>    )
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
 <h2 id="gradle-using-custom-configurations">Gradle: using custom configurations</h2>
 <p>A minimal DSL to simplify file access:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Minimal file access DSL
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>object AllFiles
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Minimal file access DSL
+</span></span></span><span style="display:flex;"><span>object AllFiles
 </span></span><span style="display:flex;"><span>val Project.<span style="color:#369">allFiles</span>: AllFiles get() = AllFiles <span style="color:#888">// We need this to prevent "Object AllFiles captures the script class instance" error
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>data <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">Finder</span>(val <span style="color:#369;font-style:italic">path:</span> File) {
+</span></span></span><span style="display:flex;"><span>data <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">Finder</span>(val <span style="color:#369;font-style:italic">path:</span> File) {
 </span></span><span style="display:flex;"><span>    fun <span style="color:#06b;font-weight:bold">withExtension</span>(<span style="color:#369;font-style:italic">extension:</span> String): List&lt;File&gt; =
 </span></span><span style="display:flex;"><span>        path.<span style="color:#369">walkTopDown</span>().<span style="color:#369">filter</span> { it.<span style="color:#369">isFile</span> &amp;&amp; it.<span style="color:#369">extension</span> == extension }.<span style="color:#369">toList</span>()
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>fun AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#369;font-style:italic">path:</span> String) = Finder(projectDir.<span style="color:#369">resolve</span>(path))
 </span></span></code></pre></div><p>Dependency declaration (configuration time):</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> <span style="color:#888">// Delegation!
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> <span style="color:#888">// Delegation!
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies { <span style="color:#888">// built-in in Gradle
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span></span><span style="display:flex;"><span>    AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
+</span></span></span><span style="display:flex;"><span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
+</span></span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Dependency use (execution time):</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    doFirst { <span style="color:#888">// We need to compute the sources and classpath as late as possible
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        val sources = AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    doFirst { <span style="color:#888">// We need to compute the sources and classpath as late as possible
+</span></span></span><span style="display:flex;"><span>        val sources = AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
 </span></span><span style="display:flex;"><span>        println(sources)
 </span></span><span style="display:flex;"><span>        when {
 </span></span><span style="display:flex;"><span>            sources.<span style="color:#369">isEmpty</span>() -&gt; {
@@ -1086,9 +1086,9 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">else</span> -&gt; args(
 </span></span><span style="display:flex;"><span>                <span style="color:#888">// destination folder: the output directory of Gradle, inside "bin"
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, outputDir,
+</span></span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, outputDir,
 </span></span><span style="display:flex;"><span>                <span style="color:#888">// classpath from the configuration
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${File.pathSeparator}${compileClasspath.asPath}"</span>,
+</span></span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${File.pathSeparator}${compileClasspath.asPath}"</span>,
 </span></span><span style="display:flex;"><span>                *sources.<span style="color:#369">toTypedArray</span>(),
 </span></span><span style="display:flex;"><span>            )
 </span></span><span style="display:flex;"><span>        }
@@ -1096,24 +1096,24 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </span></span></code></pre></div></section><section>
 <h2 id="gradle-using-custom-configurations-1">Gradle: using custom configurations</h2>
 <p>Full example:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> <span style="color:#888">// Delegation!
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies { <span style="color:#888">// built-in in Gradle
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span></span><span style="display:flex;"><span>    AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
+</span></span></span><span style="display:flex;"><span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
+</span></span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) { <span style="color:#888">// This is a Kotlin lambda with receiver!
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    inputs.<span style="color:#369">dir</span>(projectDir.<span style="color:#369">resolve</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>))
+</span></span></span><span style="display:flex;"><span>    inputs.<span style="color:#369">dir</span>(projectDir.<span style="color:#369">resolve</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>))
 </span></span><span style="display:flex;"><span>    val outputDir = layout.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>.<span style="color:#369">absolutePath</span>
 </span></span><span style="display:flex;"><span>    outputs.<span style="color:#369">dir</span>(outputDir)
 </span></span><span style="display:flex;"><span>    val javacExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javacExecutable</span>.<span style="color:#369">absolutePath</span> <span style="color:#888">// Use the current JVM's javac
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    executable(javacExecutable)
+</span></span></span><span style="display:flex;"><span>    executable(javacExecutable)
 </span></span><span style="display:flex;"><span>    doFirst { <span style="color:#888">// We need to compute the sources and classpath as late as possible
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        val sources = AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
+</span></span></span><span style="display:flex;"><span>        val sources = AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
 </span></span><span style="display:flex;"><span>        println(sources)
 </span></span><span style="display:flex;"><span>        when {
 </span></span><span style="display:flex;"><span>            sources.<span style="color:#369">isEmpty</span>() -&gt; {
@@ -1122,9 +1122,9 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">else</span> -&gt; args(
 </span></span><span style="display:flex;"><span>                <span style="color:#888">// destination folder: the output directory of Gradle, inside "bin"
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, outputDir,
+</span></span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, outputDir,
 </span></span><span style="display:flex;"><span>                <span style="color:#888">// classpath from the configuration
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${File.pathSeparator}${compileClasspath.asPath}"</span>,
+</span></span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${File.pathSeparator}${compileClasspath.asPath}"</span>,
 </span></span><span style="display:flex;"><span>                *sources.<span style="color:#369">toTypedArray</span>(),
 </span></span><span style="display:flex;"><span>            )
 </span></span><span style="display:flex;"><span>        }
@@ -1132,9 +1132,9 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888">// Minimal file access DSL
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>object AllFiles
+</span></span></span><span style="display:flex;"><span>object AllFiles
 </span></span><span style="display:flex;"><span>val Project.<span style="color:#369">allFiles</span>: AllFiles get() = AllFiles <span style="color:#888">// We need this to prevent "Object AllFiles captures the script class instance" error
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>data <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">Finder</span>(val <span style="color:#369;font-style:italic">path:</span> File) {
+</span></span></span><span style="display:flex;"><span>data <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">Finder</span>(val <span style="color:#369;font-style:italic">path:</span> File) {
 </span></span><span style="display:flex;"><span>    fun <span style="color:#06b;font-weight:bold">withExtension</span>(<span style="color:#369;font-style:italic">extension:</span> String): List&lt;File&gt; =
 </span></span><span style="display:flex;"><span>        path.<span style="color:#369">walkTopDown</span>().<span style="color:#369">filter</span> { it.<span style="color:#369">isFile</span> &amp;&amp; it.<span style="color:#369">extension</span> == extension }.<span style="color:#369">toList</span>()
 </span></span><span style="display:flex;"><span>}
@@ -1155,23 +1155,23 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </ul>
 </li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">runtimeClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> {
 </span></span><span style="display:flex;"><span>    extendsFrom(compileClasspath)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies { <span style="color:#888">// built-in in Gradle
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span></span><span style="display:flex;"><span>    AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
+</span></span></span><span style="display:flex;"><span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
+</span></span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ol start="2">
 <li>Let’s write the task</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"runJava"</span>) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"runJava"</span>) {
 </span></span><span style="display:flex;"><span>    inputs.<span style="color:#369">dir</span>(compilationDestination)
 </span></span><span style="display:flex;"><span>    dependsOn(compileJava) <span style="color:#888">// IMPORTANT! This is a task dependency, we must compile before running
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    executable(Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>.<span style="color:#369">absolutePath</span>)
+</span></span></span><span style="display:flex;"><span>    executable(Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>.<span style="color:#369">absolutePath</span>)
 </span></span><span style="display:flex;"><span>    doFirst {
 </span></span><span style="display:flex;"><span>        args(
 </span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${compilationDestination}${File.pathSeparator}${runtimeClasspath.asPath}"</span>,
@@ -1183,7 +1183,7 @@ namely, if it can be skipped because its inputs have not changed since the last 
 
 <div class="multiCol">
     <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.gradle.internal.jvm.Jvm</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">runtimeClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> {
@@ -1191,19 +1191,19 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies { <span style="color:#888">// built-in in Gradle
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span></span><span style="display:flex;"><span>    AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
+</span></span></span><span style="display:flex;"><span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
+</span></span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compilationDestination:</span> String = layout.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>.<span style="color:#369">absolutePath</span>
 </span></span><span style="display:flex;"><span>val compileJava = tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"compileJava"</span>) { <span style="color:#888">// This is a Kotlin lambda with receiver!
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    inputs.<span style="color:#369">dir</span>(projectDir.<span style="color:#369">resolve</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>))
+</span></span></span><span style="display:flex;"><span>    inputs.<span style="color:#369">dir</span>(projectDir.<span style="color:#369">resolve</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>))
 </span></span><span style="display:flex;"><span>    outputs.<span style="color:#369">dir</span>(compilationDestination)
 </span></span><span style="display:flex;"><span>    val javacExecutable = Jvm.<span style="color:#369">current</span>().<span style="color:#369">javacExecutable</span>.<span style="color:#369">absolutePath</span> <span style="color:#888">// Use the current JVM's javac
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    executable(javacExecutable)
+</span></span></span><span style="display:flex;"><span>    executable(javacExecutable)
 </span></span><span style="display:flex;"><span>    doFirst { <span style="color:#888">// We need to compute the sources and classpath as late as possible
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        val sources = AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
+</span></span></span><span style="display:flex;"><span>        val sources = AllFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"src"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"java"</span>)
 </span></span><span style="display:flex;"><span>        println(sources)
 </span></span><span style="display:flex;"><span>        when {
 </span></span><span style="display:flex;"><span>            sources.<span style="color:#369">isEmpty</span>() -&gt; {
@@ -1212,9 +1212,9 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">else</span> -&gt; args(
 </span></span><span style="display:flex;"><span>                <span style="color:#888">// destination folder: the output directory of Gradle, inside "bin"
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, compilationDestination,
+</span></span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, compilationDestination,
 </span></span><span style="display:flex;"><span>                <span style="color:#888">// classpath from the configuration
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${File.pathSeparator}${compileClasspath.asPath}"</span>,
+</span></span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${File.pathSeparator}${compileClasspath.asPath}"</span>,
 </span></span><span style="display:flex;"><span>                *sources.<span style="color:#369">toTypedArray</span>(),
 </span></span><span style="display:flex;"><span>            )
 </span></span><span style="display:flex;"><span>        }
@@ -1224,7 +1224,7 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </span></span><span style="display:flex;"><span>tasks.<span style="color:#369">register</span>&lt;Exec&gt;(<span style="color:#d20;background-color:#fff0f0">"runJava"</span>) {
 </span></span><span style="display:flex;"><span>    inputs.<span style="color:#369">dir</span>(compilationDestination)
 </span></span><span style="display:flex;"><span>    dependsOn(compileJava) <span style="color:#888">// IMPORTANT! This is a task dependency, we must compile before running
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    executable(Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>.<span style="color:#369">absolutePath</span>)
+</span></span></span><span style="display:flex;"><span>    executable(Jvm.<span style="color:#369">current</span>().<span style="color:#369">javaExecutable</span>.<span style="color:#369">absolutePath</span>)
 </span></span><span style="display:flex;"><span>    doFirst {
 </span></span><span style="display:flex;"><span>        args(
 </span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${compilationDestination}${File.pathSeparator}${runtimeClasspath.asPath}"</span>,
@@ -1235,10 +1235,10 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </span></span></code></pre></div>
 </div>
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Minimal file access DSL
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>object AllFiles
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Minimal file access DSL
+</span></span></span><span style="display:flex;"><span>object AllFiles
 </span></span><span style="display:flex;"><span>val Project.<span style="color:#369">allFiles</span>: AllFiles get() = AllFiles <span style="color:#888">// We need this to prevent "Object AllFiles captures the script class instance" error
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>data <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">Finder</span>(val <span style="color:#369;font-style:italic">path:</span> File) {
+</span></span></span><span style="display:flex;"><span>data <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">Finder</span>(val <span style="color:#369;font-style:italic">path:</span> File) {
 </span></span><span style="display:flex;"><span>    fun <span style="color:#06b;font-weight:bold">withExtension</span>(<span style="color:#369;font-style:italic">extension:</span> String): List&lt;File&gt; =
 </span></span><span style="display:flex;"><span>        path.<span style="color:#369">walkTopDown</span>().<span style="color:#369">filter</span> { it.<span style="color:#369">isFile</span> &amp;&amp; it.<span style="color:#369">extension</span> == extension }.<span style="color:#369">toList</span>()
 </span></span><span style="display:flex;"><span>}
@@ -1251,9 +1251,9 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </section><section>
 <h2 id="gradle-task-dependencies-1">Gradle: task dependencies</h2>
 <p>Let us temporarily comment:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    dependsOn(compileJava) <span style="color:#888">// IMPORTANT! This is a task dependency, we must compile before running
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    dependsOn(compileJava) <span style="color:#888">// IMPORTANT! This is a task dependency, we must compile before running
 </span></span></span></code></pre></div><p>and run:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>&gt; Task :runJava FAILED
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>&gt; Task :runJava FAILED
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>[Incubating] Problems report is available at: file:///home/danysk/LocalProjects/spe-slides/examples/run-java-deps/build/reports/problems/problems-report.html
 </span></span><span style="display:flex;"><span>
@@ -1286,7 +1286,7 @@ namely, if it can be skipped because its inputs have not changed since the last 
 </section><section>
 <h2 id="gradle-task-dependencies-2">Gradle: task dependencies</h2>
 <p><code>gradle runJava</code> with the dependency correctly set:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>&gt; Task :compileJava
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>&gt; Task :compileJava
 </span></span><span style="display:flex;"><span>[/home/danysk/LocalProjects/spe-slides/examples/run-java-deps/src/HelloMath.java]
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>&gt; Task :runJava
@@ -1395,7 +1395,7 @@ namely, if it can be skipped because its inputs have not changed since the last 
     <div class="mermaid" data-processed="true" pre-rendered="true"><svg aria-roledescription="classDiagram" role="graphics-document document" viewBox="0 0 679.1875 246" style="max-width: 679.1875px;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="100%" id="my-svg"><style>#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg g.classGroup text{fill:#9370DB;stroke:none;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:10px;}#my-svg g.classGroup text .title{font-weight:bolder;}#my-svg .nodeLabel,#my-svg .edgeLabel{color:#131300;}#my-svg .edgeLabel .label rect{fill:#ECECFF;}#my-svg .label text{fill:#131300;}#my-svg .edgeLabel .label span{background:#ECECFF;}#my-svg .classTitle{font-weight:bolder;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#my-svg .divider{stroke:#9370DB;stroke-width:1;}#my-svg g.clickable{cursor:pointer;}#my-svg g.classGroup rect{fill:#ECECFF;stroke:#9370DB;}#my-svg g.classGroup line{stroke:#9370DB;stroke-width:1;}#my-svg .classLabel .box{stroke:none;stroke-width:0;fill:#ECECFF;opacity:0.5;}#my-svg .classLabel .label{fill:#9370DB;font-size:10px;}#my-svg .relation{stroke:#333333;stroke-width:1;fill:none;}#my-svg .dashed-line{stroke-dasharray:3;}#my-svg .dotted-line{stroke-dasharray:1 2;}#my-svg #compositionStart,#my-svg .composition{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#my-svg #compositionEnd,#my-svg .composition{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#my-svg #dependencyStart,#my-svg .dependency{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#my-svg #dependencyStart,#my-svg .dependency{fill:#333333!important;stroke:#333333!important;stroke-width:1;}#my-svg #extensionStart,#my-svg .extension{fill:transparent!important;stroke:#333333!important;stroke-width:1;}#my-svg #extensionEnd,#my-svg .extension{fill:transparent!important;stroke:#333333!important;stroke-width:1;}#my-svg #aggregationStart,#my-svg .aggregation{fill:transparent!important;stroke:#333333!important;stroke-width:1;}#my-svg #aggregationEnd,#my-svg .aggregation{fill:transparent!important;stroke:#333333!important;stroke-width:1;}#my-svg #lollipopStart,#my-svg .lollipop{fill:#ECECFF!important;stroke:#333333!important;stroke-width:1;}#my-svg #lollipopEnd,#my-svg .lollipop{fill:#ECECFF!important;stroke:#333333!important;stroke-width:1;}#my-svg .edgeTerminals{font-size:11px;line-height:initial;}#my-svg .classTitleText{text-anchor:middle;font-size:18px;fill:#333;}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="18" class="marker aggregation classDiagram" id="my-svg_classDiagram-aggregationStart"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="1" class="marker aggregation classDiagram" id="my-svg_classDiagram-aggregationEnd"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="18" class="marker extension classDiagram" id="my-svg_classDiagram-extensionStart"><path d="M 1,7 L18,13 V 1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="1" class="marker extension classDiagram" id="my-svg_classDiagram-extensionEnd"><path d="M 1,1 V 13 L18,7 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="18" class="marker composition classDiagram" id="my-svg_classDiagram-compositionStart"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="1" class="marker composition classDiagram" id="my-svg_classDiagram-compositionEnd"><path d="M 18,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="6" class="marker dependency classDiagram" id="my-svg_classDiagram-dependencyStart"><path d="M 5,7 L9,13 L1,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="13" class="marker dependency classDiagram" id="my-svg_classDiagram-dependencyEnd"><path d="M 18,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="13" class="marker lollipop classDiagram" id="my-svg_classDiagram-lollipopStart"><circle r="6" cy="7" cx="7" fill="transparent" stroke="black"></circle></marker></defs><defs><marker orient="auto" markerHeight="240" markerWidth="190" refY="7" refX="1" class="marker lollipop classDiagram" id="my-svg_classDiagram-lollipopEnd"><circle r="6" cy="7" cx="7" fill="transparent" stroke="black"></circle></marker></defs><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-start="url(#my-svg_classDiagram-extensionStart)" style="fill:none" class="edge-pattern-solid relation" id="id_Task_TaskWithClasspath_1" d="M76.281,128.5L77.448,128.5C78.615,128.5,80.948,128.5,86.281,128.5C91.615,128.5,99.948,128.5,104.115,128.5L108.281,128.5"></path><path marker-start="url(#my-svg_classDiagram-extensionStart)" style="fill:none" class="edge-pattern-solid relation" id="id_TaskWithClasspath_JavaCompileTask_2" d="M343.918,81.636L352.517,77.78C361.117,73.924,378.316,66.212,391.083,62.356C403.849,58.5,412.182,58.5,416.349,58.5L420.516,58.5"></path><path marker-start="url(#my-svg_classDiagram-extensionStart)" style="fill:none" class="edge-pattern-solid relation" id="id_TaskWithClasspath_JavaRunTask_3" d="M343.918,175.364L352.517,179.22C361.117,183.076,378.316,190.788,394.047,194.644C409.779,198.5,424.042,198.5,431.173,198.5L438.305,198.5"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(33.140625, 128.5)" id="classId-Task-0" class="node default"><rect height="57" width="50.28125" y="-28.5" x="-25.140625" class="outer title-state" style=""></rect><line y2="1.5" y1="1.5" x2="25.140625" x1="-25.140625" class="divider"></line><line y2="17.5" y1="17.5" x2="25.140625" x1="-25.140625" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -17.640625, -21)" height="18" width="35.28125" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Task</span></div></foreignObject></g></g><g transform="translate(239.3984375, 128.5)" id="classId-TaskWithClasspath-1" class="node default"><rect height="79" width="262.234375" y="-39.5" x="-131.1171875" class="outer title-state" style=""></rect><line y2="-9.5" y1="-9.5" x2="131.1171875" x1="-131.1171875" class="divider"></line><line y2="28.5" y1="28.5" x2="131.1171875" x1="-131.1171875" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -73.1328125, -32)" height="18" width="146.265625" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">TaskWithClasspath</span></div></foreignObject><foreignObject transform="translate( -123.6171875, 2)" height="18" width="247.234375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Property&lt;FileCollection&gt; classpath</span></div></foreignObject></g></g><g transform="translate(545.8515625, 58.5)" id="classId-JavaCompileTask-2" class="node default"><rect height="101" width="250.671875" y="-50.5" x="-125.3359375" class="outer title-state" style=""></rect><line y2="-20.5" y1="-20.5" x2="125.3359375" x1="-125.3359375" class="divider"></line><line y2="39.5" y1="39.5" x2="125.3359375" x1="-125.3359375" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -67, -43)" height="18" width="134" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">JavaCompileTask</span></div></foreignObject><foreignObject transform="translate( -117.8359375, -9)" height="18" width="235.671875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Property&lt;FileCollection&gt; sources</span></div></foreignObject><foreignObject transform="translate( -117.8359375, 13)" height="18" width="226.75"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">DirectoryProperty destinationDir</span></div></foreignObject></g></g><g transform="translate(545.8515625, 198.5)" id="classId-JavaRunTask-3" class="node default"><rect height="79" width="215.09375" y="-39.5" x="-107.546875" class="outer title-state" style=""></rect><line y2="-9.5" y1="-9.5" x2="107.546875" x1="-107.546875" class="divider"></line><line y2="28.5" y1="28.5" x2="107.546875" x1="-107.546875" class="divider"></line><g class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel"></span></div></foreignObject><foreignObject transform="translate( -50.9921875, -32)" height="18" width="101.984375" class="classTitle"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">JavaRunTask</span></div></foreignObject><foreignObject transform="translate( -100.046875, 2)" height="18" width="200.09375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Property&lt;String&gt; mainClass</span></div></foreignObject></g></g></g></g></g></svg></div>
 </div>
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">TaskWithClasspath</span> : Task {
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">TaskWithClasspath</span> : Task {
 </span></span><span style="display:flex;"><span>    val <span style="color:#369;font-style:italic">classpath:</span> Property&lt;FileCollection&gt;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
@@ -1477,7 +1477,7 @@ for gradle to mark it as an <em>input</em> or an <em>output</em>.</p>
 
 <div class="multiCol">
     <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">AbstractJvmExec</span> : TaskWithClasspath, Exec() {
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">AbstractJvmExec</span> : TaskWithClasspath, Exec() {
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@get</span>:Classpath
 </span></span><span style="display:flex;"><span>    override val <span style="color:#369;font-style:italic">classpath:</span> Property&lt;FileCollection&gt; = project.<span style="color:#369">objects</span>.<span style="color:#369">property</span>()
 </span></span><span style="display:flex;"><span>
@@ -1486,7 +1486,7 @@ for gradle to mark it as an <em>input</em> or an <em>output</em>.</p>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// Extension function with virtual dispatch receiver!
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">protected</span> <span style="color:#080;font-weight:bold">abstract</span> fun Jvm.<span style="color:#369">jvmExecutableForTask</span>(): File
+</span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">protected</span> <span style="color:#080;font-weight:bold">abstract</span> fun Jvm.<span style="color:#369">jvmExecutableForTask</span>(): File
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">JavaRun</span>() : JavaRunTask, AbstractJvmExec() {
@@ -1507,7 +1507,7 @@ for gradle to mark it as an <em>input</em> or an <em>output</em>.</p>
 </span></span></code></pre></div>
 </div>
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">JavaCompile</span>: JavaCompileTask, AbstractJvmExec() {
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">JavaCompile</span>: JavaCompileTask, AbstractJvmExec() {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@get</span>:InputFiles
 </span></span><span style="display:flex;"><span>    override val <span style="color:#369;font-style:italic">sources:</span> Property&lt;FileCollection&gt; = project.<span style="color:#369">objects</span>.<span style="color:#369">property</span>()
@@ -1525,9 +1525,9 @@ for gradle to mark it as an <em>input</em> or an <em>output</em>.</p>
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">else</span> -&gt; args(
 </span></span><span style="display:flex;"><span>                <span style="color:#888">// destination folder: the output directory of Gradle, inside "bin"
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, destinationDir.<span style="color:#369">get</span>().<span style="color:#369">asFile</span>.<span style="color:#369">absolutePath</span>,
+</span></span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"-d"</span>, destinationDir.<span style="color:#369">get</span>().<span style="color:#369">asFile</span>.<span style="color:#369">absolutePath</span>,
 </span></span><span style="display:flex;"><span>                <span style="color:#888">// classpath from the configuration
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>                <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${File.pathSeparator}${classpath.get().asPath}"</span>,
+</span></span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"-cp"</span>, <span style="color:#d20;background-color:#fff0f0">"${File.pathSeparator}${classpath.get().asPath}"</span>,
 </span></span><span style="display:flex;"><span>                *sources.<span style="color:#369">get</span>().<span style="color:#369">files</span>.<span style="color:#369">toTypedArray</span>(),
 </span></span><span style="display:flex;"><span>            )
 </span></span><span style="display:flex;"><span>        }
@@ -1547,8 +1547,8 @@ for gradle to mark it as an <em>input</em> or an <em>output</em>.</p>
 <div class="multiCol">
     <div class="col  ">
     <p>a <em>declarative</em> part</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// DECLARATIVE (what)
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// DECLARATIVE (what)
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>val compilationDestination = layout.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">runtimeClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> {
@@ -1556,9 +1556,9 @@ for gradle to mark it as an <em>input</em> or an <em>output</em>.</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies { <span style="color:#888">// built-in in Gradle
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    allFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span></span><span style="display:flex;"><span>    allFiles.<span style="color:#369">inFolder</span>(<span style="color:#d20;background-color:#fff0f0">"libs"</span>).<span style="color:#369">withExtension</span>(<span style="color:#d20;background-color:#fff0f0">"jar"</span>).<span style="color:#369">forEach</span> { <span style="color:#888">// Not Gradle: defined below
+</span></span></span><span style="display:flex;"><span>        compileClasspath(files(it)) <span style="color:#888">// The Configuration class overrides the invoke operator
+</span></span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    runtimeClasspath(files(compilationDestination))
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
@@ -1577,12 +1577,12 @@ for gradle to mark it as an <em>input</em> or an <em>output</em>.</p>
 </div>
 <div class="col  ">
     <p>an <em>imperative</em> part</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// IMPERATIVE (how)
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// IMPERATIVE (how)
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888">// Minimal file access DSL
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>object AllFiles
+</span></span></span><span style="display:flex;"><span>object AllFiles
 </span></span><span style="display:flex;"><span>val Project.<span style="color:#369">allFiles</span>: AllFiles get() = AllFiles <span style="color:#888">// We need this to prevent "Object AllFiles captures the script class instance" error
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>data <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">Finder</span>(val <span style="color:#369;font-style:italic">path:</span> File) {
+</span></span></span><span style="display:flex;"><span>data <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">Finder</span>(val <span style="color:#369;font-style:italic">path:</span> File) {
 </span></span><span style="display:flex;"><span>    fun <span style="color:#06b;font-weight:bold">withExtension</span>(<span style="color:#369;font-style:italic">extension:</span> String): List&lt;File&gt; =
 </span></span><span style="display:flex;"><span>        path.<span style="color:#369">walkTopDown</span>().<span style="color:#369">filter</span> { it.<span style="color:#369">isFile</span> &amp;&amp; it.<span style="color:#369">extension</span> == extension }.<span style="color:#369">toList</span>()
 </span></span><span style="display:flex;"><span>}
@@ -1625,7 +1625,7 @@ and <strong>expose</strong> a purely <em>declarative API</em> to the <em>user</e
 <div class="multiCol">
     <div class="col  ">
     <p>Directory structure:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>project-folder
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>project-folder
 </span></span><span style="display:flex;"><span>├── build.gradle.kts
 </span></span><span style="display:flex;"><span>├── buildSrc
 </span></span><span style="display:flex;"><span>│&nbsp;&nbsp; ├── build.gradle.kts
@@ -1639,7 +1639,7 @@ and <strong>expose</strong> a purely <em>declarative API</em> to the <em>user</e
 </div>
 <div class="col  ">
     <p><code>buildSrc/build.gradle.kts</code>’ contents (clearer in future):</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    <span style="color:#a61717;background-color:#e3d2d2">`</span>kotlin-dsl<span style="color:#a61717;background-color:#e3d2d2">`</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
@@ -1658,7 +1658,7 @@ and <strong>expose</strong> a purely <em>declarative API</em> to the <em>user</e
 <div class="multiCol">
     <div class="col  ">
     <p>Directory structure for our Java infrastructure:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>examples/buildsrc
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>examples/buildsrc
 </span></span><span style="display:flex;"><span>├── build.gradle.kts
 </span></span><span style="display:flex;"><span>├── buildSrc
 </span></span><span style="display:flex;"><span>│&nbsp;&nbsp; ├── build.gradle.kts
@@ -1679,7 +1679,7 @@ and <strong>expose</strong> a purely <em>declarative API</em> to the <em>user</e
 </div>
 <div class="col  ">
     <p>our new <code>build.gradle.kts</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val compilationDestination = project.<span style="color:#369">layout</span>.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val compilationDestination = project.<span style="color:#369">layout</span>.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">runtimeClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> {
 </span></span><span style="display:flex;"><span>    extendsFrom(compileClasspath)
@@ -1715,7 +1715,7 @@ and <strong>expose</strong> a purely <em>declarative API</em> to the <em>user</e
 <div class="multiCol">
     <div class="col  ">
     <p>What our <code>build.gradle.kts</code> defines is now a <em>convention</em> for Java projects:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val compilationDestination = project.<span style="color:#369">layout</span>.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val compilationDestination = project.<span style="color:#369">layout</span>.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">runtimeClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> {
 </span></span><span style="display:flex;"><span>    extendsFrom(compileClasspath)
@@ -1764,14 +1764,14 @@ and <strong>expose</strong> a purely <em>declarative API</em> to the <em>user</e
 <li>Conventional build logic can be defined in <code>buildSrc/src/main/kotlin/convention-name.gradle.kts</code>,</li>
 <li>and imported in the main <code>build.gradle.kts</code> via:</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"convention-name"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
 <div class="multiCol">
     <div class="col  ">
     <p><code>buildSrc/src/main/kotlin/java-convention.gradle.kts</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val compilationDestination = project.<span style="color:#369">layout</span>.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>val compilationDestination = project.<span style="color:#369">layout</span>.<span style="color:#369">buildDirectory</span>.<span style="color:#369">dir</span>(<span style="color:#d20;background-color:#fff0f0">"bin"</span>).<span style="color:#369">get</span>().<span style="color:#369">asFile</span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">compileClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span>
 </span></span><span style="display:flex;"><span>val <span style="color:#369;font-style:italic">runtimeClasspath:</span> Configuration by configurations.<span style="color:#369">creating</span> {
 </span></span><span style="display:flex;"><span>    extendsFrom(compileClasspath)
@@ -1798,12 +1798,12 @@ and <strong>expose</strong> a purely <em>declarative API</em> to the <em>user</e
 </div>
 <div class="col  ">
     <p><code>build.gradle.kts</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"java-convention"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>tasks.<span style="color:#369">runJava</span>.<span style="color:#369">configure</span> { <span style="color:#888">// We must set the main class here
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    mainClass = <span style="color:#d20;background-color:#fff0f0">"HelloMath"</span>
+</span></span></span><span style="display:flex;"><span>    mainClass = <span style="color:#d20;background-color:#fff0f0">"HelloMath"</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
 </div>
@@ -1845,7 +1845,7 @@ Some build tasks of some module may require build tasks <em>of other modules</em
 <li>A stand-alone application using the library</li>
 </ul>
 <p>We need to reorganize the build logic to something similar to</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>hierarchial-project
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>hierarchial-project
 </span></span><span style="display:flex;"><span>|__:library
 </span></span><span style="display:flex;"><span>\__:app
 </span></span></code></pre></div><p>Desiderata:</p>
@@ -1872,32 +1872,32 @@ They can also have their own <code>settings.gradle.kts</code>, e.g. for selectin
 <ol>
 <li>Create a settings.gradle.kts and declare your modules:</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>rootProject.<span style="color:#369">name</span> = <span style="color:#d20;background-color:#fff0f0">"project-with-hierarchy"</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>rootProject.<span style="color:#369">name</span> = <span style="color:#d20;background-color:#fff0f0">"project-with-hierarchy"</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>include(<span style="color:#d20;background-color:#fff0f0">":library"</span>) <span style="color:#888">// There must be a folder named "library"
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>include(<span style="color:#d20;background-color:#fff0f0">":app"</span>) <span style="color:#888">// There must be a folder named "app"
+</span></span></span><span style="display:flex;"><span>include(<span style="color:#d20;background-color:#fff0f0">":app"</span>) <span style="color:#888">// There must be a folder named "app"
 </span></span></span></code></pre></div><ol start="2">
 <li>In the root project, configure the part common to <strong>all</strong> projects (included the root project) in a <code>allprojects</code> block</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>allprojects {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>allprojects {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// Executed for every project, included the root one
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#888">// here, `project` refers to the current project
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></span><span style="display:flex;"><span>    <span style="color:#888">// here, `project` refers to the current project
+</span></span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ol start="3">
 <li>Put the part shared by <em>solely the sub-projects</em> into a <code>subprojects</code> block</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>subprojects {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>subprojects {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// Executed for all subprojects
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#888">// here, `project` refers to the current project
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></span><span style="display:flex;"><span>    <span style="color:#888">// here, `project` refers to the current project
+</span></span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ol start="4">
 <li>In each subproject’s <code>build.gradle.kts</code>, add further customization as necessary</li>
 <li>Connect configurations to each other using dependencies</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    compileClasspath(project(<span style="color:#d20;background-color:#fff0f0">":library"</span>)) { <span style="color:#888">// My compileClasspath configuration depends on project library
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        targetConfiguration = <span style="color:#d20;background-color:#fff0f0">"runtimeClasspath"</span> <span style="color:#888">// Specifically, from its runtime
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span></span><span style="display:flex;"><span>        targetConfiguration = <span style="color:#d20;background-color:#fff0f0">"runtimeClasspath"</span> <span style="color:#888">// Specifically, from its runtime
+</span></span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ol start="6">
 <li>Declare inter-subproject task dependencies
@@ -1906,7 +1906,7 @@ They can also have their own <code>settings.gradle.kts</code>, e.g. for selectin
 </ul>
 </li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">compileJava</span> { dependsOn(project(<span style="color:#d20;background-color:#fff0f0">":library"</span>).<span style="color:#369">tasks</span>.<span style="color:#369">compileJava</span>) }
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">compileJava</span> { dependsOn(project(<span style="color:#d20;background-color:#fff0f0">":library"</span>).<span style="color:#369">tasks</span>.<span style="color:#369">compileJava</span>) }
 </span></span></code></pre></div></section><section>
 <h2 id="reusability-across-multiple-projects">Reusability across multiple projects</h2>
 <p>We now have a rudimental infrastructure for building and running Java projects
@@ -1977,15 +1977,15 @@ It usually includes:</p>
 </li>
 </ul>
 <p><strong>Example code</strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    pluginName <span style="color:#888">// Loads a plugin from the "buildEnvironment" classpath
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    <span style="color:#a61717;background-color:#e3d2d2">`</span>plugin-name<span style="color:#a61717;background-color:#e3d2d2">`</span> <span style="color:#888">// Syntax for non Kotlin-compliant plugin names
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">"plugin2-name"</span>) <span style="color:#888">// Alternative to the former
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">"some-custom-plugin"</span>) version <span style="color:#d20;background-color:#fff0f0">"1.2.3"</span> <span style="color:#888">// if not found locally, gets fetched from the Gradle plugin portal
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></span><span style="display:flex;"><span>    <span style="color:#a61717;background-color:#e3d2d2">`</span>plugin-name<span style="color:#a61717;background-color:#e3d2d2">`</span> <span style="color:#888">// Syntax for non Kotlin-compliant plugin names
+</span></span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"plugin2-name"</span>) <span style="color:#888">// Alternative to the former
+</span></span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"some-custom-plugin"</span>) version <span style="color:#d20;background-color:#fff0f0">"1.2.3"</span> <span style="color:#888">// if not found locally, gets fetched from the Gradle plugin portal
+</span></span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#888">// In case of non-hierarchial projects, plugins are also "applied"
 </span></span></span><span style="display:flex;"><span><span style="color:#888">// Otherwise, they need to get applied manually, e.g.:
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>allprojects {
+</span></span></span><span style="display:flex;"><span>allprojects {
 </span></span><span style="display:flex;"><span>    apply(plugin = <span style="color:#d20;background-color:#fff0f0">"pluginName"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
@@ -2013,7 +2013,7 @@ It usually includes:</p>
 <li>adds a <code>greet</code> task that prints a greeting</li>
 <li>the default output should be configurable with something like:</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"org.danilopianini.template-for-gradle-plugins"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>hello {
@@ -2022,29 +2022,29 @@ It usually includes:</p>
 </span></span></code></pre></div></section><section>
 <h2 id="setting-up-a-kotlin-build">Setting up a Kotlin build</h2>
 <p>First step: we need to set up a Kotlin build, we’ll write our plugin in Kotlin</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// No magic: calls a method running behind the scenes, equivalent to id("org.jetbrains.kotlin-$jvm")
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    kotlin(<span style="color:#d20;background-color:#fff0f0">"jvm"</span>) version <span style="color:#d20;background-color:#fff0f0">"2.2.20"</span> <span style="color:#888">// version is necessary
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></span><span style="display:flex;"><span>    kotlin(<span style="color:#d20;background-color:#fff0f0">"jvm"</span>) version <span style="color:#d20;background-color:#fff0f0">"2.2.20"</span> <span style="color:#888">// version is necessary
+</span></span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>The Kotlin <em>plugin</em> introduces tasks and configurations to compile and package Kotlin code</p>
 <p>Second step: we need to declare where to find dependencies</p>
 <ul>
 <li>Maven repositories are a de-facto standard for shipping JVM libraries</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Configuration of software sources
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>repositories {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Configuration of software sources
+</span></span></span><span style="display:flex;"><span>repositories {
 </span></span><span style="display:flex;"><span>    mavenCentral() <span style="color:#888">// points to Maven Central
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>     <span style="color:#888">// "implementation" is a configuration created by by the Kotlin JVM plugin
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    implementation(...) <span style="color:#888">// we can load libraries here
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></span><span style="display:flex;"><span>    implementation(...) <span style="color:#888">// we can load libraries here
+</span></span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Third step, we need the Gradle API</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    implementation(gradleApi()) <span style="color:#888">// Built-in method, returns a `Dependency` to the current Gradle version
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    api(gradleKotlinDsl()) <span style="color:#888">// Built-in method, returns a `Dependency` to the Gradle Kotlin DSL library
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></span><span style="display:flex;"><span>    api(gradleKotlinDsl()) <span style="color:#888">// Built-in method, returns a `Dependency` to the Gradle Kotlin DSL library
+</span></span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
 <h2 id="plugin-name-and-entry-point">Plugin name and entry point</h2>
 <p>Gradle expects the plugin entry point (the class implementing the <code>Plugin</code> interface) to be specified in a <strong>manifest file</strong></p>
@@ -2057,7 +2057,7 @@ It usually includes:</p>
 <br>
 e.g., <code>it.unibo.spe.greetings</code></p>
 <p>The file content is just a pointer to the class implementing <code>Plugin</code>, for instance:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#369">implementation-class</span>=<span style="color:#d20;background-color:#fff0f0">it.unibo.spe.firstplugin.GreetingPlugin</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#369">implementation-class</span>=<span style="color:#d20;background-color:#fff0f0">it.unibo.spe.firstplugin.GreetingPlugin</span>
 </span></span></code></pre></div></section><section>
 <h2 id="plugin-implementation">Plugin implementation</h2>
 <p>Usually, composed of:</p>
@@ -2080,7 +2080,7 @@ e.g., <code>it.unibo.spe.greetings</code></p>
 <div class="multiCol">
     <div class="col  ">
     <p><code>HelloTask</code> implementation:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>open <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloTask</span> : DefaultTask() {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>open <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloTask</span> : DefaultTask() {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">/**
 </span></span></span><span style="display:flex;"><span><span style="color:#888">     * The author of the greeting, lazily set.
 </span></span></span><span style="display:flex;"><span><span style="color:#888">     */</span>
@@ -2105,7 +2105,7 @@ e.g., <code>it.unibo.spe.greetings</code></p>
 </div>
 <div class="col  ">
     <p><code>HelloExtension</code>, the DSL entrypoint:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>open <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">HelloExtension</span>(<span style="color:#369;font-style:italic">objects:</span> ObjectFactory) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>open <span style="color:#080;font-weight:bold">class</span> <span style="color:#06b;font-weight:bold">HelloExtension</span>(<span style="color:#369;font-style:italic">objects:</span> ObjectFactory) {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">/**
 </span></span></span><span style="display:flex;"><span><span style="color:#888">     * This is where you write your DSL to control the plugin.
 </span></span></span><span style="display:flex;"><span><span style="color:#888">     */</span>
@@ -2115,11 +2115,11 @@ e.g., <code>it.unibo.spe.greetings</code></p>
 <ul>
 <li>whose <code>apply</code> method is called upon application</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>open <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloGradle</span> : Plugin&lt;Project&gt; {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>open <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HelloGradle</span> : Plugin&lt;Project&gt; {
 </span></span><span style="display:flex;"><span>    override fun <span style="color:#06b;font-weight:bold">apply</span>(<span style="color:#369;font-style:italic">target:</span> Project) {
 </span></span><span style="display:flex;"><span>        val extension = target.<span style="color:#369">extensions</span>.<span style="color:#369">create</span>&lt;HelloExtension&gt;(<span style="color:#d20;background-color:#fff0f0">"hello"</span>)
 </span></span><span style="display:flex;"><span>        <span style="color:#888">// Enables `hello { ... }` in build.gradle.kts
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        target.<span style="color:#369">tasks</span>.<span style="color:#369">register</span>&lt;HelloTask&gt;(<span style="color:#d20;background-color:#fff0f0">"hello"</span>) {
+</span></span></span><span style="display:flex;"><span>        target.<span style="color:#369">tasks</span>.<span style="color:#369">register</span>&lt;HelloTask&gt;(<span style="color:#d20;background-color:#fff0f0">"hello"</span>) {
 </span></span><span style="display:flex;"><span>            author.<span style="color:#369">set</span>(extension.<span style="color:#369">author</span>)
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
@@ -2146,9 +2146,9 @@ e.g., <code>it.unibo.spe.greetings</code></p>
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>project.plugins.withType(JavaPlugin::<span style="color:#080;font-weight:bold">class</span>.java) {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>project.plugins.withType(JavaPlugin::<span style="color:#080;font-weight:bold">class</span>.java) {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// Stuff you want to do only if someone enables the Java plugin for the current project
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
 <h2 id="testing-a-plugin">Testing a plugin</h2>
 <ol>
@@ -2161,11 +2161,11 @@ e.g., <code>it.unibo.spe.greetings</code></p>
 </section><section>
 <h2 id="importing-the-gradle-dependencies-and-the-test-kit">Importing the Gradle dependencies and the test kit</h2>
 <p>It’s just matter of pulling the right dependencies</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    implementation(gradleApi())
 </span></span><span style="display:flex;"><span>    implementation(gradleKotlinDsl())
 </span></span><span style="display:flex;"><span>    testImplementation(gradleTestKit()) <span style="color:#888">// Test implementation: available for testing compile and testing runtime
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>}
+</span></span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h3 id="plugin-classpath-injection">Plugin Classpath injection</h3>
 <p>By default, the Gradle test kit just runs Gradle.
 We want to inject our plugin into the distribution:</p>
@@ -2175,26 +2175,26 @@ We want to inject our plugin into the distribution:</p>
 <li>Use such list as our classpath for running Gradle</li>
 </ol>
 <p>This operation is now built-in the test kit:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Configure a Gradle runner
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runner</span> = <span style="color:#b06;font-weight:bold">GradleRunner</span>.create()
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Configure a Gradle runner
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">runner</span> = <span style="color:#b06;font-weight:bold">GradleRunner</span>.create()
 </span></span><span style="display:flex;"><span>    .withProjectDir()
 </span></span><span style="display:flex;"><span>    .withPluginClasspath(classpath) <span style="color:#888">// we need Gradle **and** our plugin
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    .withArguments(<span style="color:#d20;background-color:#fff0f0">":tasks"</span>, <span style="color:#d20;background-color:#fff0f0">":you"</span>, <span style="color:#d20;background-color:#fff0f0">":need"</span>, <span style="color:#d20;background-color:#fff0f0">":to"</span>, <span style="color:#d20;background-color:#fff0f0">":run:"</span>, <span style="color:#d20;background-color:#fff0f0">"--and"</span>, <span style="color:#d20;background-color:#fff0f0">"--cli"</span>, <span style="color:#d20;background-color:#fff0f0">"--options"</span>)
+</span></span></span><span style="display:flex;"><span>    .withArguments(<span style="color:#d20;background-color:#fff0f0">":tasks"</span>, <span style="color:#d20;background-color:#fff0f0">":you"</span>, <span style="color:#d20;background-color:#fff0f0">":need"</span>, <span style="color:#d20;background-color:#fff0f0">":to"</span>, <span style="color:#d20;background-color:#fff0f0">":run:"</span>, <span style="color:#d20;background-color:#fff0f0">"--and"</span>, <span style="color:#d20;background-color:#fff0f0">"--cli"</span>, <span style="color:#d20;background-color:#fff0f0">"--options"</span>)
 </span></span><span style="display:flex;"><span>    .build() <span style="color:#888">// This actually runs Gradle
 </span></span></span><span style="display:flex;"><span><span style="color:#888">// Inspect results
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>runner.task(<span style="color:#d20;background-color:#fff0f0">":someExistingTask"</span>)?.outcome shouldBe <span style="color:#b06;font-weight:bold">TaskOutcome</span>.SUCCESS
+</span></span></span><span style="display:flex;"><span>runner.task(<span style="color:#d20;background-color:#fff0f0">":someExistingTask"</span>)?.outcome shouldBe <span style="color:#b06;font-weight:bold">TaskOutcome</span>.SUCCESS
 </span></span><span style="display:flex;"><span>runner.output shouldContain <span style="color:#d20;background-color:#fff0f0">"Hello from Gradle"</span>
 </span></span></code></pre></div></section><section>
 <h2 id="dry-with-dependencies-declaration">DRY with dependencies declaration</h2>
 <p>Look at the following example code:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-runner-junit5:4.2.5"</span>)
 </span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-assertions-core:4.2.5"</span>)
 </span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-assertions-core-jvm:4.2.5"</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>It is <em>repetitive</em> and <em>fragile</em> (what if you change the version of a single kotest module?)</p>
 <p>Let’s patch all this fragility:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">kotestVersion</span> = <span style="color:#d20;background-color:#fff0f0">"4.2.5"</span>
 </span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-runner-junit5:</span><span style="color:#33b;background-color:#fff0f0">$kotestVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
 </span></span><span style="display:flex;"><span>    testImplementation(<span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-assertions-core:</span><span style="color:#33b;background-color:#fff0f0">$kotestVersion</span><span style="color:#d20;background-color:#fff0f0">"</span>)
@@ -2203,7 +2203,7 @@ We want to inject our plugin into the distribution:</p>
 </span></span></code></pre></div><p>Still, quite repetitive…</p>
 </section><section>
 <h2 id="dry-with-dependencies-declaration-1">DRY with dependencies declaration</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    val kotestVersion = <span style="color:#d20;background-color:#fff0f0">"4.2.5"</span>
 </span></span><span style="display:flex;"><span>    fun <span style="color:#06b;font-weight:bold">kotest</span>(<span style="color:#369;font-style:italic">module:</span> String) = <span style="color:#d20;background-color:#fff0f0">"io.kotest:kotest-$module:$kotestVersion"</span>
 </span></span><span style="display:flex;"><span>    testImplementation(kotest(<span style="color:#d20;background-color:#fff0f0">"runner-junit5"</span>)
@@ -2232,11 +2232,11 @@ We want to inject our plugin into the distribution:</p>
 
 <div class="multiCol">
     <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>[versions]
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>[versions]
 </span></span><span style="display:flex;"><span>dokka = <span style="color:#d20;background-color:#fff0f0">"2.0.0"</span>
 </span></span><span style="display:flex;"><span>konf = <span style="color:#d20;background-color:#fff0f0">"1.1.2"</span>
-</span></span><span style="display:flex;"><span>kotest = <span style="color:#d20;background-color:#fff0f0">"6.0.4"</span>
-</span></span><span style="display:flex;"><span>kotlin = <span style="color:#d20;background-color:#fff0f0">"2.2.21"</span>
+</span></span><span style="display:flex;"><span>kotest = <span style="color:#d20;background-color:#fff0f0">"6.1.11"</span>
+</span></span><span style="display:flex;"><span>kotlin = <span style="color:#d20;background-color:#fff0f0">"2.3.20"</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>[libraries]
 </span></span><span style="display:flex;"><span>apache-commons-lang3 = <span style="color:#d20;background-color:#fff0f0">"org.apache.commons:commons-lang3:3.20.0"</span>
@@ -2250,22 +2250,21 @@ We want to inject our plugin into the distribution:</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>[plugins]
 </span></span><span style="display:flex;"><span>dokka = { id = <span style="color:#d20;background-color:#fff0f0">"org.jetbrains.dokka"</span>, version.<span style="color:#369">ref</span> = <span style="color:#d20;background-color:#fff0f0">"dokka"</span> }
-</span></span><span style="display:flex;"><span>gitSemVer = <span style="color:#d20;background-color:#fff0f0">"org.danilopianini.git-sensitive-semantic-versioning:7.0.6"</span>
-</span></span><span style="display:flex;"><span>gradlePluginPublish = <span style="color:#d20;background-color:#fff0f0">"com.gradle.plugin-publish:2.0.0"</span>
+</span></span><span style="display:flex;"><span>gitSemVer = <span style="color:#d20;background-color:#fff0f0">"org.danilopianini.git-sensitive-semantic-versioning:7.0.16"</span>
+</span></span><span style="display:flex;"><span>gradlePluginPublish = <span style="color:#d20;background-color:#fff0f0">"com.gradle.plugin-publish:2.1.1"</span>
 </span></span><span style="display:flex;"><span>jacoco-testkit = <span style="color:#d20;background-color:#fff0f0">"pl.droidsonroids.jacoco.testkit:1.0.12"</span>
 </span></span><span style="display:flex;"><span>kotlin-jvm = { id = <span style="color:#d20;background-color:#fff0f0">"org.jetbrains.kotlin.jvm"</span>, version.<span style="color:#369">ref</span> = <span style="color:#d20;background-color:#fff0f0">"kotlin"</span> }
-</span></span><span style="display:flex;"><span>kotlin-qa = <span style="color:#d20;background-color:#fff0f0">"org.danilopianini.gradle-kotlin-qa:0.98.0"</span>
+</span></span><span style="display:flex;"><span>kotlin-qa = <span style="color:#d20;background-color:#fff0f0">"org.danilopianini.gradle-kotlin-qa:1.4.0"</span>
 </span></span><span style="display:flex;"><span>multiJvmTesting = <span style="color:#d20;background-color:#fff0f0">"org.danilopianini.multi-jvm-test-plugin:4.3.2"</span>
-</span></span><span style="display:flex;"><span>publishOnCentral = <span style="color:#d20;background-color:#fff0f0">"org.danilopianini.publish-on-central:9.1.7"</span>
+</span></span><span style="display:flex;"><span>publishOnCentral = <span style="color:#d20;background-color:#fff0f0">"org.danilopianini.publish-on-central:9.1.14"</span>
 </span></span><span style="display:flex;"><span>taskTree = <span style="color:#d20;background-color:#fff0f0">"com.dorongold.task-tree:4.0.1"</span>
 </span></span></code></pre></div>
 </div>
 <div class="col  ">
     <p>Gradle generates <em>type-safe accessors</em> for the definitions:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    api(gradleApi())
 </span></span><span style="display:flex;"><span>    api(gradleKotlinDsl())
-</span></span><span style="display:flex;"><span>    api(kotlin(<span style="color:#d20;background-color:#fff0f0">"stdlib-jdk8"</span>))
 </span></span><span style="display:flex;"><span>    testImplementation(gradleTestKit())
 </span></span><span style="display:flex;"><span>    testImplementation(libs.<span style="color:#369">apache</span>.<span style="color:#369">commons</span>.<span style="color:#369">lang3</span>)
 </span></span><span style="display:flex;"><span>    testImplementation(libs.<span style="color:#369">konf</span>.<span style="color:#369">yaml</span>)
@@ -2273,7 +2272,7 @@ We want to inject our plugin into the distribution:</p>
 </span></span><span style="display:flex;"><span>    testImplementation(libs.<span style="color:#369">bundles</span>.<span style="color:#369">kotlin</span>.<span style="color:#369">testing</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Also for the plugins:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    <span style="color:#a61717;background-color:#e3d2d2">`</span>java-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
 </span></span><span style="display:flex;"><span>    alias(libs.<span style="color:#369">plugins</span>.<span style="color:#369">dokka</span>)
 </span></span><span style="display:flex;"><span>    alias(libs.<span style="color:#369">plugins</span>.<span style="color:#369">gitSemVer</span>)
@@ -2332,30 +2331,30 @@ We want to inject our plugin into the distribution:</p>
 </section><section>
 <h2 id="introducing-the-gradle-toolchains">Introducing the Gradle toolchains</h2>
 <p>Define the reference toolchain version (<em>compilation target</em>):</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>java {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>java {
 </span></span><span style="display:flex;"><span>    toolchain {
 </span></span><span style="display:flex;"><span>        languageVersion.<span style="color:#369">set</span>(JavaLanguageVersion.<span style="color:#369">of</span>(<span style="color:#00d;font-weight:bold">11</span>))
 </span></span><span style="display:flex;"><span>        vendor.<span style="color:#369">set</span>(JvmVendorSpec.<span style="color:#369">ADOPTOPENJDK</span>) <span style="color:#888">// Optionally, specify a vendor
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>        implementation.<span style="color:#369">set</span>(JvmImplementation.<span style="color:#369">J9</span>) <span style="color:#888">// Optionally, select an implementation
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    }
+</span></span></span><span style="display:flex;"><span>        implementation.<span style="color:#369">set</span>(JvmImplementation.<span style="color:#369">J9</span>) <span style="color:#888">// Optionally, select an implementation
+</span></span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Create tasks for running tests on specific environments:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">withType</span>&lt;Test&gt;().<span style="color:#369">toList</span>().<span style="color:#369">takeIf</span> { it.<span style="color:#369">size</span> == <span style="color:#00d;font-weight:bold">1</span> }?.<span style="color:#369">let</span>{ it.<span style="color:#369">first</span> }.<span style="color:#369">run</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>tasks.<span style="color:#369">withType</span>&lt;Test&gt;().<span style="color:#369">toList</span>().<span style="color:#369">takeIf</span> { it.<span style="color:#369">size</span> == <span style="color:#00d;font-weight:bold">1</span> }?.<span style="color:#369">let</span>{ it.<span style="color:#369">first</span> }.<span style="color:#369">run</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// If there exist a "test" task, run it with some specific JVM version
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    javaLauncher.<span style="color:#369">set</span>(javaToolchains.<span style="color:#369">launcherFor</span> { languageVersion.<span style="color:#369">set</span>(JavaLanguageVersion.<span style="color:#369">of</span>(<span style="color:#00d;font-weight:bold">8</span>)) })
+</span></span></span><span style="display:flex;"><span>    javaLauncher.<span style="color:#369">set</span>(javaToolchains.<span style="color:#369">launcherFor</span> { languageVersion.<span style="color:#369">set</span>(JavaLanguageVersion.<span style="color:#369">of</span>(<span style="color:#00d;font-weight:bold">8</span>)) })
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#888">// Register another test task, with a different JVM
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>val testWithJVM17 by tasks.<span style="color:#369">registering</span>&lt;Test&gt; { <span style="color:#888">// Also works with JavaExec
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    javaLauncher.<span style="color:#369">set</span>(javaToolchains.<span style="color:#369">launcherFor</span> { languageVersion.<span style="color:#369">set</span>(JavaLanguageVersion.<span style="color:#369">of</span>(<span style="color:#00d;font-weight:bold">17</span>)) })
+</span></span></span><span style="display:flex;"><span>val testWithJVM17 by tasks.<span style="color:#369">registering</span>&lt;Test&gt; { <span style="color:#888">// Also works with JavaExec
+</span></span></span><span style="display:flex;"><span>    javaLauncher.<span style="color:#369">set</span>(javaToolchains.<span style="color:#369">launcherFor</span> { languageVersion.<span style="color:#369">set</span>(JavaLanguageVersion.<span style="color:#369">of</span>(<span style="color:#00d;font-weight:bold">17</span>)) })
 </span></span><span style="display:flex;"><span>} <span style="color:#888">// You can pick JVM's not yet supported by Gradle!
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>tasks.<span style="color:#369">findByName</span>(<span style="color:#d20;background-color:#fff0f0">"check"</span>)?.<span style="color:#369">configure</span> { it.<span style="color:#369">dependsOn</span>(testWithJVM17) } <span style="color:#888">// make it part of the QA suite
+</span></span></span><span style="display:flex;"><span>tasks.<span style="color:#369">findByName</span>(<span style="color:#d20;background-color:#fff0f0">"check"</span>)?.<span style="color:#369">configure</span> { it.<span style="color:#369">dependsOn</span>(testWithJVM17) } <span style="color:#888">// make it part of the QA suite
 </span></span></span></code></pre></div></section><section>
 <h2 id="making-the-plugin-available">Making the plugin available</h2>
 <p>We now know how to build a plugin, we know how to test it,
 <br>
 <em>we don’t know how to make it available to other projects!</em></p>
 <p>We want something like:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"our.plugin.id"</span>) version <span style="color:#d20;background-color:#fff0f0">"our.plugin.version"</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>To do so, we need to ship our plugin to the <a href="https://plugins.gradle.org/">Gradle plugin portal</a>
@@ -2373,7 +2372,7 @@ Gradle provides <a href="https://plugins.gradle.org/docs/publish-plugin">a plugi
 </section><section>
 <h1 id="setting-a-version">Setting a version</h1>
 <p>The project version can be specified in Gradle by simply setting the <code>version</code> property of the project:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>version = <span style="color:#d20;background-color:#fff0f0">"0.1.0"</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>version = <span style="color:#d20;background-color:#fff0f0">"0.1.0"</span>
 </span></span></code></pre></div><ul>
 <li>Drawback: <em>manual management</em>!</li>
 </ul>
@@ -2386,10 +2385,10 @@ to compute a Semantic Versioning compatible version!</p>
 <br>
 including <a href="https://github.com/DanySK/git-sensitive-semantic-versioning-gradle-plugin">one I’ve developed</a></p>
 <p>Minimal configuration:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    id (<span style="color:#d20;background-color:#fff0f0">"org.danilopianini.git-sensitive-semantic-versioning"</span>) version <span style="color:#d20;background-color:#fff0f0">"&lt;latest version&gt;"</span>
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span> ./gradlew printGitSemVer
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span> ./gradlew printGitSemVer
 </span></span><span style="display:flex;"><span>&gt; Task :printGitSemVer
 </span></span><span style="display:flex;"><span>Version computed by GitSemVer: 0.1.0-archeo+cf5b4c0
 </span></span></code></pre></div><p>Another possibility is <em>writing a plugin yourself</em>
@@ -2403,7 +2402,7 @@ But at the moment we are stuck: we don’t know yet how to expose plugins to oth
 <li>Copy the text from the MIT license</li>
 <li>If needed, edit details</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Copyright 2020 Danilo Pianini
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Copyright 2020 Danilo Pianini
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 </span></span><span style="display:flex;"><span>documentation files (the "Software"), to deal in the Software without restriction, including without limitation
@@ -2450,7 +2449,7 @@ the de-facto convention is <em>inherited from Maven</em>:</p>
 </section><section>
 <h2 id="setting-the-details">Setting the details</h2>
 <p>In order to create Maven-compatible artifacts, we need first to set the <strong>groupId</strong>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>group = <span style="color:#d20;background-color:#fff0f0">"it.unibo.firstplugin"</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>group = <span style="color:#d20;background-color:#fff0f0">"it.unibo.firstplugin"</span>
 </span></span></code></pre></div><p>Many repositories require to register the group and associate developer identities to it</p>
 <p>The project name set in <code>settings.gradle.kts</code> is usually used as <strong>artifactId</strong></p>
 <ul>
@@ -2459,12 +2458,11 @@ the de-facto convention is <em>inherited from Maven</em>:</p>
 </section><section>
 <h2 id="preparing-the-plugin-publication">Preparing the plugin publication</h2>
 <p>Gradle provides two plugins to simplify the assembly and upload of plugins</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>  <span style="color:#a61717;background-color:#e3d2d2">`</span>java-gradle-plugin<span style="color:#a61717;background-color:#e3d2d2">`</span>
 </span></span><span style="display:flex;"><span>  id(<span style="color:#d20;background-color:#fff0f0">"com.gradle.plugin-publish"</span>) version <span style="color:#d20;background-color:#fff0f0">"2.0.0"</span>
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradlePlugin {
-</span></span><span style="display:flex;"><span>    plugins {
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>    plugins {
 </span></span><span style="display:flex;"><span>        website.<span style="color:#369">set</span>(info.<span style="color:#369">website</span>)
 </span></span><span style="display:flex;"><span>        vcsUrl.<span style="color:#369">set</span>(info.<span style="color:#369">vcsUrl</span>)
 </span></span><span style="display:flex;"><span>        create(<span style="color:#d20;background-color:#fff0f0">""</span>) {
@@ -2488,14 +2486,14 @@ once done, an <strong>API Key</strong> will be available from the web interface,
 <ol>
 <li>By editing the <code>~/.gradle/gradle.properties</code> file, adding:</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle.publish.key=YOUR_KEY
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gradle.publish.key=YOUR_KEY
 </span></span><span style="display:flex;"><span>gradle.publish.secret=YOUR_SECRET
 </span></span></code></pre></div><ol start="2">
 <li>Via command line, using <code>-P</code> flags:</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>./gradlew -Pgradle.publish.key=&lt;key&gt; -Pgradle.publish.secret=&lt;secret&gt; publishPlugins
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>./gradlew -Pgradle.publish.key=&lt;key&gt; -Pgradle.publish.secret=&lt;secret&gt; publishPlugins
 </span></span></code></pre></div><p>The result is a published plugin:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>❯ ./gradlew publishPlugins
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>❯ ./gradlew publishPlugins
 </span></span><span style="display:flex;"><span>&gt; Task :publishPlugins
 </span></span><span style="display:flex;"><span>Publishing plugin it.unibo.spe.greetings-plugin version 0.1.0-archeo+ea6b9d7
 </span></span><span style="display:flex;"><span>Publishing artifact build/libs/greetings-plugin-0.1.0-archeo+ea6b9d7.jar
@@ -2549,11 +2547,11 @@ once done, an <strong>API Key</strong> will be available from the web interface,
 <h2 id="dry">DRY!</h2>
 <p>You know how to build and publish Gradle plugins: <strong>factorize the common part!</strong></p>
 <h3 id="example-preconfigured-kotlin-qa">Example: Preconfigured Kotlin QA</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// Just applies and pre-configures jacoco, detekt, and ktlint
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">"org.danilopianini.gradle-kotlin-qa"</span>) version <span style="color:#d20;background-color:#fff0f0">"0.2.1"</span>
+</span></span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"org.danilopianini.gradle-kotlin-qa"</span>) version <span style="color:#d20;background-color:#fff0f0">"0.2.1"</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// Just applies and pre-configures jacoco, Spotbugs, PMD, and checkstyle
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>    id(<span style="color:#d20;background-color:#fff0f0">"org.danilopianini.gradle-java-qa"</span>) version <span style="color:#d20;background-color:#fff0f0">"0.2.1"</span>
+</span></span></span><span style="display:flex;"><span>    id(<span style="color:#d20;background-color:#fff0f0">"org.danilopianini.gradle-java-qa"</span>) version <span style="color:#d20;background-color:#fff0f0">"0.2.1"</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
 <h2 id="code-documentation">Code documentation</h2>
@@ -2596,7 +2594,7 @@ If you do not have a signature yet, <a href="https://central.sonatype.org/pages/
 </ul>
 <p>Once you have a key, you can use the <code>signing</code> plugin to have Gradle generate signatures</p>
 <p>To set a default signatory, add to your <code>~/.gradle/gradle.properties</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#369">signing.keyId</span> = <span style="color:#d20;background-color:#fff0f0">&lt;your key id&gt;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#369">signing.keyId</span> = <span style="color:#d20;background-color:#fff0f0">&lt;your key id&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#369">signing.password</span> = <span style="color:#d20;background-color:#fff0f0">&lt;redacted&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#369">signing.secretKeyRingFile</span> = <span style="color:#d20;background-color:#fff0f0">&lt;your user home&gt;/.gnupg/secring.gpg</span>
 </span></span></code></pre></div></section><section>
@@ -2714,7 +2712,7 @@ If you do not have a signature yet, <a href="https://central.sonatype.org/pages/
 <h2 id="inspecting-dependencies-among-tasks">Inspecting dependencies <em>among tasks</em></h2>
 <p>When developing plugins or rich builds, the issue of dependencies also affect <strong>tasks</strong></p>
 <p>Gradle <em>does not</em> provide tools to ispect the task graph graphically, but a plugin exists.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    id <span style="color:#d20;background-color:#fff0f0">"com.dorongold.task-tree"</span> version <span style="color:#d20;background-color:#fff0f0">"4.0.1"</span>
 </span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
 <p>Generates a <code>taskTree</code> task printing the task tree of the tasks listed along with <code>taskTree</code>.</p>
@@ -2743,7 +2741,7 @@ If you do not have a signature yet, <a href="https://central.sonatype.org/pages/
 </section><section>
 <h2 id="automated-scans-without---scan">Automated scans without <code>--scan</code></h2>
 <p>In <code>settings.gradle.kts</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>develocity {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>develocity {
 </span></span><span style="display:flex;"><span>    buildScan {
 </span></span><span style="display:flex;"><span>        termsOfUseUrl = <span style="color:#d20;background-color:#fff0f0">"https://gradle.com/terms-of-service"</span>
 </span></span><span style="display:flex;"><span>        termsOfUseAgree = <span style="color:#d20;background-color:#fff0f0">"yes"</span>
@@ -2756,7 +2754,7 @@ If you do not have a signature yet, <a href="https://central.sonatype.org/pages/
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2025-11-21
+<p>Compiled on: 2026-04-15
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section>

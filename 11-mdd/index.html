@@ -304,12 +304,12 @@ TaxCode -d-|&gt; CustomerID</p>
 </section><section>
 <h2 id="dsl-examples-pt-3">DSL Examples (pt. 3)</h2>
 <h3 id="gherkin-a-dsl-to-write-bdd-tests-in-a-human-friendly-way">Gherkin: a DSL to write BDD tests in a human-friendly way</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">Scenario:</span><span style="color:#06b;font-weight:bold"> Verify withdraw at the ATM works correctly
-</span></span></span><span style="display:flex;"><span><span style="color:#06b;font-weight:bold"></span><span style="color:#080;font-weight:bold">Given </span><span style="color:#06b;font-weight:bold">John has </span><span style="color:#d20;background-color:#fff0f0">500</span><span style="color:#06b;font-weight:bold">$ on his account
-</span></span></span><span style="display:flex;"><span><span style="color:#06b;font-weight:bold"></span><span style="color:#080;font-weight:bold">When </span><span style="color:#06b;font-weight:bold">John ask to withdraw </span><span style="color:#d20;background-color:#fff0f0">200</span><span style="color:#06b;font-weight:bold">$
-</span></span></span><span style="display:flex;"><span><span style="color:#06b;font-weight:bold"></span><span style="color:#080;font-weight:bold">And </span><span style="color:#06b;font-weight:bold">John inserts the correct PIN
-</span></span></span><span style="display:flex;"><span><span style="color:#06b;font-weight:bold"></span><span style="color:#080;font-weight:bold">Then </span><span style="color:#d20;background-color:#fff0f0">200</span><span style="color:#06b;font-weight:bold">$ are dispensed by the ATM
-</span></span></span><span style="display:flex;"><span><span style="color:#06b;font-weight:bold"></span><span style="color:#080;font-weight:bold">And </span><span style="color:#06b;font-weight:bold">John has </span><span style="color:#d20;background-color:#fff0f0">300</span><span style="color:#06b;font-weight:bold">$ on his account
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">Scenario:</span><span style="color:#06b;font-weight:bold"> Verify withdraw at the ATM works correctly
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">Given </span><span style="color:#06b;font-weight:bold">John has </span><span style="color:#d20;background-color:#fff0f0">500</span><span style="color:#06b;font-weight:bold">$ on his account
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">When </span><span style="color:#06b;font-weight:bold">John ask to withdraw </span><span style="color:#d20;background-color:#fff0f0">200</span><span style="color:#06b;font-weight:bold">$
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">And </span><span style="color:#06b;font-weight:bold">John inserts the correct PIN
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">Then </span><span style="color:#d20;background-color:#fff0f0">200</span><span style="color:#06b;font-weight:bold">$ are dispensed by the ATM
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">And </span><span style="color:#06b;font-weight:bold">John has </span><span style="color:#d20;background-color:#fff0f0">300</span><span style="color:#06b;font-weight:bold">$ on his account
 </span></span></span></code></pre></div><ul>
 <li>
 <p>Gherkin is a language that can describe <strong>behavioural tests</strong> for software systems</p>
@@ -336,7 +336,7 @@ TaxCode -d-|&gt; CustomerID</p>
 </section><section>
 <h2 id="dsl-examples-pt-4">DSL Examples (pt. 4)</h2>
 <h3 id="vhdl-a-dsl-to-design-hardware-circuits">VHDL: a DSL to design hardware circuits</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>DFF : <span style="color:#080;font-weight:bold">process</span>(RST, CLK) <span style="color:#080;font-weight:bold">is</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>DFF : <span style="color:#080;font-weight:bold">process</span>(RST, CLK) <span style="color:#080;font-weight:bold">is</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">begin</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">if</span> RST = <span style="color:#d20;background-color:#fff0f0">'1'</span> <span style="color:#080;font-weight:bold">then</span>
 </span></span><span style="display:flex;"><span>Q &lt;= <span style="color:#d20;background-color:#fff0f0">'0'</span>;
@@ -592,7 +592,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 </ul>
 </section><section>
 <h2 id="example-of-internal-dsl-buildgradlekts">Example of internal DSL: <code>build.gradle.kts</code></h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>plugins {
 </span></span><span style="display:flex;"><span>    <span style="color:#a61717;background-color:#e3d2d2">`</span>java-library<span style="color:#a61717;background-color:#e3d2d2">`</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
@@ -928,7 +928,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 </li>
 <li>
 <p>Pretty self-explanatory:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>module <span style="color:#080;font-weight:bold">it</span>.unibo.spe.mdd.sheduler.GenerateSheduler
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>module <span style="color:#080;font-weight:bold">it</span>.unibo.spe.mdd.sheduler.GenerateSheduler
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.eclipse.xtext.xtext.generator.*</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">org.eclipse.xtext.xtext.generator.model.project.*</span>
@@ -974,7 +974,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 </ul>
 </section><section>
 <h2 id="lets-model-a-bit">Let’s model a bit</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>grammar it.<span style="color:#369">unibo</span>.<span style="color:#369">spe</span>.<span style="color:#369">mdd</span>.<span style="color:#369">sheduler</span>.<span style="color:#369">Sheduler</span> with org.<span style="color:#369">eclipse</span>.<span style="color:#369">xtext</span>.<span style="color:#369">common</span>.<span style="color:#369">Terminals</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>grammar it.<span style="color:#369">unibo</span>.<span style="color:#369">spe</span>.<span style="color:#369">mdd</span>.<span style="color:#369">sheduler</span>.<span style="color:#369">Sheduler</span> with org.<span style="color:#369">eclipse</span>.<span style="color:#369">xtext</span>.<span style="color:#369">common</span>.<span style="color:#369">Terminals</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>generate sheduler <span style="color:#d20;background-color:#fff0f0">"http://www.unibo.it/spe/mdd/sheduler/Sheduler"</span>
 </span></span><span style="display:flex;"><span>
@@ -990,7 +990,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 </span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">'in'</span> relative=RelativeTime |
 </span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">'at'</span> absolute=AbsoluteTime |
 </span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">'before'</span> before=[Task] |            <span style="color:#888">// square brackets denote references to other model elements
-</span></span></span><span style="display:flex;"><span><span style="color:#888"></span>            <span style="color:#d20;background-color:#fff0f0">'after'</span> after=[Task]
+</span></span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">'after'</span> after=[Task]
 </span></span><span style="display:flex;"><span>        )
 </span></span><span style="display:flex;"><span>        (<span style="color:#d20;background-color:#fff0f0">'repeat'</span> <span style="color:#d20;background-color:#fff0f0">'every'</span> period=RelativeTime)?
 </span></span><span style="display:flex;"><span>    <span style="color:#d20;background-color:#fff0f0">'}'</span>
@@ -1168,12 +1168,12 @@ RelativeTime *-- ClockTime
 </li>
 <li>
 <p>Content of the stub and validation rule example:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span><span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">it.unibo.spe.mdd.sheduler.validation</span>;<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">import</span><span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">it.unibo.spe.mdd.sheduler.sheduler.*</span>;<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">import</span><span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">org.eclipse.xtext.validation.Check</span>;<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">import</span><span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">org.eclipse.xtext.validation.CheckType</span>;<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span><span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">it.unibo.spe.mdd.sheduler.validation</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span><span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">it.unibo.spe.mdd.sheduler.sheduler.*</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span><span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">org.eclipse.xtext.validation.Check</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span><span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">org.eclipse.xtext.validation.CheckType</span>;<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerValidator</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">extends</span><span style="color:#bbb"> </span>AbstractShedulerValidator<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerValidator</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">extends</span><span style="color:#bbb"> </span>AbstractShedulerValidator<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#555">@Check</span>(CheckType.<span style="color:#369">FAST</span>)<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">ensureDateIsValid</span>(Date<span style="color:#bbb"> </span>date)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">if</span><span style="color:#bbb"> </span>(date.<span style="color:#369">getYear</span>()<span style="color:#bbb"> </span>&lt;<span style="color:#bbb"> </span>0)<span style="color:#bbb"> </span>{<span style="color:#bbb">
@@ -1186,7 +1186,7 @@ RelativeTime *-- ClockTime
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>error(<span style="color:#d20;background-color:#fff0f0">"Day must be between 1 and 31"</span>,<span style="color:#bbb"> </span>date,<span style="color:#bbb"> </span>ShedulerPackage.<span style="color:#369">Literals</span>.<span style="color:#369">DATE__DAY</span>,<span style="color:#bbb"> </span>0);<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span></code></pre></div><ul>
 <li>documentation here: <a href="https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation">https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation</a></li>
 </ul>
@@ -1280,12 +1280,12 @@ RelativeTime *-- ClockTime
 </li>
 <li>
 <p>Content of the stub and validation rule example:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerScopeProvider</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">extends</span><span style="color:#bbb"> </span>AbstractShedulerScopeProvider<span style="color:#bbb"> </span>{<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerScopeProvider</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">extends</span><span style="color:#bbb"> </span>AbstractShedulerScopeProvider<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#555">@Override</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span>IScope<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">getScope</span>(EObject<span style="color:#bbb"> </span>context,<span style="color:#bbb"> </span>EReference<span style="color:#bbb"> </span>reference)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">return</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">super</span>.<span style="color:#369">getScope</span>(context,<span style="color:#bbb"> </span>reference);<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span></code></pre></div><ul>
 <li>Documentation here: <a href="https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping">https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping</a></li>
 </ul>
@@ -1375,7 +1375,7 @@ RelativeTime *-- ClockTime
 
 <div class="multiCol">
     <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerRuntime</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerRuntime</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">final</span><span style="color:#bbb"> </span>ScheduledExecutorService<span style="color:#bbb"> </span>delegate;<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">ShedulerRuntime</span>(ScheduledExecutorService<span style="color:#bbb"> </span>delegate)<span style="color:#bbb"> </span>{<span style="color:#bbb">
@@ -1398,11 +1398,11 @@ RelativeTime *-- ClockTime
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>);<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerTask</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerTask</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">ShedulerTask</span>(String<span style="color:#bbb"> </span>name,<span style="color:#bbb"> </span>String<span style="color:#bbb"> </span>command,<span style="color:#bbb"> </span>String<span style="color:#bbb"> </span>entrypoint,<span style="color:#bbb"> </span>Duration<span style="color:#bbb"> </span>delay)<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#888">/*...*/</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span>String<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">getName</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#888">/*...*/</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
@@ -1433,7 +1433,7 @@ RelativeTime *-- ClockTime
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span>ShedulerTask<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">at</span>(String<span style="color:#bbb"> </span>name,<span style="color:#bbb"> </span>String<span style="color:#bbb"> </span>command,<span style="color:#bbb"> </span>String<span style="color:#bbb"> </span>entrypoint,<span style="color:#bbb"> </span>LocalDateTime<span style="color:#bbb"> </span>dateTime)<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#888">/*...*/</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span>ShedulerTask<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">at</span>(String<span style="color:#bbb"> </span>command,<span style="color:#bbb"> </span>String<span style="color:#bbb"> </span>entrypoint,<span style="color:#bbb"> </span>LocalDateTime<span style="color:#bbb"> </span>dateTime)<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#888">/*...*/</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>
 
@@ -1467,24 +1467,24 @@ pool otherPool {
 </code></pre>
 </div>
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">main</span>(String[]<span style="color:#bbb"> </span>args)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">main</span>(String[]<span style="color:#bbb"> </span>args)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>ShedulerRuntime<span style="color:#bbb"> </span>runtime<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>ShedulerRuntime(Executors.<span style="color:#369">newScheduledThreadPool</span>(1));<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>pool_myPool(runtime);<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>pool_otherPool(runtime);<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">pool_myPool</span>(ShedulerRuntime<span style="color:#bbb"> </span>runtime)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">pool_myPool</span>(ShedulerRuntime<span style="color:#bbb"> </span>runtime)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>ShedulerTask<span style="color:#bbb"> </span>task0<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>ShedulerTask.<span style="color:#369">in</span>(<span style="color:#d20;background-color:#fff0f0">"greetFrequently"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"echo hello"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"/bin/sh -c"</span>,<span style="color:#bbb"> </span>Duration.<span style="color:#369">parse</span>(<span style="color:#d20;background-color:#fff0f0">"PT5M"</span>));<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>task0.<span style="color:#369">setPeriodic</span>(Duration.<span style="color:#369">parse</span>(<span style="color:#d20;background-color:#fff0f0">"PT1H"</span>));<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>runtime.<span style="color:#369">schedule</span>(task0);<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>ShedulerTask<span style="color:#bbb"> </span>task1<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>ShedulerTask.<span style="color:#369">at</span>(<span style="color:#d20;background-color:#fff0f0">"greetOnce"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"echo hello"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"/bin/bash -c"</span>,<span style="color:#bbb"> </span>LocalDateTime.<span style="color:#369">parse</span>(<span style="color:#d20;background-color:#fff0f0">"2030-10-11T12:13"</span>));<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>runtime.<span style="color:#369">schedule</span>(task1);<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">pool_otherPool</span>(ShedulerRuntime<span style="color:#bbb"> </span>runtime)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">pool_otherPool</span>(ShedulerRuntime<span style="color:#bbb"> </span>runtime)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>ShedulerTask<span style="color:#bbb"> </span>task0<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>ShedulerTask.<span style="color:#369">in</span>(<span style="color:#d20;background-color:#fff0f0">"shutdownAfter1Day"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"sudo shutdown now"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"/bin/zsh -c"</span>,<span style="color:#bbb"> </span>Duration.<span style="color:#369">parse</span>(<span style="color:#d20;background-color:#fff0f0">"PT24H"</span>));<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>runtime.<span style="color:#369">schedule</span>(task0);<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>
 
@@ -1503,7 +1503,7 @@ pool otherPool {
 <p>The key part is generating the <em>main</em>, where components are assembled together</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerGenerator</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">extends</span><span style="color:#bbb"> </span>AbstractShedulerGenerator<span style="color:#bbb"> </span>{<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerGenerator</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">extends</span><span style="color:#bbb"> </span>AbstractShedulerGenerator<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#555">@Override</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">doGenerate</span>(Resource<span style="color:#bbb"> </span>resource,<span style="color:#bbb"> </span>IFileSystemAccess2<span style="color:#bbb"> </span>fsa,<span style="color:#bbb"> </span>IGeneratorContext<span style="color:#bbb"> </span>context)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>File<span style="color:#bbb"> </span>inputFile<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>File(resource.<span style="color:#369">getURI</span>().<span style="color:#369">toFileString</span>());<span style="color:#bbb">
@@ -1514,7 +1514,7 @@ pool otherPool {
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>fsa.<span style="color:#369">generateFile</span>(<span style="color:#d20;background-color:#fff0f0">"ShedulerTask.java"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"CODE HERE"</span>);<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>fsa.<span style="color:#369">generateFile</span>(<span style="color:#d20;background-color:#fff0f0">"ShedulerSystem_"</span><span style="color:#bbb"> </span>+<span style="color:#bbb"> </span>inputFileName<span style="color:#bbb"> </span>+<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">".java"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"CODE HERE"</span>);<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span></code></pre></div></section><section>
 <h2 id="exercise-4-write-an-interpreter-for-the-sheduler-dsl">Exercise 4: write an interpreter for the <code>Sheduler</code> DSL</h2>
 <ul>
@@ -1533,7 +1533,7 @@ pool otherPool {
 <p>The key part is writing the <code>main</code>:</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerInterpreter</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerInterpreter</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">main</span>(String[]<span style="color:#bbb"> </span>args)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">if</span><span style="color:#bbb"> </span>(args.<span style="color:#369">length</span><span style="color:#bbb"> </span>==<span style="color:#bbb"> </span>0)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>System.<span style="color:#369">err</span>.<span style="color:#369">println</span>(<span style="color:#d20;background-color:#fff0f0">"Aborting: no path to .shed file provided!"</span>);<span style="color:#bbb">
@@ -1564,7 +1564,7 @@ pool otherPool {
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span>ShedulerTask<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">toShedulerTask</span>(Task<span style="color:#bbb"> </span>task)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888">// TODO</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span></code></pre></div></section><section>
 <h2 id="exercise-5-support-for-task-dependencies">Exercise 5: support for task dependencies</h2>
 <ul>
@@ -1684,8 +1684,6 @@ pool otherPool {
   
 
   
-    
-  
   
 
   
@@ -1718,8 +1716,6 @@ pool otherPool {
   
   
 
-  
-    
   
   
 
