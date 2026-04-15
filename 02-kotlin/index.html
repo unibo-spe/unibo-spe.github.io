@@ -451,7 +451,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 <p>Kotlin is less permissive than Scala:</p>
 <ul>
 <li>Arbitrary symbols are not accepted as valid function names</li>
-<li>…unless you explicitly surround them with backtics</li>
+<li>…unless you explicitly surround them with backticks</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">def</span> ##<span style="color:#a61717;background-color:#e3d2d2">°</span>@??%&amp;@^^() <span style="color:#080;font-weight:bold">=</span> <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// Super ok for Scala: def $hash$hash$u00B0$at$qmark$qmark$percent$amp$at$up$up(): Int
 </span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">`##°@??%&amp;@^^`</span>() = <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// OK
@@ -582,7 +582,7 @@ The base version (without subject) is a more elegant “<code>if</code>/<code>el
 <li><code>new</code> is not a Kotlin keyword at all</li>
 </ul>
 </li>
-<li>Objecs get built from classes by just invoking the class name:</li>
+<li>Objects get built from classes by just invoking the class name:</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Foo</span>
 </span></span><span style="display:flex;"><span>Foo() <span style="color:#888">// a new Foo is created, no new keyword
@@ -1095,7 +1095,7 @@ This will turn useful in future…</p>
 </table>
 <ul>
 <li>Assignment functions <em>can be defined only if their arithmetic equivalent is undefined</em>.</li>
-<li>If an aritmetic operator <code>op</code> is defined, the compiler infers the assign version as:
+<li>If an arithmetic operator <code>op</code> is defined, the compiler infers the assign version as:
 <ul>
 <li><code>a op= b</code> $\Rightarrow$ <code>a = a op b</code></li>
 </ul>
@@ -1304,7 +1304,7 @@ Kotlin provides a <code>where</code> keyword to specify type bounds separately f
 <p>Kotlin supports (co/contro)variance using:</p>
 <ul>
 <li><code>&lt;out T&gt;</code> to mark covariance (similar to Java’s <code>&lt;? extends T&gt;</code>)</li>
-<li><code>&lt;in T&gt;</code> to mark controvariance (similar to Java’s <code>&lt;? super T&gt;</code>)</li>
+<li><code>&lt;in T&gt;</code> to mark contravariance (similar to Java’s <code>&lt;? super T&gt;</code>)</li>
 <li><code>&lt;*&gt;</code> to mark that only the bound is known for the type (similar to Java’s <code>&lt;?&gt;</code>)</li>
 </ul>
 <p>Type variant in Kotlin is expressed <em>at declaration site</em>!</p>
@@ -1537,7 +1537,7 @@ Delegation is often verbose and very mechanic in implementation</p>
 some delegates are built-in, e.g. <code>lazy</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">someLazyString</span> <span style="color:#080;font-weight:bold">by</span> lazy {
 </span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">"I'm initializing myself"</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#d20;background-color:#fff0f0">"I'm intialized"</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#d20;background-color:#fff0f0">"I'm initialized"</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>println(<span style="color:#d20;background-color:#fff0f0">"Doing stuff"</span>)
 </span></span><span style="display:flex;"><span>println(someLazyString) <span style="color:#888">// "I'm initializing myself" gets printed here
@@ -1784,7 +1784,7 @@ as such, their type can be legally expressed by:</p>
 </section><section>
 <h1 id="kotlin-202--functional-kotlin-11">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="extension-members-and-implicit-receivers">Extension members and implicit receivers</h2>
-<p>When extensions are defined as members, there are multiple <em>implicit recevers</em>:</p>
+<p>When extensions are defined as members, there are multiple <em>implicit receivers</em>:</p>
 <ol>
 <li><strong>dispatch receiver</strong>: the <code>object</code> or instance of the <code>class</code> in which the extension is declared</li>
 <li><strong>extension receiver</strong> the instance of the <em>receiver type</em> of the extension is called</li>
@@ -1890,7 +1890,7 @@ Used to cause side effects and returning the original object</p>
 <li>spread operator</li>
 <li>annotations</li>
 <li>coroutines</li>
-<li>interoperatibility with Java, Javscript, and C</li>
+<li>interoperability with Java, Javascript, and C</li>
 <li><code>value class</code>es</li>
 <li>context parameters</li>
 </ul>

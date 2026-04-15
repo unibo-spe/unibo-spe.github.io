@@ -369,8 +369,8 @@ this is not always the case (e.g., some components of ANTLR4…)</li>
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># We need this, because we want to work with paths relative to the executable.
 </span></span></span><span style="display:flex;"><span><span style="color:#038">file</span>(<span style="color:#d20;background-color:#fff0f0">COPY</span> ${<span style="color:#369">data</span>} <span style="color:#d20;background-color:#fff0f0">DESTINATION</span> <span style="color:#d20;background-color:#fff0f0">resources</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span></code></pre></div></section><section>
-<p>Depedency management, imperative:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># This defines the variables Boost_LIBRARIES that containts all library names
+<p>Dependency management, imperative:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># This defines the variables Boost_LIBRARIES that contains all library names
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># that we need to link into the program.
 </span></span></span><span style="display:flex;"><span><span style="color:#038">find_package</span>(<span style="color:#d20;background-color:#fff0f0">Boost</span> <span style="color:#d20;background-color:#fff0f0">1.36.0</span> <span style="color:#d20;background-color:#fff0f0">COMPONENTS</span> <span style="color:#d20;background-color:#fff0f0">filesystem</span> <span style="color:#d20;background-color:#fff0f0">system</span> <span style="color:#d20;background-color:#fff0f0">REQUIRED</span>)<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">
@@ -1457,7 +1457,7 @@ for gradle to mark it as an <em>input</em> or an <em>output</em>.</p>
 <ol>
 <li><strong>Performance</strong>
 <ul>
-<li>Gradle caches intermediate build results, using input and output markers to undersand whether or not some task is <em>up to date</em></li>
+<li>Gradle caches intermediate build results, using input and output markers to understand whether or not some task is <em>up to date</em></li>
 <li>This allows for <em>much</em> faster builds while working on large projects
 <ul>
 <li>Time to build completion can decrease a dozen minutes to seconds!</li>
@@ -2212,7 +2212,7 @@ We want to inject our plugin into the distribution:</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Uhmm…</p>
 <ul>
-<li>it’s still repetitive (can be furter factorized by bundling the kotest modules)</li>
+<li>it’s still repetitive (can be further factorized by bundling the kotest modules)</li>
 <li>the function and version could be included in <code>buildSrc</code></li>
 <li>custom solutions can be nice, but:
 <ol>
@@ -2305,13 +2305,13 @@ We want to inject our plugin into the distribution:</p>
 <li>In case of JVM or .NET projects the virtual machines we want to support</li>
 </ul>
 </li>
-<li>A <strong>built-time runtime</strong>
+<li>A <strong>build-time runtime</strong>
 <ul>
 <li>In case of Gradle, the JVM running the build system</li>
 </ul>
 </li>
 </ol>
-<p>These toolchains <em>should be controlled indipendently</em>!</p>
+<p>These toolchains <em>should be controlled independently</em>!</p>
 <p>You may want to use Java 17 to run Gradle, but compile in a Java 8-compatible bytecode, and then test on Java 11.</p>
 </section><section>
 <h2 id="gradle-and-the-toolchains">Gradle and the toolchains</h2>
@@ -2627,7 +2627,7 @@ If you do not have a signature yet, <a href="https://central.sonatype.org/pages/
 <ul>
 <li>Supports package <strong>retraction</strong> within *72-hours <em>if</em> there are <em>no dependents</em>, or after only if:
 <ul>
-<li>there are no dependents, fewer than 300 downloads last wee, and a single owner.</li>
+<li>there are no dependents, fewer than 300 downloads last week, and a single owner.</li>
 <li>retracted versions are banned</li>
 </ul>
 </li>
@@ -2858,8 +2858,6 @@ If you do not have a signature yet, <a href="https://central.sonatype.org/pages/
   
   
 
-  
-    
   
   
 

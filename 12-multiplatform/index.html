@@ -762,7 +762,7 @@ Ideally, the bigger the space the more <em>effort</em> is required to build the 
 <p>The abstraction gap is likely lower</p>
 </li>
 <li>
-<p>More third party libraries are likey available</p>
+<p>More third party libraries are likely available</p>
 </li>
 <li>
 <p>The potential audience is wider</p>
@@ -1003,7 +1003,7 @@ Ideally, the bigger the space the more <em>effort</em> is required to build the 
 <ul>
 <li>one “super-language” exists, having:
 <ol>
-<li>a code-generator targetting multiple platforms
+<li>a code-generator targeting multiple platforms
 <ul>
 <li>e.g. compiler, transpiler, etc.</li>
 </ul>
@@ -1365,7 +1365,7 @@ Ideally, the bigger the space the more <em>effort</em> is required to build the 
 <li>
 <p>which repositories should Gradle use when looking for dependencies</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>repositories { 
-</span></span><span style="display:flex;"><span>    mavenCentral() <span style="color:#888">// use MCR for downloading dependencies (recommneded)
+</span></span><span style="display:flex;"><span>    mavenCentral() <span style="color:#888">// use MCR for downloading dependencies (recommended)
 </span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// other custom repositories here (discouraged)
 </span></span></span><span style="display:flex;"><span>} 
@@ -1384,7 +1384,7 @@ Ideally, the bigger the space the more <em>effort</em> is required to build the 
 </span></span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// declares JavaScript as target
 </span></span></span><span style="display:flex;"><span>    js {
-</span></span><span style="display:flex;"><span>        useCommonJs() <span style="color:#888">// use CommonJS for JS depenencies management
+</span></span><span style="display:flex;"><span>        useCommonJs() <span style="color:#888">// use CommonJS for JS dependencies management
 </span></span></span><span style="display:flex;"><span>        <span style="color:#888">// or useEsModules() 
 </span></span></span><span style="display:flex;"><span>        binaries.executable() <span style="color:#888">// enables tasks for Node packages generation
 </span></span></span><span style="display:flex;"><span>        <span style="color:#888">// the target will consist of a Node project (with NodeJS's stdlib)
@@ -2830,7 +2830,7 @@ AbstractParser &lt;|-- StringParser
 <li>
 <p>The <code>jsMain</code> source set is compiled into either</p>
 <ul>
-<li>a Kotlin library (<code>.klib</code>), enabling imporing the project tas dependency in Kotlin/JS projects
+<li>a Kotlin library (<code>.klib</code>), enabling importing the project as dependency in Kotlin/JS projects
 <ul>
 <li>via the various <code>*Jar</code> or <code>assemble</code> tasks</li>
 </ul>
@@ -2905,7 +2905,7 @@ AbstractParser &lt;|-- StringParser
 </ul>
 </li>
 <li>
-<p>Understading the mapping among Kotlin and other languages is key</p>
+<p>Understanding the mapping among Kotlin and other languages is key</p>
 <ul>
 <li>it impacts the usability of Kotlin libraries for ordinary platform users</li>
 </ul>
@@ -4078,7 +4078,7 @@ AbstractParser &lt;|-- StringParser
 </span></span><span style="display:flex;"><span>header1 = jcsv.header(<span style="color:#d20;background-color:#fff0f0">"column1"</span>, <span style="color:#d20;background-color:#fff0f0">"column2"</span>, <span style="color:#d20;background-color:#fff0f0">"column3"</span>) 
 </span></span><span style="display:flex;"><span>header2 = jcsv.header(<span style="color:#00d;font-weight:bold">3</span>) <span style="color:#888"># anonymous header with 3 columns</span>
 </span></span><span style="display:flex;"><span>columns = (<span style="color:#d20;background-color:#fff0f0">f</span><span style="color:#d20;background-color:#fff0f0">"column</span><span style="color:#33b;background-color:#fff0f0">{</span>i<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">"</span> <span style="color:#080;font-weight:bold">for</span> i <span style="color:#080">in</span> <span style="color:#038">range</span>(<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">4</span>)) <span style="color:#888"># generator expression</span>
-</span></span><span style="display:flex;"><span>header3 = jcsv.header(columns) <span style="color:#888"># same as header1, but passing an interable</span>
+</span></span><span style="display:flex;"><span>header3 = jcsv.header(columns) <span style="color:#888"># same as header1, but passing an iterable</span>
 </span></span></code></pre></div></li>
 <li>
 <p>Function <code>iterable_or_varargs</code> aims at <em>simulating</em> <strong>multiple overloads</strong>:</p>
@@ -4479,11 +4479,7 @@ jdk4py==17.0.7.0
   
 
   
-  
-
-  
-  
-
+    
   
   
 
@@ -4511,6 +4507,14 @@ jdk4py==17.0.7.0
   
   
 
+  
+  
+
+  
+  
+
+  
+    
   
   
 

@@ -835,7 +835,7 @@ the alternative is to <em>install a private key in the runner</em></p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">using</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"composite"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">steps</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">run</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">'[[ -n "${{ inputs.token }}" ]] || false'</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Fail if the toke is unset<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Fail if the token is unset<span style="color:#bbb">
 </span></span></span></code></pre></div><ul>
 <li><del>No conditional steps (ouch…)</del>
 <ul>
@@ -960,7 +960,7 @@ the alternative is to <em>install a private key in the runner</em></p>
 <li><em>Nobody touches it</em> for months</li>
 <li>Untouched stuff is now <em>borked</em>!</li>
 </ol>
-<p>Ever happenend?</p>
+<p>Ever happened?</p>
 <ul>
 <li>Connected to the issue of <strong>build reproducibility</strong>
 <ul>
