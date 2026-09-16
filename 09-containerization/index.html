@@ -2382,7 +2382,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </li>
 </ol>
 </section><section>
-<h2 id="troubleshouting-example-on-windows">Troubleshouting example on Windows</h2>
+<h2 id="troubleshooting-example-on-windows">Troubleshooting example on Windows</h2>
 <h3 id="opening-ports-on-windows-defender">Opening ports on Windows Defender</h3>
 <p>On an administrator Powershell, run the following commands:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>netsh advfirewall firewall add rule name=<span style="color:#d20;background-color:#fff0f0">"Docker Swarm Intra-manager"</span> dir=<span style="color:#080;font-weight:bold">in</span> action=allow protocol=TCP localport=<span style="color:#00d;font-weight:bold">2377</span>
@@ -2427,7 +2427,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </ul>
 </li>
 <li>
-<p>Semantics of stack <em>deployment</em> on Swarms is <strong>different than Docker Compose</strong>:</p>
+<p>Semantics of stack <em>deployment</em> on Swarms is <strong>different from Docker Compose</strong>:</p>
 <ul>
 <li>different services may be <strong>allocated</strong> on different nodes</li>
 <li>services may be <strong>replicated</strong> on different nodes</li>
@@ -2521,10 +2521,10 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <figure><img src="/09-containerization/portainer-setup.png" width="50%">
 </figure>
 
-<p>let’s use <code>software-process-engineering</code> as password for the <code>admin</code> user</p>
+<p>let’s use <code>software-process-engineering</code> as the password for the <code>admin</code> user</p>
 </section><section>
 <h2 id="portainers-home-page">Portainer’s Home Page</h2>
-<p>Upon login, one is presented with the <em>home page</em>, asking you to select one <strong>environment</strong></p>
+<p>Upon login, you are presented with the <em>home page</em>, which asks you to select one <strong>environment</strong></p>
 <ul>
 <li><strong>environments</strong> are clusters (one Portainer instance may manage multiple clusters)</li>
 </ul>
