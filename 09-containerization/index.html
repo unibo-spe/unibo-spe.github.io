@@ -357,7 +357,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
     <figcaption></figcaption>
 </figure>
 
-<p>Containers provide <strong>runtime isolation</strong> <em>without</em> operating <strong>system replication</strong></p>
+<p>Containers provide <strong>runtime isolation</strong> <em>without</em> <strong>operating system replication</strong></p>
 </section><section>
 <h2 id="lightweight-virtual-machines">Lightweight virtual machines?</h2>
 <p><img src="https://raw.githubusercontent.com/DanySK/shared-slides/6824b93d3d52b841386a744f57953a73ccb67378/containerization/lightweight-container.jpg" alt=""></p>
@@ -391,7 +391,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <li>
 <p><strong>Infrastructure-as-a-service</strong> (IaaS) cloud technologies support deploying tasks on clusters, <em>as VM</em></p>
 <ul>
-<li>e.g. OpenStack, VSphere, etc.</li>
+<li>e.g. OpenStack, vSphere, etc.</li>
 </ul>
 </li>
 <li>
@@ -435,7 +435,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <p><strong>Containerisation</strong> $\approx$ the process of <em>encapsulating</em> an application into a <em>container</em></p>
 </li>
 <li>
-<p><strong>Orchestration</strong> $\approx$ the process of <em>deploying</em> one or more container onto <em>one or more</em> machines</p>
+<p><strong>Orchestration</strong> $\approx$ the process of <em>deploying</em> one or more containers onto <em>one or more</em> machines</p>
 </li>
 <li>
 <p><strong>Containerisation</strong> is a <em>pre-requisite</em> for <strong>orchestration</strong></p>
@@ -457,7 +457,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <li><strong>Layer</strong>: a single, cacheable, step in the creation of an image</li>
 <li><strong>Host</strong>: the machine hosting the containers</li>
 <li><strong>Registry</strong>: a repository of images (possibly external w.r.t. the host)</li>
-<li><strong>Network</strong>: a virtual network for connecting containers (among each others and with the host)</li>
+<li><strong>Network</strong>: a virtual network for connecting containers (with each other and with the host)</li>
 <li><strong>Volume</strong>: a bridge for letting containers share data with the host</li>
 <li><strong>Engine</strong> (a.k.a. <strong>daemon</strong>): the software running on the host, managing containers, images, volumes, layers, and networks</li>
 </ul>
@@ -466,7 +466,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <span class="fragment ">
   <h3 id="orchestration-level">Orchestration level</h3>
 <ul>
-<li><strong>Cluster</strong>: a set of machines, joint together by the same container orchestrator</li>
+<li><strong>Cluster</strong>: a set of machines joined together by the same container orchestrator</li>
 <li><strong>Node</strong>: a machine in the cluster (each one acting as a host, and running the container engine)</li>
 <li><strong>Service</strong>: a set of replicas of the same container</li>
 <li><strong>Stack</strong>: a set of inter-related services</li>
