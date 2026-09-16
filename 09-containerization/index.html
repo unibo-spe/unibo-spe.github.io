@@ -1191,7 +1191,7 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 </ul>
 </li>
 <li>
-<p>The main consequence is that the container will be assigned with the <strong>same IP address as the host</strong></p>
+<p>The main consequence is that the container will be assigned the <strong>same IP address as the host</strong></p>
 <ul>
 <li>the layer-4 ports used by the container are <strong>also busy</strong> for the host
 <ul>
@@ -1219,7 +1219,7 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 
 <ul>
 <li>
-<p><strong>Virtual network</strong> spanning through <em>one or more containers</em> on the <em>same host</em></p>
+<p><strong>Virtual network</strong> spanning <em>one or more containers</em> on the <em>same host</em></p>
 <ul>
 <li>containers attached to the <em>same</em> network can <strong>communicate</strong> with each other via <em>TCP/IP</em></li>
 <li>each container may be attached to <strong>multiple networks</strong>
@@ -1230,7 +1230,7 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 </ul>
 </li>
 <li>
-<p>Each container gets assigned with a <strong>private IP address</strong> on the network</p>
+<p>Each container gets assigned a <strong>private IP address</strong> on the network</p>
 <ul>
 <li>commonly in the range <code>172.x.y.z</code></li>
 <li>the IP address is contactable from the host</li>
@@ -1286,7 +1286,7 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 </ol>
 </section><section>
 <h2 id="bridge-network-pt-3">Bridge network (pt. 3)</h2>
-<p>Let’s create a non-trivial scenario with 2 container attached to the same network:</p>
+<p>Let’s create a non-trivial scenario with 2 containers attached to the same network:</p>
 <ol>
 <li>one container (host name: <code>dind</code>) will run the Docker daemon (Docker-in-Docker)</li>
 <li>the other container (host name: <code>cli</code>) will run the Docker CLI</li>
@@ -1346,8 +1346,8 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 <li>
 <p>let’s restart a Docker-in-Docker daemon, using the <code>docker</code> hostname:</p>
 <ul>
-<li><code>docker run --privileged -d --rm --network my-network --name dind --hostname docker:dind dockerd --host=tcp://0.0.0.0:2375</code></li>
-<li>in general, it would be better to both <code>--name X</code> and <code>--hostname X</code>
+<li><code>docker run --privileged -d --rm --network my-network --name dind --hostname docker docker:dind dockerd --host=tcp://0.0.0.0:2375</code></li>
+<li>in general, it would be better to specify both <code>--name X</code> and <code>--hostname X</code>
 <ul>
 <li>same name and hostname to avoid confusion!</li>
 </ul>
@@ -1399,11 +1399,11 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 <h2 id="exposing-ports-pt-2">Exposing ports (pt. 2)</h2>
 <ul>
 <li>
-<p>When <em>running</em> a Docker <em>container</em>, the exposed port can be mapped to host’s ports via <code>-P</code> option</p>
+<p>When <em>running</em> a Docker <em>container</em>, the exposed port can be mapped to the host’s ports via the <code>-P</code> option</p>
 <ul>
 <li>this would make any <code>EXPOSE</code>d port in the image mapped to some <em>random</em> port of the host</li>
 <li>e.g. <code>docker run -d --rm -P my-service; docker ps</code></li>
-<li>the actual port mapping you should run <code>docker ps</code></li>
+<li>to discover the actual port mapping, run <code>docker ps</code></li>
 </ul>
 <pre tabindex="0"><code>CONTAINER ID   IMAGE        COMMAND                  CREATED         STATUS         PORTS                                         NAMES
 b1470831b62b   my-service   "/bin/sh -c 'npm run…"   6 seconds ago   Up 5 seconds   0.0.0.0:32773-&gt;8080/tcp, :::32773-&gt;8080/tcp   sad_benz
@@ -1412,7 +1412,7 @@ b1470831b62b   my-service   "/bin/sh -c 'npm run…"   6 seconds ago   Up 5 seco
 <p>One may control the mapping of ports via the <code>-p &lt;host port&gt;:&lt;guest port&gt;</code> option</p>
 <ul>
 <li>e.g. <code>docker run -d --rm -p 8888:8080 my-service; docker ps</code></li>
-<li>this would map the container’s port <code>8080</code> to the host’s port <code>8080</code></li>
+<li>this would map the container’s port <code>8080</code> to the host’s port <code>8888</code></li>
 </ul>
 <pre tabindex="0"><code>CONTAINER ID   IMAGE        COMMAND                  CREATED         STATUS         PORTS                                       NAMES
 f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seconds   0.0.0.0:8888-&gt;8080/tcp, :::8888-&gt;8080/tcp   bold_booth
