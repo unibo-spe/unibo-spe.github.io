@@ -2691,7 +2691,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <p>the service is exposed on <strong>all master nodes</strong> in the Swarm</p>
 </li>
 <li>
-<p>so, the <code>wordpress</code> service above could be visited from several URL:</p>
+<p>so, the <code>wordpress</code> service above could be visited from several URLs:</p>
 <ul>
 <li><a href="http://storage1.stairwai.ce.almaai.unibo.it:8889">http://storage1.stairwai.ce.almaai.unibo.it:8889</a></li>
 <li><a href="http://inference1.stairwai.ce.almaai.unibo.it:8889">http://inference1.stairwai.ce.almaai.unibo.it:8889</a></li>
@@ -2709,7 +2709,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <h2 id="service-replication">Service replication</h2>
 <ul>
 <li>
-<p>Services may be <strong>replicated</strong> for the sake scalability / load-balancing / fault-tolerance, etc.</p>
+<p>Services may be <strong>replicated</strong> for the sake of scalability / load-balancing / fault-tolerance, etc.</p>
 </li>
 <li>
 <p>Two types of services:</p>
@@ -2739,8 +2739,8 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <ul>
 <li><code>N</code> replicas of the service will be deployed</li>
 <li>each one will be deployed on a <strong>manager node</strong> having the <code>mylabel</code> label set to <code>myvalue</code></li>
-<li>replicas will be evenly <em>spreaded</em> among the admissible nodes, possibly <em>evenly</em></li>
-<li>no more of <code>M</code> replicas will be put on the same node</li>
+<li>replicas will be <em>spread</em> among the admissible nodes, as evenly as possible</li>
+<li>no more than <code>M</code> replicas will be put on the same node</li>
 </ul>
 </li>
 </ul>
