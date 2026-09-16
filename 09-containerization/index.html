@@ -1681,7 +1681,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <h3 id="volumes-1">Volumes</h3>
 <p>From <a href="https://docs.docker.com/compose/compose-file/07-volumes/">Docker Compose documentation</a>:</p>
 <ul>
-<li>volumes in compose are no different than the ones we have already discussed</li>
+<li>volumes in compose are no different from the ones we have already discussed</li>
 <li>they are declared in the <code>volumes</code> section of the <code>docker-compose.yml</code> file</li>
 <li>one volume may be created <strong>stack-wise</strong> out of a <strong>local folder</strong> from the <em>host</em>…
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
@@ -1704,7 +1704,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span></code></pre></div></li>
 </ul>
 </section><section>
-<h2 id="orchestration-level-notions-pt-6-1">Orchestration-level notions (pt. 6)</h2>
+<h2 id="orchestration-level-notions-pt-7">Orchestration-level notions (pt. 7)</h2>
 <h3 id="volumes-contd">Volumes (cont’d)</h3>
 <ul>
 <li>
@@ -1715,7 +1715,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volume_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"the name used when creating the volume"</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888"># this may be different than volume_name</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888"># this may be different from volume_name</span><span style="color:#bbb">
 </span></span></span></code></pre></div></li>
 </ul>
 </li>
@@ -1735,18 +1735,18 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span></code></pre></div></li>
 </ul>
 </section><section>
-<h2 id="orchestration-level-notions-pt-7">Orchestration-level notions (pt. 7)</h2>
+<h2 id="orchestration-level-notions-pt-8">Orchestration-level notions (pt. 8)</h2>
 <h3 id="networks-1">Networks</h3>
 <p>From <a href="https://docs.docker.com/compose/compose-file/06-networks/">Docker Compose documentation</a>:</p>
 <ul>
 <li>
-<p>networks in compose are no different than the ones we have already discussed</p>
+<p>networks in compose are no different from the ones we have already discussed</p>
 </li>
 <li>
 <p>they are declared in the <code>networks</code> section of the <code>docker-compose.yml</code> file</p>
 </li>
 <li>
-<p>one network may be created <strong>stack-wise</strong> out of a <strong>local folder</strong> from the <em>host</em>…</p>
+<p>one network may be declared <strong>stack-wise</strong> in the stack file…</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">network_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver</span>:<span style="color:#bbb"> </span>overlay<span style="color:#bbb"> </span><span style="color:#888"># default choice in swarm</span><span style="color:#bbb">
@@ -1761,7 +1761,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">network_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"the name used when creating the network"</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888"># this may be different than network_name</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888"># this may be different from network_name</span><span style="color:#bbb">
 </span></span></span></code></pre></div></li>
 </ul>
 </li>
@@ -1789,7 +1789,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <li>interesting optional flags (see all with <code>--help</code>)
 <ul>
 <li><code>-d</code> (<em>detached mode</em>): run containers in the background</li>
-<li><code>--wait</code> wait for services to be running or healthy (implies detached mode)</li>
+<li><code>--wait</code> waits for services to be running or healthy (implies detached mode)</li>
 </ul>
 </li>
 </ul>
@@ -1801,8 +1801,8 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <li>if the stack is present, it is stopped</li>
 <li>interesting optional flags (see all with <code>--help</code>)
 <ul>
-<li><code>--remove-orphans</code> remove containers for services not defined in the Compose file (e.g. residuals from previous versions)</li>
-<li><code>-v</code> remove named volumes declared in the “volumes” section of the Compose file and anonymous volumes attached to containers</li>
+<li><code>--remove-orphans</code> removes containers for services not defined in the Compose file (e.g. residuals from previous versions)</li>
+<li><code>-v</code> removes named volumes declared in the “volumes” section of the Compose file and anonymous volumes attached to containers</li>
 </ul>
 </li>
 </ul>
@@ -1886,7 +1886,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <p>open your browser and browse to <a href="http://localhost:8000">http://localhost:8000</a></p>
 </li>
 <li>
-<p><code>docker ps</code> and have a look to the running containers</p>
+<p><code>docker ps</code> and have a look at the running containers</p>
 <ul>
 <li>and <code>docker network ls</code></li>
 <li>and <code>docker volume ls</code></li>
