@@ -170,11 +170,11 @@
 <li>e.g. GPUs for tasks requiring parallelism</li>
 <li>e.g. primary memory (RAM)</li>
 <li>e.g. large / quick storage (SSD, HDD, etc.)</li>
-<li>e.g. quick networks connection (e.g. optical fiber)</li>
+<li>e.g. fast network connections (e.g. optical fibre)</li>
 </ul>
 </li>
 <li>
-<p>specific <strong>operative systems</strong> (Linux, MacOS, Windows, etc.) or specific <strong>architectures</strong> (x86, ARM, etc.)</p>
+<p>specific <strong>operating systems</strong> (Linux, macOS, Windows, etc.) or specific <strong>architectures</strong> (x86, ARM, etc.)</p>
 </li>
 <li>
 <p>specific <strong>runtime platforms</strong> (e.g. JVM, Python, .NET etc.)</p>
@@ -256,7 +256,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <li>
 <p>VMH run <em>on/as</em> the <em>OS</em> of a bare-metal machine, <strong>abstracting</strong> HW and SW peculiarities away</p>
 <ul>
-<li>VM have <em>virtualised HW</em> and SW resources, different from the host’s ones</li>
+<li>VM have <em>virtualised HW</em> and SW resources, different from the host’s</li>
 </ul>
 </li>
 <li>
@@ -268,11 +268,11 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <li>
 <p>each VM runs <strong>its own OS</strong>, and may host multiple applications</p>
 <ul>
-<li>in the eyes of the user, the VM is <em>undistinguishable</em> from a bare-metal machine</li>
+<li>in the eyes of the user, the VM is <em>indistinguishable</em> from a bare-metal machine</li>
 </ul>
 </li>
 <li>
-<p>VM may be <em>paused</em>, <em>snapshot</em> (into file), <em>resumed</em>, and possibly <em>migrated</em></p>
+<p>VMs may be <em>paused</em>, <em>snapshotted</em> (into a file), <em>resumed</em>, and possibly <em>migrated</em></p>
 <ul>
 <li>snapshots are files containing the whole file-system of the VM</li>
 </ul>
@@ -292,7 +292,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <li>
 <p>Many industry-ready <strong>technologies</strong>:</p>
 <ul>
-<li>VMWare, VirtualBox, KVM, Xen, Hyper-V, QEMU, Proxmox, etc.</li>
+<li>VMware, VirtualBox, KVM, Xen, Hyper-V, QEMU, Proxmox, etc.</li>
 </ul>
 </li>
 </ul>
@@ -319,9 +319,9 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </ul>
 </li>
 <li>
-<p>each container is <em>instance</em> of an <strong>image</strong>, i.e. a <em>read-only template</em> containing deployment instructions</p>
+<p>each container is an <em>instance</em> of an <strong>image</strong>, i.e. a <em>read-only template</em> containing deployment instructions</p>
 <ul>
-<li>differences w.r.t. that image constitute the <em>state of the container</em> (these can be <em>snapshot</em> into file of minimal size)</li>
+<li>differences w.r.t. that image constitute the <em>state of the container</em> (these can be <em>snapshotted</em> into a file of minimal size)</li>
 </ul>
 </li>
 <li>
