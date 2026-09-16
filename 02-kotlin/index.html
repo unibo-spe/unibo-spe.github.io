@@ -1204,7 +1204,7 @@ This will come in handy later…</p>
 			<tr>
 					<td><code>x[y] = z</code></td>
 					<td style="text-align: center"><code>set</code></td>
-					<td><code>x.set(y) = z</code></td>
+					<td><code>x.set(y, z)</code></td>
 			</tr>
 			<tr>
 					<td><code>x(y, z)</code></td>
@@ -1233,7 +1233,7 @@ This will come in handy later…</p>
 			<tr>
 					<td><code>x[y, ..., z] = a</code></td>
 					<td style="text-align: center"><code>set</code></td>
-					<td><code>x.set(y, ..., z) = a</code></td>
+					<td><code>x.set(y, ..., z, a)</code></td>
 			</tr>
 			<tr>
 					<td><code>x(y, ..., z)</code></td>
@@ -1301,13 +1301,13 @@ Kotlin provides a <code>where</code> keyword to specify type bounds separately f
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-103--generics-3">Kotlin 103 – Generics</h1>
 <h2 id="variance-and-type-projection">Variance and type projection</h2>
-<p>Kotlin supports (co/contro)variance using:</p>
+<p>Kotlin supports (co/contra)variance using:</p>
 <ul>
 <li><code>&lt;out T&gt;</code> to mark covariance (similar to Java’s <code>&lt;? extends T&gt;</code>)</li>
 <li><code>&lt;in T&gt;</code> to mark contravariance (similar to Java’s <code>&lt;? super T&gt;</code>)</li>
 <li><code>&lt;*&gt;</code> to mark that only the bound is known for the type (similar to Java’s <code>&lt;?&gt;</code>)</li>
 </ul>
-<p>Type variant in Kotlin is expressed <em>at declaration site</em>!</p>
+<p>Type variance in Kotlin is expressed <em>at declaration site</em>!</p>
 <ul>
 <li>In Java type variance is only for methods</li>
 <li>In Kotlin type variance is only for classes and interfaces</li>
@@ -1321,21 +1321,21 @@ Kotlin provides a <code>where</code> keyword to specify type bounds separately f
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-103--generics-4">Kotlin 103 – Generics</h1>
 <h2 id="type-reification">Type reification</h2>
-<p>Generics at runtime can be dealt with two strategies:</p>
+<p>Generics at runtime can be handled with two strategies:</p>
 <ul>
 <li><strong>erasure</strong>: generic information is used by the compiler, but it’s discarded at runtime
 <ul>
 <li>Java / Scala</li>
 </ul>
 </li>
-<li><strong>monomorphization</strong>: concrete type are emitted when generic types are actually used
+<li><strong>monomorphization</strong>: concrete types are emitted when generic types are actually used
 <ul>
 <li>Rust / C#</li>
 </ul>
 </li>
 </ul>
 <p>Delicate balance between executable size, performance, and usability</p>
-<p>Kotlin uses erasure, but allows to control inlining via the <code>inline</code> keyword.
+<p>Kotlin uses erasure, but allows inlining to be controlled via the <code>inline</code> keyword.
 <br>
 In inlined functions, <em>types can be locally monomorphized</em>!
 <br>
