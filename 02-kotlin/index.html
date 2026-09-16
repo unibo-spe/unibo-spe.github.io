@@ -1350,8 +1350,8 @@ Local monomorphization is expressed with the <code>reified</code> keyword.</p>
 <ul>
 <li><code>inline</code> functions get inlined if the caller is Kotlin-compiled code,
 they don’t if they are called by other bytecode-targeting compilers (<code>javac</code>, <code>scalac</code>…)</li>
-<li><code>reified</code> types <em>requires</em> inlining to perform the local monorphization:
-the function code is <em>copied</em> on call site, and the compiler must know how to do it</li>
+<li><code>reified</code> types <em>require</em> inlining to perform the local monomorphization:
+the function code is <em>copied</em> at the call site, and the compiler must know how to do it</li>
 </ul>
 <p>$\Rightarrow$ Can’t be used if interoperability is a concern</p>
 <ul>
@@ -1392,11 +1392,11 @@ the function code is <em>copied</em> on call site, and the compiler must know ho
 </ul>
 <p><code>Pair</code> and <code>Triple</code> provided by the standard library
 <br>
-(<code>Tuple4</code>, <code>Tuple5</code>, and so on are not in standard library as opposed as Scala)</p>
+(<code>Tuple4</code>, <code>Tuple5</code>, and so on are not in the standard library, as opposed to Scala)</p>
 </section><section>
 <h1 id="kotlin-201--advanced-oop-1">Kotlin 201 – Advanced OOP</h1>
 <h2 id="destructuring-declarations">Destructuring declarations</h2>
-<p>If a class has <code>operator</code> functions named called <code>componentX</code> with <code>X</code> an integer from <code>1</code>,
+<p>If a class has <code>operator</code> functions named <code>componentX</code> with <code>X</code> an integer from <code>1</code>,
 they can be “destructured”.
 <br>
 This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
@@ -1423,7 +1423,7 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 <ul>
 <li><del><code>class</code>es, not supported for <code>interface</code>s</del> Supported since <a href="https://kotlinlang.org/docs/whatsnew15.html#sealed-interfaces">Kotlin 1.5.0</a></li>
 <li>subtypes must be defined inside the sealed class</li>
-<li>sealed hierarchies proved <em>exhaustive checking</em> inside <code>where</code> clauses</li>
+<li>sealed hierarchies provide <em>exhaustive checking</em> inside <code>when</code> clauses</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">sealed</span> <span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">Booze</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Rum</span> : Booze
@@ -1442,7 +1442,7 @@ This feature is <em>way</em> less powerful than Scala’s pattern matching.</p>
 <ul>
 <li>Nesting a class inside another does not allow access to outer members
 <ul>
-<li>It’s equivalent to a Java’s <code>static</code> inner class</li>
+<li>It’s equivalent to a Java <code>static</code> nested class</li>
 </ul>
 </li>
 <li>To create an inner class, the <code>inner</code> modifier must be explicit</li>
@@ -1506,12 +1506,12 @@ which means <code>A</code> should hold a reference of <code>B</code> and <em>exp
 <p><strong>Delegation</strong> is one of the mechanisms to implement composition,
 see the <a href="https://en.wikipedia.org/wiki/Delegation_pattern">delegation pattern</a>
 <br>
-Delegation is often verbose and very mechanic in implementation</p>
+Delegation is often verbose and very mechanical to implement</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">data</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Student</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">surname</span>: String, <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: String)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Exam</span> : MutableCollection&lt;Student&gt; {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">representation</span> = mutableListOf&lt;Student&gt;()
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">add</span>(e E) = representation.add(e)
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">addAll</span>(e E) = representation.addAll(e)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">add</span>(e: Student) = representation.add(e)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">addAll</span>(e: Collection&lt;Student&gt;) = representation.addAll(e)
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">clear</span>() = representation.clear()
 </span></span><span style="display:flex;"><span>    ... <span style="color:#888">// BOOOOOOORING
 </span></span></span><span style="display:flex;"><span>}
