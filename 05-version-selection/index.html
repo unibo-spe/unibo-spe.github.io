@@ -195,10 +195,10 @@ Both the words of the codename begin with the same letter.</p>
 <h1 id="versioning-in-the-real-world-2">Versioning in the real world</h1>
 <h2 id="wine-versioning">Wine versioning</h2>
 <p>Formerly a <em>pure date</em>, in ISO format without hyphens, e.g. <code>20040505</code>.</p>
-<p>The project <em>switched to a classic versioning</em> in form of <code>major.minor</code></p>
+<p>The project <em>switched to classic versioning</em> in the form <code>major.minor</code></p>
 <ul>
 <li>The change may give some headaches to dependency managers, since <code>20040505</code> is bigger than <code>3.9</code> and other subsequent versions.</li>
-<li>A <code>0.Date</code> format for initial development releases would have been advisable with hindsight</li>
+<li>A <code>0.Date</code> format for initial development releases would have been advisable in hindsight</li>
 </ul>
 </section><section>
 <h1 id="versioning-in-the-real-world-3">Versioning in the real world</h1>
@@ -214,8 +214,8 @@ Both the words of the codename begin with the same letter.</p>
 except that the final version numbers to be reported in the “banner” lines of the programs should become:
 <code>TeX, Version $\pi $</code> […].
 From that moment on, all “bugs” will be permanent “features”.
-<strong></strong></p><div style="text-align: right"><strong> Donald E. Knuth</strong><p></p>
-</div></blockquote>
+<strong></strong></p><div style="text-align: right"><strong>Donald E. Knuth</strong></div><p></p>
+</blockquote>
 </section><section>
 <h1 id="versioning-in-the-real-world-4">Versioning in the real world</h1>
 <h2 id="python-enhancement-proposal-440-pep440">Python Enhancement Proposal 440 (<a href="https://www.python.org/dev/peps/pep-0440/">PEP440</a>)</h2>
@@ -228,7 +228,7 @@ From that moment on, all “bugs” will be permanent “features”.
 <ul>
 <li>Epoch segment: <code>N!</code></li>
 <li><em>Mandatory</em> Release segment: <code>N(.N)*</code></li>
-<li>Pre-release segment: <code>{a|b|rc}</code></li>
+<li>Pre-release segment: <code>{a|b|rc}N</code></li>
 <li>Post-release segment: <code>.postN</code></li>
 <li>Development release segment: <code>.devN</code></li>
 </ul>
@@ -279,7 +279,7 @@ A bug fix is defined as an internal change that fixes incorrect behavior.</li>
 </li>
 <li>Major version <code>X</code> <strong>MUST</strong> be incremented if any <em>backwards incompatible changes</em> are introduced to the <em>public API</em>.
 <ul>
-<li>It <code>MAY</code> <em>include minor and patch level changes</em>.</li>
+<li>It <strong>MAY</strong> <em>include minor and patch level changes</em>.</li>
 <li>Patch and minor version <strong>MUST</strong> <em>be reset to 0</em> when major version is incremented.</li>
 </ul>
 </li>
@@ -314,7 +314,7 @@ The public API should not be considered stable.</li>
 <h2 id="the-importance-of-a-versioning-methodology">The importance of a versioning methodology</h2>
 <p><strong>Think</strong> <em>before</em> choosing a versioning schema, and then <strong>be consistent</strong></p>
 <ul>
-<li><em>Semantic versioning is warmly recommended</em>
+<li><em>Semantic versioning is strongly recommended</em>
 <ul>
 <li>Can be <em>integrated with the DVCS</em>!</li>
 <li>Dates can be added (e.g. in the pre-release or build-metadata sections)</li>
@@ -387,7 +387,7 @@ The public API should not be considered stable.</li>
 
 <span class="fragment ">
   <h3 id="idea">Idea</h3>
-<p>find a way to write <em>conventional</em> commit messages such that some automatic tool can understand whether a new version should be released</p>
+<p>Find a way to write <em>conventional</em> commit messages such that some automatic tool can understand whether a new version should be released</p>
 
 </span>
 
@@ -428,8 +428,8 @@ The public API should not be considered stable.</li>
 <li>Decide <em>which branch</em> should be looked at for triggering releases</li>
 <li>Define which <em>kind of release should be associated with which kind of commit</em>
 <ul>
-<li>Rules can be custom per-project, as far as they are consistent</li>
-<li>e.g., <code>fix</code> and <code>docs</code> are <code>PATCH</code>, <code>feat</code> are <code>MINOR</code>, <strong>Breaking changes</strong> are <code>MAJOR</code></li>
+<li>Rules can be custom per project, as long as they are consistent</li>
+<li>e.g., <code>fix</code> and <code>docs</code> are <code>PATCH</code>, <code>feat</code> is <code>MINOR</code>, <strong>Breaking changes</strong> are <code>MAJOR</code></li>
 <li>Usually the commit <em>type</em> is relied upon, but the <em>scope</em> may be used as well</li>
 </ul>
 </li>
