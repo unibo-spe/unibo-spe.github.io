@@ -1635,7 +1635,7 @@ No need for verbose interfaces such as <code>Function&lt;T, R&gt;</code>, <code>
 </span></span></span></code></pre></div></section><section>
 <h1 id="kotlin-202--functional-kotlin-2">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="function-references">Function references</h2>
-<p>Functions can be referred by using <code>::</code>
+<p>Functions can be referred to by using <code>::</code>
 <br>
 the left operand is the receiver (if present)
 <br>
@@ -1731,7 +1731,7 @@ They are allowed on <code>var</code>s as well as on <code>val</code>s</p>
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-202--functional-kotlin-8">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="extension-functions">Extension functions</h2>
-<p>Kotlin allows to extend any type capabilities from anywhere
+<p>Kotlin lets you extend the capabilities of any type from anywhere
 <br>
 via <strong>extension functions</strong></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">String</span>.containsBatman(): Boolean = <span style="color:#d20;background-color:#fff0f0">".*b.*a.*t.*m.*a.*n.*"</span>.toRegex().matches(<span style="color:#080;font-weight:bold">this</span>)
@@ -1765,8 +1765,8 @@ their behaviour is entirely specified by <code>get</code> and <code>set</code> a
 <br>
 as such, their type can be legally expressed by:</p>
 <ul>
-<li>prefixing the *receiver type</li>
-<li>following by a <code>.</code></li>
+<li>prefixing the <em>receiver type</em></li>
+<li>followed by a <code>.</code></li>
 <li>then list parameters and return types as for any function type literal</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Extension function taking an extension function as parameter
@@ -1787,9 +1787,9 @@ as such, their type can be legally expressed by:</p>
 <p>When extensions are defined as members, there are multiple <em>implicit receivers</em>:</p>
 <ol>
 <li><strong>dispatch receiver</strong>: the <code>object</code> or instance of the <code>class</code> in which the extension is declared</li>
-<li><strong>extension receiver</strong> the instance of the <em>receiver type</em> of the extension is called</li>
+<li><strong>extension receiver</strong>: the instance of the <em>receiver type</em> on which the extension is called</li>
 </ol>
-<p><em>Extension receivers have priority</em>, dispatch receivers access requires the <em>qualified <code>this</code></em> syntax
+<p><em>Extension receivers have priority</em>, accessing dispatch receivers requires the <em>qualified <code>this</code></em> syntax
 <br></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">Batman</span> { <span style="color:#888">// the Batman object is the dispatch receiver
 </span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">name</span> = <span style="color:#d20;background-color:#fff0f0">"Batman"</span>
@@ -1866,7 +1866,7 @@ the return type is the result of the function</p>
 but returns the context object
 <br>
 Used to cause side effects from a specific context,
-and returning the original object</p>
+and return the original object</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">1</span>.apply { println(<span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${this + 1}</span><span style="color:#d20;background-color:#fff0f0">1"</span>) } <span style="color:#888">// Prints 21, returns 1
 </span></span></span><span style="display:flex;"><span>mutableListOf&lt;Int&gt;().apply {
 </span></span><span style="display:flex;"><span>    addAll((<span style="color:#00d;font-weight:bold">1</span>..<span style="color:#00d;font-weight:bold">10</span>).toList())
@@ -1879,7 +1879,7 @@ and returning the original object</p>
 <br>
 the context object is bound to the first lambda parameter
 <br>
-Used to cause side effects and returning the original object</p>
+Used to cause side effects and return the original object</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">1</span>.also { println(<span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${it + 1}</span><span style="color:#d20;background-color:#fff0f0">1"</span>) } <span style="color:#888">// Prints 21, returns 1
 </span></span></span></code></pre></div></section><section>
 <h1 id="extra-content">Extra content</h1>
