@@ -2729,7 +2729,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.role == manager<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.mylabel=myvalue<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.mylabel==myvalue<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">preferences</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- <span style="color:#b06;font-weight:bold">spread</span>:<span style="color:#bbb"> </span>node.labels.mylabel<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">max_replicas_per_node</span>:<span style="color:#bbb"> </span>M     <span style="color:#bbb"> </span><span style="color:#888"># this should be a number!</span><span style="color:#bbb">
@@ -2769,7 +2769,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <ol start="2">
 <li>
 <p>Try to query it multiple times:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">while</span> true; <span style="color:#080;font-weight:bold">do</span>                                                                                                                                                                     INT ✘ 
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">while</span> true; <span style="color:#080;font-weight:bold">do</span>
 </span></span><span style="display:flex;"><span>    curl http://clusters.almaai.unibo.it:8890; 
 </span></span><span style="display:flex;"><span>    <span style="color:#038">echo</span> 
 </span></span><span style="display:flex;"><span>    sleep <span style="color:#00d;font-weight:bold">1</span>
@@ -2799,13 +2799,13 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <div class="col  ">
     <ol>
 <li>
-<p>Serval replicas of the same service are created:</p>
+<p>Several replicas of the same service are created:</p>
 <p><img src="./portainer-replicated-service.png" alt="Deployment with replicas"></p>
 </li>
 </ol>
 <br>
 <ol start="3">
-<li>Requests will be forwarded to replicas in a <strong>non-deterministc</strong> fashion</li>
+<li>Requests will be forwarded to replicas in a <strong>non-deterministic</strong> fashion</li>
 </ol>
 
 </div>
