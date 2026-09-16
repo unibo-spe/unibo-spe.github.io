@@ -53,12 +53,12 @@
 <h2 id="long-story-short">Long story short</h2>
 <p>Originally developed by Google,
 since its introduction in 2014,
-Kubernetes has grown to be on of the largest and most popular <em>open source</em> project in the world.</p>
+Kubernetes has grown to be one of the largest and most popular <em>open source</em> projects in the world.</p>
 <br>
 <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/3523_RC02/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"Docker Swarm","geo":"","time":"2015-01-01 2025-01-01"},{"keyword":"Kubernetes","geo":"","time":"2015-01-01 2025-01-01"}],"category":0,"property":""}, {"exploreQuery":"date=2015-01-01%202023-01-01&q=Docker%20Swarm,Kubernetes","guestPath":"https://trends.google.com:443/trends/embed/"}); </script>
 </section><section>
 <h2 id="long-story-short-1">Long story short</h2>
-<p>Built for <em>distributed systems</em> suitable for <em>cloud developers</em> of all scales,
+<p>Built for <em>distributed systems</em>, suitable for cloud deployments of all scales,
 it is meant to support <em>reliable</em> and <em>scalable</em> software systems.</p>
 
 
@@ -66,7 +66,7 @@ it is meant to support <em>reliable</em> and <em>scalable</em> software systems.
   <ul>
 <li><strong>Reliability</strong>: Services cannot fail, they must maintain <em>availability</em> even during software rollouts</li>
 <li><strong>Scalability</strong>: Services can adapt their capacity to keep up with the usage, without redesigning the distributed system. This includes both a <em>scale-up</em> and a <em>scale-down</em> of the service.</li>
-<li><strong>Distributed System</strong>: Pieces of software the service is composed of; they may run on different machines (connected to each-other), and may coordinate their behaviour through the network.</li>
+<li><strong>Distributed System</strong>: Pieces of software the service is composed of; they may run on different machines (connected to each other), and may coordinate their behaviour through the network.</li>
 </ul>
 
 </span>
@@ -76,7 +76,7 @@ it is meant to support <em>reliable</em> and <em>scalable</em> software systems.
 <ul>
 <li>Immutability</li>
 <li>Everything is a declarative configuration object</li>
-<li>Broader range of objects to create, and manage, the production environment with respect to Docker Swarm</li>
+<li>Broader range of objects to create and manage the production environment than Docker Swarm</li>
 <li>Automatic scaling of resources (horizontal, vertical, increasing and decreasing)</li>
 <li>Built-in monitoring</li>
 <li>Security</li>
@@ -87,12 +87,12 @@ it is meant to support <em>reliable</em> and <em>scalable</em> software systems.
 <ul>
 <li>Containers represent a declarative way to package and run applications</li>
 <li>Containers can be deployed anywhere</li>
-<li>They are meant to be stateless, thus changed at any time</li>
+<li>They are meant to be stateless, and can thus be changed at any time</li>
 </ul>
 <br>
 <p><strong>Why Docker Swarm is not enough?</strong></p>
 <p>Docker Swarm does not support large production deployments at scale,
-while Kubernetes natively support it.</p>
+while Kubernetes natively supports it.</p>
 </section><section>
 <h2 id="declarative-configuration-objects">Declarative configuration objects</h2>
 
@@ -100,10 +100,10 @@ while Kubernetes natively support it.</p>
     <div class="col  ">
     <h3 id="docker-swarm">Docker Swarm</h3>
 <ul>
-<li>makes use of the docker ecosystem:
+<li>makes use of the Docker ecosystem:
 <ul>
 <li>it does not support other container runtimes,</li>
-<li>relies on docker primitives to be used to manage the environment.</li>
+<li>relies on Docker primitives to manage the environment.</li>
 </ul>
 </li>
 <li>the environment is managed through the <code>docker-compose.yml</code> file.</li>
@@ -1293,8 +1293,6 @@ What we get (waiting a few minutes) is something like this:
   
 
   
-    
-  
   
 
   
@@ -1327,8 +1325,6 @@ What we get (waiting a few minutes) is something like this:
   
   
 
-  
-    
   
   
 
