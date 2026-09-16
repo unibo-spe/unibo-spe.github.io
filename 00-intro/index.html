@@ -91,11 +91,10 @@
 <p>On <a href="https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/526566">the course webpage</a></p>
 </section><section>
 <h1 id="organization">Organization</h1>
-<p>Lectures in lab with immediate hands-on.</p>
 <h2 id="timetable"><a href="https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/526566/orariolezioni">Timetable</a></h2>
 <ul>
-<li><strong>Thursday 11:00–14:00</strong> (3h) — Room 2.5</li>
-<li><strong>Friday 11:00–14:00</strong> (3h) — Lab 4.2</li>
+<li><strong>Thursday 10:00–13:00</strong> (3h) — Room 2.5</li>
+<li><strong>Friday 9:00–12:00</strong> (3h) — Lab 4.2</li>
 </ul>
 <p>Changes will be published on the forum</p>
 </section><section>
@@ -182,6 +181,131 @@ which acts as a commissioner.</p>
 </ul>
 <p>It is an opportunity to <em>learn by doing</em> in a context closer to the industry.</p>
 <p>Available project works will be posted on the course site on <a href="https://virtuale.unibo.it/">https://virtuale.unibo.it/</a></p>
+</section><section>
+<h1 id="final-project-quality-checklist">Final project quality checklist</h1>
+<p>It is warmly recommended to check out <a href="https://www.bestpractices.dev/en">https://www.bestpractices.dev/en</a>, applying first all the relevant items there.</p>
+
+<div class="multiCol">
+    <div class="col  ">
+    <h3 id="dvcs">DVCS</h3>
+<ul>
+<li>Adoption of a DVCS</li>
+<li>Consistently following some commit convention (e.g. <a href="https://www.conventionalcommits.org/">Conventional Commits</a>)</li>
+<li>Consistently following some branching/forking convention</li>
+<li>The branching convention is adequate to the team size and type</li>
+<li>Commits are consistent and coherent, i.e. only what should be committed together has been committed together</li>
+<li>reasonable, justified merging strategy</li>
+</ul>
+</div>
+<div class="col  ">
+    <h3 id="versioning">Versioning</h3>
+<ul>
+<li>Web API specifications (e.g. OpenAPI, <a href="https://swagger.io/">Swagger</a>), if any, are versioned</li>
+<li>Web servers routes (if any) are versioned</li>
+<li>Releases are versioned</li>
+<li>Version numbers are computed automatically</li>
+<li>Multiple releases exist</li>
+</ul>
+</div>
+
+</div>
+
+</section><section>
+<h1 id="final-project-quality-checklist-1">Final project quality checklist</h1>
+
+<div class="multiCol">
+    <div class="col  ">
+    <h3 id="project-structure">Project structure</h3>
+<ul>
+<li>The project dependencies are formally declared (incl. locking where reasonable)</li>
+<li>The project dependencies are updated automatically where possible</li>
+<li>The project directory includes build automation</li>
+<li>The build automation technology of choice is adequate for all the target platforms</li>
+<li>All repositories have a clear <code>README.md</code> file describing their purpose and content</li>
+</ul>
+<h3 id="licensing">Licensing</h3>
+<ul>
+<li>The project directory includes a LICENSE file, unless it is proprietary</li>
+<li>The choice of the licence is adequately motivated in the report</li>
+</ul>
+</div>
+<div class="col  ">
+    <h3 id="qa">QA</h3>
+<ul>
+<li>The code includes automatic tests</li>
+<li>The code includes unit tests</li>
+<li>The code includes integration tests</li>
+<li>The code includes end-to-end / system tests</li>
+<li>Integration or system tests exploit containerization (if applicable)</li>
+<li>Test code supports parallel runs (runs do not conflict with each other)</li>
+<li>Each test suite can be executed (in principle) even without CI/CD pipelines</li>
+<li>A procedure for the computation of test coverage is in place, and the final coverage is reported and commented</li>
+<li>Static analysis is in place</li>
+</ul>
+</div>
+
+</div>
+
+</section><section>
+<h1 id="final-project-quality-checklist-2">Final project quality checklist</h1>
+
+<div class="multiCol">
+    <div class="col  ">
+    <h3 id="devops">DevOps</h3>
+<ul>
+<li>CI/CD pipelines in place</li>
+<li>CI/CD matrices in place</li>
+<li>The entire test suite is executed in CI/CD</li>
+<li>Automatic release of software artifacts on target repositories (eg GitHub releases + artifact repositories for the target platforms)</li>
+<li>If the project accepts contributions from third parties, correct pipeline configuration for pull requests coming from external owners</li>
+</ul>
+</div>
+<div class="col  ">
+    <h3 id="domain-driven-design-ddd">Domain-driven Design (DDD)</h3>
+<ul>
+<li><strong>Domain</strong> and <strong>bounded contexts</strong> have been clearly identified</li>
+<li><strong>Entities</strong>, <strong>value-objects,</strong> and <strong>aggregate roots</strong> have been adequately modelled according to DDD</li>
+<li><strong>Repositories</strong> have been adequately modelled according to DDD</li>
+<li><strong>Services</strong> have been adequately modelled according to DDD</li>
+<li><strong>Factories</strong> have been adequately modelled according to DDD</li>
+<li>Exploitation of <strong>model-integrity</strong> patterns is adequately motivated</li>
+<li>The overall design of the system reflects the <a href="https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)">hexagonal architecture</a> (if applicable)</li>
+</ul>
+</div>
+
+</div>
+
+</section><section>
+<h1 id="final-project-quality-checklist-3">Final project quality checklist</h1>
+
+<div class="multiCol">
+    <div class="col  ">
+    <h3 id="requirements">Requirements</h3>
+<ul>
+<li><em>Requirements</em> are clearly captured, and categories (e.g. functional vs. non-functional)</li>
+<li><em>Scenarios</em> are clearly described via <strong>user stories</strong></li>
+<li>Definition of ‘done’ for each requirement</li>
+</ul>
+<h3 id="multi-platform">Multi-platform</h3>
+<ul>
+<li>The project involves &gt;= 2 target platforms</li>
+<li>The most dominant platform cannot be used for more than 75% of the overall project size</li>
+<li>The project is organized in such a way that code targeting different platforms is clearly partitioned</li>
+<li>Core domain entities spanning across multiple platforms are defined so to minimize code duplication, while enforcing design coherence</li>
+</ul>
+</div>
+<div class="col  ">
+    <h3 id="ai-exploitation">AI exploitation</h3>
+<ul>
+<li>The report clearly declares what GenAI has been used for and how (or that it was not used at all)</li>
+<li>Each repository has an AI-DECLARATION.md file compliant to the convention (<a href="https://ai-declaration.md/">https://ai-declaration.md/</a>)</li>
+<li>Each repository where GenAI was exploited via Agents as an AGENTS.md file compliant to the convention (<a href="https://agents.md/">https://agents.md/</a>)</li>
+<li>Skills possibly exploited by your agents are documented and motivated in the report</li>
+</ul>
+</div>
+
+</div>
+
 </section><section>
 <h1 id="software">Software</h1>
 <h2 id="required">Required</h2>
