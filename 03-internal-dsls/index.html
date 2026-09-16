@@ -237,7 +237,7 @@ we convey the meaning better by relying on a <code>typealias Attribute</code></l
 <p>We will now:</p>
 <ol>
 <li>Define the language entities</li>
-<li>Find out a way to nest them nicely</li>
+<li>Find a way to nest them nicely</li>
 </ol>
 <p><strong>Note:</strong> In this example we mix the language and model implementation.
 <br>
@@ -247,8 +247,8 @@ and then wrap it in a DSL (where mutability is mandatory)</p>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">html</span>(<span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute, <span style="color:#080;font-weight:bold">init</span>: <span style="color:#b06;font-weight:bold">HTML</span>.() -&gt; Unit): HTML = HTML(*attributes).apply(<span style="color:#080;font-weight:bold">init</span>)
 </span></span></code></pre></div><ul>
 <li>A top level function to access the DSL</li>
-<li>Mandatory parameter first (but with a <code>vararg</code> they are implicitly optional)</li>
-<li>Configuration function in form of function with receiver</li>
+<li>Mandatory parameters first (but with a <code>vararg</code> they are implicitly optional)</li>
+<li>Configuration function in the form of a function with receiver</li>
 <li>A <code>class</code> representing our entry point</li>
 </ul>
 </section><section>
@@ -319,14 +319,14 @@ making the code above equivalent to:</p>
 <p>Kotlin provides an annotation used to create scope-blocking annotations:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#555">@DslMarker</span> <span style="color:#888">// I'm defining an annotation that will prevent scope leaking
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">annotation</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HtmlTagMarker</span> <span style="color:#888">// I'm calling it HtmlTagMarker
-</span></span></span><span style="display:flex;"><span><span style="color:#555">@HtmlTagMarker</span> <span style="color:#888">// All entities whose this should not get called automatically get annotated
+</span></span></span><span style="display:flex;"><span><span style="color:#555">@HtmlTagMarker</span> <span style="color:#888">// All entities whose `this` should not be reachable from inner scopes get annotated
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">HTML</span>(<span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute = arrayOf()) : AbstractTag(<span style="color:#d20;background-color:#fff0f0">"html"</span>, *attributes) { ... }
 </span></span><span style="display:flex;"><span><span style="color:#555">@HtmlTagMarker</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Head</span> : AbstractTag(<span style="color:#d20;background-color:#fff0f0">"head"</span>) { ... }
 </span></span><span style="display:flex;"><span><span style="color:#555">@HtmlTagMarker</span> <span style="color:#888">// Annotating the common superclass suffices
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">TagWithText</span>(name: String, <span style="color:#080;font-weight:bold">vararg</span> attributes: Attribute) : AbstractTag(name, *attributes) { ... }
 </span></span></code></pre></div></section><section>
-<h1 id="kotlin-202--dsls">Kotlin 202 – DSLs</h1>
+<h1 id="kotlin-203--dsls-12">Kotlin 203 – DSLs</h1>
 <h2 id="preventing-scope-leaking">Preventing scope leaking</h2>
 <p>With the DslMarker:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>html {
@@ -344,7 +344,7 @@ making the code above equivalent to:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>html { head { <span style="color:#080;font-weight:bold">this</span><span style="color:#555">@html</span>.head { title { <span style="color:#080;font-weight:bold">this</span><span style="color:#555">@head</span>.title { } } } } } <span style="color:#888">// compiles
 </span></span></span></code></pre></div><p>But you must be <em>explicitly willing</em> to access an outer receiver</p>
 </section><section>
-<h1 id="kotlin-203--dsls-12">Kotlin 203 – DSLs</h1>
+<h1 id="kotlin-203--dsls-13">Kotlin 203 – DSLs</h1>
 <h2 id="summing-up">Summing up</h2>
 <ol>
 <li>First and foremost <strong>model the domain</strong>
@@ -359,7 +359,7 @@ making the code above equivalent to:</p>
 <li>Functions with receiver as configuration blocks</li>
 <li>Member extensions to control scope</li>
 <li>Reuse by inheritance</li>
-<li>Receiver “leakage” via annotations</li>
+<li>Prevent receiver “leakage” via annotations</li>
 </ul>
 </li>
 </ol>
