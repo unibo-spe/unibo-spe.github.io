@@ -131,7 +131,7 @@ while Kubernetes natively supports it.</p>
 </div>
 
 </section><section>
-<h3 id="an-example-of-existing-kubernetes-resources-types">An example of existing Kubernetes resources types</h3>
+<h3 id="an-example-of-existing-kubernetes-resource-types">An example of existing Kubernetes resource types</h3>
 <div class="custom">
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>NAME                              SHORTNAMES   API VERSION                            NAMESPACED   KIND                   
 </span></span><span style="display:flex;"><span>namespaces                        ns           v1                                     <span style="color:#038">false</span>        Namespace              
@@ -190,7 +190,7 @@ while Kubernetes natively supports it.</p>
 <li>Can scale up and down replicas of a resource,
 <ul>
 <li>both automatically and with a manual intervention,</li>
-<li>the automatic scaling can be configured on the observation of <em>metrics</em> (i.e. the usage of the CPU/Memory).</li>
+<li>the automatic scaling can be configured on the observation of <em>metrics</em> (e.g. CPU/memory usage).</li>
 </ul>
 </li>
 <li>The cluster can grow its capacity,
@@ -225,10 +225,10 @@ while Kubernetes natively supports it.</p>
 <div class="col  ">
     <h3 id="kubernetes">Kubernetes</h3>
 <ul>
-<li>A basic monitoring is provided built-in with the cluster,
+<li>Basic monitoring is built into the cluster,
 <ul>
-<li>is necessary to install the <code>Metrics Server</code> plugin to enable the monitoring,</li>
-<li>this comprehends the usage of the <em>CPU</em> and <em>Memory</em> of the cluster nodes and containers</li>
+<li>but it is necessary to install the <code>Metrics Server</code> plugin to enable it,</li>
+<li>this covers the usage of <em>CPU</em> and <em>memory</em> on the cluster nodes and containers</li>
 </ul>
 </li>
 <li>The monitoring can be extended using third-party tools,
@@ -244,7 +244,7 @@ while Kubernetes natively supports it.</p>
 </section><section>
 <h2 id="metrics-in-kubernetes">Metrics in Kubernetes</h2>
 <ul>
-<li><em>Metrics Registry</em> is the component of the Kubernetes’ Control Plane that exposes <strong>API</strong> to watch for cluster’s metrics.
+<li><em>Metrics Registry</em> is the component of the Kubernetes’ Control Plane that exposes an <strong>API</strong> for watching the cluster’s metrics.
 <ul>
 <li><em>Metrics Server</em> is the built-in implementation of this service</li>
 <li>there are external Metrics Servers which can be adopted instead of it.</li>
@@ -254,7 +254,7 @@ while Kubernetes natively supports it.</p>
 <ul>
 <li><strong>Resource Metrics</strong>: concerning <em>memory</em> and <em>cpu</em> of Kubernetes’ resource objects.</li>
 <li><strong>Custom Metrics</strong>: other information about Kubernetes’ resource objects.</li>
-<li><strong>External Metrics</strong>: metrics not related with Kubernetes’ resources (i.e. number of incoming HTTP requests)</li>
+<li><strong>External Metrics</strong>: metrics not related to Kubernetes resources (e.g. the number of incoming HTTP requests)</li>
 </ul>
 </li>
 </ul>
@@ -1293,11 +1293,7 @@ What we get (waiting a few minutes) is something like this:
   
 
   
-  
-
-  
-  
-
+    
   
   
 
@@ -1325,6 +1321,14 @@ What we get (waiting a few minutes) is something like this:
   
   
 
+  
+  
+
+  
+  
+
+  
+    
   
   
 
