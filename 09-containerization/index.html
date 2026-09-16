@@ -2255,12 +2255,12 @@ package "java sql" {
 <ul>
 <li>In a Docker Swarm cluster, there are two kinds of nodes:
 <ul>
-<li><strong>manager</strong> nodes, who coordinate the cluster by means of the <a href="https://docs.docker.com/engine/swarm/raft/">RAFT consensus protocol</a>
+<li><strong>manager</strong> nodes, which coordinate the cluster by means of the <a href="https://docs.docker.com/engine/swarm/raft/">RAFT consensus protocol</a>
 <ul>
 <li>they may also act as worker nodes</li>
 </ul>
 </li>
-<li><strong>worker</strong> nodes, who simply run containers</li>
+<li><strong>worker</strong> nodes, which simply run containers</li>
 </ul>
 </li>
 </ul>
@@ -2277,7 +2277,7 @@ package "java sql" {
 <li>optionally, <strong>elevate</strong> some worker nodes to manager nodes
 <ul>
 <li>this operation can <em>only</em> be done by a client connected to some <em>manager</em> node</li>
-<li>it is better to <strong>multiple</strong> manager nodes for redundancy</li>
+<li>it is better to have <strong>multiple</strong> manager nodes for redundancy</li>
 <li>it is better to have an <strong>odd</strong> number of manager nodes
 <ul>
 <li>e.g. 3, 5, 7, etc.</li>
@@ -2333,7 +2333,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <li>
 <p>Whenever done with this lecture, one may leave the Swarm via <code>docker swarm leave --force</code></p>
 <ul>
-<li><em>recall to do this after the lecture</em>, otherwise you won’t be able to use Swarm at home!</li>
+<li><em>remember to do this after the lecture</em>, otherwise you won’t be able to use Swarm at home!</li>
 </ul>
 </li>
 </ol>
@@ -2347,10 +2347,10 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <li>e.g. Windows Defender, the lab’s firewall, your home router’s firewall, etc.</li>
 <li>you may notice the presence of a firewall by the fact that <code>docker swarm join</code> hangs or fails with a timeout
 <ul>
-<li>in lack of a firewall, the command should succeed or fail almost immediately</li>
+<li>in the absence of a firewall, the command should succeed or fail almost immediately</li>
 </ul>
 </li>
-<li>troubleshouting:
+<li>troubleshooting:
 <ol>
 <li>identify which and how many firewalls are in place</li>
 <li>ensure that the firewall allows communication for <a href="https://docs.docker.com/engine/swarm/swarm-tutorial/#open-protocols-and-ports-between-the-hosts">Docker Swarm ports</a>
@@ -2365,9 +2365,9 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <li>
 <p>You use Docker on <em>Windows or Mac</em>, hence the Docker daemon runs on a <em>virtual machine</em></p>
 <ul>
-<li>in this chase the IP of the virtual machine is different than the IP of your machine</li>
+<li>in this case the IP of the virtual machine is different from the IP of your machine</li>
 <li>the <code>NODE_ADDRESS</code> in <code>docker swarm join --token &lt;SECRET_TOKEN&gt; &lt;NODE_ADDRESS&gt;:2377</code> returned by <code>docker swarm init</code> is the IP of the virtual machine</li>
-<li>troubleshouting:
+<li>troubleshooting:
 <ol>
 <li>find the actual IP of your machine (e.g. <code>ipconfig</code> on Windows, <code>ifconfig</code> on Mac), let’s call it <code>ACTUAL_IP</code></li>
 <li>configure your host to redirect Swarm traffic received by <code>ACTUAL_IP</code> towards <code>NODE_ADDRESS</code>
@@ -2375,7 +2375,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <li>for all ports listed above (<code>2377</code>, <code>7946</code>, <code>4789</code>)</li>
 </ul>
 </li>
-<li>let other nodes use <code>ACTUAL_IP</code> insteaf of <code>NODE_ADDRESS</code> in <code>docker swarm join</code> when joining the cluster</li>
+<li>let other nodes use <code>ACTUAL_IP</code> instead of <code>NODE_ADDRESS</code> in <code>docker swarm join</code> when joining the cluster</li>
 </ol>
 </li>
 </ul>
