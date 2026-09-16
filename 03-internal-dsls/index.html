@@ -72,10 +72,10 @@ which in turn requires a <strong>deep understanding of the domain</strong></p>
 </section><section>
 <h1 id="kotlin-203--dsls">Kotlin 203 – DSLs</h1>
 <h2 id="aka-type-safe-builders">a.k.a. Type safe builders</h2>
-<p>Domain-specific languages require, as first step, to have a <strong>domain model</strong>.
+<p>Domain-specific languages require a <strong>domain model</strong> as a first step.
 <br>
 Once the domain entities are available,
-they will be elegantly instanced via DSL.
+they will be elegantly instantiated via the DSL.
 <br>
 The business logic will then be bound to the domain model inextricably.</p>
 <p>The domain is better modelled with <code>interface</code>s,
@@ -176,7 +176,7 @@ whose implementations are manipulated by an infrastructure exposing the DSL</p>
 <li>Let’s pick a <code>String</code> as indentation</li>
 <li>The abstract domain uses a map to define attributes,
 but working with <code>Pair</code>s is not very clean:
-we convey a better meaning to what we are doing by relying on a <code>typealias Attribute</code></li>
+we convey the meaning better by relying on a <code>typealias Attribute</code></li>
 <li><code>TextElement</code> is trivial to implement, it’s just text</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">INDENT</span> = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#04d;background-color:#fff0f0">\t</span><span style="color:#d20;background-color:#fff0f0">"</span> <span style="color:#888">// Compile time constant
@@ -185,11 +185,11 @@ we convey a better meaning to what we are doing by relying on a <code>typealias 
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-203--dsls-5">Kotlin 203 – DSLs</h1>
 <h2 id="domain-implementation-tag">Domain implementation: <code>Tag</code></h2>
-<p><code>Tag</code> is a bit more complex, let’s try to factor the common part of all <code>Tag</code>s into an <code>AbtractTag</code></p>
+<p><code>Tag</code> is a bit more complex, let’s try to factor the common part of all <code>Tag</code>s into an <code>AbstractTag</code></p>
 <ul>
 <li><code>name</code> is easy</li>
 <li><code>Attribute</code>s get registered at creation time. We use a <code>vararg</code> to make the construction nicer</li>
-<li>We decide for a mutable implementation of <code>children</code></li>
+<li>We opt for a mutable implementation of <code>children</code></li>
 <li>Subclasses are allowed to <code>register</code> sub elements
 <ul>
 <li>We can check if an element is <code>Repeatable</code> or not</li>
