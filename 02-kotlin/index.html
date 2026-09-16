@@ -426,7 +426,7 @@ Consider the following Scala code:</p>
 <h2 id="packages-and-imports">Packages and imports</h2>
 <p>Same as Java, plus aliasing.
 <br>
-Imports go at the top of file, no locally scoped imports as in Scala</p>
+Imports go at the top of the file, no locally scoped imports as in Scala</p>
 <ul>
 <li>There are no <code>implicit</code>s in Kotlin, the <code>import</code> statement does not modify context</li>
 </ul>
@@ -438,7 +438,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 <h2 id="varargs">Varargs</h2>
 <p>Functions can have a parameter marked as <code>vararg</code>, accepting multiple entries</p>
 <ul>
-<li>Typically the last one (but not mandatorily as in Java)</li>
+<li>Typically the last one (but, unlike in Java, not necessarily)</li>
 <li>Maps to an <code>Array&lt;out T&gt;</code></li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">printall</span>(<span style="color:#080;font-weight:bold">vararg</span> strings: String) {
@@ -459,7 +459,7 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">`val`</span> = <span style="color:#d20;background-color:#fff0f0">"Hey look I can name things with keywords!"</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">`names can also contain spaces`</span> = <span style="color:#00d;font-weight:bold">1</span>
 </span></span></code></pre></div><ul>
-<li>General rule: <strong>avoid it</strong>, but in tests</li>
+<li>General rule: <strong>avoid it</strong>, except in tests</li>
 <li>It might be needed for interoperability with other languages, e.g. if a Java field is named <code>val</code></li>
 <li>Tests using kotlin.test can use them:</li>
 </ul>
@@ -511,13 +511,13 @@ Imports go at the top of file, no locally scoped imports as in Scala</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">draw</span> = <span style="color:#b06;font-weight:bold">Random</span>.nextInt(lucky + <span style="color:#00d;font-weight:bold">1</span>)
 </span></span><span style="display:flex;"><span>    attempts++
 </span></span><span style="display:flex;"><span>} <span style="color:#080;font-weight:bold">while</span> (draw != lucky) <span style="color:#888">// draw is visible here
-</span></span></span><span style="display:flex;"><span>println(<span style="color:#d20;background-color:#fff0f0">"Launched </span><span style="color:#33b;background-color:#fff0f0">$attempts</span><span style="color:#d20;background-color:#fff0f0"> dice before a lucky shot"</span>)
+</span></span></span><span style="display:flex;"><span>println(<span style="color:#d20;background-color:#fff0f0">"Rolled </span><span style="color:#33b;background-color:#fff0f0">$attempts</span><span style="color:#d20;background-color:#fff0f0"> dice before a lucky shot"</span>)
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-101--flow-control-3">Kotlin 101 – Flow control</h1>
 <h3 id="when"><code>when</code></h3>
 <p>Kotlin <em>does not support pattern matching</em> as Scala does (unfortunately)
 <br>
-The <code>when</code> block is somewhat a mild surrogate, more similar to a <code>switch</code> on steroids
+The <code>when</code> block is somewhat of a mild substitute, more similar to a <code>switch</code> on steroids
 <br>
 The base version (without subject) is a more elegant “<code>if</code>/<code>else if</code>/<code>else</code>” chain</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">countBatmans</span>(subject: String) = <span style="color:#080;font-weight:bold">when</span> {
@@ -531,7 +531,7 @@ The base version (without subject) is a more elegant “<code>if</code>/<code>el
 </section><section>
 <h1 id="kotlin-101--flow-control-4">Kotlin 101 – Flow control</h1>
 <h3 id="when-subject"><code>when (subject)</code></h3>
-<p>Checks if the value of subjects is the same of the expression on the right</p>
+<p>Checks whether the value of the subject is the same as the expression on the right</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">baseForSingleDigitOrNull</span>(digit: UInt) = <span style="color:#080;font-weight:bold">when</span>(digit) {
 </span></span><span style="display:flex;"><span>    <span style="color:#00d;font-weight:bold">0u</span>, <span style="color:#00d;font-weight:bold">1u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">"binary"</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#00d;font-weight:bold">2u</span> -&gt; <span style="color:#d20;background-color:#fff0f0">"ternary"</span>
@@ -639,7 +639,7 @@ The base version (without subject) is a more elegant “<code>if</code>/<code>el
 <li><em>fields</em> <strong>are</strong> the object’s state</li>
 <li><em>properties</em> are a way to <strong>access/change</strong> the object’s state</li>
 </ul>
-<p>It’s considered a good practice in languages without properties (Java in particular) to hide (<em>incapsulate</em>) fields (Object’s actual state)
+<p>It’s considered a good practice in languages without properties (Java in particular) to hide (<em>encapsulate</em>) fields (Object’s actual state)
 and provide access only via <code>get</code>/<code>set</code> methods: the actual state representation may change with no change to the API.</p>
 <p>In Kotlin, fields are entirely hidden, and cannot be exposed in any way, enforcing the aforementioned convention at the language level.</p>
 </section><section>
@@ -650,7 +650,7 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#080;font-weight:bold">null</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">bazLength</span>: Int <span style="color:#888">// Property with no "backing field"
 </span></span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">get</span>() = baz?.length ?: <span style="color:#00d;font-weight:bold">0</span> <span style="color:#888">// As its value will be computed every time
-</span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">stringRepresentation</span>: String = <span style="color:#d20;background-color:#fff0f0">""</span> <span style="color:#888">// Backing fields is generated
+</span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">stringRepresentation</span>: String = <span style="color:#d20;background-color:#fff0f0">""</span> <span style="color:#888">// Backing field is generated
 </span></span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">get</span>() = baz ?: <span style="color:#080;font-weight:bold">field</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">set</span>(<span style="color:#080;font-weight:bold">value</span>) {
 </span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">field</span> = <span style="color:#d20;background-color:#fff0f0">"custom: </span><span style="color:#33b;background-color:#fff0f0">$value</span><span style="color:#d20;background-color:#fff0f0">"</span> <span style="color:#888">// Access to backing field via `field` keyword
@@ -741,7 +741,7 @@ and provide access only via <code>get</code>/<code>set</code> methods: the actua
 </span></span></code></pre></div></section><section>
 <h1 id="kotlin-102--oop-8">Kotlin 102 – OOP</h1>
 <h2 id="superclass-disambiguation">Superclass disambiguation</h2>
-<p>A call to <code>super</code> can be qualified to disambiguate between conflincting interface declarations:</p>
+<p>A call to <code>super</code> can be qualified to disambiguate between conflicting interface declarations:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">A</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() = <span style="color:#d20;background-color:#fff0f0">"foo"</span>
 </span></span><span style="display:flex;"><span>}
@@ -788,7 +788,7 @@ Primary constructor code (if any) must be in an <code>init</code> block</p>
 <h1 id="kotlin-102--oop-11">Kotlin 102 – OOP</h1>
 <h2 id="nullability-and-lateinit">Nullability and <code>lateinit</code></h2>
 <p>It is possible that some <code>var</code> property needs to get initialized after the object construction:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span>: Father)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span>: Father)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Father</span>(<span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">son</span>: Son) <span style="color:#888">// Impossible to build either
 </span></span></span></code></pre></div><p>Solution 1: allow nullability (<strong>BAD</strong>)</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span>: Father)
@@ -797,7 +797,7 @@ Primary constructor code (if any) must be in an <code>init</code> block</p>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">son</span> = Son(father)
 </span></span><span style="display:flex;"><span>father.son = son
 </span></span><span style="display:flex;"><span>father.son.father <span style="color:#888">// error, needs ?.
-</span></span></span></code></pre></div><p>Solution 2: take responsibility from the compiler (<em>less bad</em>)</p>
+</span></span></span></code></pre></div><p>Solution 2: take responsibility away from the compiler (<em>less bad</em>)</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Son</span>(<span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span>: Father)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Father</span> { <span style="color:#080;font-weight:bold">lateinit</span> <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">son</span>: Son } <span style="color:#888">// lateinit: I will initialize it later, stay cool
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">father</span> = Father()
@@ -869,7 +869,7 @@ In Scala</p>
 </section><section>
 <h1 id="kotlin-102--oop-16">Kotlin 102 – OOP</h1>
 <h2 id="visibility-control">Visibility control</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Visibility</span> <span style="color:#080;font-weight:bold">internal</span> <span style="color:#080;font-weight:bold">constructor</span>( <span style="color:#888">// constructor is required to apply visibility restrictionss
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Visibility</span> <span style="color:#080;font-weight:bold">internal</span> <span style="color:#080;font-weight:bold">constructor</span>( <span style="color:#888">// constructor is required to apply visibility restrictions
 </span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">id</span>: Int <span style="color:#888">// Same as Scala
 </span></span></span><span style="display:flex;"><span>) {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">protected</span> <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">state</span> = <span style="color:#00d;font-weight:bold">0</span>
