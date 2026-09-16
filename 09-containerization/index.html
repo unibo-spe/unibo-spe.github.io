@@ -1629,10 +1629,10 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <p><strong>secrets</strong> are configs containing sensitive data that should be <em>kept secret</em></p>
 </li>
 <li>
-<p>put it simply, Docker makes it harder to inspect the content of secrets both on the host</p>
+<p>put simply, Docker makes it harder to inspect the content of secrets, both on the host and inside the container</p>
 </li>
 <li>
-<p>one secret may be either be created <strong>stack-wise</strong> out of a <strong>local file</strong> or an <strong>environment variable</strong> from the <em>host</em>…</p>
+<p>one secret may either be created <strong>stack-wise</strong> out of a <strong>local file</strong> or an <strong>environment variable</strong> from the <em>host</em>…</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">                                            </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secret_name</span>:<span style="color:#bbb">                                        </span><span style="color:#b06;font-weight:bold">secret_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"/path/to/secret/on/the/host"</span><span style="color:#bbb">                 </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"NAME_OF_THE_VARIABLE_ON_THE_HOST"</span><span style="color:#bbb">
@@ -1645,7 +1645,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secret_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"the name used when creating the secret"</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888"># this may be different than secret_name</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888"># this may be different from secret_name</span><span style="color:#bbb">
 </span></span></span></code></pre></div></li>
 </ul>
 </li>
@@ -1663,7 +1663,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span></code></pre></div></li>
 </ul>
 </section><section>
-<h2 id="orchestration-level-notions-pt-4-1">Orchestration-level notions (pt. 4)</h2>
+<h2 id="orchestration-level-notions-pt-5">Orchestration-level notions (pt. 5)</h2>
 <h3 id="about-secrets-and-configs">About secrets and configs</h3>
 <p>Important remark:</p>
 <ul>
@@ -1677,7 +1677,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </li>
 </ul>
 </section><section>
-<h2 id="orchestration-level-notions-pt-5">Orchestration-level notions (pt. 5)</h2>
+<h2 id="orchestration-level-notions-pt-6">Orchestration-level notions (pt. 6)</h2>
 <h3 id="volumes-1">Volumes</h3>
 <p>From <a href="https://docs.docker.com/compose/compose-file/07-volumes/">Docker Compose documentation</a>:</p>
 <ul>
@@ -1704,7 +1704,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span></code></pre></div></li>
 </ul>
 </section><section>
-<h2 id="orchestration-level-notions-pt-6">Orchestration-level notions (pt. 6)</h2>
+<h2 id="orchestration-level-notions-pt-6-1">Orchestration-level notions (pt. 6)</h2>
 <h3 id="volumes-contd">Volumes (cont’d)</h3>
 <ul>
 <li>
