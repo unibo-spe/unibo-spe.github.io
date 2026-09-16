@@ -705,10 +705,10 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <p>Image naming is done via <strong>tags</strong></p>
 <ul>
 <li>
-<p>The easiest way to do so is assigning tags at <em>build time</em> with the <code>-t</code> options of <code>docker build</code></p>
+<p>The easiest way to do so is assigning tags at <em>build time</em> with the <code>-t</code> option of <code>docker build</code></p>
 </li>
 <li>
-<p>The option can be repeated multiple times to make multiple tags</p>
+<p>The option can be repeated to assign multiple tags</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>docker build -t <span style="color:#d20;background-color:#fff0f0">"myImage:latest"</span> -t <span style="color:#d20;background-color:#fff0f0">"myImage:0.1.0"</span> /path/to/Dockerfile/container
 </span></span></code></pre></div></li>
 <li>
@@ -752,7 +752,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <h2 id="building-docker-images-in-ci">Building Docker images in CI</h2>
 <ul>
 <li>
-<p>Of course, as any other software, <em>custom docker images should get built in CI</em></p>
+<p>Of course, like any other software, <em>custom docker images should get built in CI</em></p>
 </li>
 <li>
 <p>Several integrators use <em>containers</em> as <strong>build environments</strong>:</p>
@@ -761,7 +761,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </ul>
 </li>
 <li>
-<p>More in general: there is <em>no inherent limit to nesting containers</em></p>
+<p>More generally: there is <em>no inherent limit to nesting containers</em></p>
 </li>
 <li>
 <p>For instance:</p>
@@ -775,7 +775,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <h2 id="volumes">Volumes</h2>
 <p>Volumes are <em>bridges</em> between the <em>host’s</em> <strong>file system</strong> and the <em>container’s</em> one</p>
 <br>
-<p>Their support several use cases:</p>
+<p>They support several use cases:</p>
 <ul>
 <li><strong>sharing</strong> data between the host and the container</li>
 <li><strong>persisting</strong> containers’ data</li>
@@ -805,7 +805,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <h2 id="sorts-of-volumes-pt-2">Sorts of volumes (pt. 2)</h2>
 <p><img src="./volume-types-named.png" alt=""></p>
 <ul>
-<li><strong>Named volume</strong>: virtual drives managed by Docker
+<li><strong>Named volumes</strong>: virtual drives managed by Docker
 <ul>
 <li>they are created with <code>docker volume create &lt;name&gt;</code></li>
 <li>they are mounted into containers as <code>&lt;name&gt;:&lt;guest path&gt;</code></li>
@@ -848,7 +848,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <p>Let’s open a Linux shell in a container: <code>docker run -it --rm alpine:latest sh</code></p>
 </li>
 <li>
-<p>Let’s create folder in there: <code>mkdir -p /data</code></p>
+<p>Let’s create a folder in there: <code>mkdir -p /data</code></p>
 </li>
 <li>
 <p>Let’s create a file in there: <code>echo "Hello world" &gt; /data/hello.txt</code></p>
@@ -900,7 +900,7 @@ drwxr-xr-x    1 root     root          4096 Nov  2 09:28 ..
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">done</span>
 </span></span></code></pre></div></li>
 <li>
-<p>Let’s have at the shared directory: <code>ls -la ./shared</code></p>
+<p>Let’s have a look at the shared directory: <code>ls -la ./shared</code></p>
 <pre tabindex="0"><code>ls -la ./shared 
 totale 56
 drwxr-xr-x  2 user    user     4096  2 nov 10.51 .
@@ -965,7 +965,7 @@ drwxr-xr-x 79 user    user    12288  2 nov 10.56 ..
 <h2 id="example-sharing-data-with-named-volumes-pt-2">Example: sharing data with named volumes (pt. 2)</h2>
 <h3 id="accessing-the-volume-from-another-container">Accessing the volume from another container</h3>
 <ol>
-<li>Let’s create yet another <em>interactice</em> container attached to the volume
+<li>Let’s create yet another <em>interactive</em> container attached to the volume
 <ul>
 <li><code>docker run --rm -it -v my-volume:/data alpine sh</code></li>
 </ul>
@@ -1041,7 +1041,7 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 </li>
 </ol>
 </section><section>
-<h2 id="how-to-retain-space-from-a-volume">How to retain space from a volume?</h2>
+<h2 id="how-to-reclaim-space-from-a-volume">How to reclaim space from a volume?</h2>
 <p>Volumes are NOT automatically <em>cleaned up</em> when containers are <em>deleted</em></p>
 <ul>
 <li>
@@ -1065,7 +1065,7 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 <h2 id="sudo-powered-containers">Sudo-powered containers</h2>
 <ul>
 <li>
-<p>Sometimes one may be willing to let a container access the <em>Docker daemon</em> <strong>of its host</strong></p>
+<p>Sometimes one may want to let a container access the <em>Docker daemon</em> <strong>of its host</strong></p>
 <ul>
 <li>this is useful for running containers that will: <em>create/delete</em> other containers, handle images, etc.</li>
 </ul>
@@ -1159,7 +1159,7 @@ drwx-----x 3 root root 4096  2 nov 11.13 ..
 
 <ul>
 <li>
-<p><strong>No</strong> networking facilities are provided to the container <strong>at all</strong>, which is then <em>isolated</em> w.r.t the external world</p>
+<p><strong>No</strong> networking facilities are provided to the container <strong>at all</strong>, which is then <em>isolated</em> w.r.t. the external world</p>
 </li>
 <li>
 <p>This is useful for containers that do not need to communicate via the network</p>
