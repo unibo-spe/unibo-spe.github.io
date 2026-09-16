@@ -1579,12 +1579,12 @@ Useful when dealing with dynamic languages or untyped serialization (e.g. JSON o
 </ul>
 <p>Any class with a method:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">getValue</span>(thisRef: T, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;): R
-</span></span></code></pre></div><p>is a valid delegate for a <code>val</code> is a <code>class</code>
+</span></span></code></pre></div><p>is a valid delegate for a <code>val</code> in a <code>class</code>
 where T is the “owner” type, and R is the type of the property</p>
 <p>A valid delegate for a <code>var</code> must also have a <code>setValue</code> method:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setValue</span>(thisRef: T, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;, <span style="color:#080;font-weight:bold">value</span>: P): Unit
 </span></span></code></pre></div><p>where T and R are the same as in <code>getValue</code>, and P is a supertype of R</p>
-<p><strong>Note</strong>: that this is a form of structural typing, exceptional with the Kotlin type system (typically nominal)</p>
+<p><strong>Note</strong> that this is a form of structural typing, an exception in the Kotlin type system (typically nominal)</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">OwnName</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">operator</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">getValue</span>(thisRef: Any?, <span style="color:#080;font-weight:bold">property</span>: KProperty&lt;*&gt;): String = <span style="color:#080;font-weight:bold">property</span>.name
 </span></span><span style="display:flex;"><span>}
@@ -1603,7 +1603,7 @@ and is similar to Smalltalk / Ceylon / Xtend / Ruby as well</p>
 <ul>
 <li>Enclosing an expression in curly brackets creates a lambda expression</li>
 <li>Parameters are listed <em>inside</em> the brackets, a <code>-&gt;</code> separates them from the body</li>
-<li>If there is one single parameter, it can be unspecified and referred with the keyword <code>it</code></li>
+<li>If there is one single parameter, it can be left unspecified and referred to with the keyword <code>it</code></li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">myLambda</span> = {
 </span></span><span style="display:flex;"><span>    println(<span style="color:#d20;background-color:#fff0f0">"Hey I'm computing"</span>)
@@ -1619,7 +1619,7 @@ and is similar to Smalltalk / Ceylon / Xtend / Ruby as well</p>
 </span></span></span></code></pre></div></section><section>
 <h1 id="kotlin-202--functional-kotlin-1">Kotlin 202 – Functional Kotlin</h1>
 <h2 id="function-type-literals">Function type literals</h2>
-<p>Just as Scala, Kotlin supports function type literals
+<p>Just as in Scala, Kotlin supports function type literals
 <br>
 No need for verbose interfaces such as <code>Function&lt;T, R&gt;</code>, <code>BiConsumer&lt;T, R&gt;</code>, etc.</p>
 <p>Function type literals have parameter types in parentheses, a <code>-&gt;</code>, and the return type</p>
