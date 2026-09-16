@@ -65,13 +65,13 @@
 </blockquote>
 </section><section>
 <h1 id="what-are-software-platforms-1">What are software platforms?</h1>
-<h2 id="operative-systems-">Operative systems (?)</h2>
+<h2 id="operating-systems-">Operating systems (?)</h2>
 <ul>
 <li>
-<p>Most software runs on top of an <strong>operative system</strong> (OS)</p>
+<p>Most software runs on top of an <strong>operating system</strong> (OS)</p>
 </li>
 <li>
-<p>So yes, all operative systems are platforms</p>
+<p>So yes, all operating systems are platforms</p>
 </li>
 <li>
 <p>Is there more?</p>
@@ -91,7 +91,7 @@
 </ul>
 </section><section>
 <h1 id="what-are-software-platforms-2">What are software platforms?</h1>
-<h2 id="operative-systems--">Operative systems + ???</h2>
+<h2 id="operating-systems--">Operating systems + ???</h2>
 <ul>
 <li>
 <p>Programming languages?</p>
@@ -128,7 +128,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <section data-shortcode-section="">
 <h1 id="what-are-api-and-runtimes">What are API and runtimes?</h1>
 <blockquote>
-<p><a href="https://en.wikipedia.org/wiki/API"><strong>API</strong></a> $\equiv$ application programming interface(s) $\stackrel{\Delta}{=}$ a <em>formal</em> specification of the set of <strong>functionalities</strong> provided by a software (sub-)system for <em>external</em> usage, there including their <strong>input</strong>, <strong>outputs</strong>, and <em>environmental</em> <strong>preconditions</strong> and <strong>effects</strong></p>
+<p><a href="https://en.wikipedia.org/wiki/API"><strong>API</strong></a> $\equiv$ application programming interface(s) $\stackrel{\Delta}{=}$ a <em>formal</em> specification of the set of <strong>functionalities</strong> provided by a software (sub-)system for <em>external</em> usage, including their <strong>inputs</strong>, <strong>outputs</strong>, and <em>environmental</em> <strong>preconditions</strong> and <strong>effects</strong></p>
 </blockquote>
 <ul>
 <li>client-server metaphor is implicit</li>
@@ -154,7 +154,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 </ul>
 </li>
 <li>
-<p>all possible <em>commands</em> a <strong>CLI application</strong> accept as <em>input</em></p>
+<p>all possible <em>commands</em> a <strong>CLI application</strong> accepts as <em>input</em></p>
 <ul>
 <li>and their admissible sub-commands, options, and arguments
 <ul>
@@ -164,7 +164,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 </ul>
 </li>
 <li>
-<p>all possible <em>routes</em> a <strong>Web service</strong> may accept HTTP request onto</p>
+<p>all possible <em>routes</em> a <strong>Web service</strong> may accept HTTP requests on</p>
 <ul>
 <li>and their admissible HTTP methods
 <ul>
@@ -183,27 +183,27 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <h2 id="examples-of-runtimes">Examples of runtimes</h2>
 <ul>
 <li>
-<p>any <em>interpreter</em> (JVM, CRL, CPython, V8)</p>
+<p>any <em>interpreter</em> (JVM, CLR, CPython, V8)</p>
 <ul>
 <li>and their standard libraries</li>
 <li>and their type system and internal conventions
 <ul>
-<li>eg value/reference types in JVM/CRL, global lock in CPython</li>
+<li>e.g. value/reference types in JVM/CLR, global lock in CPython</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>
-<p>any <em>operative system</em> (Win, Mac, Linux)</p>
+<p>any <em>operating system</em> (Win, Mac, Linux)</p>
 <ul>
-<li>and their system calls, daemons, package managers, default commands, etc</li>
+<li>and their system calls, daemons, package managers, default commands, etc.</li>
 <li>and their program memory, access control, file system models</li>
 </ul>
 </li>
 <li>
 <p>any <em>Web service</em></p>
 <ul>
-<li>and the protocols they leverage upon</li>
+<li>and the protocols they leverage</li>
 <li>and their URL structuring model</li>
 <li>the data schema of their input/output objects</li>
 <li>the authentication / authorization mechanisms they support</li>
@@ -222,7 +222,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 </ul>
 </li>
 <li>
-<p>.NET’s [pronounced “dot NET”] <strong>Common Language Runtime</strong> (CRL)</p>
+<p>.NET’s [pronounced “dot NET”] <strong>Common Language Runtime</strong> (CLR)</p>
 <ul>
 <li>supported languages: C#, VB.NET, F#, etc.</li>
 </ul>
@@ -236,7 +236,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <li>
 <p><strong>NodeJS</strong> (V8)</p>
 <ul>
-<li>supported language: JavaScript, TypeScript, etc.</li>
+<li>supported languages: JavaScript, TypeScript, etc.</li>
 </ul>
 </li>
 <li>
@@ -255,7 +255,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <li>
 <p><em>standard libraries</em></p>
 <ul>
-<li>i.e. pre-cooked functionalities developers / users may exploit</li>
+<li>i.e. ready-made functionalities developers / users may exploit</li>
 </ul>
 </li>
 <li>
@@ -316,7 +316,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <li>
 <p>Everything is (indirectly) a <em>subclass/instance</em> of <code>Object</code></p>
 <ul>
-<li>except fixed set of primitive types, and static stuff</li>
+<li>except a fixed set of primitive types, and static stuff</li>
 </ul>
 </li>
 <li>
@@ -326,7 +326,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 </ul>
 </li>
 <li>
-<p>Default methods inherited by <code>Object</code> class</p>
+<p>Default methods inherited from the <code>Object</code> class</p>
 <ul>
 <li>e.g. <code>toString</code>, <code>equals</code>, <code>hashCode</code></li>
 </ul>
@@ -347,7 +347,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <li>
 <p>Official <em>stylistic conventions</em> for most JVM languages</p>
 <ul>
-<li>e.g. type names in <code>PascalCase</code>, members names in <code>camelCase</code></li>
+<li>e.g. type names in <code>PascalCase</code>, member names in <code>camelCase</code></li>
 <li>e.g. getters/setters in Java vs. Kotlin’s or Scala’s properties</li>
 </ul>
 </li>
@@ -358,7 +358,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <ul>
 <li><em>iterable</em> data structures should implement the <code>Iterable</code> interface</li>
 <li><em>variadic</em> arguments are considered <em>arrays</em></li>
-<li><em>constructors</em> for collections subclasses accept <code>Iterable</code>s as input</li>
+<li><em>constructors</em> for collection subclasses accept <code>Iterable</code>s as input</li>
 <li>…</li>
 </ul>
 </section><section>
@@ -418,13 +418,13 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <h2 id="standard-libraries">Standard libraries</h2>
 <ul>
 <li>
-<p>Notably, one the <em>richest</em> <strong>standard libraries</strong> ever</p>
+<p>Notably, one of the <em>richest</em> <strong>standard libraries</strong> ever</p>
 </li>
 <li>
 <p>Many nice <em>functionalities</em> covering:</p>
 <ul>
 <li>all the stuff covered by Java</li>
-<li>plus many more, e.g. complex numbers, JSON and CSV parsing, etc</li>
+<li>plus many more, e.g. complex numbers, JSON and CSV parsing, etc.</li>
 </ul>
 </li>
 <li>
@@ -471,7 +471,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <li>
 <p>Official <em>stylistic conventions</em> for Python (<a href="https://peps.python.org/pep-0008/">PEP8</a>)</p>
 <ul>
-<li>e.g. type names in <code>PascalCase</code>, members names in <code>snake_case</code></li>
+<li>e.g. type names in <code>PascalCase</code>, member names in <code>snake_case</code></li>
 <li>e.g. <em>indentation-aware</em> syntax, blank line conventions, etc.</li>
 <li>…</li>
 </ul>
@@ -484,7 +484,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <li><a href="https://realpython.com/lessons/duck-typing/">duck typing</a></li>
 <li>iterable data structures should implement the <code>__iter__</code> method</li>
 <li><em>variadic</em> arguments are considered <em>tuples</em></li>
-<li><em>keyword</em> arguments are considered <em>sets</em></li>
+<li><em>keyword</em> arguments are considered <em>dictionaries</em></li>
 <li>…</li>
 </ul>
 </section><section>
@@ -607,7 +607,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <li>
 <p><em>Project files</em> are organized into <strong>modules</strong></p>
 <ul>
-<li>modules are file containing anything</li>
+<li>modules are files containing anything</li>
 <li>and declaring what to export</li>
 </ul>
 </li>
