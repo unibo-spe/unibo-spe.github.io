@@ -37,7 +37,7 @@
 <ul>
 <li>Focused on “practical use”</li>
 </ul>
-<p>Gaining momentum since Google adopted is as <em>official Android language</em></p>
+<p>Gaining momentum since Google adopted it as the <em>official Android language</em></p>
 <ul>
 <li>initially along with Java and C++</li>
 <li>now Android is Kotlin-first</li>
@@ -58,7 +58,7 @@
 </ul>
 </li>
 </ul>
-<p><strong>Kotlin</strong> is somewhat <em>a better java</em></p>
+<p><strong>Kotlin</strong> is somewhat <em>a better Java</em></p>
 <ul>
 <li>Born in industry, for the industry</li>
 <li>Many more “core” constructs and keywords than Scala</li>
@@ -71,12 +71,12 @@
 </ul>
 </section><section>
 <h1 id="kotlin-101">Kotlin 101</h1>
-<h2 id="defining-functions-constant-variables">Defining functions, constant, variables</h2>
+<h2 id="defining-functions-constants-variables">Defining functions, constants, variables</h2>
 <p>Similar to Scala. The keyword <code>def</code> is replaced by <code>fun</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">x</span> = <span style="color:#00d;font-weight:bold">10</span> <span style="color:#888">// constant
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">y</span> = <span style="color:#00d;font-weight:bold">20</span> <span style="color:#888">// variable, can be reassigned
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">foo</span>() = <span style="color:#00d;font-weight:bold">20</span> <span style="color:#888">// function definition, single expression
-</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">bar</span>(): Int { <span style="color:#888">// same as above with multiple expression
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">bar</span>(): Int { <span style="color:#888">// same as above with multiple expressions
 </span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">20</span> <span style="color:#888">// requires a return in this form...
 </span></span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">baz</span>() { } <span style="color:#888">// Unless it returns Unit
@@ -139,7 +139,7 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 </span></span></span></code></pre></div></section><section>
 <h1 id="kotlin-101-5">Kotlin 101</h1>
 <h2 id="accessing-nullable-types">Accessing nullable types</h2>
-<p>Nullable types members can’t be accessed by <code>.</code>.</p>
+<p>Members of nullable types can’t be accessed with <code>.</code>.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">baz</span>: String? = <span style="color:#d20;background-color:#fff0f0">"foo"</span>
 </span></span><span style="display:flex;"><span>baz.length <span style="color:#888">// error: only safe (?.) or non-null asserted (!!.) calls are allowed...
 </span></span></span><span style="display:flex;"><span><span style="color:#888">// on a nullable receiver of type String?
@@ -160,9 +160,9 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 <br></p>
 <ul>
 <li>Invalidates the whole point of having nullable types by asserting that the nullable object is not <code>null</code> at runtime</li>
-<li>It should be <strong>never</strong> used
+<li>It should <strong>never</strong> be used
 <ul>
-<li>In fact its ugly syntax is so <em>ugly by purpose</em></li>
+<li>In fact, its syntax is <em>ugly on purpose</em></li>
 </ul>
 </li>
 </ul>
@@ -209,7 +209,7 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 </li>
 <li>Runtime nullability checks are put in place by the compiler (<em>fail fast!</em>)
 <ul>
-<li>…but their actual nullablity is checked at use-site</li>
+<li>…but their actual nullability is checked at the use site</li>
 </ul>
 </li>
 <li>Platform types <em>can’t be created</em> in Kotlin! They only come from interaction with “platform code”</li>
@@ -272,11 +272,11 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 <ul>
 <li><code>Boolean</code>: <code>true</code>/<code>false</code></li>
 <li><code>Boolean?</code>: <code>true</code>/<code>false</code>/<code>null</code></li>
-<li><code>&amp;&amp;</code>, <code>!!</code>, and <code>!</code> operators work for <em>non-nullable</em> <code>Boolean</code>s.</li>
+<li><code>&amp;&amp;</code>, <code>||</code>, and <code>!</code> operators work for <em>non-nullable</em> <code>Boolean</code>s.</li>
 </ul>
-<p>Likewise Scala, boxing under the JVM is dealt with by the compiler
+<p>As in Scala, boxing under the JVM is dealt with by the compiler
 <br>
-<code>Boolean?</code> are always boxed (to be able to account for <code>null</code>)</p>
+<code>Boolean?</code> is always boxed (to be able to account for <code>null</code>)</p>
 </section><section>
 <h1 id="kotlin-101-13">Kotlin 101</h1>
 <h2 id="numeric-types">Numeric types</h2>
@@ -292,14 +292,14 @@ Nullable types are suffixed by a <code>?</code> and require special handling
 </section><section>
 <h1 id="kotlin-101-14">Kotlin 101</h1>
 <h2 id="issues-of-implicit-numeric-types-conversion">Issues of implicit numeric types conversion</h2>
-<p>Implicit type conversion to “bigger” types is source of nasty errors when automatic boxing is involved.
+<p>Implicit type conversion to “bigger” types is a source of nasty errors when automatic boxing is involved.
 <br>
 Consider the following Scala code:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span> == <span style="color:#b06;font-weight:bold">Double</span>.<span style="color:#b06;font-weight:bold">NaN</span>
 </span></span></code></pre></div>
 
 <span class="fragment ">
-  <p><code>false</code>, OK, as every sane language</p>
+  <p><code>false</code>, OK, like every sane language</p>
 
 </span>
 
