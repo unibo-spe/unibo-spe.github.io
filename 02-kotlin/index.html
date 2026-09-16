@@ -352,8 +352,8 @@ Consider the following Scala code:</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">0123</span> <span style="color:#888">// error: unsupported [literal prefixes and suffixes] (no octal)
 </span></span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">0xCAFE</span> <span style="color:#888">// Hex literal Int
 </span></span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">0xCAFEBABE</span> <span style="color:#888">// Hex literal Long (automatic, as it does not fit an Int)
-</span></span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">0x0000000</span> <span style="color:#888">// Hex literal Int, even it'd fit a Byte
-</span></span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">0b1111111_11111111_11111111_11111111</span> <span style="color:#888">// Binary Int (Integer.MAX_INT)
+</span></span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">0x0000000</span> <span style="color:#888">// Hex literal Int, even though it'd fit a Byte
+</span></span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">0b1111111_11111111_11111111_11111111</span> <span style="color:#888">// Binary Int (Integer.MAX_VALUE)
 </span></span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">0b11111111_11111111_11111111_11111111</span> <span style="color:#888">// Binary Long
 </span></span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">0b11111111_11111111_11111111_11111111u</span> <span style="color:#888">// Binary UInt!
 </span></span></span><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">0xFFFF_FFFF_FFFFu</span> <span style="color:#888">// ULong
@@ -376,7 +376,7 @@ Consider the following Scala code:</p>
 <p>Triple-double-quoted strings are considered <em>raw strings</em></p>
 <ul>
 <li><code>\</code> is a normal character</li>
-<li>newlines are intended as part of the string</li>
+<li>newlines are part of the string</li>
 <li>Very handy for writing regular expressions</li>
 <li><code>$</code>-templating still works</li>
 </ul>
