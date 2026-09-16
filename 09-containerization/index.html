@@ -505,7 +505,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <li>Enable and start the Docker service
 <ul>
 <li>on most Linux distributions <code>sudo systemctl enable docker; sudo systemctl start docker</code></li>
-<li>on MacOS and Windows, start the Docker Desktop application</li>
+<li>on macOS and Windows, start the Docker Desktop application</li>
 </ul>
 </li>
 <li>Test your installation
@@ -525,7 +525,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </ol>
 <br>
 <blockquote>
-<p>Subsequent examples work on Linux, but they should work on any platform</p>
+<p>Subsequent examples are shown on Linux, but they should work on any platform</p>
 <ul>
 <li>provided that a <code>bash</code> or <code>zsh</code> shell is available</li>
 </ul>
@@ -536,14 +536,14 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <li>Pull an image: <code>docker pull adoptopenjdk</code></li>
 <li>Run a container: <code>docker run adoptopenjdk</code></li>
 </ol>
-<p>Every image provides a <em>default command</em>, running without options runs such default in a <em>non-interactive</em> terminal.</p>
+<p>Every image provides a <em>default command</em>; running without options runs that default in a <em>non-interactive</em> terminal.</p>
 <p>Running in interactive mode can be achieved with the <code>-i</code> option</p>
-<p>Running a custom command <em>inside the container</em> can be achieved with writing the command after the image name</p>
+<p>Running a custom command <em>inside the container</em> can be achieved by writing the command after the image name</p>
 <ul>
 <li>e.g., <code>docker run -i adoptopenjdk bash</code></li>
 <li>parameters for the custom command can follow</li>
-<li>use the <code>t</code> option to run in a <em>pseudo-tty</em> (always use it whenever you use <code>-i</code>)</li>
-<li>use the <code>--rm</code> to remove the container after use</li>
+<li>use the <code>-t</code> option to run in a <em>pseudo-tty</em> (always use it whenever you use <code>-i</code>)</li>
+<li>use <code>--rm</code> to remove the container after use</li>
 </ul>
 </section><section>
 <h2 id="interaction-with-the-outside-world">Interaction with the outside world</h2>
@@ -615,7 +615,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">EXPOSE</span><span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">8080</span><span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#888"># Configures the default command to execute</span><span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">CMD</span> npm run service<span style="color:#a61717;background-color:#e3d2d2">
-</span></span></span></code></pre></div><p>to be built by means of the command: <code>docker build -t PATH</code></p>
+</span></span></span></code></pre></div><p>to be built by means of the command: <code>docker build PATH</code></p>
 <ul>
 <li><code>PATH</code> is the host path containing the <code>Dockerfile</code></li>
 </ul>
@@ -676,7 +676,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span>console.log(<span style="color:#d20;background-color:#fff0f0">`Service </span><span style="color:#33b;background-color:#fff0f0">${</span>serverID<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0"> listening on </span><span style="color:#33b;background-color:#fff0f0">${</span>hostname<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">:</span><span style="color:#33b;background-color:#fff0f0">${</span>port<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">`</span>)
 </span></span><span style="display:flex;"><span>server.listen(port)
-</span></span></code></pre></div><p>i.e. a Web service listening on the port indicated by the <code>SERIVICE_PORT</code> env var, showing Web pages of the form</p>
+</span></span></code></pre></div><p>i.e. a Web service listening on the port indicated by the <code>SERVICE_PORT</code> env var, showing Web pages of the form</p>
 <pre tabindex="0"><code>[$SERVER_ID@$HOST_NAME:PORT] Hit $VIEW_COUNT times
 </code></pre>
 </div>
@@ -696,7 +696,7 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <p><img src="./layers-2.png" alt=""></p>
 </section><section>
 <h2 id="layers-and-caching-pt-3">Layers and caching (pt. 3)</h2>
-<p>When the container is run, the images layers are <em>read-only</em>, and the container has a <em>read-write</em> layer on top of them</p>
+<p>When the container is run, the image layers are <em>read-only</em>, and the container has a <em>read-write</em> layer on top of them</p>
 <p><img src="./rw-layer.png" alt=""></p>
 <p>So, when a container is stopped, the read-write layer is discarded, and the image layers are kept</p>
 <p>In this way, the <em>space occupied</em> by the container is <em>minimal</em></p>
