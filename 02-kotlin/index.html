@@ -883,7 +883,7 @@ In Scala</p>
 <li><code>==</code> calls <code>equals</code></li>
 <li>Java’s stack variable comparison (<code>==</code>) is Kotlin’s <code>===</code></li>
 </ul>
-<p>Kotlin does not suffer of Scala’s equality issues
+<p>Kotlin does not suffer from Scala’s equality issues
 (no automatic conversion of types)</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> a<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Int</span> = <span style="color:#00d;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> b<span style="color:#080;font-weight:bold">:</span> <span style="color:#888;font-weight:bold">Long</span> = a
@@ -909,7 +909,7 @@ In Scala</p>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#00d;font-weight:bold">1</span> equals <span style="color:#00d;font-weight:bold">1</span> <span style="color:#888">// error: 'infix' modifier is required on 'equals' in 'kotlin.Int'
 </span></span></span></code></pre></div><ul>
-<li>Kotlin requires that the <code>infix</code> keyword for a method to be usable as infix</li>
+<li>Kotlin requires the <code>infix</code> keyword for a method to be usable as infix</li>
 <li><code>infix</code> functions have <em>lower precedence</em> than operators</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Infix</span> {
@@ -926,17 +926,17 @@ In Scala</p>
 <li>Very much the whole language philosophy: few concepts, high scalability</li>
 <li>Easy to abuse, degenerating to esoteric operators
 <ul>
-<li>Especially when software is written by people with different background</li>
+<li>Especially when software is written by people with different backgrounds</li>
 </ul>
 </li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>executer(<span style="color:#080;font-weight:bold">:</span><span style="color:#888;font-weight:bold">/</span>(<span style="color:#888;font-weight:bold">host</span>, <span style="color:#888;font-weight:bold">port</span>) / target &lt;&lt; reqBody &gt;- { fromRespStr }) <span style="color:#888">// Using Databinder Dispatch
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">val</span> graph <span style="color:#080;font-weight:bold">=</span> <span style="color:#b06;font-weight:bold">Graph</span>((jfc ~+#&gt; fra)(<span style="color:#b06;font-weight:bold">Any</span>()), (fra ~+#&gt; dme)(<span style="color:#b06;font-weight:bold">Any</span>()) <span style="color:#888">// Using ScalaGraph
 </span></span></span></code></pre></div><p>Operators are succinct, but cryptic, and their meaning changes with context</p>
-<p>This has been a source of cricism, Kotlin <strong>does not allow to define custom operators</strong></p>
+<p>This has been a source of criticism; Kotlin <strong>does not allow defining custom operators</strong></p>
 <ul>
 <li>At most, back-ticked names, but some characters are disallowed (<code>&gt;</code>, <code>/</code>, <code>:</code>, etc.)</li>
-<li>Clumsy, defies the reason why one would use them (terse and succinct code)</li>
+<li>Clumsy, defeats the purpose of using them (terse and succinct code)</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">A</span> { <span style="color:#080;font-weight:bold">infix</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">`~+#-`</span>(other: A) = <span style="color:#d20;background-color:#fff0f0">"I'm an arcane operator"</span> }
 </span></span><span style="display:flex;"><span>A() <span style="color:#a61717;background-color:#e3d2d2">`</span>~+<span style="color:#a61717;background-color:#e3d2d2">#</span>-<span style="color:#a61717;background-color:#e3d2d2">`</span> A() <span style="color:#888">// I'm an arcane operator
@@ -1014,7 +1014,7 @@ In Scala</p>
 </table>
 <p>Function invocation is an operator and can be overloaded!
 <br>
-This will turn useful in future…</p>
+This will come in handy later…</p>
 </section><section>
 <h1 id="kotlin-102--oop-conventions-5">Kotlin 102 – OOP Conventions</h1>
 <h2 id="binary-operator-overloading-arithmetic">Binary Operator overloading: arithmetic</h2>
