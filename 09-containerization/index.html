@@ -1560,16 +1560,16 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <h3 id="services">Services</h3>
 <p>From <a href="https://docs.docker.com/compose/compose-file/05-services/">Docker Compose documentation</a>:</p>
 <ul>
-<li>a <strong>service</strong> is an <em>abstract definition</em> of a computing resource within an <em>application</em> which can be <strong>scaled</strong> or <strong>replaced</strong> independently from other components</li>
+<li>a <strong>service</strong> is an <em>abstract definition</em> of a computing resource within an <em>application</em> which can be <strong>scaled</strong> or <strong>replaced</strong> independently of other components</li>
 <li>they are backed by a <em>set of</em> <strong>containers</strong>, run by the orchestrator according to <strong>replication requirements</strong> and <strong>placement constraints</strong></li>
-<li>they are backed by containers, hence they are defined by an <strong>image</strong> and set of <strong>runtime arguments</strong>
+<li>they are backed by containers, hence they are defined by an <strong>image</strong> and a set of <strong>runtime arguments</strong>
 <ul>
 <li>all containers within a service are <em>identically</em> created with these arguments</li>
 </ul>
 </li>
 <li>they are declared in the <code>services</code> section of the <code>docker-compose.yml</code> file
 <ul>
-<li>for each service, <em>attributes</em> may be spiecified, <em>overriding</em> the default behaviour of the image</li>
+<li>for each service, <em>attributes</em> may be specified, <em>overriding</em> the default behaviour of the image</li>
 <li>further attributes may be specified to declare <em>dependencies</em> on other services, volumes, networks, and so on
 <ul>
 <li>these must be declared in the same <code>docker-compose.yml</code> file</li>
