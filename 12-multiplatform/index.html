@@ -2905,7 +2905,7 @@ AbstractParser &lt;|-- StringParser
 </ul>
 </li>
 <li>
-<p>Understanding the mapping among Kotlin and other languages is key</p>
+<p>Understanding the mapping between Kotlin and other languages is key</p>
 <ul>
 <li>it impacts the usability of Kotlin libraries for ordinary platform users</li>
 </ul>
@@ -2935,7 +2935,7 @@ AbstractParser &lt;|-- StringParser
 </div>
 </div>
 <ul>
-<li>No syntactical difference among primitive and reference types
+<li>No syntactical difference between primitive and reference types
 <ul>
 <li><code>Int</code> $\leftrightarrow$ <code>int</code> / <code>Integer</code>, <code>Short</code> $\leftrightarrow$ <code>short</code> / <code>Short</code>, etc.</li>
 </ul>
@@ -3030,7 +3030,7 @@ AbstractParser &lt;|-- StringParser
 </span></span></code></pre></div>
 </div>
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyFileKt</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">final</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyFileKt</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">f</span>()<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span></code></pre></div>
@@ -3069,7 +3069,7 @@ AbstractParser &lt;|-- StringParser
 </span></span></code></pre></div>
 </div>
 <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MySingleton</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">final</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MySingleton</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">MySingleton</span>()<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">final</span><span style="color:#bbb"> </span>MySingleton<span style="color:#bbb"> </span>INSTANCE<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>MySingleton();<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
@@ -3081,8 +3081,7 @@ AbstractParser &lt;|-- StringParser
 </ul>
 <div class="multiCol">
     <div class="col  ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyType</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">constructor</span>()
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyType</span> <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">constructor</span>() {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">companion</span> <span style="color:#080;font-weight:bold">object</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">of</span>(): MyType = MyType()
 </span></span><span style="display:flex;"><span>    }
@@ -3114,8 +3113,7 @@ AbstractParser &lt;|-- StringParser
 <div class="multiCol">
     <div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">kotlin.jvm.JvmStatic</span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyType</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">constructor</span>()
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MyType</span> <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">constructor</span>() {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">companion</span> <span style="color:#080;font-weight:bold">object</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#555">@JvmStatic</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">of</span>(): MyType = MyType()
