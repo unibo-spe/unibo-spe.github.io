@@ -1410,7 +1410,7 @@ Intuitively, the bigger the space, the more <em>effort</em> is required to build
 </section><section>
 <h2 id="kotlin-multi-platform-build-configuration-pt-3">Kotlin multi-platform build configuration (pt. 3)</h2>
 <ul>
-<li>which third-party library should each target depend upon
+<li>which third-party libraries each target should depend upon
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>kotlin {
 </span></span><span style="display:flex;"><span>    sourceSets {
 </span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">commonMain</span> <span style="color:#080;font-weight:bold">by</span> getting {
@@ -1594,9 +1594,9 @@ Intuitively, the bigger the space, the more <em>effort</em> is required to build
 </ul>
 </li>
 <li>
-<p><code>assemble</code> creates all JARs (hence compiling for main code for all platforms)</p>
+<p><code>assemble</code> creates all JARs (hence compiling the main code for all platforms)</p>
 <ul>
-<li>it also generates documentation and sources JAR
+<li>it also generates documentation and sources JARs
 <ul>
 <li>if publishing is configured</li>
 </ul>
@@ -1624,7 +1624,7 @@ Intuitively, the bigger the space, the more <em>effort</em> is required to build
 <ul>
 <li>only the platform-agnostic std-lib can be used
 <ul>
-<li>API reference <a href="https://kotlinlang.org/api/latest/jvm/stdlib/">here</a> (recall to disable all targets except <code>Common</code>)</li>
+<li>API reference <a href="https://kotlinlang.org/api/latest/jvm/stdlib/">here</a> (remember to disable all targets except <code>Common</code>)</li>
 </ul>
 </li>
 <li>one may use third-party libraries, as long as they are <strong>multi-platform</strong> too</li>
@@ -1680,9 +1680,9 @@ Intuitively, the bigger the space, the more <em>effort</em> is required to build
 <p>Draw a platform-agnostic design for your domain entities</p>
 <ul>
 <li>keep in mind that you can only rely on a very small std-lib / runtime</li>
-<li>keep in mind that some API may be missing in the common std-lib:
+<li>keep in mind that some APIs may be missing from the common std-lib:
 <ul>
-<li>e.g. file system API</li>
+<li>e.g. file system APIs</li>
 </ul>
 </li>
 <li>try to reason in a platform-agnostic way
@@ -1720,9 +1720,9 @@ Intuitively, the bigger the space, the more <em>effort</em> is required to build
 <p>CSV (comma-separated values) files, e.g.:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># HEADER_1, HEADER_2, HEADER_3, ...</span>
 </span></span><span style="display:flex;"><span><span style="color:#888"># character '#' denotes the beginning of a single-line comment</span>
-</span></span><span style="display:flex;"><span><span style="color:#888"># first line conventionally denotes columns names (headers)</span>
+</span></span><span style="display:flex;"><span><span style="color:#888"># first line conventionally denotes column names (headers)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>field1, filed2, field3, ...
+</span></span><span style="display:flex;"><span>field1, field2, field3, ...
 </span></span><span style="display:flex;"><span><span style="color:#888"># character ',' acts as field separator</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">"field with spaces"</span>, <span style="color:#d20;background-color:#fff0f0">"another field, with comma"</span>, <span style="color:#d20;background-color:#fff0f0">"yet another field"</span>, ...
@@ -1805,7 +1805,7 @@ interface Record {
 
 Row &lt;|-- Record
 
-Record "1" *-right- "*" Header
+Record "*" *-right- "1" Header
 
 interface Table {
     + header: Header
@@ -1814,7 +1814,7 @@ interface Table {
     + size: Int
 }
 
-Table "1" *-u- "*" Header
+Table "*" *-u- "1" Header
 Table "*" o-u- "*" Record
 Table -u----|&gt; Iterable: //T// = Row
 </code></pre>
@@ -1980,7 +1980,7 @@ AbstractRow &lt;|-d- DefaultRecord</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">init</span> {
 </span></span><span style="display:flex;"><span>        require(header.size == <span style="color:#080;font-weight:bold">super</span>.values.size) {
-</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"Inconsistent amount of values (</span><span style="color:#33b;background-color:#fff0f0">${super.values.size}</span><span style="color:#d20;background-color:#fff0f0">) w.r.t. to header size (</span><span style="color:#33b;background-color:#fff0f0">${header.size}</span><span style="color:#d20;background-color:#fff0f0">)"</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#d20;background-color:#fff0f0">"Inconsistent number of values (</span><span style="color:#33b;background-color:#fff0f0">${super.values.size}</span><span style="color:#d20;background-color:#fff0f0">) w.r.t. header size (</span><span style="color:#33b;background-color:#fff0f0">${header.size}</span><span style="color:#d20;background-color:#fff0f0">)"</span>
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
@@ -2029,7 +2029,7 @@ AbstractRow &lt;|-d- DefaultRecord</p>
 <h2 id="need-for-factory-methods">Need for factory methods</h2>
 <ul>
 <li>
-<p>To enforce separation among API and implementation code, it’s better:</p>
+<p>To enforce separation between API and implementation code, it’s better:</p>
 <ul>
 <li>to keep interfaces public, and classes internal</li>
 <li>to provide factory methods for creating instances of the interfaces</li>
@@ -2071,22 +2071,22 @@ class Csv{
 </script>
 </section><section>
 <h2 id="the-csvkt-file">The <code>Csv.kt</code> file</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Headers creation from columns names
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// Header creation from column names
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">headerOf</span>(columns: Iterable&lt;String&gt;): Header = DefaultHeader(columns)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">headerOf</span>(<span style="color:#080;font-weight:bold">vararg</span> columns: String): Header = headerOf(columns.asIterable())
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888">// Creates anonymous headers, with columns named after their index
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">anonymousHeader</span>(size: Int): Header = headerOf((<span style="color:#00d;font-weight:bold">0</span> ..&lt; size).map { <span style="color:#080;font-weight:bold">it</span>.toString() })
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#888">// Records creation from header and values
+</span></span><span style="display:flex;"><span><span style="color:#888">// Record creation from header and values
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">recordOf</span>(header: Header, columns: Iterable&lt;String&gt;): Record = DefaultRecord(header, columns)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">recordOf</span>(header: Header, <span style="color:#080;font-weight:bold">vararg</span> columns: String): Record = recordOf(header, columns.asIterable())
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#888">// Tables creation from header and records
+</span></span><span style="display:flex;"><span><span style="color:#888">// Table creation from header and records
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">tableOf</span>(header: Header, records: Iterable&lt;Record&gt;): Table = DefaultTable(header, records)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">tableOf</span>(header: Header, <span style="color:#080;font-weight:bold">vararg</span> records: Record): Table = tableOf(header, records.asIterable())
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#888">// Tables creation from rows (anonymous header if none is provided)
+</span></span><span style="display:flex;"><span><span style="color:#888">// Table creation from rows (anonymous header if none is provided)
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">tableOf</span>(rows: Iterable&lt;Row&gt;): Table {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">records</span> = mutableListOf&lt;Record&gt;()
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">var</span> <span style="color:#369;font-weight:bold">header</span>: Header? = <span style="color:#080;font-weight:bold">null</span>
@@ -2103,7 +2103,7 @@ class Csv{
 <li>Notice that each factory method is <strong>overloaded</strong>
 <ul>
 <li>to support both <code>Iterable</code> and <code>vararg</code> arguments</li>
-<li>this is convenient for Kotlin programmers that will use our library</li>
+<li>this is convenient for Kotlin programmers who will use our library</li>
 </ul>
 </li>
 </ul>
@@ -2179,7 +2179,7 @@ class Csv{
 <h2 id="how-much-platform-specific-code-is-needed">How much platform-specific code is needed?</h2>
 <ul>
 <li>
-<p>I/O functionalities are supported by fairly different API in JVM and JS</p>
+<p>I/O functionalities are supported by fairly different APIs in the JVM and JS</p>
 <ul>
 <li>e.g. JVM’s <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/package-summary.html"><code>java.io</code> package</a> vs. JS’ <a href="https://nodejs.org/docs/latest-v20.x/api/fs.html"><code>fs</code> module</a></li>
 <li>sadly, Kotlin std-lib does not provide a common API for I/O</li>
@@ -2308,7 +2308,7 @@ Parser "1" o-- "1" Configuration
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// The configuration of this formatter (i.e. the characters to be used).
 </span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">configuration</span>: Configuration
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#888">// Formats the source of this formatter into a sequence of strings (one per each row in the source)
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Formats the source of this formatter into a sequence of strings (one for each row in the source)
 </span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">format</span>(): Iterable&lt;String&gt;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
@@ -2320,7 +2320,7 @@ Parser "1" o-- "1" Configuration
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// The configuration of this parser (i.e. the characters to be used).
 </span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">configuration</span>: Configuration
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#888">// Parses the source of this parser into a sequence of rows (one per each row in the source)
+</span></span><span style="display:flex;"><span>    <span style="color:#888">// Parses the source of this parser into a sequence of rows (one for each row in the source)
 </span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">parse</span>(): Iterable&lt;Row&gt;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
