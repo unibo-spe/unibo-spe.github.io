@@ -1149,7 +1149,7 @@ This is helpful from several perspectives:</p>
 </li>
 </ul>
 <p><br><br></p>
-<p>*trust $\approx$ willingness to collaborate + seek for stability</p>
+<p>*trust $\approx$ willingness to collaborate + seek stability</p>
 </section><section>
 <h2 id="shared-kernel">Shared Kernel</h2>
 <p><img src="./shared-kernel.jpg" alt="Shared kernel concept"></p>
@@ -1239,7 +1239,7 @@ This is helpful from several perspectives:</p>
 </ul>
 </li>
 <li>
-<p>… downstream must defend from unexpected / unanticipated change</p>
+<p>… downstream must defend itself against unexpected / unanticipated change</p>
 </li>
 <li>
 <p>The upstream’s model is then reverse engineered &amp; <strong>adapted</strong></p>
@@ -1257,7 +1257,7 @@ This is helpful from several perspectives:</p>
 <p>DDD does not enforce a particular architecture</p>
 </li>
 <li>
-<p>Any is fine as long the model is integer</p>
+<p>Any is fine as long as the model keeps its integrity</p>
 </li>
 <li>
 <p>Layered architectures are well suited to preserve models’ integrity</p>
@@ -1273,9 +1273,9 @@ This is helpful from several perspectives:</p>
 <h2 id="hexagonal-architecture-concept">Hexagonal architecture (concept)</h2>
 <p><img src="./layered-architecture.png" alt="Hexagonal architecture concept"></p>
 <ul>
-<li>outer layers depend on innermost ones
+<li>outer layers depend on inner ones
 <ul>
-<li>the vice versa is not true</li>
+<li>the converse is not true</li>
 </ul>
 </li>
 </ul>
@@ -1286,7 +1286,7 @@ This is helpful from several perspectives:</p>
 <p><strong>Domain layer</strong>: contains the domain model (entities, values, events, aggregates, etc.)</p>
 <ul>
 <li>must support a wide range of applications</li>
-<li>has no dependency from any other layer</li>
+<li>has no dependency on any other layer</li>
 </ul>
 </li>
 <li>
@@ -1402,13 +1402,13 @@ product -u-|&gt; mq
 <li>
 <p>Historical data can be analysed, to serve several purposes</p>
 <ul>
-<li>e.g. predictive maintenance, optimization, analyse &amp; anticipate faults</li>
+<li>e.g. predictive maintenance, optimisation, analysing &amp; anticipating faults</li>
 </ul>
 </li>
 <li>
 <p>Past situations can be replayed</p>
 <ul>
-<li>e.g. which improves debugging, enables measurements</li>
+<li>it improves debugging and enables measurements</li>
 </ul>
 </li>
 <li>
@@ -1430,12 +1430,12 @@ product -u-|&gt; mq
 <p>Advanced pattern for building <em>highly-scalable</em> applications</p>
 </li>
 <li>
-<p>It leverages upon <em>event sourcing</em> and <em>layered architecture</em>…</p>
+<p>It leverages <em>event sourcing</em> and <em>layered architecture</em>…</p>
 </li>
 <li>
 <p>… to deliver <strong>reactive</strong>, <strong>eventual-consistent</strong> solutions where:</p>
 <ul>
-<li>contexts boundaries can be easily enforced</li>
+<li>context boundaries can be easily enforced</li>
 <li>single responsibility principle is applied extensively</li>
 </ul>
 </li>
@@ -1464,7 +1464,7 @@ product -u-|&gt; mq
 <p><img src="./cqrs.png" alt="CQRS concept"></p>
 </section><section>
 <h2 id="cqrs-workflow-writing">CQRS workflow (writing)</h2>
-<p>Whenever users are willing to <em>perform an action</em> into the system:</p>
+<p>Whenever users want to <em>perform an action</em> in the system:</p>
 <ol>
 <li>they create a <strong>command</strong> and forward it to the <strong>write model</strong></li>
 </ol>
@@ -1480,7 +1480,7 @@ product -u-|&gt; mq
 </ul>
 </section><section>
 <h2 id="cqrs-workflow-reading">CQRS workflow (reading)</h2>
-<p>Whenever users are willing to <em>inspect/observe the system</em> at time $t$:</p>
+<p>Whenever users want to <em>inspect/observe the system</em> at time $t$:</p>
 <ol>
 <li>they perform a <strong>query</strong> on the <strong>read model</strong>
 <ul>
@@ -1500,7 +1500,7 @@ product -u-|&gt; mq
 </section><section>
 <h2 id="cqrs--when-are-commands-reified">CQRS – When are commands reified?</h2>
 <blockquote>
-<p><strong>Reification</strong>: is the process of computing the state of the system at time $t$ by applying of commands recorded up to time $t$
+<p><strong>Reification</strong> is the process of computing the state of the system at time $t$ by applying the commands recorded up to time $t$
 <br></p>
 </blockquote>
 <ul>
@@ -1517,7 +1517,7 @@ product -u-|&gt; mq
 <ul>
 <li><strong>eager</strong>: commands are reified as soon as they are received</li>
 <li><strong>pull</strong>: commands are reified upon reading queries</li>
-<li><strong>push</strong>: commands are reified in background, periodically</li>
+<li><strong>scheduled</strong>: commands are reified in the background, periodically</li>
 </ul>
 </li>
 </ul>
@@ -1575,7 +1575,7 @@ product -u-|&gt; mq
 <p>Currencies are represented by a name, a symbol and an acronym</p>
 <ul>
 <li>e.g. Euro, EUR, €</li>
-<li>e.g. USA Dollar, USD, $</li>
+<li>e.g. US Dollar, USD, $</li>
 </ul>
 </li>
 <li>
@@ -1583,11 +1583,11 @@ product -u-|&gt; mq
 <ul>
 <li>from a source currency</li>
 <li>to a destination currency</li>
-<li>in a particular moment</li>
+<li>at a particular moment</li>
 </ul>
 </li>
 <li>
-<p>Information about exchange rates can be attained from the Internet</p>
+<p>Information about exchange rates can be obtained from the Internet</p>
 </li>
 <li>
 <p>We can compute the price of each product, in any currency, at any moment</p>
@@ -1601,9 +1601,9 @@ product -u-|&gt; mq
 <p>Orders are identified by a serial number</p>
 </li>
 <li>
-<p>They keep track of the many products ordered by a customer</p>
+<p>They keep track of the products ordered by a customer</p>
 <ul>
-<li>and the amount of copies ordered for each product</li>
+<li>and the number of copies ordered for each product</li>
 </ul>
 </li>
 <li>
@@ -1618,7 +1618,7 @@ product -u-|&gt; mq
 <li>
 <p>It must be possible to compute the actual total price of an order</p>
 <ul>
-<li>in a particular moment, using a particular currency</li>
+<li>at a particular moment, using a particular currency</li>
 </ul>
 </li>
 </ul>
@@ -1644,7 +1644,7 @@ product -u-|&gt; mq
 <li>value object</li>
 <li>factory</li>
 <li>repository</li>
-<li>value object</li>
+<li>service</li>
 </ul>
 </li>
 </ol>
@@ -1671,7 +1671,7 @@ product -u-|&gt; mq
 </ol>
 <ul>
 <li>a <strong>write-model</strong> for storing variations</li>
-<li>a <strong>read-model</strong> for retrieving a snapshot of the counter’s value in a given moment</li>
+<li>a <strong>read-model</strong> for retrieving a snapshot of the counter’s value at a given moment</li>
 </ul>
 <br>
 <p>In practice:</p>
@@ -1685,7 +1685,7 @@ product -u-|&gt; mq
 
 
 <section data-shortcode-section="">
-<h2 id="exercise-3--anti-corruption-layer-pt-1">Exercise 3 – Anti corruption layer (pt. 1)</h2>
+<h2 id="exercise-3--anti-corruption-layer-pt-1">Exercise 3 – Anti-corruption layer (pt. 1)</h2>
 <ul>
 <li>
 <p>Very simple domain: <code>Table</code>s</p>
@@ -1711,7 +1711,7 @@ product -u-|&gt; mq
 </li>
 </ul>
 </section><section>
-<h2 id="exercise-3--anti-corruption-layer-pt-2">Exercise 3 – Anti corruption layer (pt. 2)</h2>
+<h2 id="exercise-3--anti-corruption-layer-pt-2">Exercise 3 – Anti-corruption layer (pt. 2)</h2>
 <h3 id="to-do">TO-DO</h3>
 <ol>
 <li>Extend the model of our domain with new <strong>interfaces</strong> supporting <strong>CSV parsing / writing functionalities</strong></li>
