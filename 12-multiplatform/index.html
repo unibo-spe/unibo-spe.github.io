@@ -3147,7 +3147,7 @@ AbstractParser &lt;|-- StringParser
 </div>
 <div class="col  ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">f</span>(<span style="color:#888;font-weight:bold">int</span>...<span style="color:#bbb"> </span>xs)<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>Integer[]<span style="color:#bbb"> </span>ys<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>xs;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888;font-weight:bold">int</span>[]<span style="color:#bbb"> </span>ys<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>xs;<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>
@@ -3235,11 +3235,11 @@ AbstractParser &lt;|-- StringParser
 <ul>
 <li>practical consequence:
 <ul>
-<li>arguments are handy in Kotlin, but…</li>
+<li>optional arguments are handy in Kotlin, but…</li>
 <li>… they are painful to use in Java</li>
 <li>mitigation strategy: use <code>@JvmOverloads</code> to generate overloaded methods for Java
 <ul>
-<li>sadly, the does not take into account all possible ordered combinations of arguments</li>
+<li>sadly, the annotation does not take into account all possible ordered combinations of arguments</li>
 </ul>
 </li>
 </ul>
@@ -3259,7 +3259,7 @@ AbstractParser &lt;|-- StringParser
 </span></span></span><span style="display:flex;"><span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">f</span>(<span style="color:#888;font-weight:bold">int</span><span style="color:#bbb"> </span>a)<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span>f(a,<span style="color:#bbb"> </span>2,<span style="color:#bbb"> </span>3);<span style="color:#bbb"> </span>}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">f</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span>f(1,<span style="color:#bbb"> </span>2,<span style="color:#bbb"> </span>3);<span style="color:#bbb"> </span>}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#888">// missing overloads:</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888">// overloads that cannot be generated (same erasure):</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#888">// void f(int a, int c) { f(a, 2, c); }</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#888">// void f(int b, int c) { f(1, b, c); }</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#888">// void f(int c) { f(1, 2, c); }</span><span style="color:#bbb">
