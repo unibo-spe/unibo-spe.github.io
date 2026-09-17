@@ -962,39 +962,39 @@ The output is something like this:
 </section><section>
 <h2 id="kubectl-config-user-certificates">Kubectl config: user certificates</h2>
 <div class="custom">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>apiVersion: v1
-</span></span><span style="display:flex;"><span>clusters:
-</span></span><span style="display:flex;"><span>- cluster:
-</span></span><span style="display:flex;"><span>    certificate-authority: /home/anitvam/.minikube/ca.crt
-</span></span><span style="display:flex;"><span>    extensions:
-</span></span><span style="display:flex;"><span>    - extension:
-</span></span><span style="display:flex;"><span>        last-update: Mon, <span style="color:#00d;font-weight:bold">18</span> Dec <span style="color:#00d;font-weight:bold">2023</span> 12:59:17 CET
-</span></span><span style="display:flex;"><span>        provider: minikube.sigs.k8s.io
-</span></span><span style="display:flex;"><span>        version: v1.32.0
-</span></span><span style="display:flex;"><span>      name: cluster_info
-</span></span><span style="display:flex;"><span>    server: https://192.168.59.101:8443
-</span></span><span style="display:flex;"><span>  name: minikube
-</span></span><span style="display:flex;"><span>contexts:
-</span></span><span style="display:flex;"><span>- context:
-</span></span><span style="display:flex;"><span>    cluster: minikube
-</span></span><span style="display:flex;"><span>    extensions:
-</span></span><span style="display:flex;"><span>    - extension:
-</span></span><span style="display:flex;"><span>        last-update: Mon, <span style="color:#00d;font-weight:bold">18</span> Dec <span style="color:#00d;font-weight:bold">2023</span> 12:59:17 CET
-</span></span><span style="display:flex;"><span>        provider: minikube.sigs.k8s.io
-</span></span><span style="display:flex;"><span>        version: v1.32.0
-</span></span><span style="display:flex;"><span>      name: context_info
-</span></span><span style="display:flex;"><span>    namespace: default
-</span></span><span style="display:flex;"><span>    user: minikube
-</span></span><span style="display:flex;"><span>  name: minikube
-</span></span><span style="display:flex;"><span>current-context: minikube
-</span></span><span style="display:flex;"><span>kind: Config
-</span></span><span style="display:flex;"><span>preferences: {}
-</span></span><span style="display:flex;"><span>users:
-</span></span><span style="display:flex;"><span>- name: minikube
-</span></span><span style="display:flex;"><span>  user:
-</span></span><span style="display:flex;"><span>    client-certificate: /home/anitvam/.minikube/profiles/minikube/client.crt
-</span></span><span style="display:flex;"><span>    client-key: /home/anitvam/.minikube/profiles/minikube/client.key
-</span></span></code></pre></div></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>v1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">clusters</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>- <span style="color:#b06;font-weight:bold">cluster</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">certificate-authority</span>:<span style="color:#bbb"> </span>/home/anitvam/.minikube/ca.crt<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">extensions</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">extension</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">last-update</span>:<span style="color:#bbb"> </span>Mon, 18 Dec 2023 12:59:17 CET<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">provider</span>:<span style="color:#bbb"> </span>minikube.sigs.k8s.io<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span>v1.32.0<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>cluster_info<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">server</span>:<span style="color:#bbb"> </span>https://192.168.59.101:8443<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">contexts</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>- <span style="color:#b06;font-weight:bold">context</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">cluster</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">extensions</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>- <span style="color:#b06;font-weight:bold">extension</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">last-update</span>:<span style="color:#bbb"> </span>Mon, 18 Dec 2023 12:59:17 CET<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">provider</span>:<span style="color:#bbb"> </span>minikube.sigs.k8s.io<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span>v1.32.0<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>context_info<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">namespace</span>:<span style="color:#bbb"> </span>default<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">user</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">current-context</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Config<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">preferences</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">users</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>minikube<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">user</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">client-certificate</span>:<span style="color:#bbb"> </span>/home/anitvam/.minikube/profiles/minikube/client.crt<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">client-key</span>:<span style="color:#bbb"> </span>/home/anitvam/.minikube/profiles/minikube/client.key<span style="color:#bbb">
+</span></span></span></code></pre></div></div>
 <div class="overlay">
    <div class="config-user"></div>
 </div>
