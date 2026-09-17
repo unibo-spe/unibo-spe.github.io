@@ -3333,7 +3333,7 @@ AbstractParser &lt;|-- StringParser
 <ul>
 <li>Kotlin supports <strong>overloading</strong>, JS does not
 <ul>
-<li>class / interface members names are <strong>mengled</strong> to avoid clashes</li>
+<li>class / interface member names are <strong>mangled</strong> to avoid clashes</li>
 <li>the <code>@JsName</code> annotation can be used to control the name of a member
 <ul>
 <li>to be used on API types and functions</li>
@@ -3394,7 +3394,7 @@ AbstractParser &lt;|-- StringParser
 <p>Kotlin numeric types, except for <code>kotlin.Long</code>, are mapped to JavaScript <code>Number</code></p>
 </li>
 <li>
-<p><code>kotlin.Char</code> is mapped to JS <code>Number</code> representing character code.</p>
+<p><code>kotlin.Char</code> is mapped to a JS <code>Number</code> representing the character code.</p>
 </li>
 <li>
 <p>Kotlin preserves overflow semantics for <code>kotlin.Int</code>, <code>kotlin.Byte</code>, <code>kotlin.Short</code>, <code>kotlin.Char</code> and <code>kotlin.Long</code></p>
@@ -3487,7 +3487,7 @@ AbstractParser &lt;|-- StringParser
 <ol>
 <li>Check style (e.g. via <a href="https://ktlint.github.io/">KtLint</a>) of all Kotlin sources</li>
 <li>Automatic bug detection (e.g. via <a href="https://github.com/detekt/detekt">Detekt</a>)</li>
-<li>For each operative system <code>O</code> (e.g. Win, Mac, Linux):
+<li>For each operating system <code>O</code> (e.g. Win, Mac, Linux):
 <ul>
 <li>for each target platform <code>T</code>:
 <ul>
@@ -3502,7 +3502,7 @@ AbstractParser &lt;|-- StringParser
 </li>
 </ul>
 </li>
-<li>If need to release (e.g. commit on <code>master</code> branch)
+<li>If a release is needed (e.g. commit on <code>master</code> branch)
 <ul>
 <li>for each target platform <code>T</code> $\cup$ <code>kotlin-multiplatform</code>:
 <ol>
@@ -3537,7 +3537,7 @@ AbstractParser &lt;|-- StringParser
 </section><section>
 <h2 id="repositories-by-platform-pt-1">Repositories by platform (pt. 1)</h2>
 <blockquote>
-<p><strong>Takeaway</strong>: each platform has some preferred main repository where users expect to find packages onto</p>
+<p><strong>Takeaway</strong>: each platform has some preferred main repository where users expect to find packages</p>
 </blockquote>
 <ul>
 <li>
@@ -3576,14 +3576,14 @@ AbstractParser &lt;|-- StringParser
 <p><code>Linux</code> $\rightarrow$ depends on the distro</p>
 <ul>
 <li>e.g. <a href="https://archlinux.org/">Arch Linux</a> $\rightarrow$ <a href="https://aur.archlinux.org/">AUR</a></li>
-<li>inter-distro: <a href="https://flatpak.org/">Flatpack</a> $\rightarrow$ <a href="https://flathub.org/home">Flathub</a></li>
+<li>inter-distro: <a href="https://flatpak.org/">Flatpak</a> $\rightarrow$ <a href="https://flathub.org/home">Flathub</a></li>
 </ul>
 </li>
 <li>
 <p><code>Python</code> $\rightarrow$ <a href="https://pypi.org/">PyPI</a></p>
 </li>
 <li>
-<p><code>.Net</code> $\rightarrow$ <a href="https://www.nuget.org/">NuGet</a></p>
+<p><code>.NET</code> $\rightarrow$ <a href="https://www.nuget.org/">NuGet</a></p>
 </li>
 </ul>
 </section><section>
@@ -3593,13 +3593,13 @@ AbstractParser &lt;|-- StringParser
 <h2 id="write-first-wrap-elsewhere-the-case-of-jpype">Write first, wrap elsewhere: the case of <a href="https://jpype.readthedocs.io/">JPype</a></h2>
 <ul>
 <li>
-<p>In the end of the day, the Python interpreter is C++ software</p>
+<p>At the end of the day, the Python interpreter is C software</p>
 </li>
 <li>
-<p>Most commonly, efficient Python code is written in C++ and then wrapped into Python</p>
+<p>Most commonly, efficient Python code is written in C and then wrapped into Python</p>
 </li>
 <li>
-<p>Put it simply, the JVM too is C++ software</p>
+<p>Put simply, the JVM too is C++ software</p>
 </li>
 <li>
 <p>Can Python code be written in Java and then wrapped into Python?</p>
@@ -3617,7 +3617,7 @@ AbstractParser &lt;|-- StringParser
 <li>
 <p>Why exactly JPype?</p>
 <ul>
-<li>still maintained, works with vanilla CPython, good documentation, good interoperabilty with JVM types</li>
+<li>still maintained, works with vanilla CPython, good documentation, good interoperability with JVM types</li>
 </ul>
 </li>
 </ul>
