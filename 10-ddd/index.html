@@ -774,7 +774,7 @@ CustomerFactory -u-&gt; Customer: creates</p>
 <p><em>Non-trivial</em> implementations should take care of</p>
 <ul>
 <li>enforcing <em>consistency</em>, in spite of <em>concurrent</em> access</li>
-<li>support complex <em>transactions</em></li>
+<li>supporting complex <em>transactions</em></li>
 </ul>
 </li>
 </ul>
@@ -805,7 +805,7 @@ CustomerRegistry –&gt; CustomerID: exploits</p>
 <h2 id="services">Services</h2>
 <blockquote>
 <p><em>Functional</em> objects encapsulating the <em>business logic</em> of the software
-<br> e.g. operations spanning through <em>several</em> entities, objects, aggregates, etc.</p>
+<br> e.g. operations spanning <em>several</em> entities, objects, aggregates, etc.</p>
 </blockquote>
 <h3 id="purpose-2">Purpose</h3>
 <ul>
@@ -813,12 +813,12 @@ CustomerRegistry –&gt; CustomerID: exploits</p>
 <li><em>Wiring</em> aggregates, entities, and value objects <em>together</em></li>
 <li>Exposing <em>coarse-grained functionalities</em> to the users</li>
 <li>Providing a <em>façade</em> for the domain</li>
-<li>Make the business logic evolvable, interchangeable, replaceable</li>
+<li>Making the business logic evolvable, interchangeable, replaceable</li>
 </ul>
 <h3 id="remarks-2">Remarks</h3>
 <ul>
-<li>Services may be <em>exposed</em> via ReSTful API</li>
-<li>Should be designed keeping <em>current uses cases</em> into account (i.e. design services to be <em>purpose-specific</em>)
+<li>Services may be <em>exposed</em> via RESTful APIs</li>
+<li>Should be designed taking <em>current use cases</em> into account (i.e. design services to be <em>purpose-specific</em>)
 <ul>
 <li>entities/objects should support <em>future use cases</em>, too (i.e. design entities/objects to be <em>general purpose</em>)</li>
 </ul>
@@ -850,7 +850,7 @@ CustomerRegistry –&gt; CustomerID: exploits</p>
 </ul>
 </li>
 <li>e.g. <strong>proxying</strong> an external service</li>
-<li>e.g. a complex operation spanning through <strong>several aggregates</strong>, repositories, factories, etc.</li>
+<li>e.g. a complex operation spanning <strong>several aggregates</strong>, repositories, factories, etc.</li>
 </ul>
 </li>
 <li>
@@ -873,7 +873,7 @@ CustomerRegistry –&gt; CustomerID: exploits</p>
 + void setCustomer(Customer customer)
 + Date getTimestamp()
 + void setTimestamp(Date timestamp)
-+ Map&lt;Product, long&gt; Amounts getAmounts()
++ Map&lt;Product, long&gt; getAmounts()
 }</p>
 <p>interface OrderID</p>
 <p>interface Customer</p>
@@ -1082,13 +1082,13 @@ This is helpful from several perspectives:</p>
 </ul>
 </li>
 <li>
-<p>Contexts-are bounded, but <strong>not isolated</strong></p>
+<p>Contexts are bounded, but <strong>not isolated</strong></p>
 <ul>
 <li>so are models, which may <em>depend</em> on each other</li>
 </ul>
 </li>
 <li>
-<p>Changes to a context, and its model may <strong>propagate</strong> to other context / models</p>
+<p>Changes to a context and its model may <strong>propagate</strong> to other contexts / models</p>
 </li>
 </ul>
 <blockquote>
@@ -1111,7 +1111,7 @@ This is helpful from several perspectives:</p>
 <p><em>Minimise</em> the potential <em>impact</em> / <em>reach</em> of changes</p>
 <ul>
 <li>each context should be as independent as possible</li>
-<li>each change affect as few contexts as possible</li>
+<li>each change affects as few contexts as possible</li>
 </ul>
 </li>
 </ul>
