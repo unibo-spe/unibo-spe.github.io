@@ -3773,10 +3773,10 @@ AbstractParser &lt;|-- StringParser
 <p>Java’s <code>Collection</code>s are <strong>mapped</strong> to Python containers by overriding <code>__len__</code></p>
 </li>
 <li>
-<p>Java’s <code>Map</code>s support Python’s <strong>dictionaries</strong> syntax by overriding <code>__getitem__</code> and <code>__setitem__</code></p>
+<p>Java’s <code>Map</code>s support Python’s <strong>dictionary</strong> syntax by overriding <code>__getitem__</code> and <code>__setitem__</code></p>
 </li>
 <li>
-<p>Java’s <code>List</code>s support Python’s <strong>lists</strong> syntax by overriding <code>__getitem__</code> and <code>__setitem__</code></p>
+<p>Java’s <code>List</code>s support Python’s <strong>list</strong> syntax by overriding <code>__getitem__</code> and <code>__setitem__</code></p>
 </li>
 </ul>
 <figure><img src="/12-multiplatform/jpype-collections.png" alt="Java collections vs. Python collections in JPype" width="50%">
@@ -3784,16 +3784,16 @@ AbstractParser &lt;|-- StringParser
 
 </section><section>
 <h2 id="jpypes-bridging-model-pt-7">JPype’s Bridging Model (pt. 7)</h2>
-<p>Overview on the <a href="https://jpype.readthedocs.io/en/latest/quickguide.html#mplements-and-extension">official documentation</a></p>
+<p>Overview on the <a href="https://jpype.readthedocs.io/en/latest/quickguide.html#implements-and-extension">official documentation</a></p>
 <ul>
 <li>
 <p>Java <em>interfaces</em> can be <strong>implemented</strong> in Python, via JPype’s <strong>decorators</strong></p>
 </li>
 <li>
-<p>Java’s open / abstract classes <strong>cannot be extended</strong> in Python</p>
+<p>Java’s non-final / abstract classes <strong>cannot be extended</strong> in Python</p>
 </li>
 <li>
-<p>Python <strong>lambda expressions</strong> can be cast’d to Java’s <strong>functional interfaces</strong></p>
+<p>Python <strong>lambda expressions</strong> can be cast to Java’s <strong>functional interfaces</strong></p>
 </li>
 </ul>
 <figure><img src="/12-multiplatform/jpype-implements.png" alt="Implementing Java interfaces in Python" width="50%">
@@ -3864,7 +3864,7 @@ AbstractParser &lt;|-- StringParser
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>csv = jpype.JPackage(<span style="color:#d20;background-color:#fff0f0">"io.github.gciatto.csv.Csv"</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>csv.headerOf([<span style="color:#d20;background-color:#fff0f0">"filed"</span>, <span style="color:#d20;background-color:#fff0f0">"another field"</span>])
+</span></span><span style="display:flex;"><span>csv.headerOf([<span style="color:#d20;background-color:#fff0f0">"field"</span>, <span style="color:#d20;background-color:#fff0f0">"another field"</span>])
 </span></span></code></pre></div></li>
 <li>
 <p>This would raise the following <strong>error</strong>:</p>
