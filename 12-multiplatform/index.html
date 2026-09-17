@@ -2393,7 +2393,7 @@ AbstractParser &lt;|-- StringParser
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div></section><section>
 <h2 id="the-abstractparser-class">The <code>AbstractParser</code> class</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">AbstractParser</span>(<span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">source</span>: Any, <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">configuration</span>: Configuration) : Parser {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">abstract</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">AbstractParser</span>(<span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">source</span>: Any, <span style="color:#080;font-weight:bold">override</span> <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">configuration</span>: Configuration) : Parser {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// Empty methods to be overridden by sub-classes to initialize/finalise parsing.
 </span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">protected</span> <span style="color:#080;font-weight:bold">open</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">beforeParsing</span>() { <span style="color:#888">/* does nothing by default */</span> }
@@ -2532,11 +2532,11 @@ AbstractParser &lt;|-- StringParser
 </span></span></code></pre></div><ul>
 <li>notice the <code>expect</code> keyword, and the lack of function body</li>
 <li>we’re just declaring the signature of a platform-specific function</li>
-<li>there is no type for representing paths is Kotlin’s common std-lib
+<li>there is no type for representing paths in Kotlin’s common std-lib
 <ul>
 <li>hence we’re using <code>String</code> as a platform-agnostic representation of paths
 <ul>
-<li>this is suboptimal choice</li>
+<li>this is a suboptimal choice</li>
 </ul>
 </li>
 </ul>
@@ -2628,7 +2628,7 @@ AbstractParser &lt;|-- StringParser
 </ul>
 </li>
 <li>
-<p>These function supports reading / writing a file <strong>in one shot</strong></p>
+<p>These functions support reading / writing a file <strong>in one shot</strong></p>
 <ul>
 <li>i.e. they return / generate the <em>whole</em> content of the file as a string</li>
 <li>quite inefficient if the file is big</li>
@@ -2639,7 +2639,7 @@ AbstractParser &lt;|-- StringParser
 <ul>
 <li>one must instruct the compiler about
 <ol>
-<li><strong>where</strong> to look up for std-lib function (module name)</li>
+<li><strong>where</strong> to look up std-lib functions (module name)</li>
 <li><strong>how</strong> to map JS functions to Kotlin functions (<code>external</code> declarations)</li>
 </ol>
 </li>
