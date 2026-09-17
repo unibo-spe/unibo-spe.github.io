@@ -3909,7 +3909,7 @@ AbstractParser &lt;|-- StringParser
 </ul>
 </section><section>
 <h2 id="customising-java-types-in-python-pt-2">Customising Java types in Python (pt. 2)</h2>
-<p>Consider for instance the following customisations, allowing to use <em>Java collections</em> with <strong>Python syntax</strong></p>
+<p>Consider for instance the following customisations, allowing <em>Java collections</em> to be used with <strong>Python syntax</strong></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">from</span> <span style="color:#b06;font-weight:bold">typing</span> <span style="color:#080;font-weight:bold">import</span> Iterable, Sequence
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
@@ -4019,7 +4019,7 @@ AbstractParser &lt;|-- StringParser
 <p>The <code>jcsv</code> package is a Pythonic wrapper for our JVM-based <code>io.github.gciatto.csv</code> library</p>
 </li>
 <li>
-<p>Java’s type definition are brought to Python in <code>jcsv/__init__.py</code>:</p>
+<p>Java’s type definitions are brought to Python in <code>jcsv/__init__.py</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">jpype</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">jpype.imports</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">from</span> <span style="color:#b06;font-weight:bold">java.lang</span> <span style="color:#080;font-weight:bold">import</span> Iterable <span style="color:#080;font-weight:bold">as</span> JIterable
@@ -4156,7 +4156,7 @@ AbstractParser &lt;|-- StringParser
 <h2 id="example-the-jcsv-package-pt-6">Example: the <code>jcsv</code> package (pt. 6)</h2>
 <ul>
 <li>
-<p>The <code>Header</code> shall inherit all customisation for <code>Row</code>, plus the following ones:</p>
+<p>The <code>Header</code> shall inherit all customisations of <code>Row</code>, plus the following ones:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#555">@jpype.JImplementationFor</span>(<span style="color:#d20;background-color:#fff0f0">"io.github.gciatto.csv.Header"</span>)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">_Header</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@property</span>
@@ -4179,7 +4179,7 @@ AbstractParser &lt;|-- StringParser
 <h2 id="example-the-jcsv-package-pt-7">Example: the <code>jcsv</code> package (pt. 7)</h2>
 <ul>
 <li>
-<p>The <code>Record</code> shall inherit all customisation for <code>Row</code>, plus the following ones:</p>
+<p>The <code>Record</code> shall inherit all customisations of <code>Row</code>, plus the following ones:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#555">@jpype.JImplementationFor</span>(<span style="color:#d20;background-color:#fff0f0">"io.github.gciatto.csv.Record"</span>)
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">_Record</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#555">@property</span>
@@ -4233,7 +4233,6 @@ AbstractParser &lt;|-- StringParser
 <li>supporting the syntax <code>len(table)</code> instead of <code>table.getSize()</code></li>
 <li>supporting the syntax <code>table[i]</code> instead of <code>table.get(i)</code></li>
 <li>supporting the syntax <code>table[-i]</code> instead of <code>table.get(table.getSize() - i - 1)</code></li>
-<li>supporting the syntax <code>record in table</code> instead of <code>table.contains(record)</code></li>
 <li>supporting the syntax <code>table.records</code> instead of <code>table.getRecords()</code></li>
 </ul>
 </li>
@@ -4246,7 +4245,7 @@ AbstractParser &lt;|-- StringParser
 </span></span><span style="display:flex;"><span>│&nbsp;&nbsp; ├── __init__.py
 </span></span><span style="display:flex;"><span>│&nbsp;&nbsp; ├── jvm
 </span></span><span style="display:flex;"><span>│&nbsp;&nbsp; │&nbsp;&nbsp; ├── __init__.py         <span style="color:#888"># this is where JPype is loaded</span>
-</span></span><span style="display:flex;"><span>│&nbsp;&nbsp; │&nbsp;&nbsp; └── csv.jar             <span style="color:#888"># this the Fat-JAR of the JVM-based library</span>
+</span></span><span style="display:flex;"><span>│&nbsp;&nbsp; │&nbsp;&nbsp; └── csv.jar             <span style="color:#888"># this is the Fat-JAR of the JVM-based library</span>
 </span></span><span style="display:flex;"><span>│&nbsp;&nbsp; └── python.py
 </span></span><span style="display:flex;"><span>├── requirements.txt
 </span></span><span style="display:flex;"><span>└── <span style="color:#038">test</span>
@@ -4257,7 +4256,7 @@ AbstractParser &lt;|-- StringParser
 <li>
 <p>We need to <strong>ensure</strong> that the <em>JVM-based library</em> is available on the system where <code>jcsv</code> is installed</p>
 <ul>
-<li>why not including it in the Python package?</li>
+<li>why not include it in the Python package?</li>
 </ul>
 </li>
 <li>
@@ -4369,7 +4368,7 @@ jdk4py==17.0.7.0
 </ul>
 </li>
 <li>
-<p>It is important to <strong>test</strong> all the <em>costumisations</em> and <em>factory methods</em></p>
+<p>It is important to <strong>test</strong> all the <em>customisations</em> and <em>factory methods</em></p>
 <ul>
 <li>because these are <strong>not covered</strong> by the unit tests of the <em>JVM-based library</em></li>
 </ul>

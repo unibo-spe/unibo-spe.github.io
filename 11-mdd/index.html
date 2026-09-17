@@ -306,7 +306,7 @@ TaxCode -d-|&gt; CustomerID</p>
 <h3 id="gherkin-a-dsl-to-write-bdd-tests-in-a-human-friendly-way">Gherkin: a DSL to write BDD tests in a human-friendly way</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">Scenario:</span><span style="color:#06b;font-weight:bold"> Verify withdraw at the ATM works correctly
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">Given </span><span style="color:#06b;font-weight:bold">John has </span><span style="color:#d20;background-color:#fff0f0">500</span><span style="color:#06b;font-weight:bold">$ on his account
-</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">When </span><span style="color:#06b;font-weight:bold">John ask to withdraw </span><span style="color:#d20;background-color:#fff0f0">200</span><span style="color:#06b;font-weight:bold">$
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">When </span><span style="color:#06b;font-weight:bold">John asks to withdraw </span><span style="color:#d20;background-color:#fff0f0">200</span><span style="color:#06b;font-weight:bold">$
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">And </span><span style="color:#06b;font-weight:bold">John inserts the correct PIN
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">Then </span><span style="color:#d20;background-color:#fff0f0">200</span><span style="color:#06b;font-weight:bold">$ are dispensed by the ATM
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">And </span><span style="color:#06b;font-weight:bold">John has </span><span style="color:#d20;background-color:#fff0f0">300</span><span style="color:#06b;font-weight:bold">$ on his account
@@ -314,16 +314,16 @@ TaxCode -d-|&gt; CustomerID</p>
 <li>
 <p>Gherkin is a language that can describe <strong>behavioural tests</strong> for software systems</p>
 <ul>
-<li>i.e. what system should do in given scenario</li>
+<li>i.e. what the system should do in a given scenario</li>
 </ul>
 </li>
 <li>
-<p>Syntax if very flexible and it seems like <em>natural language</em></p>
+<p>Syntax is very flexible and it seems like <em>natural language</em></p>
 </li>
 <li>
-<p>Stakeholders and engineer will agree on a set of <strong>behavioural specifications</strong> for the system</p>
+<p>Stakeholders and engineers will agree on a set of <strong>behavioural specifications</strong> for the system</p>
 <ul>
-<li>written in Gherking</li>
+<li>written in Gherkin</li>
 </ul>
 </li>
 <li>
@@ -426,7 +426,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 </ul>
 </li>
 <li>
-<p>Yet the difference is fuzzy, so lets try to clarify:</p>
+<p>Yet the difference is fuzzy, so let’s try to clarify:</p>
 </li>
 </ul>
 <table>
@@ -461,7 +461,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 			<tr>
 					<td style="text-align: center"><strong>Defined by</strong></td>
 					<td style="text-align: center">companies or committees</td>
-					<td style="text-align: center">teams of domain expertes</td>
+					<td style="text-align: center">teams of domain experts</td>
 			</tr>
 			<tr>
 					<td style="text-align: center"><strong>User base</strong></td>
@@ -504,7 +504,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <li>three main aspects:
 <ol>
 <li><strong>conversion</strong> into <em>runnable code</em> (e.g. <em>translation</em> or <em>interpretation</em>) …</li>
-<li>… leveraging onto a <strong>execution engine</strong> (i.e. <em>library functionalities</em> supporting the runnable code) …</li>
+<li>… leveraging an <strong>execution engine</strong> (i.e. <em>library functionalities</em> supporting the runnable code) …</li>
 <li>… in turn relying on a <strong>software platform</strong> (e.g. JVM, .NET, etc.)</li>
 </ol>
 </li>
@@ -512,7 +512,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 </li>
 </ul>
 <blockquote>
-<p>The role of <em>DSL engineers</em> mostly focuses on <strong>steps 1</strong> &amp; <strong>2</strong> (other than defining the <strong>syntax</strong>)</p>
+<p>The role of <em>DSL engineers</em> mostly focuses on <strong>steps 1</strong> &amp; <strong>2</strong> (besides defining the <strong>syntax</strong>)</p>
 </blockquote>
 </section><section>
 <h2 id="converting-dsl-into-runnable-code">Converting DSL into runnable code</h2>
@@ -526,7 +526,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <li>e.g. <a href="https://eclipse.dev/Xtext/xtend/">Xtend</a>, or <a href="https://www.typescriptlang.org/">TypeScript</a>, despite being GPL, are transpiled into Java and JS respectively</li>
 </ul>
 </li>
-<li>a.k.a. <strong>compilation</strong> if the target language is low-level (e.g. assembly, JVM bytecode, CRL, etc.)
+<li>a.k.a. <strong>compilation</strong> if the target language is low-level (e.g. assembly, JVM bytecode, CIL, etc.)
 <ul>
 <li>e.g. Java is compiled into JVM bytecode (despite being a GPL)</li>
 </ul>
@@ -536,7 +536,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <li>
 <p><strong>Interpretation</strong>: the execution engine is able to <em>parse and execute</em> the DSL script <em>directly</em></p>
 <ul>
-<li>a.k.a. <strong>runtime interpretation</strong> or <em>runtime compilation</em> if the execution engine is able to compile the DSL script into a runnable code
+<li>a.k.a. <strong>runtime interpretation</strong> or <em>runtime compilation</em> if the execution engine is able to compile the DSL script into runnable code
 <ul>
 <li>e.g. <a href="https://github.com/tuProlog/2p-kt">2P-Kt</a> is a GPL interpreted by a custom execution engine, written in Kotlin, running on the JVM</li>
 </ul>
@@ -566,7 +566,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <p>As opposed to <strong>internal</strong> (a.k.a. <em>embedded</em>) <strong>DSLs</strong></p>
 <ul>
 <li>i.e. where the syntax is a subset of some pre-existing GPL…</li>
-<li>… whose syntax is <strong>flexible</strong> enough to allow <em>costimisation</em></li>
+<li>… whose syntax is <strong>flexible</strong> enough to allow <em>customisation</em></li>
 </ul>
 </li>
 <li>
@@ -634,7 +634,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <h2 id="key-aspects-of-internal-dsl">Key aspects of <em>internal</em> DSL</h2>
 <ul>
 <li>
-<p>Internal DSL may <strong>ease adoption</strong> of the DSL it self</p>
+<p>Internal DSL may <strong>ease adoption</strong> of the DSL itself</p>
 <ul>
 <li>users may <em>already know</em> the GPL
 <ul>
@@ -645,7 +645,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 </ul>
 </li>
 <li>
-<p>Internal DSL <strong>simplify</strong> the <strong>DSL engineering</strong> process</p>
+<p>Internal DSLs <strong>simplify</strong> the <strong>DSL engineering</strong> process</p>
 <ul>
 <li><em>no need</em> to write and maintain a <strong>custom parser</strong>
 <ul>
@@ -660,7 +660,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 </ul>
 </li>
 <li>
-<p>The <strong>integration</strong> among the GPL and the DSL is <strong>tight</strong></p>
+<p>The <strong>integration</strong> between the GPL and the DSL is <strong>tight</strong></p>
 <ul>
 <li>the DSL may exploit the <strong>constructs of the GPL</strong>, and this is commonly <em>desired</em></li>
 <li>the DSL is <strong>technologically</strong> and <strong>syntactically bound</strong> to the GPL, and this is commonly <em>undesired</em></li>
@@ -680,7 +680,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <p>This is <em>no different</em> from <strong>any other library</strong> supporting some given domain</p>
 </li>
 <li>
-<p>Except that hacks could exploit to ease the adoption of the <strong>target DSL syntax</strong></p>
+<p>Except that hacks can be exploited to ease the adoption of the <strong>target DSL syntax</strong></p>
 </li>
 </ul>
 
@@ -703,7 +703,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <h3 id="other-relevant-tools-for-language-engineering">Other relevant tools for language engineering</h3>
 <ul>
 <li>
-<p><a href="https://www.antlr.org/">ANTLR</a> only parser generation for Java, JS, Python, .Net, C++</p>
+<p><a href="https://www.antlr.org/">ANTLR</a> only parser generation for Java, JS, Python, .NET, C++</p>
 </li>
 <li>
 <p><a href="https://microsoft.github.io/language-server-protocol/overviews/lsp/overview/">Language Server Protocol</a> (LSP)</p>
@@ -751,8 +751,8 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <li>scoping (with pluggable rules)</li>
 <li>IDE support via LSP</li>
 <li>syntax colouring</li>
-<li>etc.</li>
 <li>test stubs</li>
+<li>etc.</li>
 </ul>
 </li>
 <li>
@@ -763,7 +763,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <h2 id="running-example-the-task-scheduling-domain">Running example: the <strong>task scheduling</strong> domain</h2>
 <ul>
 <li>
-<p>Users may be willing to <strong>schedule</strong> custom <em>tasks</em> on a machine</p>
+<p>Users may want to <strong>schedule</strong> custom <em>tasks</em> on a machine</p>
 </li>
 <li>
 <p><strong>Task</strong> $\equiv$ running any <em>command</em> available on the OS</p>
@@ -772,9 +772,9 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 </ul>
 </li>
 <li>
-<p><strong>Scheduling</strong> implied defining <em>when</em> the task should be executed</p>
+<p><strong>Scheduling</strong> implies defining <em>when</em> the task should be executed</p>
 <ul>
-<li><em>relatively</em> to now: e.g. <em><strong>in</strong> 5 minutes</em>, <em><strong>in</strong> 1 hour</em>, etc.</li>
+<li><em>relative</em> to now: e.g. <em><strong>in</strong> 5 minutes</em>, <em><strong>in</strong> 1 hour</em>, etc.</li>
 <li><em>absolutely</em>: e.g. <em>today <strong>at</strong> 10:00</em>, <em>tomorrow <strong>at</strong> 12:00</em>, <em><strong>on</strong> 2023/11/23 <strong>at</strong> 13:16</em> etc.</li>
 <li><em>before</em> or <em>after</em> <strong>some other task</strong></li>
 <li><em>periodically</em>: e.g. <em><strong>every</strong> 5 minutes</em>, <em><strong>every</strong> 48 hours</em>, etc.</li>
@@ -818,7 +818,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <p>Clone with Git the <code>exercises</code> branch</p>
 </li>
 <li>
-<p>The cloned repository is and <a href="https://www.eclipse.org/downloads/">Ecplise</a> project</p>
+<p>The cloned repository is an <a href="https://www.eclipse.org/downloads/">Eclipse</a> project</p>
 <ul>
 <li>please install <a href="https://eclipse.dev/Xtext/download.html">Eclipse for DSL developers</a> from Xtext’s website</li>
 </ul>
@@ -827,7 +827,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <p>In Eclipse, import the <em>repository root</em> directory as a <strong>Gradle project</strong></p>
 </li>
 <li>
-<p>You may also use <strong>IntelliJ</strong>, in that case just import the <code>sheduler-lang/</code> directory as <em>Gradle project</em></p>
+<p>You may also use <strong>IntelliJ</strong>; in that case just import the <code>sheduler-lang/</code> directory as a <em>Gradle project</em></p>
 <ul>
 <li>no syntax colouring or Xtext support on IntelliJ or VSCode</li>
 </ul>
@@ -891,7 +891,7 @@ pension contribution InpsGLA paid by employer 2/3 and employee 1/3 {
 <li>
 <p><code>generateXtextLanguage</code> generates the language infrastructure</p>
 <ul>
-<li>there including:
+<li>including:
 <ul>
 <li>domain model interfaces / classes</li>
 <li>parser</li>
@@ -1115,8 +1115,8 @@ Task *-- RelativeTime
 Task *-- AbsoluteTime
 RelativeTime *-- TimeSpan
 TimeSpan *-- TimeUnit
-RelativeTime *-- Date
-RelativeTime *-- ClockTime
+AbsoluteTime *-- Date
+AbsoluteTime *-- ClockTime
 @enduml
 
 </taskpool></task></timespan></figure>
@@ -1196,7 +1196,7 @@ RelativeTime *-- ClockTime
 <h2 id="about-validation-rules-pt-2">About validation rules (pt. 2)</h2>
 <p>Remarks:</p>
 <ul>
-<li>the name of the validation method is meaning-less</li>
+<li>the name of the validation method is meaningless</li>
 <li>only the <strong>type</strong> of the parameter matters</li>
 <li>plus the presence of the <code>@Check</code> annotation</li>
 <li>the <code>@CheckType</code> annotation is optional, and defaults to <code>CheckType.NORMAL</code>
@@ -1233,7 +1233,7 @@ RelativeTime *-- ClockTime
 </ul>
 </li>
 <li>
-<p>Error is some <code>ClockTime</code> is invalid</p>
+<p>Error if some <code>ClockTime</code> is invalid</p>
 <ul>
 <li>hour must be between 0 and 23</li>
 <li>minute must be between 0 and 59</li>
@@ -1250,7 +1250,7 @@ RelativeTime *-- ClockTime
 <p>Error if some <code>TimeSpan</code> is invalid</p>
 <ul>
 <li>negative duration</li>
-<li>1000 or more when the unit is nano/milli seconds</li>
+<li>1000 or more when the unit is nano/milliseconds</li>
 <li>60 or more when the unit is minutes/seconds</li>
 <li>24 or more when the unit is hours</li>
 </ul>
@@ -1269,7 +1269,7 @@ RelativeTime *-- ClockTime
 <h2 id="about-scoping-rules">About scoping rules</h2>
 <ul>
 <li>
-<p>Validation rules are defined in the <code>ShedulerScopeProvider</code> class</p>
+<p>Scoping rules are defined in the <code>ShedulerScopeProvider</code> class</p>
 <ul>
 <li>package: <code>it.unibo.spe.mdd.sheduler.scoping</code></li>
 <li>Gradle sub-project: <code>sheduler-lang/</code><strong><code>it.unibo.spe.mdd.sheduler</code></strong></li>
@@ -1279,7 +1279,7 @@ RelativeTime *-- ClockTime
 <p>Stub class is generated by Xtext when running the <code>generateXtextLanguage</code> task</p>
 </li>
 <li>
-<p>Content of the stub and validation rule example:</p>
+<p>Content of the stub and scoping rule example:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ShedulerScopeProvider</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">extends</span><span style="color:#bbb"> </span>AbstractShedulerScopeProvider<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#555">@Override</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span>IScope<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">getScope</span>(EObject<span style="color:#bbb"> </span>context,<span style="color:#bbb"> </span>EReference<span style="color:#bbb"> </span>reference)<span style="color:#bbb"> </span>{<span style="color:#bbb">
@@ -1298,7 +1298,7 @@ RelativeTime *-- ClockTime
 <li>in our case, this could only happen in <code>Task</code>s’ <code>before</code> and <code>after</code> properties</li>
 <li>the scope is essentially a container of <code>EObject</code>s, which are the possible values for the <code>EReference</code>
 <ul>
-<li>the implementer of the scope provide should select which <code>EObject</code>s to include in the scope</li>
+<li>the implementer of the scope provider should select which <code>EObject</code>s to include in the scope</li>
 </ul>
 </li>
 </ul>
@@ -1322,7 +1322,7 @@ RelativeTime *-- ClockTime
 <p>Two approaches:</p>
 <ul>
 <li><strong>interpretation</strong>: the DSL is interpreted by some <strong>execution engine</strong></li>
-<li><strong>translation</strong>: the DSL is translated into some <em>executable code</em>, leveraging on the API of some <strong>execution engine</strong></li>
+<li><strong>translation</strong>: the DSL is translated into some <em>executable code</em>, leveraging the API of some <strong>execution engine</strong></li>
 </ul>
 </li>
 <li>
@@ -1363,7 +1363,7 @@ RelativeTime *-- ClockTime
 </li>
 <li>we may define some custom notion of <code>ShedulerRuntime</code>
 <ul>
-<li>leveraging on the <code>ScheduledExecutorService</code> API…</li>
+<li>leveraging the <code>ScheduledExecutorService</code> API…</li>
 <li>… to schedule the <code>ShedulerTask</code>s for execution</li>
 </ul>
 </li>
