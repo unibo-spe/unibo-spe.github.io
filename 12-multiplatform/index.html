@@ -2671,8 +2671,8 @@ AbstractParser &lt;|-- StringParser
 </span></span><span style="display:flex;"><span><span style="color:#888">// Kotlin mapping for: https://nodejs.org/api/fs.html#fswritefilesyncfile-data-options
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">external</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">writeFileSync</span>(<span style="color:#080;font-weight:bold">file</span>: String, <span style="color:#080;font-weight:bold">data</span>: String, options: <span style="color:#080;font-weight:bold">dynamic</span> = definedExternally)
 </span></span></code></pre></div><ul>
-<li>the <code>@JsModule</code> annotation instructs the compiler about where to look up for the <code>fs</code> module</li>
-<li><code>external</code> declarations are Kotlin signatures of JS function</li>
+<li>the <code>@JsModule</code> annotation instructs the compiler about where to look up the <code>fs</code> module</li>
+<li><code>external</code> declarations are Kotlin signatures of JS functions</li>
 <li><code>dynamic</code> is a special type that can be used to represent any JS object
 <ul>
 <li>it overrides Kotlin’s type system, hence it should be used with care</li>
@@ -2702,8 +2702,8 @@ AbstractParser &lt;|-- StringParser
 <li>notice the exploitation of common code for parsing the string into a <code>Table</code> (namely, <code>parseAsCSV</code>)</li>
 <li>notice the <code>js("...")</code> magic function
 <ul>
-<li>it allows to write JS code directly in Kotlin</li>
-<li>the provided string should contain bare JS code, the compiler will output “as-is”</li>
+<li>it allows JS code to be written directly in Kotlin</li>
+<li>the provided string should contain bare JS code, which the compiler will output as-is</li>
 <li>it’s a way to fill the abstraction gap on JS</li>
 <li>we use it to create a JS object on the fly, to provide optional parameters to <code>readFileSync</code></li>
 </ul>
@@ -2749,7 +2749,7 @@ AbstractParser &lt;|-- StringParser
 <p>file <code>Utils.jvm.kt</code> in <code>jvmTest</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span> <span style="color:#b06;font-weight:bold">java.io.File</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">actual</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">createTempFile</span>(name: String, extension: String, content: String): String
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">actual</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">createTempFile</span>(name: String, extension: String, content: String): String {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">file</span> = <span style="color:#b06;font-weight:bold">File</span>.createTempFile(name, extension)
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">file</span>.writeText(content)
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">file</span>.absolutePath
@@ -2767,7 +2767,7 @@ AbstractParser &lt;|-- StringParser
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">actual</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">createTempFile</span>(name: String, extension: String, content: String): String {
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">tag</span> = <span style="color:#b06;font-weight:bold">Math</span>.random().toString().replace(<span style="color:#d20;background-color:#fff0f0">"."</span>, <span style="color:#d20;background-color:#fff0f0">""</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">path</span> = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$tmpDirectory</span><span style="color:#d20;background-color:#fff0f0">/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">-</span><span style="color:#33b;background-color:#fff0f0">$tag</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#33b;background-color:#fff0f0">$extension</span><span style="color:#d20;background-color:#fff0f0">"</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">path</span> = <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">${tmpdir()}</span><span style="color:#d20;background-color:#fff0f0">/</span><span style="color:#33b;background-color:#fff0f0">$name</span><span style="color:#d20;background-color:#fff0f0">-</span><span style="color:#33b;background-color:#fff0f0">$tag</span><span style="color:#d20;background-color:#fff0f0">.</span><span style="color:#33b;background-color:#fff0f0">$extension</span><span style="color:#d20;background-color:#fff0f0">"</span>
 </span></span><span style="display:flex;"><span>    writeFileSync(path, content)
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">return</span> path
 </span></span><span style="display:flex;"><span>}
@@ -2780,7 +2780,7 @@ AbstractParser &lt;|-- StringParser
 <h2 id="multi-platform-testing-actual-tests">Multi-platform testing (actual tests)</h2>
 <ul>
 <li>
-<p>file <code>CsvFiles.kt</code> in <code>commonMain</code>:</p>
+<p>file <code>CsvFiles.kt</code> in <code>commonTest</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">object</span> <span style="color:#b06;font-weight:bold">CsvFiles</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#888">// Path of the temporary file containing the string CsvStrings.iris
 </span></span></span><span style="display:flex;"><span>    <span style="color:#888">// (file lazily created upon first usage).
