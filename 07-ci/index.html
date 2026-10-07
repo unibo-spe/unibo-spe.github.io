@@ -28,7 +28,7 @@
 <br>
 <h3 id="danilo-pianini"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2026-10-01
+<p>Compiled on: 2026-10-07
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -50,8 +50,8 @@
 </section><section>
 <h1 id="the-integration-hell">The Integration Hell</h1>
 <ul>
-<li>Traditional software development takes several months for <em>“integrating”</em> a couple of years of development</li>
-<li>The longer there is no integrated project, the higher the <strong>risk</strong></li>
+<li>Traditional software development takes several months to <em>“integrate”</em> a couple of years of development</li>
+<li>The longer the project goes without integration, the higher the <strong>risk</strong></li>
 </ul>
 </section><section>
 <h1 id="continuous-integration-2">Continuous integration</h1>
@@ -98,7 +98,7 @@
 <li>The build process should be <em>rich</em> and <em>fast</em></li>
 <li>Operations requiring a long time should be <em>automated</em>
 <ul>
-<li>And run somewhere else than devs’ PCs</li>
+<li>And run somewhere other than devs’ PCs</li>
 </ul>
 </li>
 </ul>
@@ -113,19 +113,19 @@
 <li>Matching the relevant specifications of the actual targets</li>
 </ul>
 </li>
-<li>High degree of <em>configurability</em></li>
+<li>Offer a high degree of <em>configurability</em></li>
 <li>Possibly, <em>declarative configuration</em></li>
 <li>A <em>notification system</em> to alert about failures or issues</li>
 <li>Support for <em>authentication</em> and deployment to external services</li>
 </ul>
 <p><strong>Plenty</strong> of integrators on the market</p>
-<p>Circle CI, Travis CI, Werker, done.io, Codefresh, Codeship, Bitbucket Pipelines, GitHub Actions, GitLab CI/CD Pipelines, JetBrains TeamCity…</p>
+<p>Circle CI, Travis CI, Wercker, Drone.io, Codefresh, Codeship, Bitbucket Pipelines, GitHub Actions, GitLab CI/CD Pipelines, JetBrains TeamCity…</p>
 </section><section>
 <!-- this file includes generated content. Do not edit. Edit content/07-ci/generator.md, instead. -->
 <h1 id="core-concepts">Core concepts</h1>
-<p>Naming and organization is variable across platforms, but <em>in general</em>:</p>
+<p>Naming and organization are variable across platforms, but <em>in general</em>:</p>
 <ul>
-<li>One or more <strong>pipelines</strong> can be associated to <strong>events</strong>
+<li>One or more <strong>pipelines</strong> can be associated with <strong>events</strong>
 <ul>
 <li>For instance, a <em>new commit</em>, an update to a <em>pull request</em>, or a <em>timeout</em></li>
 </ul>
@@ -210,7 +210,7 @@ creating “<em>self-hosted runners</em>”. Self-hosted and GitHub-hosted runne
 <h2 id="convention-over-configuration">Convention over configuration</h2>
 <p>Several CI systems inherit the “<em>convention over configuration</em>” principle.</p>
 <p>For instance, by default (with an empty configuration file) Travis CI builds a Ruby project using <code>rake</code>.</p>
-<p>GitHub actions <strong>does not</strong> adhere to the principle:
+<p>GitHub Actions <strong>does not</strong> adhere to the principle:
 if left unconfigured, the runner does nothing
 (it does not even clone the repository locally).</p>
 <p>Probable reason: Actions is an <em>all-round</em> repository automation system for GitHub,
@@ -266,7 +266,7 @@ added support for <em>YAML anchors</em> but does <strong>not</strong> support <e
 <li>“<strong>actions</strong>”: <em>reusable parameterizable <strong>steps</strong></em>
 <ul>
 <li><em>JavaScript</em> (working on any OS)</li>
-<li><em>Docker container</em>-based (linux only)</li>
+<li><em>Docker container</em>-based (Linux only)</li>
 <li><em>Composite</em> (assemblage of other actions)</li>
 </ul>
 </li>
@@ -413,7 +413,7 @@ and many are developed by the community.</p>
 			<tr>
 					<td>String</td>
 					<td><code>'...'</code> (mandatorily single quoted)</td>
-					<td>Javascript’s <code>parseInt</code>, with the exception that <code>''</code> is <code>0</code></td>
+					<td>JavaScript’s <code>parseInt</code>, with the exception that <code>''</code> is <code>0</code></td>
 					<td>none</td>
 			</tr>
 			<tr>
@@ -436,7 +436,7 @@ and many are developed by the community.</p>
 <ul>
 <li>Grouping with <code>( )</code></li>
 <li>Array access by index with <code>[ ]</code></li>
-<li>Object deference with <code>.</code></li>
+<li>Object dereference with <code>.</code></li>
 <li>Logic operators: not <code>!</code>, and <code>&amp;&amp;</code>, or <code>||</code></li>
 <li>Comparison operators: <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code></li>
 </ul>
@@ -451,13 +451,13 @@ and many are developed by the community.</p>
 <li>By default, every step has an implicit <code>if: success()</code> conditional</li>
 </ul>
 </li>
-<li><code>always()</code>: always <code>true</code>, causes the step evaluation even if previous failed, but supports combinations
+<li><code>always()</code>: always <code>true</code>, causes the step to be evaluated even if previous steps failed, but supports combinations
 <ul>
 <li><code>always() &amp;&amp; &lt;expression returning false&gt;</code> evaluates the expression and does not run the step</li>
 </ul>
 </li>
 <li><code>cancelled()</code>: <code>true</code> if the workflow execution has been canceled</li>
-<li><code>failure()</code>: <code>true</code> if a previous step of any previous job has failed</li>
+<li><code>failure()</code>: <code>true</code> if any previous step or job has failed</li>
 </ul>
 </section><section>
 <h2 id="the-gha-context">The GHA context</h2>
@@ -492,7 +492,7 @@ and many are developed by the community.</p>
 </ul>
 </section><section>
 <h2 id="checking-out-the-repository">Checking out the repository</h2>
-<p>By default, GitHub actions’ <em>runners do <strong>not</strong> check out the repository</em></p>
+<p>By default, GitHub Actions’ <em>runners do <strong>not</strong> check out the repository</em></p>
 <ul>
 <li>Actions may not need to access the code
 <ul>
@@ -529,7 +529,7 @@ and many are developed by the community.</p>
 <ul>
 <li>Check out the repo with the maximum <em>depth</em></li>
 <li>Recursively check out all <em>submodules</em></li>
-<li>Checkout all <em>tags</em></li>
+<li>Check out all <em>tags</em></li>
 </ul>
 </section><section>
 <h2 id="writing-outputs">Writing outputs</h2>
@@ -572,15 +572,15 @@ The simplest way to send commands is to print on standard output a message in th
 </ul>
 <p>A good continuous integration pipeline should test <em>all the supported combinations</em></p>
 <ul>
-<li>or a sample, if the performance is otherwise unbearable</li>
+<li>or a sample, if the cost is otherwise unbearable</li>
 </ul>
 <p>The solution is the adoption of a <strong>build matrix</strong></p>
 <ul>
 <li>Build variables and their allowed values are specified</li>
 <li>The CI integrator generates the <em>cartesian product</em> of the variable values, and launches a build for each!</li>
-<li>Note: there is no built-in feature to exclude some combination
+<li>Note: combinations can be removed with <code>exclude:</code> (and added with <code>include:</code>)
 <ul>
-<li>It must be done manually using <code>if</code> conditionals</li>
+<li>Finer-grained skipping can still be done with <code>if</code> conditionals</li>
 </ul>
 </li>
 </ul>
@@ -618,7 +618,7 @@ The simplest way to send commands is to print on standard output a message in th
 <p>We would like the CI to be able to</p>
 <ul>
 <li>Sign our artifacts</li>
-<li>Delivery/Deploy our artifacts on remote targets</li>
+<li>Deliver/deploy our artifacts to remote targets</li>
 </ul>
 <p>Both operations <strong>require private information to be shared</strong></p>
 <p>Of course, private data <em>can’t be shared</em></p>
@@ -639,7 +639,7 @@ The simplest way to send commands is to print on standard output a message in th
 <p>GitHub Actions can access these secrets from the context:</p>
 <ul>
 <li>Using the <code>secrets.&lt;secret name&gt;</code> context object</li>
-<li>Access is allowed only for workflows generated by local events
+<li>Access is allowed only for workflows triggered by local events
 <ul>
 <li>Namely, no secrets for pull requests</li>
 </ul>
@@ -1002,10 +1002,10 @@ the alternative is to <em>install a private key in the runner</em></p>
 <h3 id="setup-and-auth">Setup and Auth</h3>
 <p>Install from package manager, then:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh --version
-</span></span><span style="display:flex;"><span>gh auth login            <span style="color:#888"># guided OAuth or token</span>
-</span></span><span style="display:flex;"><span>gh auth status           <span style="color:#888"># verify</span>
-</span></span><span style="display:flex;"><span>gh config <span style="color:#038">set</span> prompt disabled <span style="color:#038">true</span>   <span style="color:#888"># non-interactive scripts</span>
-</span></span><span style="display:flex;"><span>gh <span style="color:#038">alias</span> <span style="color:#038">set</span> prd <span style="color:#d20;background-color:#fff0f0">'pr create -d -f'</span>   <span style="color:#888"># example alias</span>
+</span></span><span style="display:flex;"><span>gh auth login                      <span style="color:#888"># guided OAuth or token</span>
+</span></span><span style="display:flex;"><span>gh auth status                     <span style="color:#888"># verify</span>
+</span></span><span style="display:flex;"><span>gh config <span style="color:#038">set</span> prompt disabled      <span style="color:#888"># non-interactive scripts</span>
+</span></span><span style="display:flex;"><span>gh <span style="color:#038">alias</span> <span style="color:#038">set</span> prd <span style="color:#d20;background-color:#fff0f0">'pr create -d -f'</span> <span style="color:#888"># example alias</span>
 </span></span></code></pre></div><p>Multiple accounts:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh auth login --hostname github.com --scopes repo,workflow
 </span></span><span style="display:flex;"><span>gh auth switch --user &lt;handle&gt;
@@ -1022,14 +1022,14 @@ the alternative is to <em>install a private key in the runner</em></p>
 </span></span><span style="display:flex;"><span>gh pr merge --auto --squash
 </span></span></code></pre></div><p>Releases and notifications:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh release create v1.2.0 dist/* -t <span style="color:#d20;background-color:#fff0f0">"v1.2.0"</span> -n <span style="color:#d20;background-color:#fff0f0">"Changelog…"</span>
-</span></span><span style="display:flex;"><span>gh notif list --unread
+</span></span><span style="display:flex;"><span>gh api notifications
 </span></span></code></pre></div></section><section>
 <h2 id="cicd-secrets-and-raw-api">CI/CD, Secrets, and Raw API</h2>
 <p>Workflows:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh workflow list
 </span></span><span style="display:flex;"><span>gh run list
 </span></span><span style="display:flex;"><span>gh run watch --job <span style="color:#00d;font-weight:bold">123456789</span>
-</span></span><span style="display:flex;"><span>gh workflow run build.yml -f <span style="color:#369">ref</span>=main
+</span></span><span style="display:flex;"><span>gh workflow run build.yml --ref main
 </span></span></code></pre></div><p>Secrets:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>gh secret <span style="color:#038">set</span> NPM_TOKEN --body <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#369">$NPM_TOKEN</span><span style="color:#d20;background-color:#fff0f0">"</span>              <span style="color:#888"># repo</span>
 </span></span><span style="display:flex;"><span>gh secret <span style="color:#038">set</span> PROD_KEY --org &lt;org&gt; --repos <span style="color:#d20;background-color:#fff0f0">'app-*'</span>       <span style="color:#888"># org with repo filter</span>
@@ -1244,7 +1244,7 @@ with a pre-populated text area</li>
 <br>
 <h3 id="danilo-pianini-1"><a href="mailto:danilo.pianini@unibo.it">Danilo Pianini — <code>danilo.pianini@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2026-10-01
+<p>Compiled on: 2026-10-07
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section>
