@@ -41,7 +41,7 @@
 <br>
 <h3 id="giovanni-ciatto"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2026-10-07
+<p>Compiled on: 2026-10-08
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -176,8 +176,8 @@
 <h2 id="inside-a-meta-meta-model-ecore">Inside a meta-meta-model: Ecore</h2>
 
 <div class="multiCol">
-    <div class="col  ">
-    <img src="./ecore-core.svg" alt="Core of the Ecore meta-meta-model: an EPackage contains EClassifiers; EClass and EDataType are EClassifiers, EEnum is an EDataType; an EClass has super-types and contains EStructuralFeatures (with name, lowerBound, upperBound), which are either EAttributes typed by an EDataType or EReferences (with a containment flag and an optional opposite) typed by an EClass" style="width: 100%; max-height: 80vh; object-fit: contain;">
+    <div class="col col-4 ">
+    <img src="./ecore-core.svg" alt="Core of the Ecore meta-meta-model: an EPackage contains EClassifiers; EClass and EDataType are EClassifiers, EEnum is an EDataType; an EClass has super-types and contains EStructuralFeatures (with name, lowerBound, upperBound), which are either EAttributes typed by an EDataType or EReferences (with a containment flag and an optional opposite) typed by an EClass" style="width: 100%; max-height: 60vh; object-fit: contain;">
 </div>
 <div class="col  ">
     <ul>
@@ -228,34 +228,31 @@
 
 <div class="multiCol">
     <div class="col  ">
-    <p>Textual (<code>.shed</code> file, for humans):</p>
-<pre tabindex="0"><code>pool myPool {
-    schedule task greetOnce {
-        command "echo hello"
-        at 2030/10/11 12:13
-    }
-}
-</code></pre>
+    <p>Meta-model (abstract syntax):
+<img src="./book-metamodel.svg" alt="Meta-model of the example: a Book (title: String, year: int) contains one or more Authors (name: String) via the authors reference" style="max-height: 35vh; object-fit: contain;"></p>
 </div>
 <div class="col  ">
-    <p><a href="https://www.omg.org/spec/XMI">XMI</a> (OMG’s XML interchange format, for tools):</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">&lt;sheduler:TaskPoolSet</span> <span style="color:#369">xmlns:sheduler=</span><span style="color:#d20;background-color:#fff0f0">"http://www.unibo.it/spe/mdd/sheduler/Sheduler"</span><span style="color:#b06;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">&lt;pools</span> <span style="color:#369">name=</span><span style="color:#d20;background-color:#fff0f0">"myPool"</span><span style="color:#b06;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#b06;font-weight:bold">&lt;tasks</span> <span style="color:#369">name=</span><span style="color:#d20;background-color:#fff0f0">"greetOnce"</span> <span style="color:#369">command=</span><span style="color:#d20;background-color:#fff0f0">"echo hello"</span><span style="color:#b06;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#b06;font-weight:bold">&lt;absolute&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#b06;font-weight:bold">&lt;date</span> <span style="color:#369">year=</span><span style="color:#d20;background-color:#fff0f0">"2030"</span> <span style="color:#369">month=</span><span style="color:#d20;background-color:#fff0f0">"10"</span> <span style="color:#369">day=</span><span style="color:#d20;background-color:#fff0f0">"11"</span><span style="color:#b06;font-weight:bold">/&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#b06;font-weight:bold">&lt;time</span> <span style="color:#369">hour=</span><span style="color:#d20;background-color:#fff0f0">"12"</span> <span style="color:#369">minute=</span><span style="color:#d20;background-color:#fff0f0">"13"</span><span style="color:#b06;font-weight:bold">/&gt;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#b06;font-weight:bold">&lt;/absolute&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#b06;font-weight:bold">&lt;/tasks&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">&lt;/pools&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">&lt;/sheduler:TaskPoolSet&gt;</span>
+    <p><a href="https://yaml.org">YAML</a>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">title</span>:<span style="color:#bbb"> </span>Domain-Specific Languages<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">year</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">2010</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">authors</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Martin Fowler<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span>- <span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Rebecca Parsons<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+<div class="col  ">
+    <p><a href="https://www.w3.org/XML/">XML</a>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">&lt;book</span> <span style="color:#369">title=</span><span style="color:#d20;background-color:#fff0f0">"Domain-Specific Languages"</span> <span style="color:#369">year=</span><span style="color:#d20;background-color:#fff0f0">"2010"</span><span style="color:#b06;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">&lt;author</span> <span style="color:#369">name=</span><span style="color:#d20;background-color:#fff0f0">"Martin Fowler"</span><span style="color:#b06;font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#b06;font-weight:bold">&lt;author</span> <span style="color:#369">name=</span><span style="color:#d20;background-color:#fff0f0">"Rebecca Parsons"</span><span style="color:#b06;font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">&lt;/book&gt;</span>
 </span></span></code></pre></div>
 </div>
 
 </div>
 
 <ul>
-<li>Both <em>conform</em> to the same meta-model, and they are parsed into the <strong>same</strong> in-memory model</li>
+<li>Different <em>notations</em>, <strong>same</strong> abstract structure: both <em>conform</em> to the meta-model on the left</li>
 </ul>
 </section><section>
 <h2 id="what-a-meta-model-cannot-say-static-semantics">What a meta-model cannot say: static semantics</h2>
@@ -266,17 +263,18 @@
 <li>
 <p>Many rules of a domain are <em>not</em> structural, e.g.:</p>
 <ul>
-<li>“two tasks in the same pool cannot have the same name”</li>
-<li>“a month is a number between 1 and 12”</li>
-<li>“a task cannot be scheduled after itself, not even indirectly”</li>
+<li>“two authors of the same book cannot have the same name”</li>
+<li>“the title of a book cannot be empty”</li>
+<li>“a book cannot be published in the future”</li>
 </ul>
 </li>
 <li>
 <p>These are called <strong>static semantics</strong> (or <em>well-formedness rules</em>)</p>
 <ul>
 <li>OMG’s way: constraints written in <a href="https://www.omg.org/spec/OCL">OCL</a> (<em>Object Constraint Language</em>), attached to the meta-model
-<pre tabindex="0"><code>context TaskPool
-inv uniqueTaskNames: self.tasks-&gt;select(t | t.name &lt;&gt; null)-&gt;isUnique(t | t.name)
+<pre tabindex="0"><code>context Book
+inv uniqueAuthorNames: self.authors-&gt;isUnique(a | a.name)
+inv nonEmptyTitle: self.title.size() &gt; 0
 </code></pre></li>
 <li>Xtext’s way: <strong>validation rules</strong> written in a GPL (Java), see <a href="#/exercise-1">Exercise 1</a></li>
 </ul>
@@ -2884,7 +2882,7 @@ pool otherPool {
 </section><section>
 <h1 id="lecture-is-over">Lecture is Over</h1>
 <br>
-<p>Compiled on: 2026-10-07
+<p>Compiled on: 2026-10-08
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href="../#/toc"><i class="fa fa-undo" aria-hidden="true"></i> back to ToC</a></p>
 </section>
