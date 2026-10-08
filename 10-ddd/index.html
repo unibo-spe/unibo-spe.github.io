@@ -44,6 +44,33 @@
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
+<h2 id="lecture-goals">Lecture goals</h2>
+<ul>
+<li>Understand how <strong>domain-driven design</strong> guides the derivation of a software <em>model</em> from a <em>domain</em></li>
+<li>Know the DDD <strong>building blocks</strong> (tactical design) and <strong>integration patterns</strong> (strategic design)</li>
+<li>Map a DDD model onto a <strong>layered architecture</strong></li>
+<li>Understand <strong>event sourcing</strong> and <strong>CQRS</strong></li>
+<li>Practice on the exercises</li>
+</ul>
+</section><section>
+<h2 id="outline">Outline</h2>
+<ol>
+<li><a href="#/motivation">Motivation</a>: <em>why a structured design process</em></li>
+<li><a href="#/notions">Main notions</a>: <em>domain, subdomains, bounded contexts, model, ubiquitous language</em></li>
+<li><a href="#/building-blocks">Building blocks</a>: <em>entities, value objects, aggregates, factories, repositories, services, domain events</em></li>
+<li><a href="#/strategic-design">Strategic design</a>: <em>bounded contexts, context maps, integration patterns</em></li>
+<li><a href="#/architecture">Layered architecture</a>: <em>layers, ports &amp; adapters, modules</em></li>
+<li><a href="#/advanced">Event sourcing and CQRS</a>: <em>storing changes, segregating reads and writes</em></li>
+<li><a href="#/exercises">Exercises</a></li>
+</ol>
+<br>
+<blockquote>
+<p>Main references: <a href="https://www.domainlanguage.com/ddd/">Evans, <em>Domain-Driven Design</em>, 2003</a>, <a href="https://www.informit.com/store/implementing-domain-driven-design-9780321834577">Vernon, <em>Implementing Domain-Driven Design</em>, 2013</a></p>
+</blockquote>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="motivation">
+  
 <h1 id="motivation-and-context">Motivation and Context</h1>
 </section><section>
 <h2 id="why-a-structured-design-process">Why a structured design process?</h2>
@@ -104,7 +131,10 @@
 </ul>
 </li>
 </ul>
-</section><section>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="notions">
+  
 <h1 id="main-notions-of-ddd">Main notions of DDD</h1>
 </section><section>
 
@@ -203,7 +233,10 @@
 <p><strong>Domain</strong>: the reference area of knowledge</p>
 </li>
 <li>
-<p><strong>Context</strong>: a portion of the domain</p>
+<p><strong>Subdomain</strong>: a portion of the domain (problem space)</p>
+</li>
+<li>
+<p><strong>Bounded context</strong>: the boundary within which a model and its language are consistent (solution space)</p>
 </li>
 <li>
 <p><strong>Model</strong>: a reification of the domain in software</p>
@@ -213,17 +246,9 @@
 </li>
 </ul>
 </section><section>
-<h2 id="the-domain">The <em>Domain</em></h2>
+<h2 id="subdomains-and-bounded-contexts"><em>Subdomains</em> and <em>Bounded Contexts</em></h2>
 <blockquote>
-<p>A well-established sphere of knowledge, influence or activity</p>
-</blockquote>
-<ul>
-<li>e.g. some university (department, faculty, HR, etc.), linear algebra, etc.</li>
-</ul>
-</section><section>
-<h2 id="contexts"><em>Contexts</em></h2>
-<blockquote>
-<p>A <em>portion</em> of the domain with a clear <em>boundary</em>:</p>
+<p>A bounded context is a <em>boundary</em> within which a model and its language are consistent:</p>
 <ul>
 <li>relying on a sub-set of the concepts of the domain</li>
 <li>where words/names have a unique, precise meaning</li>
@@ -231,11 +256,20 @@
 </ul>
 </blockquote>
 <ul>
-<li>e.g. departments, divisions, complex numbers, etc.</li>
+<li>ideally 1 subdomain $\approx$ 1 bounded context, but not necessarily</li>
 </ul>
 </section><section>
-<h2 id="domain-vs-context">Domain <em>vs.</em> Context</h2>
-<p><img src="./domain.png" alt="Domain and context"></p>
+<h2 id="kinds-of-subdomains">Kinds of subdomains</h2>
+<ul>
+<li><em>core</em>: where the business differentiates itself $\rightarrow$ invest most modelling effort here</li>
+<li><em>supporting</em>: needed, specific to the business, not differentiating</li>
+<li><em>generic</em>: common to many businesses (e.g. authentication, invoicing) $\rightarrow$ buy / reuse</li>
+<li>e.g. for a university: teaching may be core, course scheduling supporting, authentication generic</li>
+</ul>
+<p>(cf. <a href="https://www.domainlanguage.com/ddd/">Evans, 2003</a>; <a href="https://www.domainlanguage.com/ddd/reference/">Evans, <em>DDD Reference</em>, 2015</a>)</p>
+</section><section>
+<h2 id="domain-vs-subdomains-vs-contexts">Domain <em>vs.</em> Subdomains <em>vs.</em> Contexts</h2>
+<p><img src="./domain.png" alt="A domain containing payment, offer, customer, and shipping subdomains; each subdomain contains an e-commerce bounded context and its services"></p>
 </section><section>
 <h2 id="the-domain-model">The domain <em>Model</em></h2>
 <blockquote>
@@ -318,7 +352,7 @@
 </ul>
 </li>
 <li>
-<p>Draw a <strong>context map</strong> tracking</p>
+<p>Draw a <strong>context map</strong> (defined <a href="#/context-map">later</a>) tracking</p>
 <ul>
 <li>the main contexts and their junctions</li>
 <li>words whose meaning varies across contexts</li>
@@ -332,20 +366,19 @@
 </li>
 </ol>
 </section><section>
-<h2 id="example-of-context-map">Example of context map</h2>
-<div class="multiCol">
-    <div class="col  ">
-    <p>Abstract context map:
-<img src="./context-map.jpg" alt="Abstract context map"></p>
-</div>
-<div class="col  ">
-    <p>Actual context map:
-<img src="./bounded-contexts.png" alt="Actual context map"></p>
-</div>
-</div>
+<h2 id="discovering-the-domain-event-storming">Discovering the domain: Event Storming</h2>
+<ul>
+<li>Collaborative workshop with domain experts and developers (cf. <a href="https://www.eventstorming.com/">Brandolini</a>)</li>
+<li>Put <em>domain events</em> (past tense) on a timeline, then add commands, actors, aggregates, and policies</li>
+<li>Boundaries between clusters of events suggest <em>bounded contexts</em></li>
+<li>Domain events are introduced <a href="#/domain-events">later</a></li>
+</ul>
 
 </section>
-</section><section>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="building-blocks">
+  
 <h1 id="ddd-building-blocks">DDD Building Blocks</h1>
 </section><section>
 <h2 id="towards-building-blocks">Towards building blocks</h2>
@@ -443,7 +476,7 @@
 <p><strong>Value Object</strong>: objects without identity</p>
 </li>
 <li>
-<p><strong>Aggregate Root</strong>: compound objects</p>
+<p><strong>Aggregate</strong>: cluster of entities/value objects with a consistency boundary, accessed via its <strong>root</strong> entity</p>
 </li>
 <li>
 <p><strong>Domain Event</strong>: objects modelling relevant events (notifications)</p>
@@ -460,7 +493,7 @@
 </ul>
 </section><section>
 <h2 id="building-blocks-concept">Building blocks (concept)</h2>
-<p><img src="./building-blocks.png" alt="Building blocks graphical overview"></p>
+<p><img src="./building-blocks.png" alt="A concept map linking model-driven design to services, entities, value objects, aggregates, factories, and repositories; entities act as aggregate roots and repositories access aggregates"></p>
 </section><section>
 <h2 id="entities-vs-value-objects">Entities vs. Value Objects</h2>
 <blockquote>
@@ -499,7 +532,7 @@
 <li>equality compares attributes alone</li>
 </ul>
 </li>
-<li>Must be <em>stateless</em> $\Rightarrow$ better to use <em>immutable</em> design
+<li>Must be <em>immutable</em>: their state is their attributes, which never change
 <ul>
 <li>read-only properties</li>
 <li>lack of state-changing methods</li>
@@ -573,11 +606,14 @@ TaxCode -d-|&gt; CustomerID</p>
     handlePlantumlFigureByID("plantuml-figure-0");
 </script>
 </section><section>
-<h2 id="aggregate-root">Aggregate Root</h2>
+<h2 id="aggregates-and-aggregate-roots">Aggregates and Aggregate Roots</h2>
 <h3 id="definition">Definition</h3>
 <ul>
 <li>
-<p>A <em>composite</em> entity, <em>aggregating</em> related entities/value objects</p>
+<p>An <em>aggregate</em> is a cluster of entities/value objects treated as a unit for consistency and changes</p>
+</li>
+<li>
+<p>The <em>aggregate root</em> is the single entity in the aggregate that outside objects may reference</p>
 </li>
 <li>
 <p>It <em>guarantees</em> the <em>consistency</em> of the objects it contains</p>
@@ -592,8 +628,9 @@ TaxCode -d-|&gt; CustomerID</p>
 <p>Outside objects should <em>avoid</em> holding <em>references</em> to composing objects</p>
 </li>
 </ul>
+<p>(cf. <a href="https://www.domainlanguage.com/ddd/">Evans, 2003</a>; <a href="https://www.informit.com/store/implementing-domain-driven-design-9780321834577">Vernon, 2013</a>)</p>
 </section><section>
-<h2 id="aggregate-root-constraints">Aggregate Root (constraints)</h2>
+<h2 id="aggregate-roots-constraints">Aggregate Roots (constraints)</h2>
 <ul>
 <li>
 <p>They are usually <em>compound</em> entities</p>
@@ -610,7 +647,7 @@ TaxCode -d-|&gt; CustomerID</p>
 <li>
 <p><em>Must</em> implement <code>equals()</code> and <code>hashCode()</code> on JVM (as any other entity)</p>
 <ul>
-<li>implementation may take <em>composing</em> items into account</li>
+<li>equality compares the root’s identity, as for any entity</li>
 </ul>
 </li>
 <li>
@@ -619,12 +656,12 @@ TaxCode -d-|&gt; CustomerID</p>
 <li>that’s why they are called aggregate <em>roots</em></li>
 <li>notable exception: <em>references</em> to <em>identifiers</em> of other aggregates</li>
 </ul>
-<p><img src="./aggregate-references.png" alt="Aggregate roots should not hold references to other aggregates’ components"></p>
+<p><img src="./aggregate-references.png" alt="Three separate aggregates, each with an aggregate root and internal components; a prohibition symbol marks that internal components must not be referenced across aggregate boundaries"></p>
 </li>
 </ul>
 </section><section>
 <h2 id="aggregate-root-example">Aggregate Root (example)</h2>
-<p><img src="./aggregate-root.png" alt="Two aggregates with inter-dependencies"></p>
+<p><img src="./aggregate-root.png" alt="A Buyer aggregate containing a Buyer aggregate root, and an Order aggregate containing an Order root, Address value object, and OrderItem child entity; Order refers to Buyer through BuyerID"></p>
 <p>(notice the link between <code>Order</code> and <code>Buyer</code> implemented by letting the <code>Order</code> hold a reference to the <code>BuyerID</code>)</p>
 </section><section>
 <h2 id="factories-definition">Factories (definition)</h2>
@@ -632,7 +669,7 @@ TaxCode -d-|&gt; CustomerID</p>
 <p>Objects aimed at <strong>creating</strong> other objects</p>
 </blockquote>
 <br>
-<p><img src="./factories.png" alt="Concept of factory"></p>
+<p><img src="./factories.png" alt="A client delegates entity creation to a factory, which hides the complexity of creating the entity"></p>
 </section><section>
 <h2 id="factories-details">Factories (details)</h2>
 <h3 id="purpose">Purpose</h3>
@@ -694,21 +731,21 @@ TaxCode -d-|&gt; CustomerID</p>
 <p>VatNumber -u-|&gt; CustomerID
 TaxCode -u-|&gt; CustomerID</p>
 <p>interface CustomerFactory {
-+ VatNumber computeVatNumber(String name, String surname, Date birthDate, String birthPlace)
++ TaxCode computeTaxCode(String name, String surname, Date birthDate, String birthPlace)
 ..
-+ Customer newCustomerPerson(TaxCode code, String fullName, string email)
++ Customer newCustomerPerson(TaxCode code, String fullName, String email)
 + Customer newCustomerPerson(String name, String surname, Date birthDate, String birthPlace, String email)
 ..
 + Customer newCustomerCompany(VatNumber code, String fullName, String email)
 }
 note bottom of CustomerFactory</p>
 <ul>
-<li>method for creating VAT numbers</li>
+<li>method for computing tax codes</li>
 <li>methods for creating person customers</li>
 <li>methods for creating company customers
 end note</li>
 </ul>
-<p>CustomerFactory -r-&gt; VatNumber: creates
+<p>CustomerFactory -r-&gt; TaxCode: creates
 CustomerFactory -u-&gt; Customer: creates</p>
 </figure>
 <script>
@@ -719,7 +756,7 @@ CustomerFactory -u-&gt; Customer: creates</p>
 <blockquote>
 <p>Objects mediating the <em>persistent</em> <strong>storage/retrieval</strong> of other objects</p>
 </blockquote>
-<p><img src="./repositories.png" alt="Concept of repositories"></p>
+<p><img src="./repositories.png" alt="A client retrieves and saves an aggregate through a repository, which hydrates and persists the aggregate in a database"></p>
 </section><section>
 <h2 id="repositories-details">Repositories (details)</h2>
 <h3 id="purpose-1">Purpose</h3>
@@ -788,8 +825,8 @@ CustomerFactory -u-&gt; Customer: creates</p>
 + Iterable<customer> getAllCustomers()
 ..
 + Customer findCustomerById(CustomerID id)
-+ Iterable<customer> findCustomerByName(string name)
-+ Iterable<customer> findCustomerByEmail(string email)
++ Iterable<customer> findCustomerByName(String name)
++ Iterable<customer> findCustomerByEmail(String email)
 ..
 + void addNewCustomer(Customer customer)
 + void updateCustomer(Customer customer)
@@ -804,16 +841,34 @@ CustomerRegistry –&gt; CustomerID: exploits</p>
 </section><section>
 <h2 id="services">Services</h2>
 <blockquote>
-<p><em>Functional</em> objects encapsulating the <em>business logic</em> of the software
-<br> e.g. operations spanning <em>several</em> entities, objects, aggregates, etc.</p>
+<p>Operations that do not naturally belong to any entity or value object</p>
 </blockquote>
 <h3 id="purpose-2">Purpose</h3>
 <ul>
-<li>Reifying <em>control-related</em> aspects of the software</li>
-<li><em>Wiring</em> aggregates, entities, and value objects <em>together</em></li>
-<li>Exposing <em>coarse-grained functionalities</em> to the users</li>
-<li>Providing a <em>façade</em> for the domain</li>
-<li>Making the business logic evolvable, interchangeable, replaceable</li>
+<li>
+<p>Reifying <em>control-related</em> aspects of the software</p>
+</li>
+<li>
+<p><em>Wiring</em> aggregates, entities, and value objects <em>together</em></p>
+</li>
+<li>
+<p>Exposing <em>coarse-grained functionalities</em> to the users</p>
+</li>
+<li>
+<p>Providing a <em>façade</em> for the domain</p>
+</li>
+<li>
+<p>Making the business logic evolvable, interchangeable, replaceable</p>
+</li>
+<li>
+<p><em>domain service</em>: domain logic spanning several aggregates; lives in the domain layer</p>
+</li>
+<li>
+<p><em>application service</em>: orchestrates a use case (loads aggregates via repositories, calls them, saves, publishes events); lives in the application layer</p>
+</li>
+<li>
+<p>Rule of thumb: put behaviour on entities/aggregates first; a model of only getters/setters plus services is an <em>anemic domain model</em> (cf. <a href="https://martinfowler.com/bliki/AnemicDomainModel.html">Fowler</a>)</p>
+</li>
 </ul>
 <h3 id="remarks-2">Remarks</h3>
 <ul>
@@ -873,7 +928,7 @@ CustomerRegistry –&gt; CustomerID: exploits</p>
 + void setCustomer(Customer customer)
 + Date getTimestamp()
 + void setTimestamp(Date timestamp)
-+ Map&lt;Product, long&gt; getAmounts()
++ Map&lt;Product, Long&gt; getAmounts()
 }</p>
 <p>interface OrderID</p>
 <p>interface Customer</p>
@@ -897,7 +952,8 @@ OrderID -d[hidden]- Customer</p>
 <script>
     handlePlantumlFigureByID("plantuml-figure-3");
 </script>
-</section><section>
+</section>
+<section data-noprocess="" data-shortcode-slide="" id="domain-events">
 <h2 id="domain-events-definition">Domain Events (definition)</h2>
 <blockquote>
 <p>A value-like object capturing some domain-related <em>event</em>
@@ -906,7 +962,7 @@ OrderID -d[hidden]- Customer</p>
 <ul>
 <li>actually, only the event <em>notification</em>/description is reified to a type</li>
 </ul>
-<p><img src="./domain-events.png" alt="Concept of domain events"></p>
+<p><img src="./domain-events.png" alt="A Basket aggregate publishes a Product Added Event after a product is added; a Recommendation Service consumes it to update a Recommendations aggregate"></p>
 </section><section>
 <h2 id="domain-events-details">Domain Events (details)</h2>
 <h3 id="purpose-3">Purpose</h3>
@@ -955,52 +1011,49 @@ OrderID -d[hidden]- Customer</p>
 </ul>
 </li>
 <li>
-<p>[Teacher’s Suggestion]: prefer <em>neutral</em> names for event classes in the model</p>
-<ul>
-<li>e.g. <code>OrderEventArgs</code> instead of <code>OrderPerformedEventArgs</code></li>
-<li>e.g. <code>OrderEvent</code> instead of <code>OrderPerformedEvent</code></li>
-<li>the reason: the same OOP type may be used to represent different events:
-<ul>
-<li>e.g. <code>orderIssued</code>, <code>orderConfirmed</code>, <code>orderCancelled</code>, etc.</li>
-</ul>
+<p>Common convention: one type per event, named in the <em>past tense</em> (e.g. <code>OrderPlaced</code>, <code>OrderCancelled</code>) (cf. <a href="https://www.informit.com/store/implementing-domain-driven-design-9780321834577">Vernon, 2013</a>)</p>
 </li>
-</ul>
+<li>
+<p>[Teacher’s Suggestion]: use a neutral type (e.g. <code>OrderEvent</code>) plus a kind/discriminator field when many events share the same payload</p>
 </li>
 </ul>
 </section><section>
 <h2 id="domain-events-example">Domain Events (example)</h2>
-<figure id="plantuml-figure-4" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-5" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
 <p>interface OrderManagementService {
 + void performOrder(Order order)
 ..
-+ void <strong>notifyOrderPerformed</strong>(OrderEventArgs event)
++ void <strong>notifyOrderPerformed</strong>(OrderEvent event)
 }</p>
-<p>interface OrderEventArgs {
+<p>interface OrderEvent {
 + OrderID getID()
 + CustomerID getCustomer()
 + Date <strong>getTimestamp</strong>()
-+ Dictionary&lt;ProductID, long&gt; getAmounts()
++ Map&lt;ProductID, Long&gt; getAmounts()
 }</p>
 <p>interface OrderID</p>
 <p>interface CustomerID</p>
 <p>interface ProductID</p>
-<p>OrderEventArgs “1” *-u- “1” OrderID
-OrderEventArgs “1” *-r- “1” CustomerID
-OrderEventArgs “1” *-d- “N” ProductID</p>
-<p>OrderEventArgs .. OrderManagementService</p>
-<p>note left of OrderEventArgs: domain event
+<p>OrderEvent “1” *-u- “1” OrderID
+OrderEvent “1” *-r- “1” CustomerID
+OrderEvent “1” *-d- “N” ProductID</p>
+<p>OrderEvent .. OrderManagementService</p>
+<p>note left of OrderEvent: domain event
 note left of OrderID: value object
 note left of ProductID: value object
 note right of CustomerID: value object
 note right of OrderManagementService: service</p>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-4");
+    handlePlantumlFigureByID("plantuml-figure-5");
 </script>
 
 </section>
-</section><section>
-<h1 id="ddd-patterns">DDD Patterns</h1>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="strategic-design">
+  
+<h1 id="strategic-design">Strategic Design</h1>
 </section><section>
 <h2 id="towards-ddd-patterns">Towards DDD patterns</h2>
 <h3 id="further-notions-involving-contexts">Further notions involving <strong>contexts</strong></h3>
@@ -1012,7 +1065,10 @@ note right of OrderManagementService: service</p>
 <p><strong>Context Map</strong>: providing a <em>global view</em> on the domain and its contexts</p>
 </li>
 </ul>
-</section><section>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="context-map">
+  
 <h2 id="actual-definitions">Actual definitions</h2>
 <h3 id="context-boundary">Context Boundary</h3>
 <blockquote>
@@ -1039,7 +1095,8 @@ This is helpful from several perspectives:</p>
 </blockquote>
 </section><section>
 <h2 id="example-of-bounded-context-map">Example of bounded context map</h2>
-<p><img src="./bounded-contexts.png" alt="Context map"></p>
+<p><img src="./bounded-contexts.png" alt="A sales context containing Opportunity, Pipeline, Territory, and Sales Person, connected by Customer and Product to a support context containing Ticket, Defect, and Product Version"></p>
+<p>(source: <a href="https://martinfowler.com/bliki/BoundedContext.html">Fowler</a>)</p>
 </section><section>
 <h2 id="bounded-contexts--context-maps-best-practices">Bounded Contexts &amp; Context Maps (best practices)</h2>
 <ul>
@@ -1098,7 +1155,7 @@ This is helpful from several perspectives:</p>
 <h2 id="model-integrity-patterns">Model integrity patterns</h2>
 <ul>
 <li><strong>Shared kernel</strong>: sharing a common model among contexts</li>
-<li><strong>Customer–supplier</strong>: the consumer model’s team requests changes in the supplier model</li>
+<li><strong>Customer–supplier</strong>: the downstream (customer) team requests changes in the supplier model</li>
 <li><strong>Conformist</strong>: one model’s team reacts to changes of some model they depend on</li>
 <li><strong>Anti-corruption layer</strong>: a model’s team isolates itself from another model</li>
 </ul>
@@ -1117,7 +1174,7 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="model-integrity-patterns-background-pt-1">Model integrity patterns (background, pt. 1)</h2>
-<p><img src="./context-map.jpg" alt="Context maps concept"></p>
+<p><img src="./context-map.jpg" alt="Three oval contexts, A, B, and Legacy, each enclosing a model; lines between the ovals mark contact points between contexts"></p>
 <ul>
 <li>Context maps highlight relations among contexts
 <ul>
@@ -1127,7 +1184,7 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="model-integrity-patterns-background-pt-2">Model integrity patterns (background, pt. 2)</h2>
-<p><img src="./provider-consumer.jpg" alt="Upstream and downstream roles"></p>
+<p><img src="./provider-consumer.jpg" alt="A downstream Search Page Context and an upstream Search API Context connected by a line indicating their roles"></p>
 <p>Each relation among 2 contexts usually involves 2 ends/roles:</p>
 <ul>
 <li><strong>upstream</strong> end, i.e. the one <em>providing</em> functionalities</li>
@@ -1152,7 +1209,7 @@ This is helpful from several perspectives:</p>
 <p>*trust $\approx$ willingness to collaborate + seek stability</p>
 </section><section>
 <h2 id="shared-kernel">Shared Kernel</h2>
-<p><img src="./shared-kernel.jpg" alt="Shared kernel concept"></p>
+<p><img src="./shared-kernel.jpg" alt="Catalog and Inventory contexts overlap around a shared supplier model used by both contexts"></p>
 <ul>
 <li>
 <p>Best when: multiple contexts <em>share</em> the <strong>same team</strong> / organization / product</p>
@@ -1172,7 +1229,7 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="customersupplier">Customer–Supplier</h2>
-<p><img src="./customer-supplier.jpg" alt="Customer–supplier concept"></p>
+<p><img src="./customer-supplier.jpg" alt="A downstream Search Page Context and upstream Search API Context connected by a customer-supplier relationship"></p>
 <ul>
 <li>
 <p>Best when:</p>
@@ -1202,7 +1259,7 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="conformist">Conformist</h2>
-<p><img src="./conformist.jpg" alt="Conformist concept"></p>
+<p><img src="./conformist.jpg" alt="A Search Page Context downstream of a Search API Context, while an External Context conforms downstream to the Search API Context"></p>
 <ul>
 <li>
 <p>Best when:</p>
@@ -1222,7 +1279,7 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="anti-corruption-layer">Anti-corruption layer</h2>
-<p><img src="./anti-corruption-layer.jpg" alt="Anti-corruption layer concept"></p>
+<p><img src="./anti-corruption-layer.jpg" alt="A Search Context isolates its model from an upstream Catalog Context through an anti-corruption translation layer with no business logic"></p>
 <ul>
 <li>
 <p>Best when:</p>
@@ -1249,7 +1306,128 @@ This is helpful from several perspectives:</p>
 </li>
 </ul>
 </section><section>
-<h1 id="layered-architecture">Layered Architecture</h1>
+<h2 id="partnership">Partnership</h2>
+<ul>
+<li>
+<p>Best when: contexts are <strong>peers</strong> and their teams can cooperate closely</p>
+</li>
+<li>
+<p>Key idea: teams <strong>coordinate</strong> development, releases, and operational decisions</p>
+<ul>
+<li>neither team is a supplier or customer of the other</li>
+</ul>
+</li>
+<li>
+<p>Trade-off: the relationship works only while communication and shared commitment remain strong</p>
+</li>
+</ul>
+</section><section>
+<h2 id="open-host-service">Open Host Service</h2>
+<ul>
+<li>
+<p>Best when: one <strong>upstream</strong> context serves many different downstream contexts</p>
+</li>
+<li>
+<p>Key idea: expose a <strong>stable protocol</strong> that all downstream contexts can use</p>
+<ul>
+<li>avoid a separate, bespoke integration for every consumer</li>
+</ul>
+</li>
+<li>
+<p>Keep the protocol explicit and evolve it compatibly</p>
+</li>
+</ul>
+</section><section>
+<h2 id="published-language">Published Language</h2>
+<ul>
+<li>
+<p>Best when: contexts exchange information through a <strong>shared interchange language</strong></p>
+</li>
+<li>
+<p>Key idea: publish and document the language independently of either internal model</p>
+<ul>
+<li>e.g. a versioned message schema or API representation</li>
+</ul>
+</li>
+<li>
+<p>An open host service often uses a published language</p>
+</li>
+</ul>
+</section><section>
+<h2 id="separate-ways">Separate Ways</h2>
+<ul>
+<li>
+<p>Best when: integration would cost more than the value it provides</p>
+</li>
+<li>
+<p>Key idea: keep contexts <strong>independent</strong>; duplicate or recreate only the information each needs</p>
+</li>
+<li>
+<p>Reconsider when duplicated work or inconsistent information becomes costly</p>
+</li>
+</ul>
+</section><section>
+<h2 id="integration-patterns-summary">Integration patterns (summary)</h2>
+<table>
+	<thead>
+			<tr>
+					<th>Pattern</th>
+					<th>Upstream/downstream relation</th>
+					<th>Key idea</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Shared Kernel</td>
+					<td>peers</td>
+					<td>Keep a small shared part of the model</td>
+			</tr>
+			<tr>
+					<td>Customer–Supplier</td>
+					<td>customer influences supplier</td>
+					<td>Collaborate on the supplier’s evolution</td>
+			</tr>
+			<tr>
+					<td>Conformist</td>
+					<td>downstream accepts upstream</td>
+					<td>Adapt the downstream model to the upstream</td>
+			</tr>
+			<tr>
+					<td>Anti-corruption Layer</td>
+					<td>downstream shields itself</td>
+					<td>Translate the upstream model at the boundary</td>
+			</tr>
+			<tr>
+					<td>Partnership</td>
+					<td>peers</td>
+					<td>Coordinate development and releases</td>
+			</tr>
+			<tr>
+					<td>Open Host Service</td>
+					<td>one upstream, many downstreams</td>
+					<td>Offer a stable protocol for integration</td>
+			</tr>
+			<tr>
+					<td>Published Language</td>
+					<td>shared interchange language</td>
+					<td>Publish a documented integration language</td>
+			</tr>
+			<tr>
+					<td>Separate Ways</td>
+					<td>no integration</td>
+					<td>Decouple when integration is not worth its cost</td>
+			</tr>
+	</tbody>
+</table>
+<ul>
+<li><em>Big Ball of Mud</em> is a descriptive label for an unstructured system, not an integration pattern.</li>
+</ul>
+<p>(cf. <a href="https://www.domainlanguage.com/ddd/reference/">Evans, <em>DDD Reference</em>, 2015</a>)</p>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="architecture">
+  
+<h1 id="layered-onion-architecture">Layered (onion) Architecture</h1>
 </section><section>
 <h2 id="layered-architecture-disclaimer">Layered Architecture (disclaimer)</h2>
 <ul>
@@ -1263,15 +1441,15 @@ This is helpful from several perspectives:</p>
 <p>Layered architectures are well suited to preserve models’ integrity</p>
 </li>
 <li>
-<p>Here we focus on the <strong>hexagonal architecture</strong>, a particular case of layered architecture</p>
+<p>The same dependency rule (outer depends on inner, never the converse) underlies <em>hexagonal</em> (ports &amp; adapters, cf. <a href="https://alistair.cockburn.us/hexagonal-architecture/">Cockburn, 2005</a>), <em>onion</em>, and <em>clean</em> architectures</p>
 <ul>
-<li>well suited to DDD</li>
+<li>in hexagonal terms, domain/application define <em>ports</em> (e.g. repository interfaces); outer layers provide <em>adapters</em> (e.g. DB-backed repositories, REST controllers)</li>
 </ul>
 </li>
 </ul>
 </section><section>
-<h2 id="hexagonal-architecture-concept">Hexagonal architecture (concept)</h2>
-<p><img src="./layered-architecture.png" alt="Hexagonal architecture concept"></p>
+<h2 id="layered-onion-architecture-concept">Layered (onion) architecture (concept)</h2>
+<p><img src="./layered-architecture.svg" alt="Concentric layers: Domain at the centre, Application and Presentation around it, and Messages, REST API, and Storage as outer adapters"></p>
 <ul>
 <li>outer layers depend on inner ones
 <ul>
@@ -1280,7 +1458,7 @@ This is helpful from several perspectives:</p>
 </li>
 </ul>
 </section><section>
-<h2 id="hexagonal-architecture-explanation">Hexagonal architecture (explanation)</h2>
+<h2 id="layered-onion-architecture-explanation">Layered (onion) architecture (explanation)</h2>
 <ol>
 <li>
 <p><strong>Domain layer</strong>: contains the domain model (entities, values, events, aggregates, etc.)</p>
@@ -1311,7 +1489,7 @@ This is helpful from several perspectives:</p>
 <ul>
 <li>this is where repositories are implemented</li>
 <li>may involve some DB technology</li>
-<li>depends on the domain layer (and, possibly, on the presentation layer)</li>
+<li>depends on the domain layer (and, possibly, on the application layer)</li>
 </ul>
 </li>
 <li>
@@ -1340,7 +1518,7 @@ This is helpful from several perspectives:</p>
 </li>
 </ul>
 
-<figure id="plantuml-figure-7" class="plantuml" alt="" style="width: 100%;height: 50vh;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-13" class="plantuml" alt="" style="width: 100%;height: 50vh;max-width: 95vw;max-height: 80vh;">
     
 top to bottom direction
 
@@ -1355,24 +1533,27 @@ component ":message-queue" as mq
 component ":command-line" as cli
 component product
 
-domain &lt;|-- application
-application &lt;|-- presentation
-presentation &lt;|-- server
-presentation &lt;|-- mq
-application &lt;|-- storage
-presentation -r-|&gt; gson
-presentation &lt;|-- cli
-db &lt;|-l- storage  
-product -u-|&gt; server
-product -u-|&gt; storage
-product -u-|&gt; mq    
+application ..&gt; domain
+presentation ..&gt; application
+server ..&gt; presentation
+mq ..&gt; presentation
+cli ..&gt; presentation
+storage ..&gt; application
+presentation ..&gt; gson
+storage ..&gt; db
+product ..&gt; server
+product ..&gt; storage
+product ..&gt; mq
 
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-7");
+    handlePlantumlFigureByID("plantuml-figure-13");
 </script>
 
-</section><section>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="advanced">
+  
 <h1 id="advanced-aspects-of-ddd">Advanced aspects of DDD</h1>
 </section><section>
 <h2 id="event-sourcing-preliminaries">Event sourcing (preliminaries)</h2>
@@ -1386,7 +1567,7 @@ product -u-|&gt; mq
 </ul>
 </li>
 </ul>
-<p><img src="./state-vs-flow.svg" alt="Flow vs. state representation"></p>
+<p><img src="./state-vs-flow.svg" alt="Two timelines for a counter: state snapshots record values 0, 1, 2, while a flow records initial value 0 followed by increment events that reconstruct those values"></p>
 </section><section>
 <h2 id="event-sourcing">Event sourcing</h2>
 <blockquote>
@@ -1395,6 +1576,7 @@ product -u-|&gt; mq
 <ul>
 <li>perfect match with DDD as domain events are first-class citizens</li>
 </ul>
+<p>(cf. <a href="https://martinfowler.com/eaaDev/EventSourcing.html">Fowler, Event Sourcing</a>)</p>
 </section><section>
 <h2 id="event-sourcing-pros--cons">Event sourcing (pros &amp; cons)</h2>
 <h3 id="benefits">Benefits</h3>
@@ -1430,10 +1612,10 @@ product -u-|&gt; mq
 <p>Advanced pattern for building <em>highly-scalable</em> applications</p>
 </li>
 <li>
-<p>It leverages <em>event sourcing</em> and <em>layered architecture</em>…</p>
+<p>It is <em>often combined</em> with event sourcing, but does not require it (cf. <a href="https://martinfowler.com/bliki/CQRS.html">Fowler, CQRS</a>)</p>
 </li>
 <li>
-<p>… to deliver <strong>reactive</strong>, <strong>eventual-consistent</strong> solutions where:</p>
+<p>It can deliver <strong>reactive</strong>, <strong>eventually consistent</strong> solutions where:</p>
 <ul>
 <li>context boundaries can be easily enforced</li>
 <li>single responsibility principle is applied extensively</li>
@@ -1445,6 +1627,7 @@ product -u-|&gt; mq
 <blockquote>
 <p><strong>Split</strong> the <em>domain</em> and <em>application</em> layers to <em>segregate</em> <strong>read/write</strong> responsibilities</p>
 </blockquote>
+<p>(cf. <a href="https://martinfowler.com/bliki/CQRS.html">Fowler, CQRS</a>; <a href="https://martinfowler.com/eaaDev/EventSourcing.html">Fowler, Event Sourcing</a>)</p>
 <ul>
 <li>
 <p><strong>Read</strong> model (a.k.a. <em>view</em> or <em>query</em> model)</p>
@@ -1461,7 +1644,8 @@ product -u-|&gt; mq
 </ul>
 </section><section>
 <h2 id="cqrs-concept">CQRS concept</h2>
-<p><img src="./cqrs.png" alt="CQRS concept"></p>
+<p><img src="./cqrs.png" alt="A UI sends commands to a command model and queries to a query model; the command model updates a database and propagates changes to the query model, which serves read results"></p>
+<p>(source: <a href="https://martinfowler.com/bliki/CQRS.html">Fowler</a>)</p>
 </section><section>
 <h2 id="cqrs-workflow-writing">CQRS workflow (writing)</h2>
 <p>Whenever users want to <em>perform an action</em> in the system:</p>
@@ -1473,10 +1657,10 @@ product -u-|&gt; mq
 </ul>
 <br>
 <ol start="2">
-<li>the command is possibly <em>validated</em> &amp; <strong>stored</strong> onto some database</li>
+<li>the command is validated by the <strong>write model</strong>; if accepted, it produces one or more <em>domain events</em></li>
 </ol>
 <ul>
-<li>an ad-hoc <strong>database</strong> is available in the model for storing commands</li>
+<li>with event sourcing, the <em>events</em> (not commands) are appended to an <em>event store</em></li>
 </ul>
 </section><section>
 <h2 id="cqrs-workflow-reading">CQRS workflow (reading)</h2>
@@ -1491,37 +1675,39 @@ product -u-|&gt; mq
 </ol>
 <br>
 <ol start="2">
-<li>commands up to time $t$ are assumed to be <strong>reified</strong> when reading
+<li>the read model is a <em>projection</em> built from the events up to time $t$
 <ul>
-<li>a <strong>snapshot</strong> of the system state <em>at time $t$</em> is returned to users</li>
+<li>it returns a read-optimised representation of the system state at time $t$</li>
 </ul>
 </li>
 </ol>
 </section><section>
-<h2 id="cqrs--when-are-commands-reified">CQRS – When are commands reified?</h2>
+<h2 id="cqrs--when-is-the-read-model-updated">CQRS – When is the read model updated?</h2>
 <blockquote>
-<p><strong>Reification</strong> is the process of computing the state of the system at time $t$ by applying the commands recorded up to time $t$
-<br></p>
+<p>A <em>projection</em> computes a read model by applying the events recorded up to time $t$</p>
 </blockquote>
 <ul>
 <li>
-<p>If queries and commands are stored on different databases</p>
+<p>If read and write data are stored on different databases</p>
 <ul>
-<li>reification implies updating the query database</li>
+<li>projecting events updates the query database</li>
 <li>the query database should be <strong>read-efficient</strong></li>
-<li>the commands database should be <strong>write-efficient</strong></li>
+<li>the event store should be <strong>write-efficient</strong></li>
 </ul>
 </li>
 <li>
 <p>Several, non-mutually-exclusive strategies:</p>
 <ul>
-<li><strong>eager</strong>: commands are reified as soon as they are received</li>
-<li><strong>pull</strong>: commands are reified upon reading queries</li>
-<li><strong>scheduled</strong>: commands are reified in the background, periodically</li>
+<li><strong>eager</strong>: events are projected as soon as they are received</li>
+<li><strong>on read</strong>: events are projected when a query is read</li>
+<li><strong>scheduled</strong>: events are projected in the background, periodically</li>
 </ul>
 </li>
 </ul>
-</section><section>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="exercises">
+  
 <h1 id="exercises">Exercises</h1>
 <p>Repository: <a href="https://github.com/unibo-spe/ddd-exercise">https://github.com/unibo-spe/ddd-exercise</a>, branch <code>exercise</code></p>
 <p>(solutions on branch <code>master</code>)</p>
@@ -1702,7 +1888,7 @@ product -u-|&gt; mq
 <li>Guide here: <a href="https://www.baeldung.com/apache-commons-csv">https://www.baeldung.com/apache-commons-csv</a></li>
 </ul>
 </li>
-<li><a href="http://opencsv.sourceforge.net/">OpenCSV</a>
+<li><a href="https://opencsv.sourceforge.net/">OpenCSV</a>
 <ul>
 <li>Guide here: <a href="https://www.baeldung.com/opencsv">https://www.baeldung.com/opencsv</a></li>
 </ul>
