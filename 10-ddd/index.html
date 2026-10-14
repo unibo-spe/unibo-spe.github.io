@@ -40,7 +40,7 @@
 <br>
 <h3 id="giovanni-ciatto"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2026-10-13
+<p>Compiled on: 2026-10-14
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -57,7 +57,7 @@
 <ol>
 <li><a href="#/motivation">Motivation</a>: <em>why a structured design process</em></li>
 <li><a href="#/notions">Main notions</a>: <em>domain, subdomains, bounded contexts, model, ubiquitous language</em></li>
-<li><a href="#/building-blocks">Building blocks</a>: <em>entities, value objects, aggregates, factories, repositories, services, domain events</em></li>
+<li><a href="#/building-blocks">Building blocks</a>: <em>entities, value objects, aggregates, factories, repositories, services, dependency injection, domain events</em></li>
 <li><a href="#/strategic-design">Strategic design</a>: <em>bounded contexts, context maps, integration patterns</em></li>
 <li><a href="#/architecture">Layered architecture</a>: <em>layers, ports &amp; adapters, modules</em></li>
 <li><a href="#/advanced">Event sourcing and CQRS</a>: <em>storing changes, segregating reads and writes</em></li>
@@ -267,9 +267,44 @@
 <li>e.g. for a university: teaching may be core, course scheduling supporting, authentication generic</li>
 </ul>
 <p>(cf. <a href="https://www.domainlanguage.com/ddd/">Evans, 2003</a>; <a href="https://www.domainlanguage.com/ddd/reference/">Evans, <em>DDD Reference</em>, 2015</a>)</p>
-</section><section>
+</section>
+<section data-noprocess="" data-shortcode-slide="" id="domain-subdomains-contexts">
 <h2 id="domain-vs-subdomains-vs-contexts">Domain <em>vs.</em> Subdomains <em>vs.</em> Contexts</h2>
-<p><img src="./domain.png" alt="A domain containing payment, offer, customer, and shipping subdomains; each subdomain contains an e-commerce bounded context and its services"></p>
+<p><img src="./domain.svg" alt="An e-commerce domain split into payment (generic), offer (core), customer (supporting), and shipping (supporting) subdomains, each realised by one bounded context with its services, except shipping, realised by a shipping and a tracking context. Every context has its own Customer model, all linked to the same customer identity (CustomerID): as payer in payment (billing address, tax code or VAT number, payment methods), as shopper in the catalog (purchase history, preferences, segment), as account holder in the customer context (personal data, credentials, contacts), and as recipient in shipping (shipping addresses, delivery preferences) and tracking (shipments to track, notification contacts)"></p>
+</section>
+<section data-noprocess="" data-shortcode-slide="" id="same-concept-different-models">
+<h2 id="same-concept-different-models">Same concept, different models</h2>
+<ul>
+<li>
+<p>The same real-world <em>concept</em> (e.g. a <strong>customer</strong>) shows up in several subdomains, seen from a different <strong>angle</strong> each time:</p>
+<ul>
+<li><em>payment</em> $\rightarrow$ the customer as <strong>payer</strong>: billing (fiscal) address, tax code / VAT number, payment methods</li>
+<li><em>offer</em> $\rightarrow$ the customer as <strong>shopper</strong>: purchase history, preferences, segment $\Rightarrow$ predict offers and recommendations</li>
+<li><em>customer</em> $\rightarrow$ the customer as <strong>account holder</strong>: personal data, credentials, contacts, which they manage themselves</li>
+<li><em>shipping</em> $\rightarrow$ the customer as <strong>recipient</strong>: shipping addresses, delivery preferences, shipments to track</li>
+</ul>
+</li>
+<li>
+<p>Each bounded context keeps its <strong>own model</strong> of the concept, with only the data and behaviour it needs</p>
+<ul>
+<li>possibly under a different name, in its own <em>ubiquitous language</em> (payer, shopper, recipient, …)</li>
+</ul>
+</li>
+<li>
+<p>What contexts <em>share</em> is the <strong>identity</strong> (e.g. <code>CustomerID</code>), <em>not</em> the model</p>
+<ul>
+<li>contexts refer to each other’s objects <em>by identifier</em></li>
+<li>the same holds for other concepts, e.g. a <em>product</em>: price and discounts in <em>offer</em>, VAT rate in <em>payment</em>, weight and size in <em>shipping</em></li>
+</ul>
+</li>
+<li>
+<p><strong>Anti-pattern</strong>: one all-encompassing <code>Customer</code> class shared by every context</p>
+<ul>
+<li>any change for one context affects all the others, and the constraints of different contexts end up conflicting</li>
+<li>how contexts integrate with each other is the subject of <a href="#/context-map">context maps</a></li>
+</ul>
+</li>
+</ul>
 </section><section>
 <h2 id="the-domain-model">The domain <em>Model</em></h2>
 <blockquote>
@@ -489,11 +524,14 @@
 </li>
 <li>
 <p><strong>Factory</strong>: objects creating other objects</p>
+<ul>
+<li>they enable <em>dependency injection</em> (and, hence, testability)</li>
+</ul>
 </li>
 </ul>
 </section><section>
 <h2 id="building-blocks-concept">Building blocks (concept)</h2>
-<p><img src="./building-blocks.png" alt="A concept map linking model-driven design to services, entities, value objects, aggregates, factories, and repositories; entities act as aggregate roots and repositories access aggregates"></p>
+<p><img src="./building-blocks.svg" alt="A concept map linking model-driven design to services, entities, value objects, aggregates, factories, and repositories; entities act as aggregate roots and repositories access aggregates"></p>
 </section><section>
 <h2 id="entities-vs-value-objects">Entities vs. Value Objects</h2>
 <blockquote>
@@ -577,30 +615,36 @@
 </section><section>
 <h2 id="entities-vs-value-objects-example">Entities vs. Value Objects (example)</h2>
 <figure id="plantuml-figure-0" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
-<p>interface Customer {
-+ CustomerID getID()
-..
-+ String getName()
-+ void <strong>setName</strong>(name: String)
-+ String getEmail()
-+ void <strong>setEmail</strong>(email: String)
+<pre>interface Customer {
+    + CustomerID getID()
+    ..
+    + String getName()
+    + void **setName**(name: String)
+    + String getEmail()
+    + void **setEmail**(email: String)
 }
-note left: Entity</p>
-<p>interface CustomerID {
-+ Object getValue()
+note left: Entity
+
+interface CustomerID {
+    + Object getValue()
 }
-note right: Value Object</p>
-<p>interface TaxCode {
-+ String getValue()
+note right: Value Object
+
+interface TaxCode {
+    + String getValue()
 }
-note left: Value Object</p>
-<p>interface VatNumber {
-+ long getValue()
+note left: Value Object
+
+interface VatNumber {
+    + long getValue()
 }
-note right: Value Object</p>
-<p>VatNumber -d-|&gt; CustomerID
-TaxCode -d-|&gt; CustomerID</p>
-<p>Customer *-r- CustomerID</p>
+note right: Value Object
+
+VatNumber -d-|&gt; CustomerID
+TaxCode -d-|&gt; CustomerID
+
+Customer *-r- CustomerID
+</pre>
 </figure>
 <script>
     handlePlantumlFigureByID("plantuml-figure-0");
@@ -656,20 +700,75 @@ TaxCode -d-|&gt; CustomerID</p>
 <li>that’s why they are called aggregate <em>roots</em></li>
 <li>notable exception: <em>references</em> to <em>identifiers</em> of other aggregates</li>
 </ul>
-<p><img src="./aggregate-references.png" alt="Three separate aggregates, each with an aggregate root and internal components; a prohibition symbol marks that internal components must not be referenced across aggregate boundaries"></p>
+<p><img src="./aggregate-references.svg" alt="Three aggregates, each with an aggregate root and internal components; references from one aggregate to another aggregate’s root are allowed, while a reference to another aggregate’s internal component is forbidden"></p>
 </li>
 </ul>
 </section><section>
 <h2 id="aggregate-root-example">Aggregate Root (example)</h2>
-<p><img src="./aggregate-root.png" alt="A Buyer aggregate containing a Buyer aggregate root, and an Order aggregate containing an Order root, Address value object, and OrderItem child entity; Order refers to Buyer through BuyerID"></p>
-<p>(notice the link between <code>Order</code> and <code>Buyer</code> implemented by letting the <code>Order</code> hold a reference to the <code>BuyerID</code>)</p>
+<figure id="plantuml-figure-1" class="plantuml" alt="A Customer aggregate, whose root Customer owns a CustomerID, and an Order aggregate, whose root Order owns an OrderID, an Address value object, and many OrderItem entities; Order refers to the customer only through its CustomerID" style="width: 100%;height: 65vh;max-width: 95vw;max-height: 80vh;">
+<pre>package "Customer aggregate" &lt;&lt;Rectangle&gt;&gt; {
+    interface Customer {
+        + CustomerID getID()
+        ..
+        + String getName()
+        + String getEmail()
+    }
+    note left of Customer: aggregate root
+
+    interface CustomerID
+    note left of CustomerID: value object
+}
+
+package "Order aggregate" &lt;&lt;Rectangle&gt;&gt; {
+    interface Order {
+        + OrderID getID()
+        + CustomerID **getCustomer**()
+        + Date getTimestamp()
+        + Address getShippingAddress()
+        + Iterable&lt;OrderItem&gt; getItems()
+        ..
+        + void **setShippingAddress**(address: Address)
+        + void **addItem**(product: ProductID, amount: long)
+        + void **removeItem**(product: ProductID)
+        + Money getTotal()
+    }
+    note top of Order: aggregate root
+
+    interface OrderID
+    note bottom of OrderID: value object
+
+    interface Address {
+        + String getStreet()
+        + String getCity()
+    }
+    note bottom of Address: value object
+
+    interface OrderItem {
+        + ProductID getProduct()
+        + long getAmount()
+        + Money getPrice()
+    }
+    note bottom of OrderItem: entity
+}
+
+Customer "1" *-d- "1" CustomerID
+Order "1" *-d- "1" OrderID
+Order "1" *-d- "1" Address
+Order "1" *-d- "N" OrderItem
+Order .l.&gt; CustomerID: refers to\nthe customer\nby ID
+</pre>
+</figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-1");
+</script>
+<p>(notice that <code>Order</code> refers to its <code>Customer</code> via the <code>CustomerID</code> only, and that <code>OrderItem</code>s refer to products via <code>ProductID</code>s)</p>
 </section><section>
 <h2 id="factories-definition">Factories (definition)</h2>
 <blockquote>
 <p>Objects aimed at <strong>creating</strong> other objects</p>
 </blockquote>
 <br>
-<p><img src="./factories.png" alt="A client delegates entity creation to a factory, which hides the complexity of creating the entity"></p>
+<p><img src="./factories.svg" alt="A client delegates entity creation to a factory, which hides the complexity of creating the entity"></p>
 </section><section>
 <h2 id="factories-details">Factories (details)</h2>
 <h3 id="purpose">Purpose</h3>
@@ -722,41 +821,47 @@ TaxCode -d-|&gt; CustomerID</p>
 </ul>
 </section><section>
 <h2 id="factories-example">Factories (example)</h2>
-<figure id="plantuml-figure-1" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
-<p>interface CustomerID</p>
-<p>interface TaxCode</p>
-<p>interface VatNumber</p>
-<p>interface Customer</p>
-<p>Customer “1” *– “1” CustomerID</p>
-<p>VatNumber -u-|&gt; CustomerID
-TaxCode -u-|&gt; CustomerID</p>
-<p>interface CustomerFactory {
-+ TaxCode computeTaxCode(String name, String surname, Date birthDate, String birthPlace)
-..
-+ Customer newCustomerPerson(TaxCode code, String fullName, String email)
-+ Customer newCustomerPerson(String name, String surname, Date birthDate, String birthPlace, String email)
-..
-+ Customer newCustomerCompany(VatNumber code, String fullName, String email)
+<figure id="plantuml-figure-2" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<pre>interface CustomerID
+
+interface TaxCode
+
+interface VatNumber
+
+interface Customer
+
+Customer "1" *-- "1" CustomerID
+
+VatNumber -u-|&gt; CustomerID
+TaxCode -u-|&gt; CustomerID
+
+interface CustomerFactory {
+    + TaxCode computeTaxCode(String name, String surname, Date birthDate, String birthPlace)
+    ..
+    + Customer newCustomerPerson(TaxCode code, String fullName, String email)
+    + Customer newCustomerPerson(String name, String surname, Date birthDate, String birthPlace, String email)
+    ..
+    + Customer newCustomerCompany(VatNumber code, String fullName, String email)
 }
-note bottom of CustomerFactory</p>
-<ul>
-<li>method for computing tax codes</li>
-<li>methods for creating person customers</li>
-<li>methods for creating company customers
-end note</li>
-</ul>
-<p>CustomerFactory -r-&gt; TaxCode: creates
-CustomerFactory -u-&gt; Customer: creates</p>
+note bottom of CustomerFactory
+- method for computing tax codes
+- methods for creating person customers
+- methods for creating company customers
+end note
+
+CustomerFactory -r-&gt; TaxCode: creates
+CustomerFactory -u-&gt; Customer: creates
+</pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-1");
+    handlePlantumlFigureByID("plantuml-figure-2");
 </script>
 </section><section>
 <h2 id="repositories-definition">Repositories (definition)</h2>
 <blockquote>
 <p>Objects mediating the <em>persistent</em> <strong>storage/retrieval</strong> of other objects</p>
 </blockquote>
-<p><img src="./repositories.png" alt="A client retrieves and saves an aggregate through a repository, which hydrates and persists the aggregate in a database"></p>
+<p><img src="./repositories.svg" alt="A client gets an aggregate from a repository, modifies it, and saves it back; the repository rebuilds (hydrates) the aggregate from data loaded from the database, and stores it there, dealing with whole aggregates only"></p>
 </section><section>
 <h2 id="repositories-details">Repositories (details)</h2>
 <h3 id="purpose-1">Purpose</h3>
@@ -817,26 +922,31 @@ CustomerFactory -u-&gt; Customer: creates</p>
 </ul>
 </section><section>
 <h2 id="repositories-example">Repositories (example)</h2>
-<figure id="plantuml-figure-2" class="plantuml" alt="" style="width: 100%;height: 70vh;max-width: 95vw;max-height: 80vh;">
-<p>interface CustomerID</p>
-<p>interface Customer</p>
-<p>Customer “1” *-u- “1” CustomerID</p>
-<p>interface CustomerRegistry {
-+ Iterable<customer> getAllCustomers()
-..
-+ Customer findCustomerById(CustomerID id)
-+ Iterable<customer> findCustomerByName(String name)
-+ Iterable<customer> findCustomerByEmail(String email)
-..
-+ void addNewCustomer(Customer customer)
-+ void updateCustomer(Customer customer)
-+ void removeCustomer(Customer customer)
-}</customer></customer></customer></p>
-<p>CustomerRegistry “1” o–&gt; “N” Customer: contains
-CustomerRegistry –&gt; CustomerID: exploits</p>
+<figure id="plantuml-figure-3" class="plantuml" alt="" style="width: 100%;height: 70vh;max-width: 95vw;max-height: 80vh;">
+<pre>interface CustomerID
+
+interface Customer
+
+Customer "1" *-u- "1" CustomerID
+
+interface CustomerRegistry {
+    + Iterable&lt;Customer&gt; getAllCustomers()
+    ..
+    + Customer findCustomerById(CustomerID id)
+    + Iterable&lt;Customer&gt; findCustomerByName(String name)
+    + Iterable&lt;Customer&gt; findCustomerByEmail(String email)
+    ..
+    + void addNewCustomer(Customer customer)
+    + void updateCustomer(Customer customer)
+    + void removeCustomer(Customer customer)
+}
+
+CustomerRegistry "1" o--&gt; "N" Customer: contains
+CustomerRegistry --&gt; CustomerID: exploits
+</pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-2");
+    handlePlantumlFigureByID("plantuml-figure-3");
 </script>
 </section><section>
 <h2 id="services">Services</h2>
@@ -918,40 +1028,339 @@ CustomerRegistry –&gt; CustomerID: exploits</p>
 </ul>
 </section><section>
 <h2 id="services-example">Services (example)</h2>
-<figure id="plantuml-figure-3" class="plantuml" alt="" style="width: 100%;height: 70vh;max-width: 95vw;max-height: 80vh;">
-<p>interface OrderManagementService {
-+ void performOrder(Order order)
-}</p>
-<p>interface Order {
-+ OrderID getId()
-+ Customer getCustomer()
-+ void setCustomer(Customer customer)
-+ Date getTimestamp()
-+ void setTimestamp(Date timestamp)
-+ Map&lt;Product, Long&gt; getAmounts()
-}</p>
-<p>interface OrderID</p>
-<p>interface Customer</p>
-<p>interface Product</p>
-<p>interface OrderStore</p>
-<p>Order “1” *-r- “1” OrderID
-Order “1” *-d- “1” Customer
-Order “1” *-u- “N” Product
-OrderStore “1” *– “N” Order</p>
-<p>OrderManagementService ..&gt; Order: handles
-OrderManagementService ..&gt; OrderStore: updates</p>
-<p>note bottom of OrderStore: repository
-note top of Order: entity
+<figure id="plantuml-figure-4" class="plantuml" alt="" style="width: 100%;height: 70vh;max-width: 95vw;max-height: 80vh;">
+<pre>interface OrderManagementService {
+    + void performOrder(Order order)
+}
+
+interface Order {
+    + OrderID getId()
+    + CustomerID getCustomer()
+    + void setCustomer(CustomerID customer)
+    + Date getTimestamp()
+    + void setTimestamp(Date timestamp)
+    + Map&lt;ProductID, Long&gt; getAmounts()
+}
+
+interface OrderID
+
+interface CustomerID
+
+interface ProductID
+
+interface OrderStore
+
+Order "1" *-r- "1" OrderID
+Order "1" *-d- "1" CustomerID
+Order "1" *-u- "N" ProductID
+OrderStore "1" *-- "N" Order
+
+OrderManagementService ..&gt; Order: handles
+OrderManagementService ..&gt; OrderStore: updates
+
+note bottom of OrderStore: repository
+note top of Order: entity (aggregate root)
 note right of OrderID: value object
-note right of Product: entity
-note right of Customer: entity
-note top of OrderManagementService: service</p>
-<p>OrderID -u[hidden]- Product
-OrderID -d[hidden]- Customer</p>
+note right of ProductID: value object
+note right of CustomerID: value object
+note top of OrderManagementService: service
+
+OrderID -u[hidden]- ProductID
+OrderID -d[hidden]- CustomerID
+
+</pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-3");
+    handlePlantumlFigureByID("plantuml-figure-4");
 </script>
+</section>
+<section data-noprocess="" data-shortcode-slide="" id="dependency-injection">
+<h2 id="factories-enable-dependency-injection">Factories enable Dependency Injection</h2>
+<ul>
+<li>Services depend on <em>repositories</em> and <em>factories</em> (and possibly on other services)
+<ul>
+<li>e.g. <code>OrderManagementService</code> needs an <code>OrderStore</code> to save orders</li>
+</ul>
+</li>
+<li><strong>Who creates</strong> these dependencies?
+<ul>
+<li>if the service calls <code>new SqlOrderStore()</code> itself, it is <em>bound</em> to that implementation</li>
+<li>… and it can hardly be tested without a real database</li>
+</ul>
+</li>
+</ul>
+<p><img src="./di-motivation.svg" alt="Left: without DI, the service itself creates a SqlOrderStore, so the implementation choice is hard-coded in the client. Right: with DI, a factory first creates the SqlOrderStore and then injects it into the service, which only uses it through the OrderStore interface"></p>
+<ul>
+<li>Factories already <em>hide</em> the implementation choice
+<ul>
+<li><strong>Dependency Injection</strong> (DI) goes one step further: the client does not create its dependencies, it <em>receives</em> them</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="dependency-inversion">Dependency inversion</h2>
+<blockquote>
+<p>Goal: <em>minimise</em> dependencies among types, to make implementations <em>interchangeable</em></p>
+</blockquote>
+<ul>
+<li>Let <em>interfaces</em> depend on <em>interfaces</em> only</li>
+<li>Let <em>classes</em> depend on <em>interfaces</em>, never on other <em>classes</em>
+<ul>
+<li>built-in types (e.g. <code>String</code>, <code>LocalDate</code>) are tolerated exceptions</li>
+</ul>
+</li>
+<li><em>Delay</em> the choice of the actual implementation of each interface as much as possible</li>
+<li>Do not <em>leak</em> implementation types into public APIs</li>
+</ul>
+<p><img src="./dependency-inversion.svg" alt="Before: OrderManagementServiceImpl depends directly on the SqlOrderStore class. After: OrderManagementServiceImpl depends on the OrderStore interface, which is implemented by both SqlOrderStore and InMemoryOrderStore, so the arrows towards the implementation are inverted"></p>
+</section><section>
+<h2 id="dependency-injection-concept">Dependency Injection (concept)</h2>
+<blockquote>
+<p>Interfaces are separated from classes; the <strong>wiring</strong> between them is <em>delayed</em> and performed <em>outside</em> the classes using them</p>
+</blockquote>
+<ol>
+<li><strong>Design &amp; segregate interfaces</strong>
+<ul>
+<li>interface members only expose interface (or built-in) types: natural after DDD</li>
+<li>interfaces and implementations in <em>separate</em> modules (e.g. <code>:domain</code> vs. <code>:storage</code>)</li>
+</ul>
+</li>
+<li><strong>Implement classes relying on interfaces only</strong>
+<ul>
+<li>fields, parameters, return types: interfaces (private members too)</li>
+<li>expose a mechanism to <em>inject</em> the actual implementations:
+<ul>
+<li><em>constructor injection</em>: dependencies are constructor parameters
+<ul>
+<li>the object is always complete and consistent $\rightarrow$ <strong>preferred</strong></li>
+</ul>
+</li>
+<li><em>setter injection</em>: one setter per dependency
+<ul>
+<li>more flexible, yet objects may be left in <em>inconsistent</em> states</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Wire interfaces and classes</strong> at runtime
+<ul>
+<li>choosing the most adequate implementation for the situation at hand (production, test, etc.)</li>
+</ul>
+</li>
+</ol>
+</section><section>
+<h2 id="inversion-of-control">Inversion of Control</h2>
+<ul>
+<li>Without DI, an object <em>controls</em> the creation of its own dependencies</li>
+<li>With DI, this control is <em>inverted</em>: some external entity creates the dependencies and passes them in
+<ul>
+<li>the <em>composition root</em>: the (only) place where implementations are chosen and wired
+<ul>
+<li>e.g. the <code>main</code> method, or an application-level factory</li>
+</ul>
+</li>
+<li>or a <em>DI container</em> (a.k.a. <em>IoC container</em>), i.e. a library doing the wiring for us</li>
+</ul>
+</li>
+<li><em>Hollywood principle</em>: “don’t call us, we’ll call you”</li>
+<li>Dependency Injection is a particular form of <strong>Inversion of Control</strong> (IoC)
+<ul>
+<li>cf. <a href="https://martinfowler.com/articles/injection.html">Fowler, <em>Inversion of Control Containers and the Dependency Injection pattern</em>, 2004</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="remark">Remark</h3>
+<ul>
+<li>A factory <em>alone</em> just moves the <code>new</code> somewhere else: the client now depends on the factory</li>
+<li>It becomes DI when the factory is <em>the composition root</em>, i.e. it creates the objects <strong>and</strong> injects them into each other</li>
+</ul>
+</section><section>
+<h2 id="di-in-java-example-pt-1-implementation">DI in Java (example, pt. 1): implementation</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">interface</span> <span style="color:#b06;font-weight:bold">OrderStore</span><span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">add</span>(Order<span style="color:#bbb"> </span>order);<span style="color:#bbb"> </span><span style="color:#888">/* ... */</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">OrderManagementServiceImpl</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">implements</span><span style="color:#bbb"> </span>OrderManagementService<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">final</span><span style="color:#bbb"> </span>OrderStore<span style="color:#bbb"> </span>store;<span style="color:#bbb">          </span><span style="color:#888">// interface</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">final</span><span style="color:#bbb"> </span>CustomerFactory<span style="color:#bbb"> </span>customers;<span style="color:#bbb"> </span><span style="color:#888">// interface</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888">// constructor injection: dependencies are received, not created</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>OrderManagementServiceImpl(OrderStore<span style="color:#bbb"> </span>store,<span style="color:#bbb"> </span>CustomerFactory<span style="color:#bbb"> </span>customers)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">this</span>.<span style="color:#369">store</span><span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>Objects.<span style="color:#369">requireNonNull</span>(store);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">this</span>.<span style="color:#369">customers</span><span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>Objects.<span style="color:#369">requireNonNull</span>(customers);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#555">@Override</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">performOrder</span>(Order<span style="color:#bbb"> </span>order)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888">// ... validate the order, possibly via customers ...</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>store.<span style="color:#369">add</span>(order);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
+</span></span></span></code></pre></div><ul>
+<li>The service only mentions <em>interfaces</em>: <code>OrderStore</code>, <code>CustomerFactory</code>, <code>Order</code></li>
+<li>No <code>new</code> for any dependency $\rightarrow$ the implementation choice is somebody else’s business</li>
+</ul>
+</section><section>
+<h2 id="di-in-java-example-pt-2-the-composition-root">DI in Java (example, pt. 2): the composition root</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ApplicationFactory</span><span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#888">// the composition root</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span>OrderStore<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">orderStore</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">return</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>SqlOrderStore(System.<span style="color:#369">getenv</span>(<span style="color:#d20;background-color:#fff0f0">"DB_URL"</span>));<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span>CustomerFactory<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">customerFactory</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">return</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>CustomerFactoryImpl();<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span>OrderManagementService<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">orderManagementService</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">return</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>OrderManagementServiceImpl(orderStore(),<span style="color:#bbb"> </span>customerFactory());<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888">// in main():</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>OrderManagementService<span style="color:#bbb"> </span>service<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>ApplicationFactory().<span style="color:#369">orderManagementService</span>();<span style="color:#bbb">
+</span></span></span></code></pre></div><ul>
+<li>The factory is the <em>only</em> class mentioning <em>implementation</em> classes
+<ul>
+<li>which can stay package-private (not leaked into the API)</li>
+</ul>
+</li>
+<li><strong>A hand-written factory is a minimal DI container</strong>
+<ul>
+<li>one method per interface, specifying <em>which</em> implementation and <em>how</em> to initialise it</li>
+</ul>
+</li>
+<li>In a layered architecture, this is the job of the outermost module (cf. <a href="#/enforcing-architecture">modules</a>)</li>
+</ul>
+</section><section>
+<h2 id="di-eases-testability">DI eases testability</h2>
+<ul>
+<li>The class under test does not create its dependencies $\rightarrow$ the <em>test</em> decides what to pass in
+<ul>
+<li>no need to edit production code, nor to patch it with static mocking tricks</li>
+</ul>
+</li>
+</ul>
+<div class="multiCol">
+<div class="col  ">
+    <p><strong>Unit tests</strong>: inject <em>test doubles</em> (stubs, fakes, mocks)</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#555">@Test</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">performOrderStoresTheOrder</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>OrderStore<span style="color:#bbb"> </span>store<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>mock(OrderStore.<span style="color:#369">class</span>);<span style="color:#bbb"> </span><span style="color:#888">// Mockito</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">var</span><span style="color:#bbb"> </span>service<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>OrderManagementServiceImpl(<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>store,<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>CustomerFactoryImpl());<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>service.<span style="color:#369">performOrder</span>(order);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>verify(store).<span style="color:#369">add</span>(order);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
+</span></span></span></code></pre></div><ul>
+<li>tests the service in <em>isolation</em>, no DB needed</li>
+</ul>
+</div>
+<div class="col  ">
+    <p><strong>Integration tests</strong>: inject <em>real</em> (yet lightweight) components</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#555">@Test</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">orderIsActuallyStored</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">var</span><span style="color:#bbb"> </span>store<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>InMemoryOrderStore();<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">var</span><span style="color:#bbb"> </span>service<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>OrderManagementServiceImpl(<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>store,<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>CustomerFactoryImpl());<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>service.<span style="color:#369">performOrder</span>(order);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>assertTrue(store.<span style="color:#369">contains</span>(order));<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
+</span></span></span></code></pre></div><ul>
+<li>or a <code>SqlOrderStore</code> on a throw-away DB (e.g. via <a href="https://testcontainers.com/">Testcontainers</a>)</li>
+</ul>
+</div>
+</div>
+<ul>
+<li>Each test acts as a <em>test-specific composition root</em></li>
+</ul>
+</section><section>
+<h2 id="di-eases-testability-overview">DI eases testability (overview)</h2>
+<p><img src="./di-testing.svg" alt="The same OrderManagementServiceImpl code receives an OrderStore via its constructor in three different set-ups: in production it is wired by ApplicationFactory with a SqlOrderStore; in unit tests it is wired by the test with a Mockito mock; in integration tests it is wired by the test with an InMemoryOrderStore or a SqlOrderStore on a test database run with Testcontainers"></p>
+<ul>
+<li>Only the <em>wiring</em> changes across production, unit tests, and integration tests
+<ul>
+<li>the production code is tested <em>as is</em></li>
+</ul>
+</li>
+<li>Dependencies that are hard to control in tests (DB, network, clock, randomness) should be <em>injected</em> as well
+<ul>
+<li>e.g. inject a <code>java.time.Clock</code> instead of calling <code>LocalDateTime.now()</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="di-technologies">DI technologies</h2>
+<ul>
+<li>Hand-written factories become tedious as the dependency graph grows</li>
+<li><em>DI containers</em> automate the wiring. They let developers:
+<ol>
+<li><em>register</em> the chosen implementation for each interface (a.k.a. <em>binding</em>)</li>
+<li>specify its <em>lifetime</em>: <em>singleton</em> (one shared instance), <em>transient</em> (new instance per request), <em>scoped</em> (one per scope, e.g. per HTTP request)</li>
+<li><em>retrieve</em> (or have injected) an object for a given interface</li>
+</ol>
+</li>
+</ul>
+<div style="font-size: 0.7em">
+<table>
+	<thead>
+			<tr>
+					<th>Technology</th>
+					<th>Language</th>
+					<th>Notes</th>
+					<th>Docs</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Jakarta Dependency Injection (ex JSR-330)</td>
+					<td>Java</td>
+					<td>standard annotations (<code>@Inject</code>, <code>@Singleton</code>), no container</td>
+					<td><a href="https://jakarta.ee/specifications/dependency-injection/">spec</a></td>
+			</tr>
+			<tr>
+					<td>Jakarta CDI</td>
+					<td>Java</td>
+					<td>standard container of Jakarta EE (e.g. Quarkus)</td>
+					<td><a href="https://jakarta.ee/specifications/cdi/">spec</a></td>
+			</tr>
+			<tr>
+					<td>Spring Framework</td>
+					<td>Java, Kotlin</td>
+					<td>the most widespread container, runtime reflection</td>
+					<td><a href="https://docs.spring.io/spring-framework/reference/core/beans.html">docs</a></td>
+			</tr>
+			<tr>
+					<td>Google Guice</td>
+					<td>Java</td>
+					<td>bindings declared in <em>modules</em>, runtime</td>
+					<td><a href="https://github.com/google/guice/wiki">docs</a></td>
+			</tr>
+			<tr>
+					<td>Dagger 2 / Hilt</td>
+					<td>Java, Kotlin (Android)</td>
+					<td>wiring code generated at <em>compile time</em></td>
+					<td><a href="https://dagger.dev/">docs</a></td>
+			</tr>
+			<tr>
+					<td>Koin</td>
+					<td>Kotlin (multiplatform)</td>
+					<td>Kotlin DSL, no reflection</td>
+					<td><a href="https://insert-koin.io/">docs</a></td>
+			</tr>
+			<tr>
+					<td><code>Microsoft.Extensions.DependencyInjection</code></td>
+					<td>C#</td>
+					<td><code>IServiceCollection</code> + <code>IServiceProvider</code></td>
+					<td><a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection">docs</a></td>
+			</tr>
+	</tbody>
+</table>
+</div>
+<ul>
+<li>Containers support <em>overriding</em> bindings in tests too
+<ul>
+<li>e.g. Spring’s <code>@MockitoBean</code>, Guice’s <code>Modules.override(...)</code></li>
+</ul>
+</li>
+</ul>
 </section>
 <section data-noprocess="" data-shortcode-slide="" id="domain-events">
 <h2 id="domain-events-definition">Domain Events (definition)</h2>
@@ -962,7 +1371,7 @@ OrderID -d[hidden]- Customer</p>
 <ul>
 <li>actually, only the event <em>notification</em>/description is reified to a type</li>
 </ul>
-<p><img src="./domain-events.png" alt="A Basket aggregate publishes a Product Added Event after a product is added; a Recommendation Service consumes it to update a Recommendations aggregate"></p>
+<p><img src="./domain-events.svg" alt="A customer adds a product to the Basket aggregate, which publishes a ProductAdded domain event after saving; the event notifies a Recommendation Service, which updates the Recommendations aggregate"></p>
 </section><section>
 <h2 id="domain-events-details">Domain Events (details)</h2>
 <h3 id="purpose-3">Purpose</h3>
@@ -1019,33 +1428,41 @@ OrderID -d[hidden]- Customer</p>
 </ul>
 </section><section>
 <h2 id="domain-events-example">Domain Events (example)</h2>
-<figure id="plantuml-figure-5" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
-<p>interface OrderManagementService {
-+ void performOrder(Order order)
-..
-+ void <strong>notifyOrderPerformed</strong>(OrderEvent event)
-}</p>
-<p>interface OrderEvent {
-+ OrderID getID()
-+ CustomerID getCustomer()
-+ Date <strong>getTimestamp</strong>()
-+ Map&lt;ProductID, Long&gt; getAmounts()
-}</p>
-<p>interface OrderID</p>
-<p>interface CustomerID</p>
-<p>interface ProductID</p>
-<p>OrderEvent “1” *-u- “1” OrderID
-OrderEvent “1” *-r- “1” CustomerID
-OrderEvent “1” *-d- “N” ProductID</p>
-<p>OrderEvent .. OrderManagementService</p>
-<p>note left of OrderEvent: domain event
+<figure id="plantuml-figure-8" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<pre>interface OrderManagementService {
+    + void performOrder(Order order)
+    ..
+    + void **notifyOrderPerformed**(OrderEvent event)
+}
+
+interface OrderEvent {
+    + OrderID getID()
+    + CustomerID getCustomer()
+    + Date **getTimestamp**()
+    + Map&lt;ProductID, Long&gt; getAmounts()
+}
+
+interface OrderID
+
+interface CustomerID
+
+interface ProductID
+
+OrderEvent "1" *-u- "1" OrderID
+OrderEvent "1" *-r- "1" CustomerID
+OrderEvent "1" *-d- "N" ProductID
+
+OrderEvent .. OrderManagementService
+
+note left of OrderEvent: domain event
 note left of OrderID: value object
 note left of ProductID: value object
 note right of CustomerID: value object
-note right of OrderManagementService: service</p>
+note right of OrderManagementService: service
+</pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-5");
+    handlePlantumlFigureByID("plantuml-figure-8");
 </script>
 
 </section>
@@ -1095,7 +1512,7 @@ This is helpful from several perspectives:</p>
 </blockquote>
 </section><section>
 <h2 id="example-of-bounded-context-map">Example of bounded context map</h2>
-<p><img src="./bounded-contexts.png" alt="A sales context containing Opportunity, Pipeline, Territory, and Sales Person, connected by Customer and Product to a support context containing Ticket, Defect, and Product Version"></p>
+<p><img src="./bounded-contexts.svg" alt="A sales context containing Opportunity, Pipeline, Territory, and Sales Person, connected by Customer and Product to a support context containing Ticket, Defect, and Product Version"></p>
 <p>(source: <a href="https://martinfowler.com/bliki/BoundedContext.html">Fowler</a>)</p>
 </section><section>
 <h2 id="bounded-contexts--context-maps-best-practices">Bounded Contexts &amp; Context Maps (best practices)</h2>
@@ -1174,7 +1591,7 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="model-integrity-patterns-background-pt-1">Model integrity patterns (background, pt. 1)</h2>
-<p><img src="./context-map.jpg" alt="Three oval contexts, A, B, and Legacy, each enclosing a model; lines between the ovals mark contact points between contexts"></p>
+<p><img src="./context-map.svg" alt="Three contexts, A, B, and Legacy, each enclosing one or more models; lines between models of different contexts mark contact points between contexts"></p>
 <ul>
 <li>Context maps highlight relations among contexts
 <ul>
@@ -1184,7 +1601,7 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="model-integrity-patterns-background-pt-2">Model integrity patterns (background, pt. 2)</h2>
-<p><img src="./provider-consumer.jpg" alt="A downstream Search Page Context and an upstream Search API Context connected by a line indicating their roles"></p>
+<p><img src="./provider-consumer.svg" alt="A downstream Search Page Context and an upstream Search API Context connected by a line, marked D and U at the two ends"></p>
 <p>Each relation among 2 contexts usually involves 2 ends/roles:</p>
 <ul>
 <li><strong>upstream</strong> end, i.e. the one <em>providing</em> functionalities</li>
@@ -1209,7 +1626,7 @@ This is helpful from several perspectives:</p>
 <p>*trust $\approx$ willingness to collaborate + seek stability</p>
 </section><section>
 <h2 id="shared-kernel">Shared Kernel</h2>
-<p><img src="./shared-kernel.jpg" alt="Catalog and Inventory contexts overlap around a shared supplier model used by both contexts"></p>
+<p><img src="./shared-kernel.svg" alt="Catalog and Inventory contexts overlap around a shared supplier model used by both contexts"></p>
 <ul>
 <li>
 <p>Best when: multiple contexts <em>share</em> the <strong>same team</strong> / organization / product</p>
@@ -1229,7 +1646,7 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="customersupplier">Customer–Supplier</h2>
-<p><img src="./customer-supplier.jpg" alt="A downstream Search Page Context and upstream Search API Context connected by a customer-supplier relationship"></p>
+<p><img src="./customer-supplier.svg" alt="A downstream Search Page Context and upstream Search API Context connected by a customer-supplier relationship"></p>
 <ul>
 <li>
 <p>Best when:</p>
@@ -1259,7 +1676,7 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="conformist">Conformist</h2>
-<p><img src="./conformist.jpg" alt="A Search Page Context downstream of a Search API Context, while an External Context conforms downstream to the Search API Context"></p>
+<p><img src="./conformist.svg" alt="A Search Page Context downstream of a Search API Context, while an External Context conforms downstream to the Search API Context"></p>
 <ul>
 <li>
 <p>Best when:</p>
@@ -1279,7 +1696,7 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="anti-corruption-layer">Anti-corruption layer</h2>
-<p><img src="./anti-corruption-layer.jpg" alt="A Search Context isolates its model from an upstream Catalog Context through an anti-corruption translation layer with no business logic"></p>
+<p><img src="./anti-corruption-layer.svg" alt="A Search Context isolates its model from an upstream Catalog Context through an anti-corruption translation layer with no business logic"></p>
 <ul>
 <li>
 <p>Best when:</p>
@@ -1305,124 +1722,6 @@ This is helpful from several perspectives:</p>
 </ul>
 </li>
 </ul>
-</section><section>
-<h2 id="partnership">Partnership</h2>
-<ul>
-<li>
-<p>Best when: contexts are <strong>peers</strong> and their teams can cooperate closely</p>
-</li>
-<li>
-<p>Key idea: teams <strong>coordinate</strong> development, releases, and operational decisions</p>
-<ul>
-<li>neither team is a supplier or customer of the other</li>
-</ul>
-</li>
-<li>
-<p>Trade-off: the relationship works only while communication and shared commitment remain strong</p>
-</li>
-</ul>
-</section><section>
-<h2 id="open-host-service">Open Host Service</h2>
-<ul>
-<li>
-<p>Best when: one <strong>upstream</strong> context serves many different downstream contexts</p>
-</li>
-<li>
-<p>Key idea: expose a <strong>stable protocol</strong> that all downstream contexts can use</p>
-<ul>
-<li>avoid a separate, bespoke integration for every consumer</li>
-</ul>
-</li>
-<li>
-<p>Keep the protocol explicit and evolve it compatibly</p>
-</li>
-</ul>
-</section><section>
-<h2 id="published-language">Published Language</h2>
-<ul>
-<li>
-<p>Best when: contexts exchange information through a <strong>shared interchange language</strong></p>
-</li>
-<li>
-<p>Key idea: publish and document the language independently of either internal model</p>
-<ul>
-<li>e.g. a versioned message schema or API representation</li>
-</ul>
-</li>
-<li>
-<p>An open host service often uses a published language</p>
-</li>
-</ul>
-</section><section>
-<h2 id="separate-ways">Separate Ways</h2>
-<ul>
-<li>
-<p>Best when: integration would cost more than the value it provides</p>
-</li>
-<li>
-<p>Key idea: keep contexts <strong>independent</strong>; duplicate or recreate only the information each needs</p>
-</li>
-<li>
-<p>Reconsider when duplicated work or inconsistent information becomes costly</p>
-</li>
-</ul>
-</section><section>
-<h2 id="integration-patterns-summary">Integration patterns (summary)</h2>
-<table>
-	<thead>
-			<tr>
-					<th>Pattern</th>
-					<th>Upstream/downstream relation</th>
-					<th>Key idea</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>Shared Kernel</td>
-					<td>peers</td>
-					<td>Keep a small shared part of the model</td>
-			</tr>
-			<tr>
-					<td>Customer–Supplier</td>
-					<td>customer influences supplier</td>
-					<td>Collaborate on the supplier’s evolution</td>
-			</tr>
-			<tr>
-					<td>Conformist</td>
-					<td>downstream accepts upstream</td>
-					<td>Adapt the downstream model to the upstream</td>
-			</tr>
-			<tr>
-					<td>Anti-corruption Layer</td>
-					<td>downstream shields itself</td>
-					<td>Translate the upstream model at the boundary</td>
-			</tr>
-			<tr>
-					<td>Partnership</td>
-					<td>peers</td>
-					<td>Coordinate development and releases</td>
-			</tr>
-			<tr>
-					<td>Open Host Service</td>
-					<td>one upstream, many downstreams</td>
-					<td>Offer a stable protocol for integration</td>
-			</tr>
-			<tr>
-					<td>Published Language</td>
-					<td>shared interchange language</td>
-					<td>Publish a documented integration language</td>
-			</tr>
-			<tr>
-					<td>Separate Ways</td>
-					<td>no integration</td>
-					<td>Decouple when integration is not worth its cost</td>
-			</tr>
-	</tbody>
-</table>
-<ul>
-<li><em>Big Ball of Mud</em> is a descriptive label for an unstructured system, not an integration pattern.</li>
-</ul>
-<p>(cf. <a href="https://www.domainlanguage.com/ddd/reference/">Evans, <em>DDD Reference</em>, 2015</a>)</p>
 </section>
 
 <section data-noprocess="" data-shortcode-slide="" id="architecture">
@@ -1499,7 +1798,10 @@ This is helpful from several perspectives:</p>
 </ul>
 </li>
 </ol>
-</section><section>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="enforcing-architecture">
+  
 <h2 id="enforcing-the-architecture-in-the-code">Enforcing the architecture in the code</h2>
 <ul>
 <li>
@@ -1518,9 +1820,8 @@ This is helpful from several perspectives:</p>
 </li>
 </ul>
 
-<figure id="plantuml-figure-13" class="plantuml" alt="" style="width: 100%;height: 50vh;max-width: 95vw;max-height: 80vh;">
-    
-top to bottom direction
+<figure id="plantuml-figure-14" class="plantuml" alt="" style="width: 100%;height: 50vh;max-width: 95vw;max-height: 80vh;">
+<pre>top to bottom direction
 
 component ":domain" as domain
 component ":application" as application
@@ -1529,7 +1830,7 @@ component "third-party serialization library" as gson
 component "third-party DB client library" as db
 component ":storage" as storage
 component ":web-api" as server
-component ":message-queue" as mq 
+component ":message-queue" as mq
 component ":command-line" as cli
 component product
 
@@ -1544,12 +1845,15 @@ storage ..&gt; db
 product ..&gt; server
 product ..&gt; storage
 product ..&gt; mq
-
+</pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-13");
+    handlePlantumlFigureByID("plantuml-figure-14");
 </script>
 
+<ul>
+<li><code>product</code> is the <em>composition root</em>: it wires implementations from all modules (cf. <a href="#/dependency-injection">Dependency Injection</a>)</li>
+</ul>
 </section>
 
 <section data-noprocess="" data-shortcode-slide="" id="advanced">
@@ -1644,7 +1948,7 @@ product ..&gt; mq
 </ul>
 </section><section>
 <h2 id="cqrs-concept">CQRS concept</h2>
-<p><img src="./cqrs.png" alt="A UI sends commands to a command model and queries to a query model; the command model updates a database and propagates changes to the query model, which serves read results"></p>
+<p><img src="./cqrs.svg" alt="A UI sends commands to the command model, which validates them, applies domain logic, and writes to the database; the query model reads from the database and serves query results to the UI"></p>
 <p>(source: <a href="https://martinfowler.com/bliki/CQRS.html">Fowler</a>)</p>
 </section><section>
 <h2 id="cqrs-workflow-writing">CQRS workflow (writing)</h2>
@@ -1831,6 +2135,11 @@ product ..&gt; mq
 <li>factory</li>
 <li>repository</li>
 <li>service</li>
+</ul>
+</li>
+<li><strong>Wire</strong> services, repositories, and factories via <em>constructor injection</em>
+<ul>
+<li>write at least one <em>integration test</em> injecting an in-memory repository</li>
 </ul>
 </li>
 </ol>

@@ -38,7 +38,7 @@
 <br>
 <h3 id="giovanni-ciatto"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2026-10-13
+<p>Compiled on: 2026-10-14
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -2048,8 +2048,7 @@ b304d1ae5404   bridge               bridge    local
 <h3 id="domain-model">Domain model</h3>
 
 <figure id="plantuml-figure-13" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
-    
-interface Customer {
+<pre>interface Customer {
     + id: CustomerID
     + firstName: String 
     + lastName: String
@@ -2082,8 +2081,8 @@ TaxCode -d-|&gt; CustomerID
 Customer *-r- CustomerID
 
 interface CustomerRepository {
-    + findById(id: CustomerID): Iterable<customer>
-    + findByName(name: String): Iterable<customer>
+    + findById(id: CustomerID): Iterable&lt;Customer&gt;
+    + findByName(name: String): Iterable&lt;Customer&gt;
     + add(customer: Customer)
     + update(oldId: CustomerID, customer: Customer)
     + remove(id: CustomerID)
@@ -2092,8 +2091,8 @@ note left: Repository
 
 CustomerRepository o-r- Customer
 
-
-</customer></customer></figure>
+</pre>
+</figure>
 <script>
     handlePlantumlFigureByID("plantuml-figure-13");
 </script>
@@ -2103,11 +2102,10 @@ CustomerRepository o-r- Customer
 <h3 id="implementation-details">Implementation details</h3>
 
 <figure id="plantuml-figure-14" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
-    
-
+<pre>
 interface CustomerRepository {
-    + findById(id: CustomerID): Iterable<customer>
-    + findByName(name: String): Iterable<customer>
+    + findById(id: CustomerID): Iterable&lt;Customer&gt;
+    + findByName(name: String): Iterable&lt;Customer&gt;
     + add(customer: Customer)
     + update(oldId: CustomerID, customer: Customer)
     + remove(id: CustomerID)
@@ -2146,8 +2144,8 @@ package "java sql" {
     MariaDBConnection --|&gt; Connection
 }
 
-
-</customer></customer></figure>
+</pre>
+</figure>
 <script>
     handlePlantumlFigureByID("plantuml-figure-14");
 </script>

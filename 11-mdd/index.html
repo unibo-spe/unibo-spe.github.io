@@ -41,7 +41,7 @@
 <br>
 <h3 id="giovanni-ciatto"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2026-10-13
+<p>Compiled on: 2026-10-14
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -482,29 +482,35 @@ TaxCode -d-|&gt; CustomerID</p>
 </div>
 <div class="col  ">
     <figure id="plantuml-figure-0" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
-<p>interface Customer {
-+ CustomerID getID()
-+ String getName()
-+ void <strong>setName</strong>(name: String)
-+ String getEmail()
-+ void <strong>setEmail</strong>(email: String)
+<pre>interface Customer {
+    + CustomerID getID()
+    + String getName()
+    + void **setName**(name: String)
+    + String getEmail()
+    + void **setEmail**(email: String)
 }
-note left: Entity</p>
-<p>interface CustomerID {
-+ Object getValue()
+note left: Entity
+
+interface CustomerID {
+    + Object getValue()
 }
-note right: Value Object</p>
-<p>interface TaxCode {
-+ String getValue()
+note right: Value Object
+
+interface TaxCode {
+    + String getValue()
 }
-note left: Value Object</p>
-<p>interface VatNumber {
-+ long getValue()
+note left: Value Object
+
+interface VatNumber {
+    + long getValue()
 }
-note right: Value Object</p>
-<p>VatNumber -d-|&gt; CustomerID
-TaxCode -d-|&gt; CustomerID</p>
-<p>Customer *-r- CustomerID</p>
+note right: Value Object
+
+VatNumber -d-|&gt; CustomerID
+TaxCode -d-|&gt; CustomerID
+
+Customer *-r- CustomerID
+</pre>
 </figure>
 <script>
     handlePlantumlFigureByID("plantuml-figure-0");
@@ -2882,7 +2888,7 @@ pool otherPool {
 </section><section>
 <h1 id="lecture-is-over">Lecture is Over</h1>
 <br>
-<p>Compiled on: 2026-10-13
+<p>Compiled on: 2026-10-14
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href="../#/toc"><i class="fa fa-undo" aria-hidden="true"></i> back to ToC</a></p>
 </section>

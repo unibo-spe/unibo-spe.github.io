@@ -38,7 +38,7 @@
 <br>
 <h3 id="giovanni-ciatto"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2026-10-13
+<p>Compiled on: 2026-10-14
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -1776,49 +1776,52 @@ Intuitively, the bigger the space, the more <em>effort</em> is required to build
 </section><section>
 <h2 id="domain-entities">Domain entities</h2>
 <figure id="plantuml-figure-0" class="plantuml" alt="" style="width: 50%;max-width: 95vw;max-height: 80vh;">
-<p>top to bottom direction</p>
-<p>package “kotlin” {
-interface Iterable<t>
-}</t></p>
-<p>package “io github gciatto csv” {</p>
-<pre><code>interface Row {
-    + get(index: Int): String
-    + size: Int
+<pre>top to bottom direction
+
+package "kotlin" {
+    interface Iterable&lt;T&gt;
 }
 
-Row -up-|&gt; Iterable: //T// = String
+package "io github gciatto csv" {
 
-interface Header {
-    + columns: List&lt;String&gt;
-    + contains(column: String): Boolean
-    + indexOf(column: String): Int
+    interface Row {
+        + get(index: Int): String
+        + size: Int
+    }
+
+    Row -up-|&gt; Iterable: //T// = String
+
+    interface Header {
+        + columns: List&lt;String&gt;
+        + contains(column: String): Boolean
+        + indexOf(column: String): Int
+    }
+
+    Row &lt;|-- Header
+
+    interface Record {
+        + header: Header
+        + values: List&lt;String&gt;
+        + contains(value: String): Boolean
+        + get(column: String): String
+    }
+
+    Row &lt;|-- Record
+
+    Record "*" *-right- "1" Header
+
+    interface Table {
+        + header: Header
+        + records: List&lt;Record&gt;
+        + get(row: Int): Row
+        + size: Int
+    }
+    
+    Table "*" *-u- "1" Header
+    Table "*" o-u- "*" Record
+    Table -u----|&gt; Iterable: //T// = Row
 }
-
-Row &lt;|-- Header
-
-interface Record {
-    + header: Header
-    + values: List&lt;String&gt;
-    + contains(value: String): Boolean
-    + get(column: String): String
-}
-
-Row &lt;|-- Record
-
-Record "*" *-right- "1" Header
-
-interface Table {
-    + header: Header
-    + records: List&lt;Record&gt;
-    + get(row: Int): Row
-    + size: Int
-}
-
-Table "*" *-u- "1" Header
-Table "*" o-u- "*" Record
-Table -u----|&gt; Iterable: //T// = Row
-</code></pre>
-<p>}</p>
+</pre>
 </figure>
 <script>
     handlePlantumlFigureByID("plantuml-figure-0");
@@ -1886,37 +1889,48 @@ Table -u----|&gt; Iterable: //T// = Row
 </span></span></code></pre></div></section><section>
 <h2 id="common-implementations-of-domain-entities">Common implementations of domain entities</h2>
 <figure id="plantuml-figure-1" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
-    <p>top to bottom direction</p>
-<p>package “io github gciatto csv <strong>impl</strong>” {
-interface Row</p>
-<pre><code>abstract class AbstractRow {
-    - values: List&lt;String&gt;
-    # constructor(values: List&lt;String&gt;)
+<pre>&lt;p&gt;top to bottom direction&lt;/p&gt;
+&lt;p&gt;package &amp;ldquo;io github gciatto csv &lt;strong&gt;impl&lt;/strong&gt;&amp;rdquo; {
+interface Row&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;abstract class AbstractRow {
+    - values: List&amp;lt;String&amp;gt;
+    # constructor(values: List&amp;lt;String&amp;gt;)
     # toString(type: String?): String
 }
-<p>Row &lt;|-d- AbstractRow</p>
-<p>interface Header</p>
-<p>class DefaultHeader {
-- indexesByName: Map&lt;String, Int&gt;
-+ constructor(columns: Iterable&lt;String&gt;)
-}</p>
-<p>Row &lt;|-d- Header
-Header &lt;|-d- DefaultHeader
-AbstractRow &lt;|-d- DefaultHeader</p>
-<p>interface Record</p>
-<p>class DefaultRecord {
-+ constructor(header: Header, values: Iterable&lt;String&gt;)
-}</p>
-<p>Row &lt;|-d- Record
-Record &lt;|– DefaultRecord
-AbstractRow &lt;|-d- DefaultRecord</p>
-<p>class DefaultTable {
-+ constructor(header: Header, records: Iterable&lt;Record&gt;)
-}</p>
-<p>interface Table</p>
-</code><p><code>Table &lt;|– DefaultTable
-</code></p></pre><p></p>
-<p>}</p>
+
+Row &amp;lt;|-d- AbstractRow
+
+interface Header
+
+class DefaultHeader {
+    - indexesByName: Map&amp;lt;String, Int&amp;gt;
+    + constructor(columns: Iterable&amp;lt;String&amp;gt;)
+}
+
+Row &amp;lt;|-d- Header
+Header &amp;lt;|-d- DefaultHeader
+AbstractRow &amp;lt;|-d- DefaultHeader
+
+interface Record
+
+class DefaultRecord {
+    + constructor(header: Header, values: Iterable&amp;lt;String&amp;gt;)
+}
+
+Row &amp;lt;|-d- Record
+Record &amp;lt;|-- DefaultRecord
+AbstractRow &amp;lt;|-d- DefaultRecord
+
+class DefaultTable {
+    + constructor(header: Header, records: Iterable&amp;lt;Record&amp;gt;)
+}
+
+interface Table
+
+Table &amp;lt;|-- DefaultTable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;/p&gt;
+</pre>
 </figure>
 <script>
     handlePlantumlFigureByID("plantuml-figure-1");
@@ -2052,19 +2066,19 @@ AbstractRow &lt;|-d- DefaultRecord</p>
 </li>
 </ul>
 <figure id="plantuml-figure-2" class="plantuml" alt="" style="width: 30%;max-width: 95vw;max-height: 80vh;">
-<pre><code>@startuml
-skinparam monochrome false
-class Csv{
-    + headerOf(columns): Header
-    + anonymousHeader(size: Int): Header
-    ..
-    + recordOf(header, values): Record
-    ..
-    + tableOf(header, records): Table
-    + tableOf(rows): Table
-}
-@enduml
-</code></pre>
+<pre>    @startuml
+    skinparam monochrome false
+    class Csv{
+        + headerOf(columns): Header
+        + anonymousHeader(size: Int): Header
+        ..
+        + recordOf(header, values): Record
+        ..
+        + tableOf(header, records): Table
+        + tableOf(rows): Table
+    }
+    @enduml
+    </pre>
 </figure>
 <script>
     handlePlantumlFigureByID("plantuml-figure-2");
@@ -2230,40 +2244,43 @@ class Csv{
 </li>
 </ul>
 <figure id="plantuml-figure-3" class="plantuml" alt="" style="width: 35%;max-width: 95vw;max-height: 80vh;">
-<p>@startuml
-skinparam monochrome false</p>
-<p>package “io github gciatto csv” {</p>
-<pre><code>class Configuration {
-    + separator: Char
-    + delimiter: Char
-    + comment: Char
-    --
-    + isComment(string: String): Boolean
-    + isRecord(string: String): Boolean
-    + isHeader(string: String): Boolean
-    ..
-    + getComment(string: String): String?
-    + getFields(string: String): List&lt;String&gt;
-    + getColumnNames(string: String): List&lt;String&gt;
-}
+<pre>@startuml
+skinparam monochrome false
 
-interface Formatter {
-    + source: Iterable&lt;Row&gt;
-    + configuration: Configuration
-    + format(): Iterable&lt;String&gt;
-}
+package "io github gciatto csv" {
 
-interface Parser {
-    + source: Any
-    + configuration: Configuration
-    + parse(): Iterable&lt;Row&gt;
-}
+    class Configuration {
+        + separator: Char
+        + delimiter: Char
+        + comment: Char
+        --
+        + isComment(string: String): Boolean
+        + isRecord(string: String): Boolean
+        + isHeader(string: String): Boolean
+        ..
+        + getComment(string: String): String?
+        + getFields(string: String): List&lt;String&gt;
+        + getColumnNames(string: String): List&lt;String&gt;
+    }
 
-Formatter "1" o-- "1" Configuration
-Parser "1" o-- "1" Configuration
-</code></pre>
-<p>}
-@enduml</p>
+    interface Formatter {
+        + source: Iterable&lt;Row&gt;
+        + configuration: Configuration
+        + format(): Iterable&lt;String&gt;
+    }
+
+    interface Parser {
+        + source: Any
+        + configuration: Configuration
+        + parse(): Iterable&lt;Row&gt;
+    }
+
+    Formatter "1" o-- "1" Configuration
+    Parser "1" o-- "1" Configuration
+
+}
+@enduml
+</pre>
 </figure>
 <script>
     handlePlantumlFigureByID("plantuml-figure-3");
@@ -2326,44 +2343,46 @@ Parser "1" o-- "1" Configuration
 </span></span></code></pre></div></section><section>
 <h2 id="common-implementation-of-novel-entities">Common implementation of novel entities</h2>
 <figure id="plantuml-figure-4" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
-<p>@startuml
-skinparam monochrome false</p>
-<p>package “io github gciatto csv impl” {</p>
-<pre><code>class Configuration
-interface Formatter
-interface Parser
+<pre>@startuml
+skinparam monochrome false
 
-DefaultFormatter "1" o-- "1" Configuration
-AbstractParser "1" o-- "1" Configuration
+package "io github gciatto csv impl" {
 
-class DefaultFormatter {
-    + constructor(source: Iterable&lt;Row&gt;, configuration: Configuration)
-    - formatRow(row: Row): String
-    - formatAsHeader(row: Row): String
-    - formatAsRecord(row: Row): String
+    class Configuration
+    interface Formatter
+    interface Parser
+
+    DefaultFormatter "1" o-- "1" Configuration
+    AbstractParser "1" o-- "1" Configuration
+
+    class DefaultFormatter {
+        + constructor(source: Iterable&lt;Row&gt;, configuration: Configuration)
+        - formatRow(row: Row): String
+        - formatAsHeader(row: Row): String
+        - formatAsRecord(row: Row): String
+    }
+
+    Formatter &lt;|-- DefaultFormatter
+
+    abstract class AbstractParser {
+        # constructor(source: Any, configuration: Configuration)
+        # beforeParsing()
+        # afterParsing()
+        # {abstract} sourceAsLines(): Sequence&lt;String&gt;
+    }
+
+    Parser &lt;|-- AbstractParser
+
+    class StringParser {
+        + source: String
+        + constructor(source: String, configuration: Configuration)
+        + sourceAsLines(): Sequence&lt;String&gt;
+    }
+
+    AbstractParser &lt;|-- StringParser
 }
-
-Formatter &lt;|-- DefaultFormatter
-
-abstract class AbstractParser {
-    # constructor(source: Any, configuration: Configuration)
-    # beforeParsing()
-    # afterParsing()
-    # {abstract} sourceAsLines(): Sequence&lt;String&gt;
-}
-
-Parser &lt;|-- AbstractParser
-
-class StringParser {
-    + source: String
-    + constructor(source: String, configuration: Configuration)
-    + sourceAsLines(): Sequence&lt;String&gt;
-}
-
-AbstractParser &lt;|-- StringParser
-</code></pre>
-<p>}
-@enduml</p>
+@enduml
+</pre>
 </figure>
 <script>
     handlePlantumlFigureByID("plantuml-figure-4");
