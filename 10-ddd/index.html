@@ -980,7 +980,7 @@ Customer *-r- CustomerID
 <p><img src="./aggregate-references.svg" alt="Three aggregates, each with an aggregate root and internal components; references from one aggregate to another aggregate’s root are allowed, while a reference to another aggregate’s internal component is forbidden"></p>
 </section><section>
 <h2 id="aggregate-root-example">Aggregate Root (example)</h2>
-<figure id="plantuml-figure-d518ce94b36b6c9344533ead4198bc06" class="plantuml" alt="A Customer aggregate, whose root Customer owns a CustomerID, and an Order aggregate, whose root Order owns an OrderID, an Address value object, and many OrderItem entities; Order refers to the customer only through its CustomerID" style="width: 100%;height: 65vh;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-67d017aacf8ec46a549f2001fc754a67" class="plantuml" alt="A Customer aggregate, whose root Customer owns a CustomerID, and an Order aggregate, whose root Order owns an OrderID, an Address value object, and many OrderItem entities; Order refers to the customer only through its CustomerID" style="width: 100%;height: 65vh;max-width: 95vw;max-height: 80vh;">
 <pre>package "Customer aggregate" &lt;&lt;Rectangle&gt;&gt; {
     interface Customer {
         + CustomerID getID()
@@ -998,7 +998,7 @@ package "Order aggregate" &lt;&lt;Rectangle&gt;&gt; {
     interface Order {
         + OrderID getID()
         + CustomerID **getCustomer**()
-        + Date getTimestamp()
+        + Instant getTimestamp()
         + Address getShippingAddress()
         + Iterable&lt;OrderItem&gt; getItems()
         ..
@@ -1034,7 +1034,7 @@ Order .l.&gt; CustomerID: refers to\nthe customer\nby ID
 </pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-d518ce94b36b6c9344533ead4198bc06");
+    handlePlantumlFigureByID("plantuml-figure-67d017aacf8ec46a549f2001fc754a67");
 </script>
 <p>(notice that <code>Order</code> refers to its <code>Customer</code> via the <code>CustomerID</code> only, and that <code>OrderItem</code>s refer to products via <code>ProductID</code>s)</p>
 </section><section>
@@ -1507,7 +1507,7 @@ rectangle "Database per service" {
 </ul>
 </section><section>
 <h2 id="services-example">Services (example)</h2>
-<figure id="plantuml-figure-869517beb65f41ce30ee78425a4ca2df" class="plantuml" alt="" style="width: 100%;height: 70vh;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-ba0029f788642e90d65028c1686de024" class="plantuml" alt="" style="width: 100%;height: 70vh;max-width: 95vw;max-height: 80vh;">
 <pre>interface OrderManagementService {
     + void performOrder(Order order)
     ..
@@ -1527,8 +1527,8 @@ interface Order {
     + OrderID getId()
     + CustomerID getCustomer()
     + void setCustomer(CustomerID customer)
-    + Date getTimestamp()
-    + void setTimestamp(Date timestamp)
+    + Instant getTimestamp()
+    + void setTimestamp(Instant timestamp)
     + Map&lt;ProductID, Long&gt; getAmounts()
 }
 
@@ -1565,7 +1565,7 @@ OrderID -d[hidden]- CustomerID
 </pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-869517beb65f41ce30ee78425a4ca2df");
+    handlePlantumlFigureByID("plantuml-figure-ba0029f788642e90d65028c1686de024");
 </script>
 </section><section>
 <h2 id="services-at-the-web-level-pt-1">Services at the Web level (pt. 1)</h2>
@@ -1682,7 +1682,7 @@ OrderID -d[hidden]- CustomerID
 </ul>
 </section><section>
 <h2 id="domain-events-example">Domain Events (example)</h2>
-<figure id="plantuml-figure-97bf2682c1015c759513fbefbe62b175" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-baa5858c0a986aab7dc97d274bf37775" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
 <pre>interface OrderManagementService {
     + void performOrder(Order order)
     ..
@@ -1700,7 +1700,7 @@ interface OrderEvent {
     + String **getKind**()
     + OrderID getOrder()
     + CustomerID getCustomer()
-    + Date **getTimestamp**()
+    + Instant **getTimestamp**()
     + Map&lt;ProductID, Long&gt; getAmounts()
 }
 
@@ -1734,7 +1734,7 @@ note left of OrderEventListener: listener (observer)
 </pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-97bf2682c1015c759513fbefbe62b175");
+    handlePlantumlFigureByID("plantuml-figure-baa5858c0a986aab7dc97d274bf37775");
 </script>
 </section><section>
 <h2 id="domain-events-at-the-web-level-pt-1">Domain Events at the Web level (pt. 1)</h2>
@@ -1889,7 +1889,7 @@ note left of OrderEventListener: listener (observer)
 </ul>
 </section><section>
 <h2 id="factories-example">Factories (example)</h2>
-<figure id="plantuml-figure-3263a548cc90bd8fc30ad0b68b80c5a4" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-60f54d4ccd9f18cb4d1cc2d7342797e9" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
 <pre>interface CustomerID
 
 interface TaxCode
@@ -1903,26 +1903,34 @@ Customer "1" *-- "1" CustomerID
 VatNumber -u-|&gt; CustomerID
 TaxCode -u-|&gt; CustomerID
 
+enum Gender {
+    MALE
+    FEMALE
+}
+
 interface CustomerFactory {
-    + TaxCode computeTaxCode(String name, String surname, Date birthDate, String birthPlace)
+    + TaxCode computeTaxCode(String name, String surname, LocalDate birthDate, Gender gender, String birthPlace)
     ..
     + Customer newCustomerPerson(TaxCode code, String fullName, String email)
-    + Customer newCustomerPerson(String name, String surname, Date birthDate, String birthPlace, String email)
+    + Customer newCustomerPerson(String name, String surname, LocalDate birthDate, Gender gender, String birthPlace, String email)
     ..
     + Customer newCustomerCompany(VatNumber code, String fullName, String email)
 }
 note bottom of CustomerFactory
 - method for computing tax codes
+  (birth place = Italian municipality, e.g. "Roma" -&gt; H501)
 - methods for creating person customers
 - methods for creating company customers
 end note
+
+CustomerFactory .l.&gt; Gender
 
 CustomerFactory -r-&gt; TaxCode: creates
 CustomerFactory -u-&gt; Customer: creates
 </pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-3263a548cc90bd8fc30ad0b68b80c5a4");
+    handlePlantumlFigureByID("plantuml-figure-60f54d4ccd9f18cb4d1cc2d7342797e9");
 </script>
 </section><section>
 <h2 id="factories-at-the-web-level-pt-1">Factories at the Web level (pt. 1)</h2>
@@ -1995,9 +2003,9 @@ CustomerFactory -u-&gt; Customer: creates
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>Customer<span style="color:#bbb"> </span>customer<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">switch</span><span style="color:#bbb"> </span>(request)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">case</span><span style="color:#bbb"> </span>NewPerson<span style="color:#bbb"> </span>p<span style="color:#bbb"> </span>-&gt;<span style="color:#bbb"> </span>factory.<span style="color:#369">newCustomerPerson</span>(<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>p.<span style="color:#369">name</span>(),<span style="color:#bbb"> </span>p.<span style="color:#369">surname</span>(),<span style="color:#bbb"> </span>p.<span style="color:#369">birthDate</span>(),<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>p.<span style="color:#369">birthPlace</span>(),<span style="color:#bbb"> </span>p.<span style="color:#369">email</span>());<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>p.<span style="color:#369">gender</span>(),<span style="color:#bbb"> </span>p.<span style="color:#369">birthPlace</span>(),<span style="color:#bbb"> </span>p.<span style="color:#369">email</span>());<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">case</span><span style="color:#bbb"> </span>NewCompany<span style="color:#bbb"> </span>c<span style="color:#bbb"> </span>-&gt;<span style="color:#bbb"> </span>factory.<span style="color:#369">newCustomerCompany</span>(<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>VatNumber.<span style="color:#369">parse</span>(c.<span style="color:#369">vat</span>()),<span style="color:#bbb"> </span><span style="color:#888">// may throw</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>factory.<span style="color:#369">vatNumber</span>(c.<span style="color:#369">vat</span>()),<span style="color:#bbb"> </span><span style="color:#888">// may throw</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>c.<span style="color:#369">fullName</span>(),<span style="color:#bbb"> </span>c.<span style="color:#369">email</span>());<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>};<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>registry.<span style="color:#369">addNewCustomer</span>(customer);<span style="color:#bbb">
@@ -2858,6 +2866,7 @@ product ..&gt; mq
 <h1 id="exercises">Exercises</h1>
 <p>Repository: <a href="https://github.com/unibo-spe/ddd-exercise">https://github.com/unibo-spe/ddd-exercise</a>, branch <code>exercise</code></p>
 <p>(solutions on branch <code>master</code>)</p>
+<p>Each exercise folder contains a <code>walkthrough.md</code>, suggesting how to address the exercise step by step</p>
 </section><section>
 
 
@@ -2874,6 +2883,9 @@ product ..&gt; mq
 </li>
 <li>
 <p>Persons are identified by tax codes</p>
+<ul>
+<li>computed out of name, surname, birth date, gender, and birth place</li>
+</ul>
 </li>
 <li>
 <p>In any case a name and email are recorded for each customer</p>
@@ -3062,6 +3074,50 @@ product ..&gt; mq
 <li>Sketch <em>tests</em> for the implementations</li>
 <li>Provide <strong>implementations</strong> for the interfaces, using <strong>the other</strong> library</li>
 <li>Use the same tests as above to prove the two implementations work <em>the same way</em></li>
+</ol>
+
+</section>
+</section><section>
+
+
+<section data-shortcode-section="">
+<h2 id="exercise-4--dependency-injection-pt-1">Exercise 4 – Dependency Injection (pt. 1)</h2>
+<ul>
+<li>
+<p>A <code>ParkingLot</code> lets cars <code>enter</code> and <code>exit</code>, by plate</p>
+<ul>
+<li>the first 15 minutes are free, then each started hour costs 1.50 EUR</li>
+<li>the same car cannot enter twice</li>
+<li>drivers are greeted on a display (i.e. the console)</li>
+</ul>
+</li>
+<li>
+<p>The class <em>works</em>, but it is <strong>hard to test</strong></p>
+<ul>
+<li>it <em>reaches</em> by itself everything it needs</li>
+<li>its tests are <em>slow</em> (they wait for time to pass), <em>weak</em> (no exact fees), and <em>share state</em></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="exercise-4--dependency-injection-pt-2">Exercise 4 – Dependency Injection (pt. 2)</h2>
+<h3 id="to-do">TO-DO</h3>
+<ol>
+<li>Run the tests, and observe what makes them slow or weak</li>
+<li>Identify the <strong>hidden dependencies</strong> of <code>ParkingLot</code>
+<ul>
+<li>static methods with side effects, static state, I/O, …</li>
+<li>hint: the system clock is a dependency too (cf. <code>java.time.Clock</code>)</li>
+</ul>
+</li>
+<li>Introduce one <strong>interface</strong> per dependency (unless the JDK already provides one), and move the current behaviour into <strong>implementations</strong></li>
+<li>Let <code>ParkingLot</code> receive its dependencies via <strong>constructor injection</strong></li>
+<li>Let <code>Main</code> be the <strong>composition root</strong></li>
+<li>Rewrite the tests with <em>test doubles</em> (stubs, fakes, mocks), asserting <em>exact</em> fees, without waiting
+<ul>
+<li>cf. <a href="#/dependency-injection">DI eases testability</a></li>
+</ul>
+</li>
 </ol>
 
 </section>
