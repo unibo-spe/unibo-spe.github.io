@@ -40,7 +40,7 @@
 <br>
 <h3 id="giovanni-ciatto"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2026-10-14
+<p>Compiled on: 2026-10-15
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -57,7 +57,7 @@
 <ol>
 <li><a href="#/motivation">Motivation</a>: <em>why a structured design process</em></li>
 <li><a href="#/notions">Main notions</a>: <em>domain, subdomains, bounded contexts, model, ubiquitous language</em></li>
-<li><a href="#/building-blocks">Building blocks</a>: <em>entities, value objects, aggregates, factories, repositories, services, dependency injection, domain events</em></li>
+<li><a href="#/building-blocks">Building blocks</a>: <em>entities, value objects, aggregates, repositories, services, domain events, factories, dependency injection</em></li>
 <li><a href="#/strategic-design">Strategic design</a>: <em>bounded contexts, context maps, integration patterns</em></li>
 <li><a href="#/architecture">Layered architecture</a>: <em>layers, ports &amp; adapters, modules</em></li>
 <li><a href="#/advanced">Event sourcing and CQRS</a>: <em>storing changes, segregating reads and writes</em></li>
@@ -93,8 +93,11 @@
 <p>What’s the <strong>criterion</strong> to choose <strong>if</strong> and <strong>when</strong> to adopt languages / patterns / architectures / principles / practices?</p>
 </blockquote>
 </section><section>
+<h2 id="the-domain-as-the-criterion">The domain as the criterion</h2>
+<p><img src="./domain-as-criterion.svg" alt="Left, facts stated by domain experts; right, the design choice each fact suggests, with the part of the lecture discussing it. A placed order must never change suggests immutable value objects (building blocks). Every price change must be traceable for years suggests event sourcing. Payment and shipping are run by different teams and change at different paces suggests separate bounded contexts (strategic design). The catalogue is browsed all day but updated once a week suggests segregating reads from writes (CQRS). We may switch payment provider next year suggests ports and adapters and dependency injection. Crossed out as non-criteria: it’s trendy, I already know it, the last project used it, the framework wants it so"></p>
+</section><section>
 <h2 id="recommended-workflow">Recommended workflow</h2>
-<h3 id="problem-xrightarrowcolorredanalysis-model-xrightarrowcolorreddesign-architecture-xrightarrowimplementation-solution">Problem $\xrightarrow{\color{red}analysis}$ <strong>Model</strong> $\xrightarrow{\color{red}design}$ Architecture $\xrightarrow{implementation}$ Solution</h3>
+<p><img src="./workflow.svg" alt="A linear workflow: the problem is turned into a model via analysis, the model into an architecture via design, and the architecture into a solution via implementation; the model and the steps leading to and from it are highlighted"></p>
 <ul>
 <li>yet, how to derive the model?</li>
 </ul>
@@ -169,6 +172,9 @@
 </ul>
 </li>
 </ul>
+</section><section>
+<h2 id="what-is-the-domain-example">What is the domain? (example)</h2>
+<p><img src="./university-domain.svg" alt="A university domain made of five contexts, each with its own expert and its own words: teaching (course coordinator), student office (secretary), human resources (HR officer), research (research office), facilities (facilities manager). Some words recur with different meanings: a student takes classes and exams in teaching, but is someone enrolled who pays fees in the student office; a course is a subject taught yearly in teaching, but a degree programme in the student office; a professor teaches courses in teaching, is an employee with a contract in HR, and a principal investigator in research"></p>
 </section><section>
 <h2 id="ddd-philosophy-pt-1">DDD Philosophy (pt. 1)</h2>
 <ul>
@@ -245,6 +251,9 @@
 <p><strong>Ubiquitous Language</strong>: language used by domain experts and mirrored by the model</p>
 </li>
 </ul>
+</section><section>
+<h2 id="overview-of-main-notions-picture">Overview of main notions (picture)</h2>
+<p><img src="./notions-overview.svg" alt="Problem space: an e-commerce domain split into payment (generic), offer (core), customer (supporting), and shipping (supporting) subdomains. Solution space: each subdomain is realised, ideally one-to-one, by a bounded context, which contains its own model and its own ubiquitous language"></p>
 </section><section>
 <h2 id="subdomains-and-bounded-contexts"><em>Subdomains</em> and <em>Bounded Contexts</em></h2>
 <blockquote>
@@ -341,6 +350,19 @@
 <p><strong>used to name software components</strong></p>
 </li>
 </ul>
+</section>
+<section data-noprocess="" data-shortcode-slide="" id="glossary">
+<h2 id="how-a-glossary-may-look-like">How a glossary may look like</h2>
+<p><img src="./glossary.svg" alt="Excerpt of a glossary for an e-commerce domain, as a table with columns term, context, definition, and synonyms to avoid. Basket (offer): the products a customer is considering, not binding, not to be confused with order. Order (offer): a binding request to buy products at the agreed prices. Place an order (offer): turn a basket into an order. Customer appears twice, with different meanings: in payment, whoever is billed (a.k.a. payer); in shipping, whoever receives a shipment (a.k.a. recipient). Shipment (shipping): a parcel carrying part of one order to one address"></p>
+<ul>
+<li>one entry per term <em>and</em> per context: the same word may mean different things in different contexts</li>
+</ul>
+</section><section>
+<h2 id="the-glossary-is-reflected-everywhere">The glossary is reflected everywhere</h2>
+<p><img src="./glossary-reflection.svg" alt="The glossary terms (Basket, Order, place, Customer, Shipment) are mirrored by the code (interfaces Basket, Order, Customer, method place, List of Shipment), by the documentation (a page explaining how a customer places a basket, which becomes an order delivered via shipments), and by conversations among a domain expert, a developer, and a manager, who all use the same terms"></p>
+<ul>
+<li>same words, same meanings, for <em>all</em> people: experts, developers, managers, users</li>
+</ul>
 
 </section>
 </section><section>
@@ -400,6 +422,35 @@
 </ul>
 </li>
 </ol>
+</section>
+<section data-noprocess="" data-shortcode-slide="" id="conceptual-workflow-diagram">
+<h2 id="conceptual-workflow-activity-diagram">Conceptual Workflow (activity diagram)</h2>
+<figure id="plantuml-figure-a1db908c0c69988174f158d4b316685e" class="plantuml" alt="Activity diagram of the conceptual workflow: identify and name the domain, then its main contexts; then repeatedly elicit the meaning of relevant words with domain experts and update the glossary, as long as ambiguous words remain; then adopt the ubiquitous language, draw the context map, model the software around the language, and continue with the choice of building blocks" style="width: 100%;max-width: 95vw;max-height: 85vhvh;">
+<pre>skinparam defaultFontSize 18
+skinparam ActivityBackgroundColor #e3edf8
+skinparam ActivityBorderColor #2f6db5
+start
+:Identify and name the **domain**;
+:Identify and name the main **contexts**;
+repeat
+  :Elicit the meaning of relevant **words**
+  with **domain experts**
+  (beware of homonyms and synonyms);
+  :Update the **glossary**;
+repeat while (ambiguous or missing words?) is (yes)
+-&gt; no;
+:Adopt the **ubiquitous language**
+in talks, sketches, and code;
+:Draw the **context map**;
+:Model the software around the language
+(1 concept ≈ 1 interface);
+(A)
+note right: continues with\nbuilding blocks
+</pre>
+</figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-a1db908c0c69988174f158d4b316685e");
+</script>
 </section><section>
 <h2 id="discovering-the-domain-event-storming">Discovering the domain: Event Storming</h2>
 <ul>
@@ -407,6 +458,31 @@
 <li>Put <em>domain events</em> (past tense) on a timeline, then add commands, actors, aggregates, and policies</li>
 <li>Boundaries between clusters of events suggest <em>bounded contexts</em></li>
 <li>Domain events are introduced <a href="#/domain-events">later</a></li>
+</ul>
+<br>
+<blockquote>
+<p>More on event storming in the course <a href="https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/558673">Software Architecture and Platforms</a></p>
+</blockquote>
+</section><section>
+<h2 id="event-storming-notation">Event Storming: notation</h2>
+<p><img src="./event-storming-notation.svg" alt="Sticky-note colours used in event storming: orange for domain events (e.g. Order Placed), blue for commands (Place Order), small yellow for actors (Customer), large yellow for aggregates (Order), lilac for policies (whenever … then …), green for read models (Basket Summary), pink for external systems (Payment Gateway), and red, tilted, for hot spots (open questions)"></p>
+<ul>
+<li>one colour per kind of sticky note, on a long paper roll (or a virtual whiteboard)</li>
+</ul>
+</section><section>
+<h2 id="event-storming-big-picture">Event Storming: big picture</h2>
+<p><img src="./event-storming-big-picture.svg" alt="Domain events of an e-commerce placed along a timeline: product added to or removed from basket, order placed, payment authorized or refused, invoice issued, shipment prepared, parcel dispatched, delivered, or returned. Hot spots ask what if stock runs out after placing, and who pays for returns. Dashed boundaries group the events into candidate offer, payment, and shipping contexts"></p>
+<ol>
+<li>everybody writes the events they know, then the group sorts them in time</li>
+<li>discussions reveal <em>hot spots</em> and the <em>words</em> people use $\rightarrow$ glossary</li>
+<li>clusters of events suggest <em>bounded contexts</em></li>
+</ol>
+</section><section>
+<h2 id="event-storming-process-modelling">Event Storming: process modelling</h2>
+<p><img src="./event-storming-process.svg" alt="Process-level event storming: a Customer, informed by the Basket Summary read model, issues the Place Order command, handled by the Order aggregate, which emits Order Placed; a policy (whenever an order is placed, charge the customer) issues the Charge Customer command, sent to the Payment Gateway external system, which emits Payment Authorized, and so on"></p>
+<ul>
+<li>zoom into one process: <em>actor</em> $\rightarrow$ <em>command</em> $\rightarrow$ <em>aggregate</em> $\rightarrow$ <em>event</em> $\rightarrow$ <em>policy</em> $\rightarrow$ <em>command</em> …</li>
+<li>aggregates and events found here become building blocks of the model</li>
 </ul>
 
 </section>
@@ -417,41 +493,7 @@
 <h1 id="ddd-building-blocks">DDD Building Blocks</h1>
 </section><section>
 <h2 id="towards-building-blocks">Towards building blocks</h2>
-
-<div class="multiCol">
-    
-
-<div class="col  ">
-    <p>Domain</p>
-<ul>
-<li>Concept
-<ul>
-<li>instance</li>
-</ul>
-</li>
-</ul>
-
-</div>
-
-<div class="col  ">
-    <p>$\xrightarrow{modelling}$</p>
-
-</div>
-
-<div class="col  ">
-    <p>Model</p>
-<ul>
-<li>Type
-<ul>
-<li>object</li>
-</ul>
-</li>
-</ul>
-
-</div>
-
-</div>
-
+<p><img src="./domain-to-model.svg" alt="Modelling maps the domain onto the model: a domain concept (e.g. customer) becomes a type (e.g. interface Customer), and each instance of the concept (e.g. Alice, Bob) is reified as an object of that type (alice, bob)"></p>
 <ul>
 <li>Each <em>concept</em> from each <strong>context</strong> shall become a <em>type</em> in the <strong>model</strong>
 <ul>
@@ -474,7 +516,12 @@
 </section><section>
 <h2 id="workflow">Workflow</h2>
 <p>(continued)</p>
-<ol start="7">
+
+<div class="multiCol">
+    
+
+<div class="col col-7 ">
+    <ol start="7">
 <li>
 <p><em>Choose</em> the most adequate <strong>building block</strong> for each concept</p>
 <ul>
@@ -498,6 +545,37 @@
 </ul>
 </li>
 </ol>
+
+</div>
+
+<div class="col col-5 ">
+    <figure id="plantuml-figure-6c12bc0fcc25426426ac549103be3784" class="plantuml" alt="Continuation of the conceptual workflow activity diagram: for each concept, choose the most adequate building block and design the corresponding type; if new concepts emerge (identifiers, repositories, factories, ...), add them to the glossary and to the model; repeat while concepts are left" style="width: 100%;max-width: 95vw;max-height: 75vhvh;">
+<pre>skinparam defaultFontSize 18
+skinparam ActivityBackgroundColor #e3edf8
+skinparam ActivityBorderColor #2f6db5
+(A)
+repeat
+  :Pick a **concept**;
+  :Choose its **building block**;
+  :Design the corresponding **type**;
+  if (new concepts emerged?) then (yes)
+    :Add them to the **glossary**
+    and to the model;
+  else (no)
+  endif
+repeat while (concepts left?) is (yes)
+-&gt; no;
+stop
+</pre>
+</figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-6c12bc0fcc25426426ac549103be3784");
+</script>
+
+</div>
+
+</div>
+
 </section><section>
 
 
@@ -514,13 +592,13 @@
 <p><strong>Aggregate</strong>: cluster of entities/value objects with a consistency boundary, accessed via its <strong>root</strong> entity</p>
 </li>
 <li>
-<p><strong>Domain Event</strong>: objects modelling relevant events (notifications)</p>
+<p><strong>Repository</strong>: objects providing storage facilities</p>
 </li>
 <li>
 <p><strong>Service</strong> objects: providing stateless functionalities</p>
 </li>
 <li>
-<p><strong>Repository</strong>: objects providing storage facilities</p>
+<p><strong>Domain Event</strong>: objects modelling relevant events (notifications)</p>
 </li>
 <li>
 <p><strong>Factory</strong>: objects creating other objects</p>
@@ -532,7 +610,12 @@
 </section><section>
 <h2 id="building-blocks-concept">Building blocks (concept)</h2>
 <p><img src="./building-blocks.svg" alt="A concept map linking model-driven design to services, entities, value objects, aggregates, factories, and repositories; entities act as aggregate roots and repositories access aggregates"></p>
+
+</section>
 </section><section>
+
+
+<section data-shortcode-section="">
 <h2 id="entities-vs-value-objects">Entities vs. Value Objects</h2>
 <blockquote>
 <p>Genus-differentia definition:</p>
@@ -614,7 +697,7 @@
 </ul>
 </section><section>
 <h2 id="entities-vs-value-objects-example">Entities vs. Value Objects (example)</h2>
-<figure id="plantuml-figure-0" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-25f502babcce8ee943e4325821d543e4" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
 <pre>interface Customer {
     + CustomerID getID()
     ..
@@ -647,9 +730,14 @@ Customer *-r- CustomerID
 </pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-0");
+    handlePlantumlFigureByID("plantuml-figure-25f502babcce8ee943e4325821d543e4");
 </script>
+
+</section>
 </section><section>
+
+
+<section data-shortcode-section="">
 <h2 id="aggregates-and-aggregate-roots">Aggregates and Aggregate Roots</h2>
 <h3 id="definition">Definition</h3>
 <ul>
@@ -694,18 +782,21 @@ Customer *-r- CustomerID
 <li>equality compares the root’s identity, as for any entity</li>
 </ul>
 </li>
-<li>
-<p>Components of an aggregate should <em>not</em> hold <strong>references</strong> to components of <em>other</em> aggregates</p>
+</ul>
+</section><section>
+<h2 id="aggregate-roots-constraints-contd">Aggregate Roots (constraints, cont’d)</h2>
+<ul>
+<li>Components of an aggregate should <em>not</em> hold <strong>references</strong> to components of <em>other</em> aggregates
 <ul>
 <li>that’s why they are called aggregate <em>roots</em></li>
 <li>notable exception: <em>references</em> to <em>identifiers</em> of other aggregates</li>
 </ul>
-<p><img src="./aggregate-references.svg" alt="Three aggregates, each with an aggregate root and internal components; references from one aggregate to another aggregate’s root are allowed, while a reference to another aggregate’s internal component is forbidden"></p>
 </li>
 </ul>
+<p><img src="./aggregate-references.svg" alt="Three aggregates, each with an aggregate root and internal components; references from one aggregate to another aggregate’s root are allowed, while a reference to another aggregate’s internal component is forbidden"></p>
 </section><section>
 <h2 id="aggregate-root-example">Aggregate Root (example)</h2>
-<figure id="plantuml-figure-1" class="plantuml" alt="A Customer aggregate, whose root Customer owns a CustomerID, and an Order aggregate, whose root Order owns an OrderID, an Address value object, and many OrderItem entities; Order refers to the customer only through its CustomerID" style="width: 100%;height: 65vh;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-d518ce94b36b6c9344533ead4198bc06" class="plantuml" alt="A Customer aggregate, whose root Customer owns a CustomerID, and an Order aggregate, whose root Order owns an OrderID, an Address value object, and many OrderItem entities; Order refers to the customer only through its CustomerID" style="width: 100%;height: 65vh;max-width: 95vw;max-height: 80vh;">
 <pre>package "Customer aggregate" &lt;&lt;Rectangle&gt;&gt; {
     interface Customer {
         + CustomerID getID()
@@ -759,10 +850,415 @@ Order .l.&gt; CustomerID: refers to\nthe customer\nby ID
 </pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-1");
+    handlePlantumlFigureByID("plantuml-figure-d518ce94b36b6c9344533ead4198bc06");
 </script>
 <p>(notice that <code>Order</code> refers to its <code>Customer</code> via the <code>CustomerID</code> only, and that <code>OrderItem</code>s refer to products via <code>ProductID</code>s)</p>
+
+</section>
 </section><section>
+
+
+<section data-shortcode-section="">
+<h2 id="repositories-definition">Repositories (definition)</h2>
+<blockquote>
+<p>Objects mediating the <em>persistent</em> <strong>storage/retrieval</strong> of other objects</p>
+</blockquote>
+<p><img src="./repositories.svg" alt="A client gets an aggregate from a repository, modifies it, and saves it back; the repository rebuilds (hydrates) the aggregate from data loaded from the database, and stores it there, dealing with whole aggregates only"></p>
+</section><section>
+<h2 id="repositories-details">Repositories (details)</h2>
+<h3 id="purpose">Purpose</h3>
+<ul>
+<li>Hiding (i.e. be backed by) some <em>database technology</em></li>
+<li>Possibly realising some sort of <a href="https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping">object-relational mapping (ORM)</a></li>
+<li><em>Storing</em> / <em>retrieving</em> aggregate roots as <em>wholes</em></li>
+<li>Supporting <em>CRUD</em> operations on aggregate roots, and/or <em>wrapping common queries</em>
+<ul>
+<li>Create, Read, Update, Delete</li>
+</ul>
+</li>
+</ul>
+<h3 id="remarks">Remarks</h3>
+<ul>
+<li>They may exploit <em>factories</em> for turning retrieved data into objects</li>
+<li>If properly engineered, they avoid the <em>lock-in</em> effect for database technologies</li>
+<li>Design &amp; implementation may require thinking about:
+<ul>
+<li>the architecture,</li>
+<li>the infrastructure,</li>
+<li>the expected load,</li>
+<li>etc.</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="repositories-constraints">Repositories (constraints)</h2>
+<ul>
+<li>
+<p>They are usually <em>identity-less</em>, <em>stateful</em>, and <em>composed</em> objects</p>
+<ul>
+<li>state may consist of the <em>stored objects</em></li>
+<li>state may consist of <em>DB connections</em></li>
+</ul>
+</li>
+<li>
+<p>May be implemented as <em>classes</em> in most OOP languages</p>
+</li>
+<li>
+<p>Provide methods to</p>
+<ul>
+<li><em>add</em>, <em>remove</em>, <em>update</em> aggregate root entities</li>
+<li><em>select</em> and return one or more entities, possibly in a <em>lazy</em> way
+<ul>
+<li>this should return <code>Iterable</code>, <code>Collection</code>, or <code>Stream</code> on JVM</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><em>Non-trivial</em> implementations should take care of</p>
+<ul>
+<li>enforcing <em>consistency</em>, in spite of <em>concurrent</em> access</li>
+<li>supporting complex <em>transactions</em></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="repositories-example">Repositories (example)</h2>
+<figure id="plantuml-figure-c60b704a3ba50af011e6229d9a10a02c" class="plantuml" alt="" style="width: 100%;height: 70vh;max-width: 95vw;max-height: 80vh;">
+<pre>interface CustomerID
+
+interface Customer
+
+Customer "1" *-u- "1" CustomerID
+
+interface CustomerRegistry {
+    + Iterable&lt;Customer&gt; getAllCustomers()
+    ..
+    + Customer findCustomerById(CustomerID id)
+    + Iterable&lt;Customer&gt; findCustomerByName(String name)
+    + Iterable&lt;Customer&gt; findCustomerByEmail(String email)
+    ..
+    + void addNewCustomer(Customer customer)
+    + void updateCustomer(Customer customer)
+    + void removeCustomer(Customer customer)
+}
+
+CustomerRegistry "1" o--&gt; "N" Customer: contains
+CustomerRegistry --&gt; CustomerID: exploits
+</pre>
+</figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-c60b704a3ba50af011e6229d9a10a02c");
+</script>
+
+</section>
+</section><section>
+
+
+<section data-shortcode-section="">
+<h2 id="services">Services</h2>
+<blockquote>
+<p>Operations that do not naturally belong to any entity or value object</p>
+</blockquote>
+<h3 id="purpose">Purpose</h3>
+<ul>
+<li>
+<p>Reifying <em>control-related</em> aspects of the software</p>
+</li>
+<li>
+<p><em>Wiring</em> aggregates, entities, and value objects <em>together</em></p>
+</li>
+<li>
+<p>Exposing <em>coarse-grained functionalities</em> to the users</p>
+</li>
+<li>
+<p>Providing a <em>façade</em> for the domain</p>
+</li>
+<li>
+<p>Making the business logic evolvable, interchangeable, replaceable</p>
+</li>
+<li>
+<p><em>domain service</em>: domain logic spanning several aggregates; lives in the domain layer</p>
+</li>
+<li>
+<p><em>application service</em>: orchestrates a use case (loads aggregates via repositories, calls them, saves, publishes events); lives in the application layer</p>
+</li>
+<li>
+<p>Rule of thumb: put behaviour on entities/aggregates first; a model of only getters/setters plus services is an <em>anemic domain model</em> (cf. <a href="https://martinfowler.com/bliki/AnemicDomainModel.html">Fowler</a>)</p>
+</li>
+</ul>
+<h3 id="remarks">Remarks</h3>
+<ul>
+<li>Services may be <em>exposed</em> via RESTful APIs</li>
+<li>Should be designed taking <em>current use cases</em> into account (i.e. design services to be <em>purpose-specific</em>)
+<ul>
+<li>entities/objects should support <em>future use cases</em>, too (i.e. design entities/objects to be <em>general purpose</em>)</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="services-constraints">Services (constraints)</h2>
+<ul>
+<li>
+<p>They are usually <em>identity-less</em>, <em>stateless</em> objects</p>
+</li>
+<li>
+<p>May be implemented as classes in OOP languages</p>
+<ul>
+<li>or bare <em>functions</em> in functional languages</li>
+</ul>
+</li>
+<li>
+<p>Commonly provide <em>procedures</em> to do business-related stuff</p>
+<ul>
+<li>e.g. a <strong>complex operation</strong>…
+<ul>
+<li>… concerning some particular <em>aggregate root</em></li>
+<li>… which does <u>not</u> support the operation directly through its methods
+<ul>
+<li>(maybe because the operation is use-case specific)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>e.g. <strong>proxying</strong> an external service</li>
+<li>e.g. a complex operation spanning <strong>several aggregates</strong>, repositories, factories, etc.</li>
+</ul>
+</li>
+<li>
+<p><em>Non-trivial</em> implementations should take care of</p>
+<ul>
+<li>supporting <em>concurrent access</em> to the service’s facilities</li>
+<li>exposing <em>domain events</em> to the external world</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="services-and-events">Services and events</h2>
+<ul>
+<li>
+<p>Services are most commonly <strong>prosumers</strong> of <em>events</em></p>
+<ul>
+<li>i.e. they both <em>produce</em> and <em>consume</em> events</li>
+<li>events are most commonly <em>domain events</em> (cf. <a href="#/domain-events">later</a>)</li>
+</ul>
+</li>
+<li>
+<p>In practice, services commonly implement the <a href="https://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> (aka <em>event listener</em>)</p>
+<ul>
+<li>often in <em>both</em> roles: event <strong>source</strong> (subject) <em>and</em> event <strong>listener</strong> (observer)</li>
+</ul>
+</li>
+<li>
+<p>Hence, services may come with <em>ad-hoc methods</em> to</p>
+<ul>
+<li><em>produce</em> events, i.e. let listeners (un)subscribe
+<ul>
+<li>e.g. <code>addOrderEventListener(listener)</code>, <code>removeOrderEventListener(listener)</code></li>
+</ul>
+</li>
+<li><em>react</em> to events, i.e. handle notifications from other sources
+<ul>
+<li>e.g. <code>onCustomerEvent(event)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="services-example">Services (example)</h2>
+<figure id="plantuml-figure-869517beb65f41ce30ee78425a4ca2df" class="plantuml" alt="" style="width: 100%;height: 70vh;max-width: 95vw;max-height: 80vh;">
+<pre>interface OrderManagementService {
+    + void performOrder(Order order)
+    ..
+    + void **addOrderEventListener**(OrderEventListener listener)
+    + void **removeOrderEventListener**(OrderEventListener listener)
+}
+
+interface OrderEventListener {
+    + void **onOrderEvent**(OrderEvent event)
+}
+
+interface CustomerEventListener {
+    + void **onCustomerEvent**(CustomerEvent event)
+}
+
+interface Order {
+    + OrderID getId()
+    + CustomerID getCustomer()
+    + void setCustomer(CustomerID customer)
+    + Date getTimestamp()
+    + void setTimestamp(Date timestamp)
+    + Map&lt;ProductID, Long&gt; getAmounts()
+}
+
+interface OrderID
+
+interface CustomerID
+
+interface ProductID
+
+interface OrderStore
+
+Order "1" *-r- "1" OrderID
+Order "1" *-d- "1" CustomerID
+Order "1" *-u- "N" ProductID
+OrderStore "1" *-- "N" Order
+
+OrderManagementService ..&gt; Order: handles
+OrderManagementService ..&gt; OrderStore: updates
+OrderManagementService -u-|&gt; CustomerEventListener
+OrderManagementService "1" o-l- "N" OrderEventListener: notifies
+
+note bottom of OrderStore: repository
+note top of Order: entity (aggregate root)
+note right of OrderID: value object
+note right of ProductID: value object
+note right of CustomerID: value object
+note right of OrderManagementService: service\n(source of order events,\nlistener of customer events)
+note left of OrderEventListener: listener (observer)
+note left of CustomerEventListener: listener (observer)
+
+OrderID -u[hidden]- ProductID
+OrderID -d[hidden]- CustomerID
+
+</pre>
+</figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-869517beb65f41ce30ee78425a4ca2df");
+</script>
+
+</section>
+</section>
+
+
+<section data-shortcode-section="">
+<section data-noprocess="" data-shortcode-slide="" id="domain-events">
+<h2 id="domain-events-definition">Domain Events (definition)</h2>
+<blockquote>
+<p>A value-like object capturing some domain-related <em>event</em>
+<br> (i.e., an observable <em>variation</em> in the domain, which is <em>relevant</em> to the software)</p>
+</blockquote>
+<ul>
+<li>actually, only the event <em>notification</em>/description is reified to a type</li>
+</ul>
+<p><img src="./domain-events.svg" alt="A customer places an order via the Order Management Service, which saves the Order aggregate and then publishes an OrderEvent of kind “placed”; the event notifies a Recommendation Service, which updates the Recommendations aggregate"></p>
+</section><section>
+<h2 id="domain-events-details">Domain Events (details)</h2>
+<h3 id="purpose">Purpose</h3>
+<ul>
+<li><em>Propagate</em> changes among portions of the domain model (e.g. contexts, aggregates, entities, etc.)</li>
+<li><em>Record</em> changes concerning the domain</li>
+</ul>
+<h3 id="remarks">Remarks</h3>
+<ul>
+<li>
+<p>Strong relation with the <a href="https://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> (i.e. publish-subscribe)</p>
+</li>
+<li>
+<p>Strong relation with the <em>event sourcing</em> approach (described later)</p>
+</li>
+<li>
+<p>Strong relation with the <em>CQRS pattern</em> (described later)</p>
+</li>
+</ul>
+</section><section>
+<h2 id="domain-events-constraints">Domain Events (constraints)</h2>
+<ul>
+<li>
+<p>They are usually <em>time-stamped</em> value objects</p>
+</li>
+<li>
+<p>May be implemented as <em>data-classes</em> or <em>records</em></p>
+</li>
+<li>
+<p>They represent a <em>relevant variation</em> in the domain</p>
+<ul>
+<li>e.g. a <em>change</em> in the <em>state</em> of some entity / repository</li>
+</ul>
+</li>
+<li>
+<p>Event sources &amp; listeners shall be identified too</p>
+<ul>
+<li>who is <em>generating</em> the event?</li>
+<li>who is <em>consuming</em> the event?</li>
+</ul>
+</li>
+<li>
+<p><em>Infrastructural components</em> may be devoted to <em>propagate</em> events across contexts</p>
+<ul>
+<li>e.g. a message broker, a message queue, etc.</li>
+</ul>
+</li>
+<li>
+<p>Common convention: one type per event, named in the <em>past tense</em> (e.g. <code>OrderPlaced</code>, <code>OrderCancelled</code>) (cf. <a href="https://www.informit.com/store/implementing-domain-driven-design-9780321834577">Vernon, 2013</a>)</p>
+</li>
+<li>
+<p>[Teacher’s Suggestion]: use a neutral type (e.g. <code>OrderEvent</code>) plus a kind/discriminator field when many events share the same payload</p>
+</li>
+</ul>
+</section><section>
+<h2 id="domain-events-example">Domain Events (example)</h2>
+<figure id="plantuml-figure-97bf2682c1015c759513fbefbe62b175" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<pre>interface OrderManagementService {
+    + void performOrder(Order order)
+    ..
+    + void **addOrderEventListener**(OrderEventListener listener)
+    + void **removeOrderEventListener**(OrderEventListener listener)
+}
+
+interface OrderEventListener {
+    + void **onOrderEvent**(OrderEvent event)
+}
+
+interface RecommendationService
+
+interface OrderEvent {
+    + String **getKind**()
+    + OrderID getOrder()
+    + CustomerID getCustomer()
+    + Date **getTimestamp**()
+    + Map&lt;ProductID, Long&gt; getAmounts()
+}
+
+interface OrderID
+
+interface CustomerID
+
+interface ProductID
+
+OrderEvent "1" *-r- "1" OrderID
+OrderEvent "1" *-d- "1" CustomerID
+OrderEvent "1" *-d- "N" ProductID
+OrderID -[hidden]d- ProductID
+
+OrderManagementService .r.&gt; OrderEvent: publishes
+OrderEventListener &lt;|-d- RecommendationService
+OrderManagementService "1" o-d- "N" OrderEventListener: notifies
+OrderEventListener .r.&gt; OrderEvent: consumes
+
+note top of OrderEvent
+    domain event
+    (kind: "placed",
+    "cancelled", ...)
+end note
+note right of OrderID: value object
+note right of ProductID: value object
+note left of CustomerID: value object
+note top of OrderManagementService: service
+note right of RecommendationService: service
+note left of OrderEventListener: listener (observer)
+</pre>
+</figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-97bf2682c1015c759513fbefbe62b175");
+</script>
+
+</section>
+</section><section>
+
+
+<section data-shortcode-section="">
 <h2 id="factories-definition">Factories (definition)</h2>
 <blockquote>
 <p>Objects aimed at <strong>creating</strong> other objects</p>
@@ -821,7 +1317,7 @@ Order .l.&gt; CustomerID: refers to\nthe customer\nby ID
 </ul>
 </section><section>
 <h2 id="factories-example">Factories (example)</h2>
-<figure id="plantuml-figure-2" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-3263a548cc90bd8fc30ad0b68b80c5a4" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
 <pre>interface CustomerID
 
 interface TaxCode
@@ -854,226 +1350,14 @@ CustomerFactory -u-&gt; Customer: creates
 </pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-2");
+    handlePlantumlFigureByID("plantuml-figure-3263a548cc90bd8fc30ad0b68b80c5a4");
 </script>
-</section><section>
-<h2 id="repositories-definition">Repositories (definition)</h2>
-<blockquote>
-<p>Objects mediating the <em>persistent</em> <strong>storage/retrieval</strong> of other objects</p>
-</blockquote>
-<p><img src="./repositories.svg" alt="A client gets an aggregate from a repository, modifies it, and saves it back; the repository rebuilds (hydrates) the aggregate from data loaded from the database, and stores it there, dealing with whole aggregates only"></p>
-</section><section>
-<h2 id="repositories-details">Repositories (details)</h2>
-<h3 id="purpose-1">Purpose</h3>
-<ul>
-<li>Hiding (i.e. be backed by) some <em>database technology</em></li>
-<li>Possibly realising some sort of <a href="https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping">object-relational mapping (ORM)</a></li>
-<li><em>Storing</em> / <em>retrieving</em> aggregate roots as <em>wholes</em></li>
-<li>Supporting <em>CRUD</em> operations on aggregate roots, and/or <em>wrapping common queries</em>
-<ul>
-<li>Create, Read, Update, Delete</li>
-</ul>
-</li>
-</ul>
-<h3 id="remarks-1">Remarks</h3>
-<ul>
-<li>They may exploit <em>factories</em> for turning retrieved data into objects</li>
-<li>If properly engineered, they avoid the <em>lock-in</em> effect for database technologies</li>
-<li>Design &amp; implementation may require thinking about:
-<ul>
-<li>the architecture,</li>
-<li>the infrastructure,</li>
-<li>the expected load,</li>
-<li>etc.</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="repositories-constraints">Repositories (constraints)</h2>
-<ul>
-<li>
-<p>They are usually <em>identity-less</em>, <em>stateful</em>, and <em>composed</em> objects</p>
-<ul>
-<li>state may consist of the <em>stored objects</em></li>
-<li>state may consist of <em>DB connections</em></li>
-</ul>
-</li>
-<li>
-<p>May be implemented as <em>classes</em> in most OOP languages</p>
-</li>
-<li>
-<p>Provide methods to</p>
-<ul>
-<li><em>add</em>, <em>remove</em>, <em>update</em> aggregate root entities</li>
-<li><em>select</em> and return one or more entities, possibly in a <em>lazy</em> way
-<ul>
-<li>this should return <code>Iterable</code>, <code>Collection</code>, or <code>Stream</code> on JVM</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p><em>Non-trivial</em> implementations should take care of</p>
-<ul>
-<li>enforcing <em>consistency</em>, in spite of <em>concurrent</em> access</li>
-<li>supporting complex <em>transactions</em></li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="repositories-example">Repositories (example)</h2>
-<figure id="plantuml-figure-3" class="plantuml" alt="" style="width: 100%;height: 70vh;max-width: 95vw;max-height: 80vh;">
-<pre>interface CustomerID
 
-interface Customer
-
-Customer "1" *-u- "1" CustomerID
-
-interface CustomerRegistry {
-    + Iterable&lt;Customer&gt; getAllCustomers()
-    ..
-    + Customer findCustomerById(CustomerID id)
-    + Iterable&lt;Customer&gt; findCustomerByName(String name)
-    + Iterable&lt;Customer&gt; findCustomerByEmail(String email)
-    ..
-    + void addNewCustomer(Customer customer)
-    + void updateCustomer(Customer customer)
-    + void removeCustomer(Customer customer)
-}
-
-CustomerRegistry "1" o--&gt; "N" Customer: contains
-CustomerRegistry --&gt; CustomerID: exploits
-</pre>
-</figure>
-<script>
-    handlePlantumlFigureByID("plantuml-figure-3");
-</script>
-</section><section>
-<h2 id="services">Services</h2>
-<blockquote>
-<p>Operations that do not naturally belong to any entity or value object</p>
-</blockquote>
-<h3 id="purpose-2">Purpose</h3>
-<ul>
-<li>
-<p>Reifying <em>control-related</em> aspects of the software</p>
-</li>
-<li>
-<p><em>Wiring</em> aggregates, entities, and value objects <em>together</em></p>
-</li>
-<li>
-<p>Exposing <em>coarse-grained functionalities</em> to the users</p>
-</li>
-<li>
-<p>Providing a <em>façade</em> for the domain</p>
-</li>
-<li>
-<p>Making the business logic evolvable, interchangeable, replaceable</p>
-</li>
-<li>
-<p><em>domain service</em>: domain logic spanning several aggregates; lives in the domain layer</p>
-</li>
-<li>
-<p><em>application service</em>: orchestrates a use case (loads aggregates via repositories, calls them, saves, publishes events); lives in the application layer</p>
-</li>
-<li>
-<p>Rule of thumb: put behaviour on entities/aggregates first; a model of only getters/setters plus services is an <em>anemic domain model</em> (cf. <a href="https://martinfowler.com/bliki/AnemicDomainModel.html">Fowler</a>)</p>
-</li>
-</ul>
-<h3 id="remarks-2">Remarks</h3>
-<ul>
-<li>Services may be <em>exposed</em> via RESTful APIs</li>
-<li>Should be designed taking <em>current use cases</em> into account (i.e. design services to be <em>purpose-specific</em>)
-<ul>
-<li>entities/objects should support <em>future use cases</em>, too (i.e. design entities/objects to be <em>general purpose</em>)</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="services-constraints">Services (constraints)</h2>
-<ul>
-<li>
-<p>They are usually <em>identity-less</em>, <em>stateless</em> objects</p>
-</li>
-<li>
-<p>May be implemented as classes in OOP languages</p>
-<ul>
-<li>or bare <em>functions</em> in functional languages</li>
-</ul>
-</li>
-<li>
-<p>Commonly provide <em>procedures</em> to do business-related stuff</p>
-<ul>
-<li>e.g. a <strong>complex operation</strong>…
-<ul>
-<li>… concerning some particular <em>aggregate root</em></li>
-<li>… which does <u>not</u> support the operation directly through its methods
-<ul>
-<li>(maybe because the operation is use-case specific)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>e.g. <strong>proxying</strong> an external service</li>
-<li>e.g. a complex operation spanning <strong>several aggregates</strong>, repositories, factories, etc.</li>
-</ul>
-</li>
-<li>
-<p><em>Non-trivial</em> implementations should take care of</p>
-<ul>
-<li>supporting <em>concurrent access</em> to the service’s facilities</li>
-<li>exposing <em>domain events</em> to the external world</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h2 id="services-example">Services (example)</h2>
-<figure id="plantuml-figure-4" class="plantuml" alt="" style="width: 100%;height: 70vh;max-width: 95vw;max-height: 80vh;">
-<pre>interface OrderManagementService {
-    + void performOrder(Order order)
-}
-
-interface Order {
-    + OrderID getId()
-    + CustomerID getCustomer()
-    + void setCustomer(CustomerID customer)
-    + Date getTimestamp()
-    + void setTimestamp(Date timestamp)
-    + Map&lt;ProductID, Long&gt; getAmounts()
-}
-
-interface OrderID
-
-interface CustomerID
-
-interface ProductID
-
-interface OrderStore
-
-Order "1" *-r- "1" OrderID
-Order "1" *-d- "1" CustomerID
-Order "1" *-u- "N" ProductID
-OrderStore "1" *-- "N" Order
-
-OrderManagementService ..&gt; Order: handles
-OrderManagementService ..&gt; OrderStore: updates
-
-note bottom of OrderStore: repository
-note top of Order: entity (aggregate root)
-note right of OrderID: value object
-note right of ProductID: value object
-note right of CustomerID: value object
-note top of OrderManagementService: service
-
-OrderID -u[hidden]- ProductID
-OrderID -d[hidden]- CustomerID
-
-</pre>
-</figure>
-<script>
-    handlePlantumlFigureByID("plantuml-figure-4");
-</script>
 </section>
+</section>
+
+
+<section data-shortcode-section="">
 <section data-noprocess="" data-shortcode-slide="" id="dependency-injection">
 <h2 id="factories-enable-dependency-injection">Factories enable Dependency Injection</h2>
 <ul>
@@ -1194,7 +1478,10 @@ OrderID -d[hidden]- CustomerID
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">performOrder</span>(Order<span style="color:#bbb"> </span>order)<span style="color:#bbb"> </span>{<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888">// ... validate the order, possibly via customers ...</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>store.<span style="color:#369">add</span>(order);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888">// ... then notify order event listeners ...</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888">// ... (un)subscription methods for order event listeners ...</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
 </span></span></span></code></pre></div><ul>
 <li>The service only mentions <em>interfaces</em>: <code>OrderStore</code>, <code>CustomerFactory</code>, <code>Order</code></li>
@@ -1361,109 +1648,6 @@ OrderID -d[hidden]- CustomerID
 </ul>
 </li>
 </ul>
-</section>
-<section data-noprocess="" data-shortcode-slide="" id="domain-events">
-<h2 id="domain-events-definition">Domain Events (definition)</h2>
-<blockquote>
-<p>A value-like object capturing some domain-related <em>event</em>
-<br> (i.e., an observable <em>variation</em> in the domain, which is <em>relevant</em> to the software)</p>
-</blockquote>
-<ul>
-<li>actually, only the event <em>notification</em>/description is reified to a type</li>
-</ul>
-<p><img src="./domain-events.svg" alt="A customer adds a product to the Basket aggregate, which publishes a ProductAdded domain event after saving; the event notifies a Recommendation Service, which updates the Recommendations aggregate"></p>
-</section><section>
-<h2 id="domain-events-details">Domain Events (details)</h2>
-<h3 id="purpose-3">Purpose</h3>
-<ul>
-<li><em>Propagate</em> changes among portions of the domain model (e.g. contexts, aggregates, entities, etc.)</li>
-<li><em>Record</em> changes concerning the domain</li>
-</ul>
-<h3 id="remarks-3">Remarks</h3>
-<ul>
-<li>
-<p>Strong relation with the <a href="https://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> (i.e. publish-subscribe)</p>
-</li>
-<li>
-<p>Strong relation with the <em>event sourcing</em> approach (described later)</p>
-</li>
-<li>
-<p>Strong relation with the <em>CQRS pattern</em> (described later)</p>
-</li>
-</ul>
-</section><section>
-<h2 id="domain-events-constraints">Domain Events (constraints)</h2>
-<ul>
-<li>
-<p>They are usually <em>time-stamped</em> value objects</p>
-</li>
-<li>
-<p>May be implemented as <em>data-classes</em> or <em>records</em></p>
-</li>
-<li>
-<p>They represent a <em>relevant variation</em> in the domain</p>
-<ul>
-<li>e.g. a <em>change</em> in the <em>state</em> of some entity / repository</li>
-</ul>
-</li>
-<li>
-<p>Event sources &amp; listeners shall be identified too</p>
-<ul>
-<li>who is <em>generating</em> the event?</li>
-<li>who is <em>consuming</em> the event?</li>
-</ul>
-</li>
-<li>
-<p><em>Infrastructural components</em> may be devoted to <em>propagate</em> events across contexts</p>
-<ul>
-<li>e.g. a message broker, a message queue, etc.</li>
-</ul>
-</li>
-<li>
-<p>Common convention: one type per event, named in the <em>past tense</em> (e.g. <code>OrderPlaced</code>, <code>OrderCancelled</code>) (cf. <a href="https://www.informit.com/store/implementing-domain-driven-design-9780321834577">Vernon, 2013</a>)</p>
-</li>
-<li>
-<p>[Teacher’s Suggestion]: use a neutral type (e.g. <code>OrderEvent</code>) plus a kind/discriminator field when many events share the same payload</p>
-</li>
-</ul>
-</section><section>
-<h2 id="domain-events-example">Domain Events (example)</h2>
-<figure id="plantuml-figure-8" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
-<pre>interface OrderManagementService {
-    + void performOrder(Order order)
-    ..
-    + void **notifyOrderPerformed**(OrderEvent event)
-}
-
-interface OrderEvent {
-    + OrderID getID()
-    + CustomerID getCustomer()
-    + Date **getTimestamp**()
-    + Map&lt;ProductID, Long&gt; getAmounts()
-}
-
-interface OrderID
-
-interface CustomerID
-
-interface ProductID
-
-OrderEvent "1" *-u- "1" OrderID
-OrderEvent "1" *-r- "1" CustomerID
-OrderEvent "1" *-d- "N" ProductID
-
-OrderEvent .. OrderManagementService
-
-note left of OrderEvent: domain event
-note left of OrderID: value object
-note left of ProductID: value object
-note right of CustomerID: value object
-note right of OrderManagementService: service
-</pre>
-</figure>
-<script>
-    handlePlantumlFigureByID("plantuml-figure-8");
-</script>
 
 </section>
 </section>
@@ -1820,7 +2004,7 @@ This is helpful from several perspectives:</p>
 </li>
 </ul>
 
-<figure id="plantuml-figure-14" class="plantuml" alt="" style="width: 100%;height: 50vh;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-c69d5a6712883b31d42f2049fda5011c" class="plantuml" alt="" style="width: 100%;height: 50vh;max-width: 95vw;max-height: 80vh;">
 <pre>top to bottom direction
 
 component ":domain" as domain
@@ -1848,7 +2032,7 @@ product ..&gt; mq
 </pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-14");
+    handlePlantumlFigureByID("plantuml-figure-c69d5a6712883b31d42f2049fda5011c");
 </script>
 
 <ul>
