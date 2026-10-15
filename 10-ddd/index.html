@@ -610,6 +610,71 @@ stop
 </section><section>
 <h2 id="building-blocks-concept">Building blocks (concept)</h2>
 <p><img src="./building-blocks.svg" alt="A concept map linking model-driven design to services, entities, value objects, aggregates, factories, and repositories; entities act as aggregate roots and repositories access aggregates"></p>
+</section>
+<section data-noprocess="" data-shortcode-slide="" id="building-blocks-levels">
+<h2 id="building-blocks-at-two-levels">Building blocks at two levels</h2>
+<blockquote>
+<p>Building blocks are <em>archetypes</em> for design decisions: they apply at (at least) two <strong>levels</strong> of abstraction</p>
+</blockquote>
+<ul>
+<li><strong>Low level</strong>, i.e. <em>OOP modelling</em>: types, classes, interfaces, and objects <em>within</em> a software process
+<ul>
+<li>the focus of the original DDD literature, and of the first slides of each building block</li>
+</ul>
+</li>
+<li><strong>High level</strong>, i.e. <em>Web APIs</em> and <em>microservices</em>: resources, data schemas, endpoints, messages, and services <em>of</em> a distributed system
+<ul>
+<li>each building block ends with suggestions on how to employ it at this level</li>
+</ul>
+</li>
+</ul>
+<br>
+<table>
+	<thead>
+			<tr>
+					<th>Building block</th>
+					<th>OOP level</th>
+					<th>Web API / microservices level</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Value Object</td>
+					<td>immutable data class / record</td>
+					<td>reusable <em>schema</em>, embedded by value, no URL of its own</td>
+			</tr>
+			<tr>
+					<td>Entity</td>
+					<td>class with an identifier</td>
+					<td>schema with an <code>id</code> + <em>resource</em> with its own URL</td>
+			</tr>
+			<tr>
+					<td>Aggregate</td>
+					<td>cluster of objects behind a root</td>
+					<td>resource (+ sub-resources), <em>transaction boundary</em> of each request</td>
+			</tr>
+			<tr>
+					<td>Repository</td>
+					<td>object hiding the storage</td>
+					<td><em>DBMS</em> technology, and which service <em>owns</em> which data</td>
+			</tr>
+			<tr>
+					<td>Service</td>
+					<td>stateless object wiring the domain</td>
+					<td><em>microservice</em> ($\approx$ one per bounded context), API controllers</td>
+			</tr>
+			<tr>
+					<td>Domain Event</td>
+					<td>time-stamped value object</td>
+					<td><em>message</em> schema, propagated via a <em>broker</em></td>
+			</tr>
+			<tr>
+					<td>Factory</td>
+					<td>object creating other objects</td>
+					<td><code>POST</code> on collections, request $\rightarrow$ domain object mapping</td>
+			</tr>
+	</tbody>
+</table>
 
 </section>
 </section><section>
@@ -732,6 +797,125 @@ Customer *-r- CustomerID
 <script>
     handlePlantumlFigureByID("plantuml-figure-25f502babcce8ee943e4325821d543e4");
 </script>
+</section><section>
+<h2 id="value-objects-at-the-web-level">Value Objects at the Web level</h2>
+<ul>
+<li>Value objects $\rightarrow$ reusable <strong>data schemas</strong>
+<ul>
+<li>e.g. in the <code>components/schemas</code> part of an <a href="https://spec.openapis.org/oas/v3.1.0">OpenAPI</a> specification, or via <a href="https://json-schema.org/">JSON Schema</a></li>
+</ul>
+</li>
+<li>They have <em>no URL</em> of their own: they are always <em>embedded</em> by value into the representations of other resources</li>
+<li>Their invariants become <em>schema constraints</em>: <code>required</code>, <code>pattern</code>, <code>minimum</code>, <code>enum</code>, <code>additionalProperties: false</code>, …
+<ul>
+<li>servers reject non-conforming requests with <code>400 Bad Request</code> (or <code>422 Unprocessable Content</code>)</li>
+</ul>
+</li>
+<li>The schema is the <em>contract</em> between clients and servers, the record is its <em>counterpart</em> in the code
+<ul>
+<li>the latter may be generated from the former (cf. <a href="https://openapi-generator.tech/">OpenAPI Generator</a>), or vice versa</li>
+</ul>
+</li>
+<li>Immutability comes for free: representations are <em>copies</em>, so updating a value means <em>replacing</em> it</li>
+</ul>
+<div class="multiCol">
+<div class="col col-6 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># openapi.yaml (excerpt)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">components</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">schemas</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">Money</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span>object<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">required</span>:<span style="color:#bbb"> </span>[amount, currency]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">additionalProperties</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">properties</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">amount</span>:<span style="color:#bbb">   </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">number, minimum</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">0</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">currency</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">string, pattern</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"^[A-Z]{3}$"</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">Address</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span>object<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">required</span>:<span style="color:#bbb"> </span>[street, city, zip]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">additionalProperties</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">false</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">properties</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">street</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">string, minLength</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">1</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">city</span>:<span style="color:#bbb">   </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">string, minLength</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">1</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">zip</span>:<span style="color:#bbb">    </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">string, pattern</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"^[0-9]{5}$"</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+<div class="col col-6 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">record</span> <span style="color:#b06;font-weight:bold">Money</span>(BigDecimal<span style="color:#bbb"> </span>amount,<span style="color:#bbb"> </span>Currency<span style="color:#bbb"> </span>currency)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>Money<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#888">// compact constructor: checks invariants</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">if</span><span style="color:#bbb"> </span>(amount.<span style="color:#369">signum</span>()<span style="color:#bbb"> </span>&lt;<span style="color:#bbb"> </span>0)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#080;font-weight:bold">throw</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>IllegalArgumentException(<span style="color:#d20;background-color:#fff0f0">"negative amount"</span>);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">record</span> <span style="color:#b06;font-weight:bold">Address</span>(String<span style="color:#bbb"> </span>street,<span style="color:#bbb"> </span>String<span style="color:#bbb"> </span>city,<span style="color:#bbb"> </span>String<span style="color:#bbb"> </span>zip)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>Address<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">if</span><span style="color:#bbb"> </span>(street.<span style="color:#369">isBlank</span>()<span style="color:#bbb"> </span>||<span style="color:#bbb"> </span>city.<span style="color:#369">isBlank</span>())<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#080;font-weight:bold">throw</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>IllegalArgumentException(<span style="color:#d20;background-color:#fff0f0">"blank field"</span>);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">if</span><span style="color:#bbb"> </span>(!zip.<span style="color:#369">matches</span>(<span style="color:#d20;background-color:#fff0f0">"[0-9]{5}"</span>))<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#080;font-weight:bold">throw</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>IllegalArgumentException(<span style="color:#d20;background-color:#fff0f0">"invalid zip"</span>);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+</div>
+</section><section>
+<h2 id="entities-at-the-web-level">Entities at the Web level</h2>
+<ul>
+<li>Same as value objects (i.e. data schemas), plus <strong>identity</strong>
+<ul>
+<li>the identifier is part of the schema, but <code>readOnly</code>: assigned by the server, never changed by clients</li>
+<li>the identifier is also part of the entity’s <strong>URL</strong>, e.g. <code>/customers/{id}</code></li>
+<li>prefer <em>opaque</em>, server-generated identifiers (e.g. UUIDs) over <em>natural keys</em> (e.g. tax codes)
+<ul>
+<li>natural keys may change, and they leak personal data into URLs and logs</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Entities are mutable $\rightarrow$ concurrent updates may conflict
+<ul>
+<li>use <code>ETag</code> / <code>If-Match</code> headers for <em>optimistic concurrency</em> (cf. <a href="https://www.rfc-editor.org/rfc/rfc9110#name-if-match">RFC 9110</a>)</li>
+<li><code>412 Precondition Failed</code> if the entity changed since the client last read it</li>
+</ul>
+</li>
+<li>Not every entity deserves its own URL: only <em>aggregate roots</em> do (cf. next section)</li>
+</ul>
+<div class="multiCol">
+<div class="col col-6 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">CustomerID</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span>string<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">format</span>:<span style="color:#bbb"> </span>uuid<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">Customer</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span>object<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">required</span>:<span style="color:#bbb"> </span>[id, name, email]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">properties</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">id</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">$ref</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"#/components/schemas/CustomerID"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">readOnly</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb">    </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">string, minLength</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">1</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">email</span>:<span style="color:#bbb">   </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">string, format</span>:<span style="color:#bbb"> </span>email }<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">address</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">$ref</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"#/components/schemas/Address"</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+<div class="col col-6 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">record</span> <span style="color:#b06;font-weight:bold">CustomerID</span>(UUID<span style="color:#bbb"> </span>value)<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Customer</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">final</span><span style="color:#bbb"> </span>CustomerID<span style="color:#bbb"> </span>id;<span style="color:#bbb"> </span><span style="color:#888">// never changes</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span>String<span style="color:#bbb"> </span>name,<span style="color:#bbb"> </span>email;<span style="color:#bbb">  </span><span style="color:#888">// may change</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span>Address<span style="color:#bbb"> </span>address;<span style="color:#bbb">     </span><span style="color:#888">// value object</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888">// ... constructor, getters, setters ...</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#555">@Override</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">boolean</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">equals</span>(Object<span style="color:#bbb"> </span>o)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">return</span><span style="color:#bbb"> </span>o<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">instanceof</span><span style="color:#bbb"> </span>Customer<span style="color:#bbb"> </span>c<span style="color:#bbb"> </span>&amp;&amp;<span style="color:#bbb"> </span>id.<span style="color:#369">equals</span>(c.<span style="color:#369">id</span>);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#555">@Override</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">int</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">hashCode</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">return</span><span style="color:#bbb"> </span>id.<span style="color:#369">hashCode</span>();<span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+</div>
 
 </section>
 </section><section>
@@ -853,6 +1037,136 @@ Order .l.&gt; CustomerID: refers to\nthe customer\nby ID
     handlePlantumlFigureByID("plantuml-figure-d518ce94b36b6c9344533ead4198bc06");
 </script>
 <p>(notice that <code>Order</code> refers to its <code>Customer</code> via the <code>CustomerID</code> only, and that <code>OrderItem</code>s refer to products via <code>ProductID</code>s)</p>
+</section><section>
+<h2 id="aggregates-at-the-web-level-pt-1">Aggregates at the Web level (pt. 1)</h2>
+<blockquote>
+<p>Recall: ReST principles and API design anti-patterns in <a href="https://unibo-dtm-se.github.io/course-slides/web/">these slides</a></p>
+</blockquote>
+<ul>
+<li>One aggregate root $\rightarrow$ one <em>collection</em> resource + one <em>item</em> resource
+<ul>
+<li>e.g. <code>/orders</code> (collection) and <code>/orders/{orderId}</code> (item)</li>
+</ul>
+</li>
+<li>Internal components $\rightarrow$ <em>sub-resources</em>, reachable only <em>through the root</em>
+<ul>
+<li>e.g. <code>/orders/{orderId}/items/{productId}</code>, never <code>/order-items/{id}</code></li>
+</ul>
+</li>
+<li>References to <em>other aggregates</em> $\rightarrow$ <em>identifiers</em> (or links), never embedded copies
+<ul>
+<li>e.g. <code>"customerId": "c-42"</code>, or <code>"customer": "/customers/c-42"</code>, in the representation of an order</li>
+</ul>
+</li>
+<li><code>GET</code> on the root returns the <em>whole</em> aggregate (root + components)
+<ul>
+<li>consistently with repositories, which load and store <em>whole</em> aggregates</li>
+</ul>
+</li>
+<li>One request modifies <em>one</em> aggregate $\rightarrow$ the aggregate is the <strong>transaction boundary</strong> of each request
+<ul>
+<li>changes spanning several aggregates are <em>eventually</em> consistent, via <a href="#/domain-events">domain events</a></li>
+</ul>
+</li>
+<li>Domain operations which are not CRUD $\rightarrow$ model them as <em>resources</em> (nouns), not as verbs in the URL
+<ul>
+<li>e.g. <code>POST /orders/{orderId}/cancellation</code>, rather than <code>POST /cancelOrder?id=...</code></li>
+</ul>
+</li>
+<li>The root still <em>enforces the invariants</em>, and violations become <em>status codes</em>
+<ul>
+<li>e.g. adding items to a cancelled order $\rightarrow$ <code>409 Conflict</code></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="aggregates-at-the-web-level-pt-2">Aggregates at the Web level (pt. 2)</h2>
+<h3 id="example-web-api-for-the-order-aggregate">Example: Web API for the <code>Order</code> aggregate</h3>
+<div style="font-size: 0.85em">
+<table>
+	<thead>
+			<tr>
+					<th>Method</th>
+					<th>Path</th>
+					<th>Meaning</th>
+					<th><code>Order</code> method</th>
+					<th>Success</th>
+					<th>Errors</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>GET</code></td>
+					<td><code>/orders?customerId=c-42</code></td>
+					<td>list orders (of a customer)</td>
+					<td>(repository query)</td>
+					<td><code>200</code></td>
+					<td><code>400</code></td>
+			</tr>
+			<tr>
+					<td><code>POST</code></td>
+					<td><code>/orders</code></td>
+					<td>place a new order</td>
+					<td>(factory)</td>
+					<td><code>201</code> + <code>Location</code></td>
+					<td><code>400</code>, <code>422</code></td>
+			</tr>
+			<tr>
+					<td><code>GET</code></td>
+					<td><code>/orders/{orderId}</code></td>
+					<td>read the whole aggregate</td>
+					<td>getters</td>
+					<td><code>200</code> + <code>ETag</code></td>
+					<td><code>404</code></td>
+			</tr>
+			<tr>
+					<td><code>PUT</code></td>
+					<td><code>/orders/{orderId}/shipping-address</code></td>
+					<td>replace a value object</td>
+					<td><code>setShippingAddress</code></td>
+					<td><code>204</code></td>
+					<td><code>400</code>, <code>404</code>, <code>412</code></td>
+			</tr>
+			<tr>
+					<td><code>POST</code></td>
+					<td><code>/orders/{orderId}/items</code></td>
+					<td>add an item, via the root</td>
+					<td><code>addItem</code></td>
+					<td><code>201</code></td>
+					<td><code>400</code>, <code>404</code>, <code>409</code></td>
+			</tr>
+			<tr>
+					<td><code>DELETE</code></td>
+					<td><code>/orders/{orderId}/items/{productId}</code></td>
+					<td>remove an item, via the root</td>
+					<td><code>removeItem</code></td>
+					<td><code>204</code></td>
+					<td><code>404</code>, <code>409</code></td>
+			</tr>
+			<tr>
+					<td><code>POST</code></td>
+					<td><code>/orders/{orderId}/cancellation</code></td>
+					<td>domain operation</td>
+					<td><code>cancel</code> (new)</td>
+					<td><code>201</code></td>
+					<td><code>404</code>, <code>409</code></td>
+			</tr>
+			<tr>
+					<td><code>DELETE</code></td>
+					<td><code>/orders/{orderId}</code></td>
+					<td>delete the aggregate</td>
+					<td>(repository)</td>
+					<td><code>204</code></td>
+					<td><code>404</code></td>
+			</tr>
+	</tbody>
+</table>
+</div>
+<br>
+<ul>
+<li>Paths mention <em>aggregates</em> and their <em>components</em>, never <em>database tables</em> or <em>actions</em></li>
+<li>Every endpoint on <code>/orders/{orderId}/...</code> is handled by <em>loading</em> the root, <em>invoking</em> one of its methods, and <em>saving</em> it back</li>
+</ul>
 
 </section>
 </section><section>
@@ -950,6 +1264,132 @@ CustomerRegistry --&gt; CustomerID: exploits
 <script>
     handlePlantumlFigureByID("plantuml-figure-c60b704a3ba50af011e6229d9a10a02c");
 </script>
+</section><section>
+<h2 id="repositories-at-the-web-level-pt-1">Repositories at the Web level (pt. 1)</h2>
+<div class="multiCol">
+<div class="col col-8 ">
+    <ul>
+<li>At the Web level, repositories are mostly about <strong>infrastructure</strong>
+<ul>
+<li>which <em>DBMS</em> technology?
+<ul>
+<li>relational (e.g. PostgreSQL), document (e.g. MongoDB), key-value (e.g. Redis), graph (e.g. Neo4j), …</li>
+<li>depending on the <em>shape</em> of aggregates, and on the <em>queries</em> to be supported</li>
+<li>aggregates fit document stores naturally: one document per aggregate</li>
+</ul>
+</li>
+<li>how to deploy it? managed (cloud) vs. self-hosted, replication, backups, …</li>
+</ul>
+</li>
+<li>Each microservice may adopt a different technology: <em>polyglot persistence</em> (cf. <a href="https://martinfowler.com/bliki/PolyglotPersistence.html">Fowler</a>)</li>
+<li>The repository <em>interface</em> keeps the choice <em>swappable</em> (and <em>mockable</em> in tests, cf. <a href="#/dependency-injection">dependency injection</a>)</li>
+</ul>
+</div>
+<div class="col col-4 ">
+    <figure id="plantuml-figure-4da26e22120383eccbb1e3160b553d3e" class="plantuml" alt="Shared database: an Order service and a Customer service both read and write the same database. Database per service: each service owns its own database, and the Order service gets customer data via the Customer service's API or events" style="width: 100%;max-width: 95vw;max-height: 70vhvh;">
+<pre>skinparam defaultFontSize 18
+rectangle "Shared database" {
+  component "Order\nservice" as O1
+  component "Customer\nservice" as C1
+  database "DB" as DB1
+  O1 --&gt; DB1
+  C1 --&gt; DB1
+}
+rectangle "Database per service" {
+  component "Order\nservice" as O2
+  component "Customer\nservice" as C2
+  database "Orders\nDB" as DB2
+  database "Customers\nDB" as DB3
+  O2 --&gt; DB2
+  C2 --&gt; DB3
+  O2 ..&gt; C2 : API / events
+}
+</pre>
+</figure>
+<script>
+    handlePlantumlFigureByID("plantuml-figure-4da26e22120383eccbb1e3160b553d3e");
+</script>
+</div>
+</div>
+<blockquote>
+<p>The <strong>main</strong> design decision, though, is: shall microservices <em>share</em> a database?</p>
+</blockquote>
+</section><section>
+<h2 id="repositories-at-the-web-level-pt-2">Repositories at the Web level (pt. 2)</h2>
+<h3 id="shared-database-vs-database-per-service">Shared database <em>vs.</em> database per service</h3>
+<table>
+	<thead>
+			<tr>
+					<th>Aspect</th>
+					<th>Shared database</th>
+					<th>Database per service</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Coupling</td>
+					<td>via the <em>schema</em>: one change may break other services</td>
+					<td>each service <em>owns</em> its data, hidden behind its API</td>
+			</tr>
+			<tr>
+					<td>Deployment and scaling</td>
+					<td>coordinated</td>
+					<td>independent</td>
+			</tr>
+			<tr>
+					<td>Queries across contexts</td>
+					<td>easy (e.g. SQL joins)</td>
+					<td>API composition, or local <em>read models</em> (cf. <a href="#/advanced">CQRS</a>)</td>
+			</tr>
+			<tr>
+					<td>Transactions across contexts</td>
+					<td>ACID, for free</td>
+					<td><em>sagas</em> + eventual consistency</td>
+			</tr>
+			<tr>
+					<td>Technology</td>
+					<td>one DBMS for all</td>
+					<td>polyglot persistence</td>
+			</tr>
+			<tr>
+					<td>Operations</td>
+					<td>one DB to run</td>
+					<td>many DBs to run, back up, monitor</td>
+			</tr>
+	</tbody>
+</table>
+</section><section>
+<h2 id="repositories-at-the-web-level-pt-3">Repositories at the Web level (pt. 3)</h2>
+<ul>
+<li>
+<p>Rule of thumb: <strong>one database per bounded context</strong> (cf. <a href="https://microservices.io/patterns/data/database-per-service.html">microservices.io</a>)</p>
+<ul>
+<li>sharing a <em>DBMS server</em> is fine, sharing <em>tables</em> is not
+<ul>
+<li>e.g. one schema (and one DB user) per service, on the same PostgreSQL instance</li>
+</ul>
+</li>
+<li>a shared database is a hidden <em>shared kernel</em> (cf. <a href="#/strategic-design">strategic design</a>): acceptable only with tight coordination among teams</li>
+</ul>
+</li>
+<li>
+<p>Consequences of having one database per service:</p>
+<ul>
+<li>data of other contexts is either <em>requested</em> via their APIs, or <em>replicated</em> locally by listening to their <a href="#/domain-events">domain events</a></li>
+<li>business transactions spanning several services become <strong>sagas</strong> (cf. <a href="https://microservices.io/patterns/data/saga.html">microservices.io</a>)
+<ul>
+<li>i.e. sequences of <em>local</em> transactions, with <em>compensating</em> actions in case of failure</li>
+<li>e.g. <em>place order</em> $\rightarrow$ <em>reserve stock</em> $\rightarrow$ <em>charge payment</em>; if payment fails, <em>release stock</em> and <em>cancel order</em></li>
+</ul>
+</li>
+<li>saving an aggregate <em>and</em> publishing its event must be <em>atomic</em> $\rightarrow$ <strong>transactional outbox</strong> (cf. <a href="https://microservices.io/patterns/data/transactional-outbox.html">microservices.io</a>)
+<ul>
+<li>the event is stored in the same DB transaction as the aggregate, then relayed to the broker</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
 </section>
 </section><section>
@@ -1127,6 +1567,49 @@ OrderID -d[hidden]- CustomerID
 <script>
     handlePlantumlFigureByID("plantuml-figure-869517beb65f41ce30ee78425a4ca2df");
 </script>
+</section><section>
+<h2 id="services-at-the-web-level-pt-1">Services at the Web level (pt. 1)</h2>
+<ul>
+<li>
+<p>Which and how many Web services? Rule of thumb: <strong>one microservice per bounded context</strong></p>
+<ul>
+<li>the bounded context is the boundary of a model, of a language, and (often) of a team</li>
+<li><em>finer</em> splits (e.g. one service per aggregate) are possible, but increase the communication overhead</li>
+<li><em>coarser</em> splits are fine to begin with: a <em>modular monolith</em> may be split later (cf. <a href="https://martinfowler.com/bliki/MonolithFirst.html">Fowler</a>)</li>
+</ul>
+</li>
+<li>
+<p>Inside each microservice:</p>
+<ul>
+<li><em>application services</em> $\rightarrow$ API <em>controllers</em> (i.e. endpoint handlers)
+<ul>
+<li>parse requests, load aggregates via repositories, invoke them, save them, publish events</li>
+</ul>
+</li>
+<li><em>domain services</em> stay internal: not every service object deserves an endpoint</li>
+</ul>
+</li>
+<li>
+<p>Microservices communicate either:</p>
+<ul>
+<li><strong>synchronously</strong>, via ReST calls
+<ul>
+<li>simple, but the caller depends on the callee being up (<em>temporal coupling</em>)</li>
+</ul>
+</li>
+<li><strong>asynchronously</strong>, via some <strong>message-oriented middleware</strong> (i.e. a <em>broker</em>)
+<ul>
+<li>e.g. <a href="https://www.rabbitmq.com/">RabbitMQ</a>, <a href="https://kafka.apache.org/">Apache Kafka</a>, <a href="https://mqtt.org/">MQTT</a> brokers</li>
+<li>producers <em>publish</em> domain events on topics/queues, consumers <em>subscribe</em> to them</li>
+<li>it is the observer pattern, at the system level: publishers know nothing about subscribers</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="services-at-the-web-level-pt-2">Services at the Web level (pt. 2)</h2>
+<p><img src="./microservices.svg" alt="A client calls an API gateway via HTTP; the gateway routes ReST requests to the Customer, Order, and Recommendation services, one per bounded context, each with its own database; the Customer service publishes customer events and the Order service publishes order events on a message broker; the Order service consumes customer events, the Recommendation service consumes order events"></p>
 
 </section>
 </section>
@@ -1253,6 +1736,95 @@ note left of OrderEventListener: listener (observer)
 <script>
     handlePlantumlFigureByID("plantuml-figure-97bf2682c1015c759513fbefbe62b175");
 </script>
+</section><section>
+<h2 id="domain-events-at-the-web-level-pt-1">Domain Events at the Web level (pt. 1)</h2>
+<ul>
+<li>
+<p>As for value objects, mostly a matter of <strong>data schema design</strong></p>
+<ul>
+<li>but for <em>messages</em> exchanged via a broker, rather than for <em>resources</em> exposed via HTTP</li>
+</ul>
+</li>
+<li>
+<p><a href="https://www.asyncapi.com/docs/reference/specification/v3.0.0">AsyncAPI</a> is the counterpart of OpenAPI for <em>message-driven</em> APIs</p>
+<ul>
+<li>it describes the <em>channels</em> (i.e. topics/queues), the <em>operations</em> of each service on them (send/receive), and the <em>messages</em></li>
+<li>message payloads are described via JSON Schema, as in OpenAPI</li>
+<li>documentation and code skeletons can be generated from it, as for OpenAPI</li>
+</ul>
+</li>
+<li>
+<p><a href="https://cloudevents.io/">CloudEvents</a> standardises the <em>envelope</em> of events, regardless of the broker</p>
+<ul>
+<li>i.e. the metadata wrapping the payload: <code>id</code>, <code>source</code>, <code>type</code>, <code>time</code>, <code>data</code>, …</li>
+</ul>
+</li>
+<li>
+<p>Events carry <em>identifiers</em> of aggregates (as ReST representations do), and possibly a <em>snapshot</em> of relevant data (cf. <a href="https://martinfowler.com/articles/201701-event-driven.html">Fowler</a>)</p>
+<ul>
+<li><em>thin</em> events (identifiers only): consumers query the producer’s API for details</li>
+<li><em>fat</em> events (state-carrying): consumers keep a local copy of the data they need, with no further calls</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="domain-events-at-the-web-level-pt-2">Domain Events at the Web level (pt. 2)</h2>
+<div class="multiCol">
+<div class="col col-7 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># asyncapi.yaml (excerpt)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">asyncapi</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3.0.0</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">info</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">title</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">Order service events, version</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">1.0.0</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">channels</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">orderEvents</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">address</span>:<span style="color:#bbb"> </span>orders.events<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">messages</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">orderEvent</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">$ref</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"#/components/messages/OrderEvent"</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">operations</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">publishOrderEvent</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">action</span>:<span style="color:#bbb"> </span>send<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">channel</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">$ref</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"#/channels/orderEvents"</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">components</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">messages</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">OrderEvent</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">payload</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span>object<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">required</span>:<span style="color:#bbb"> </span>[kind, orderId, customerId, timestamp, amounts]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">properties</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">kind</span>:<span style="color:#bbb">       </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">string, enum</span>:<span style="color:#bbb"> </span>[placed, cancelled] }<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">orderId</span>:<span style="color:#bbb">    </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">string, format</span>:<span style="color:#bbb"> </span>uuid }<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">customerId</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">string, format</span>:<span style="color:#bbb"> </span>uuid }<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">timestamp</span>:<span style="color:#bbb">  </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">string, format</span>:<span style="color:#bbb"> </span>date-time }<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">amounts</span>:<span style="color:#bbb">    </span><span style="color:#888"># ProductID -&gt; amount</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span>object<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#b06;font-weight:bold">additionalProperties</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">integer, minimum</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">1</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+<div class="col col-5 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">record</span> <span style="color:#b06;font-weight:bold">OrderEvent</span>(<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>String<span style="color:#bbb"> </span>kind,<span style="color:#bbb"> </span><span style="color:#888">// "placed", "cancelled", ...</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>OrderID<span style="color:#bbb"> </span>orderId,<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>CustomerID<span style="color:#bbb"> </span>customerId,<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>Instant<span style="color:#bbb"> </span>timestamp,<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>Map&lt;ProductID,<span style="color:#bbb"> </span>Long&gt;<span style="color:#bbb"> </span>amounts<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>)<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span></code></pre></div><br>
+<ul>
+<li>Events are published to <em>unknown</em> consumers $\rightarrow$ their schema is a <strong>public contract</strong>
+<ul>
+<li>prefer <em>additive</em> changes (new optional fields)</li>
+<li>never remove/rename fields, nor change their meaning</li>
+<li><em>version</em> the schema otherwise</li>
+<li>consumers should ignore unknown fields (cf. <a href="https://martinfowler.com/bliki/TolerantReader.html"><em>tolerant reader</em></a>)</li>
+</ul>
+</li>
+<li>Brokers commonly deliver messages <em>at least once</em> $\rightarrow$ consumers should be <em>idempotent</em>
+<ul>
+<li>e.g. discard events whose <code>id</code> was already processed</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 
 </section>
 </section><section>
@@ -1352,6 +1924,93 @@ CustomerFactory -u-&gt; Customer: creates
 <script>
     handlePlantumlFigureByID("plantuml-figure-3263a548cc90bd8fc30ad0b68b80c5a4");
 </script>
+</section><section>
+<h2 id="factories-at-the-web-level-pt-1">Factories at the Web level (pt. 1)</h2>
+<ul>
+<li>
+<p><code>POST</code> on a <em>collection</em> resource is the Web counterpart of a <strong>factory</strong></p>
+<ul>
+<li>the client sends the <em>ingredients</em>, the server <em>creates</em> the entity</li>
+<li>the server assigns the <em>identifier</em>, computes <em>derived</em> values (e.g. tax codes, totals, timestamps), and enforces <em>invariants</em></li>
+<li>response: <code>201 Created</code>, plus <code>Location: /customers/{id}</code> header, plus the representation of the new entity</li>
+<li>conversely, <code>PUT /customers/{id}</code> lets the <em>client</em> choose the identifier (sensible only for natural keys)</li>
+</ul>
+</li>
+<li>
+<p>Different factory methods $\rightarrow$ different <em>request schemas</em> for the same collection</p>
+<ul>
+<li>e.g. <code>newCustomerPerson</code> vs. <code>newCustomerCompany</code> $\rightarrow$ <code>oneOf</code> + <code>discriminator</code> in OpenAPI</li>
+</ul>
+</li>
+<li>
+<p>Request bodies are untrusted <em>representations</em> (aka DTOs, data transfer objects), <u>not</u> domain objects</p>
+<ul>
+<li>factories <em>reconstitute</em> valid domain objects out of them, or reject them (<code>400</code> / <code>422</code>)</li>
+<li>this keeps the wire format and the domain model <em>independent</em> of each other
+<ul>
+<li>i.e. the inbound side of an <em>anti-corruption layer</em> (cf. <a href="#/strategic-design">strategic design</a>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>POST</code> is not idempotent: if the client retries after a timeout, duplicates may be created</p>
+<ul>
+<li><em>idempotency keys</em>: the client sends a unique <code>Idempotency-Key</code> header, the server creates the entity only once (cf. <a href="https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/">IETF draft</a>)</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="factories-at-the-web-level-pt-2">Factories at the Web level (pt. 2)</h2>
+<div class="multiCol">
+<div class="col col-6 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># openapi.yaml (excerpt)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">paths</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">/customers</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">post</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">requestBody</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">content</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">application/json</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#b06;font-weight:bold">schema</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">              </span><span style="color:#b06;font-weight:bold">oneOf</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">                </span>- <span style="color:#b06;font-weight:bold">$ref</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"#/components/schemas/NewPerson"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">                </span>- <span style="color:#b06;font-weight:bold">$ref</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"#/components/schemas/NewCompany"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">              </span><span style="color:#b06;font-weight:bold">discriminator</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">propertyName</span>:<span style="color:#bbb"> </span>kind }<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">responses</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#d20;background-color:#fff0f0">"201"</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span>customer created<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">headers</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#b06;font-weight:bold">Location</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">              </span><span style="color:#b06;font-weight:bold">schema</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">type</span>:<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">string, format</span>:<span style="color:#bbb"> </span>uri }<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">content</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#b06;font-weight:bold">application/json</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">              </span><span style="color:#b06;font-weight:bold">schema</span>:<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">$ref</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"#/components/schemas/Customer"</span><span style="color:#bbb"> </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#d20;background-color:#fff0f0">"422"</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">description</span>:<span style="color:#bbb"> </span>invalid data (e.g. malformed VAT number)<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+<div class="col col-6 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888">// API controller (application layer)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>Customer<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">create</span>(NewCustomerRequest<span style="color:#bbb"> </span>request)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>Customer<span style="color:#bbb"> </span>customer<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">switch</span><span style="color:#bbb"> </span>(request)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">case</span><span style="color:#bbb"> </span>NewPerson<span style="color:#bbb"> </span>p<span style="color:#bbb"> </span>-&gt;<span style="color:#bbb"> </span>factory.<span style="color:#369">newCustomerPerson</span>(<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>p.<span style="color:#369">name</span>(),<span style="color:#bbb"> </span>p.<span style="color:#369">surname</span>(),<span style="color:#bbb"> </span>p.<span style="color:#369">birthDate</span>(),<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>p.<span style="color:#369">birthPlace</span>(),<span style="color:#bbb"> </span>p.<span style="color:#369">email</span>());<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">case</span><span style="color:#bbb"> </span>NewCompany<span style="color:#bbb"> </span>c<span style="color:#bbb"> </span>-&gt;<span style="color:#bbb"> </span>factory.<span style="color:#369">newCustomerCompany</span>(<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>VatNumber.<span style="color:#369">parse</span>(c.<span style="color:#369">vat</span>()),<span style="color:#bbb"> </span><span style="color:#888">// may throw</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>c.<span style="color:#369">fullName</span>(),<span style="color:#bbb"> </span>c.<span style="color:#369">email</span>());<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>};<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>registry.<span style="color:#369">addNewCustomer</span>(customer);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">return</span><span style="color:#bbb"> </span>customer;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888">// -&gt; 201 Created</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888">//    Location: /customers/{customer.getID()}</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
+</span></span></span></code></pre></div><ul>
+<li><code>NewPerson</code> and <code>NewCompany</code> are DTOs (e.g. records generated from the OpenAPI schemas)</li>
+<li><code>factory</code> and <code>registry</code> are the <code>CustomerFactory</code> and <code>CustomerRegistry</code> from the previous examples</li>
+</ul>
+</div>
+</div>
 
 </section>
 </section>
