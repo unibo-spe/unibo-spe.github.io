@@ -40,7 +40,7 @@
 <br>
 <h3 id="giovanni-ciatto"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2026-10-21
+<p>Compiled on: 2026-10-22
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -50,7 +50,7 @@
 <li>Know the DDD <strong>building blocks</strong> (tactical design) and <strong>integration patterns</strong> (strategic design)</li>
 <li>Map a DDD model onto a <strong>layered architecture</strong></li>
 <li>Understand <strong>event sourcing</strong> and <strong>CQRS</strong></li>
-<li>Practice on the exercises</li>
+<li><strong>Practice</strong> on the <em>exercises</em></li>
 </ul>
 </section><section>
 <h2 id="outline">Outline</h2>
@@ -99,20 +99,20 @@
 <h2 id="recommended-workflow">Recommended workflow</h2>
 <p><img src="./workflow.svg" alt="A linear workflow: the problem is turned into a model via analysis, the model into an architecture via design, and the architecture into a solution via implementation; the model and the steps leading to and from it are highlighted"></p>
 <ul>
-<li>yet, how to derive the model?</li>
+<li>yet, <strong>how to derive the model</strong>?</li>
 </ul>
 </section><section>
 <h2 id="why-domain-driven-design">Why Domain Driven Design?</h2>
 <ul>
 <li>Here we present <strong>domain-driven design</strong> (DDD)
 <ul>
-<li>one of many approaches to software design</li>
+<li>one of <em>many approaches</em> to software <em>design</em></li>
 </ul>
 </li>
 </ul>
 <br>
 <ul>
-<li>It consists of principles, best practices, and patterns guiding design
+<li>It consists of <em>principles</em>, <em>best practices</em>, and <em>patterns</em> guiding <strong>design</strong>
 <ul>
 <li>unified under a common <em>philosophy</em></li>
 <li>focus is on the <em>design workflow</em>, other than the result</li>
@@ -121,7 +121,7 @@
 </ul>
 <br>
 <ul>
-<li>Major benefits:
+<li>Major <strong>benefits</strong>:
 <ul>
 <li>it stresses <em>adherence</em> to the problem at hand</li>
 <li>it focuses on delivering a <em>business-tailored</em> model
@@ -154,7 +154,7 @@
 </ul>
 <br>
 <ul>
-<li>Remarks:
+<li><strong>Remarks</strong>:
 <ul>
 <li>focus is on how <strong>users and experts perceive the domain</strong></li>
 <li>focus is <strong>not</strong> on how <strong>developers</strong> perceive the domain</li>
@@ -163,7 +163,7 @@
 </ul>
 <br>
 <ul>
-<li>Examples of domains and the contexts composing them
+<li>Examples of <strong>domains</strong> and the <em>contexts</em> composing them
 <ul>
 <li>some <strong>university</strong> (department, faculty, HR, etc.)</li>
 <li>some given <strong>company</strong> (manufacturing, marketing, HR, etc.)</li>
@@ -182,7 +182,7 @@
 <ul>
 <li>it should be <em>modelled</em> &amp; <em>implemented</em> to match that domain
 <ul>
-<li>i.e. modelling should elicit the key aspects of a domain, possibly by interacting with experts</li>
+<li>i.e. modelling should <em>elicit</em> the <em>key aspects</em> of a domain, possibly by <em>interacting with experts</em></li>
 <li>i.e. design and implementation should <em>mirror</em> the domain</li>
 </ul>
 </li>
@@ -208,9 +208,9 @@
 <ul>
 <li>Software should <em>adhere</em> to the <em>domain</em>, at any moment
 <ul>
-<li>architecture and implementation should favour adherence to the domain
+<li><em>architecture</em> and <em>implementation</em> should favour <strong>adherence</strong> to the domain
 <ul>
-<li>in spite of their evolution / modification</li>
+<li>in spite of their <em>evolution</em> / <em>modification</em></li>
 </ul>
 </li>
 </ul>
@@ -221,8 +221,8 @@
 <li>
 <p>Functionalities, structure, and UX should <em>mirror</em> the domain too</p>
 <ul>
-<li>using the libraries should be natural for developers</li>
-<li>UX should be natural for users</li>
+<li>using the libraries should be <em>natural</em> for <em>developers</em></li>
+<li>UX should be <em>natural</em> for <em>users</em></li>
 </ul>
 <p>as both developers and users are (supposed to be) immersed in the domain</p>
 </li>
@@ -265,7 +265,7 @@
 </ul>
 </blockquote>
 <ul>
-<li>ideally 1 subdomain $\approx$ 1 bounded context, but not necessarily</li>
+<li>ideally 1 <em>subdomain</em> $\approx$ 1 <em>bounded context</em>, but <strong>not necessarily</strong></li>
 </ul>
 </section><section>
 <h2 id="kinds-of-subdomains">Kinds of subdomains</h2>
@@ -309,7 +309,7 @@
 <li>
 <p><strong>Anti-pattern</strong>: one all-encompassing <code>Customer</code> class shared by every context</p>
 <ul>
-<li>any change for one context affects all the others, and the constraints of different contexts end up conflicting</li>
+<li>any <em>change</em> for one context <em>affects all the others</em>, and the constraints of different contexts end up <strong>conflicting</strong></li>
 <li>how contexts integrate with each other is the subject of <a href="#/context-map">context maps</a></li>
 </ul>
 </li>
@@ -337,10 +337,10 @@
 </blockquote>
 <ul>
 <li>
-<p>underlying assumption:</p>
+<p>underlying <strong>assumption</strong>:</p>
 <ul>
-<li>different people call the same things differently</li>
-<li>especially when they come from different contexts</li>
+<li><em>different people</em> call the <em>same things</em> <strong>differently</strong></li>
+<li>especially when they come from <em>different contexts</em></li>
 </ul>
 </li>
 <li>
@@ -377,14 +377,14 @@
 <li>
 <p>Identify the <strong>main contexts</strong> within the domain, giving them names</p>
 <ul>
-<li>possibly, by interacting with experts</li>
+<li>possibly, by <em>interacting with experts</em></li>
 </ul>
 </li>
 <li>
 <p>Identify the actual meaning of <strong>relevant words</strong> from the domain, and track them into a <strong>glossary</strong></p>
 <ul>
 <li>
-<p>possibly, by interacting with experts</p>
+<p>possibly, by <em>interacting with experts</em></p>
 </li>
 <li>
 <p><em>without assuming you already know the meaning of words</em></p>
@@ -393,7 +393,7 @@
 </ul>
 </li>
 <li>
-<p>keep in mind that the meaning of words may vary among contexts</p>
+<p>keep in mind that the <em>meaning</em> of words may <strong>vary among contexts</strong></p>
 <ul>
 <li><strong>homonyms</strong>: similar names, different meanings</li>
 <li><strong>synonyms</strong>: different names, similar meanings</li>
@@ -404,15 +404,15 @@
 <li>
 <p>Adhere to the language, use it, make it yours</p>
 <ul>
-<li>especially when talking about the domain / model / software</li>
-<li>design/sketch code mirroring the language</li>
+<li>especially when <em>talking</em> about the domain / model / software</li>
+<li>design/sketch code <em>mirroring</em> the language</li>
 </ul>
 </li>
 <li>
 <p>Draw a <strong>context map</strong> (defined <a href="#/context-map">later</a>) tracking</p>
 <ul>
-<li>the main contexts and their junctions</li>
-<li>words whose meaning varies across contexts</li>
+<li>the main <em>contexts</em> and their <em>junctions</em></li>
+<li><em>words</em> whose meaning <em>varies</em> across contexts</li>
 </ul>
 </li>
 <li>
@@ -467,7 +467,7 @@ note right: continues with\nbuilding blocks
 <h2 id="event-storming-notation">Event Storming: notation</h2>
 <p><img src="./event-storming-notation.svg" alt="Sticky-note colours used in event storming: orange for domain events (e.g. Order Placed), blue for commands (Place Order), small yellow for actors (Customer), large yellow for aggregates (Order), lilac for policies (whenever … then …), green for read models (Basket Summary), pink for external systems (Payment Gateway), and red, tilted, for hot spots (open questions)"></p>
 <ul>
-<li>one colour per kind of sticky note, on a long paper roll (or a virtual whiteboard)</li>
+<li>one <em>colour</em> per <strong>kind of sticky note</strong>, on a long paper roll (or a virtual whiteboard)</li>
 </ul>
 </section><section>
 <h2 id="event-storming-big-picture">Event Storming: big picture</h2>
@@ -482,7 +482,7 @@ note right: continues with\nbuilding blocks
 <p><img src="./event-storming-process.svg" alt="Process-level event storming: a Customer, informed by the Basket Summary read model, issues the Place Order command, handled by the Order aggregate, which emits Order Placed; a policy (whenever an order is placed, charge the customer) issues the Charge Customer command, sent to the Payment Gateway external system, which emits Payment Authorized, and so on"></p>
 <ul>
 <li>zoom into one process: <em>actor</em> $\rightarrow$ <em>command</em> $\rightarrow$ <em>aggregate</em> $\rightarrow$ <em>event</em> $\rightarrow$ <em>policy</em> $\rightarrow$ <em>command</em> …</li>
-<li>aggregates and events found here become building blocks of the model</li>
+<li><em>aggregates</em> and <em>events</em> found here become <strong>building blocks</strong> of the model</li>
 </ul>
 
 </section>
@@ -509,7 +509,7 @@ note right: continues with\nbuilding blocks
 <ul>
 <li>Use <em>building blocks</em> as <strong>archetypes</strong>
 <ul>
-<li>let them guide and constrain your design</li>
+<li>let them <em>guide</em> and <em>constrain</em> your design</li>
 </ul>
 </li>
 </ul>
@@ -525,14 +525,14 @@ note right: continues with\nbuilding blocks
 <li>
 <p><em>Choose</em> the most adequate <strong>building block</strong> for each concept</p>
 <ul>
-<li>depending on the nature of the concept</li>
-<li>… or the properties of its instances</li>
+<li>depending on the <em>nature</em> of the concept</li>
+<li>… or the <em>properties</em> of its <em>instances</em></li>
 </ul>
 </li>
 <li>
 <p>The building block dictates how to <strong>design the type</strong> corresponding to the concept</p>
 <ul>
-<li>objects in OOP are shaped by types</li>
+<li><em>objects</em> in OOP are <em>shaped</em> by <em>types</em></li>
 </ul>
 </li>
 <li>
@@ -694,19 +694,19 @@ stop
 <h4 id="classroom">Classroom</h4>
 <ul>
 <li>
-<p>Seats in a classroom may be modelled as value objects</p>
+<p><em>Seats</em> in a classroom may be modelled as <strong>value objects</strong></p>
 </li>
 <li>
-<p>Attendees of a class may be modelled as entities</p>
+<p><em>Attendees</em> of a class may be modelled as <strong>entities</strong></p>
 </li>
 </ul>
 <h4 id="seats-on-a-plane">Seats on a plane</h4>
 <ul>
 <li>
-<p>Numbered seats $\rightarrow$ entities</p>
+<p><em>Numbered</em> seats $\rightarrow$ <strong>entities</strong></p>
 </li>
 <li>
-<p>otherwise $\rightarrow$ value objects</p>
+<p>otherwise $\rightarrow$ <strong>value objects</strong></p>
 </li>
 </ul>
 </section><section>
@@ -715,25 +715,25 @@ stop
 <ul>
 <li>Identified by their <em>attributes</em>
 <ul>
-<li>equality compares attributes alone</li>
+<li><em>equality</em> compares <em>attributes</em> alone</li>
 </ul>
 </li>
 <li>Must be <em>immutable</em>: their state is their attributes, which never change
 <ul>
-<li>read-only properties</li>
-<li>lack of state-changing methods</li>
+<li><em>read-only</em> properties</li>
+<li><em>lack</em> of <em>state-changing</em> methods</li>
 </ul>
 </li>
 <li>May be implemented as
 <ul>
-<li>structures in .NET</li>
+<li><em>structures</em> in .NET</li>
 <li><em>data classes</em> in Kotlin, Scala, Python</li>
-<li>records in Java</li>
+<li><em>records</em> in Java</li>
 </ul>
 </li>
 <li><em>Must</em> implement <code>equals()</code> and <code>hashCode()</code> on JVM
 <ul>
-<li>implementation must compare the objects’ attributes</li>
+<li>implementation must compare the objects’ <em>attributes</em></li>
 </ul>
 </li>
 </ul>
@@ -744,19 +744,19 @@ stop
 <li>They have an inherent <em>identity</em>, which never changes during their lifespan
 <ul>
 <li>common modelling: <strong>identifier attribute</strong>, of some value type</li>
-<li>equality compares identity</li>
+<li><em>equality</em> compares <em>identity</em></li>
 </ul>
 </li>
 <li>Can be <em>stateful</em> $\Rightarrow$ may have a <em>mutable</em> design
 <ul>
-<li>modifiable properties</li>
-<li>state-changing methods</li>
+<li><em>modifiable</em> properties</li>
+<li><em>state-changing</em> methods</li>
 </ul>
 </li>
 <li>May be implemented via <em>classes</em> in most languages</li>
 <li>Must implement <code>equals()</code> and <code>hashCode()</code> on JVM
 <ul>
-<li>implementation must compare (at least) the objects’ identifiers</li>
+<li>implementation must compare (at least) the objects’ <em>identifiers</em></li>
 </ul>
 </li>
 </ul>
@@ -873,7 +873,7 @@ Customer *-r- CustomerID
 </li>
 </ul>
 </li>
-<li>Entities are mutable $\rightarrow$ concurrent updates may conflict
+<li>Entities are <em>mutable</em> $\rightarrow$ <strong>concurrent updates</strong> may <em>conflict</em>
 <ul>
 <li>use <code>ETag</code> / <code>If-Match</code> headers for <em>optimistic concurrency</em> (cf. <a href="https://www.rfc-editor.org/rfc/rfc9110#name-if-match">RFC 9110</a>)</li>
 <li><code>412 Precondition Failed</code> if the entity changed since the client last read it</li>
@@ -1195,11 +1195,11 @@ Order .l.&gt; CustomerID: refers to\nthe customer\nby ID
 <ul>
 <li>They may exploit <em>factories</em> for turning retrieved data into objects</li>
 <li>If properly engineered, they avoid the <em>lock-in</em> effect for database technologies</li>
-<li>Design &amp; implementation may require thinking about:
+<li>Design &amp; implementation may require <strong>thinking about</strong>:
 <ul>
-<li>the architecture,</li>
-<li>the infrastructure,</li>
-<li>the expected load,</li>
+<li>the <em>architecture</em>,</li>
+<li>the <em>infrastructure</em>,</li>
+<li>the expected <em>load</em>,</li>
 <li>etc.</li>
 </ul>
 </li>
@@ -1218,7 +1218,7 @@ Order .l.&gt; CustomerID: refers to\nthe customer\nby ID
 <p>May be implemented as <em>classes</em> in most OOP languages</p>
 </li>
 <li>
-<p>Provide methods to</p>
+<p>Provide <strong>methods</strong> to</p>
 <ul>
 <li><em>add</em>, <em>remove</em>, <em>update</em> aggregate root entities</li>
 <li><em>select</em> and return one or more entities, possibly in a <em>lazy</em> way
@@ -1278,7 +1278,7 @@ CustomerRegistry --&gt; CustomerID: exploits
 <li>aggregates fit document stores naturally: one document per aggregate</li>
 </ul>
 </li>
-<li>how to deploy it? managed (cloud) vs. self-hosted, replication, backups, …</li>
+<li>how to <em>deploy</em> it? <em>managed</em> (cloud) vs. <em>self-hosted</em>, replication, backups, …</li>
 </ul>
 </li>
 <li>Each microservice may adopt a different technology: <em>polyglot persistence</em> (cf. <a href="https://martinfowler.com/bliki/PolyglotPersistence.html">Fowler</a>)</li>
@@ -1373,7 +1373,7 @@ rectangle "Database per service" {
 </ul>
 </li>
 <li>
-<p>Consequences of having one database per service:</p>
+<p><strong>Consequences</strong> of having one database per service:</p>
 <ul>
 <li>data of other contexts is either <em>requested</em> via their APIs, or <em>replicated</em> locally by listening to their <a href="#/domain-events">domain events</a></li>
 <li>business transactions spanning several services become <strong>sagas</strong> (cf. <a href="https://microservices.io/patterns/data/saga.html">microservices.io</a>)
@@ -1415,7 +1415,7 @@ rectangle "Database per service" {
 <p>Providing a <em>façade</em> for the domain</p>
 </li>
 <li>
-<p>Making the business logic evolvable, interchangeable, replaceable</p>
+<p>Making the <em>business logic</em> <strong>evolvable</strong>, <em>interchangeable</em>, <em>replaceable</em></p>
 </li>
 <li>
 <p><em>domain service</em>: domain logic spanning several aggregates; lives in the domain layer</p>
@@ -1443,7 +1443,7 @@ rectangle "Database per service" {
 <p>They are usually <em>identity-less</em>, <em>stateless</em> objects</p>
 </li>
 <li>
-<p>May be implemented as classes in OOP languages</p>
+<p>May be implemented as <em>classes</em> in OOP languages</p>
 <ul>
 <li>or bare <em>functions</em> in functional languages</li>
 </ul>
@@ -1456,7 +1456,7 @@ rectangle "Database per service" {
 <li>… concerning some particular <em>aggregate root</em></li>
 <li>… which does <u>not</u> support the operation directly through its methods
 <ul>
-<li>(maybe because the operation is use-case specific)</li>
+<li>(maybe because the operation is <em>use-case specific</em>)</li>
 </ul>
 </li>
 </ul>
@@ -1573,13 +1573,13 @@ OrderID -d[hidden]- CustomerID
 <li>
 <p>Which and how many Web services? Rule of thumb: <strong>one microservice per bounded context</strong></p>
 <ul>
-<li>the bounded context is the boundary of a model, of a language, and (often) of a team</li>
+<li>the bounded context is the <em>boundary</em> of a <em>model</em>, of a <em>language</em>, and (often) of a <em>team</em></li>
 <li><em>finer</em> splits (e.g. one service per aggregate) are possible, but increase the communication overhead</li>
 <li><em>coarser</em> splits are fine to begin with: a <em>modular monolith</em> may be split later (cf. <a href="https://martinfowler.com/bliki/MonolithFirst.html">Fowler</a>)</li>
 </ul>
 </li>
 <li>
-<p>Inside each microservice:</p>
+<p><strong>Inside</strong> each microservice:</p>
 <ul>
 <li><em>application services</em> $\rightarrow$ API <em>controllers</em> (i.e. endpoint handlers)
 <ul>
@@ -1590,7 +1590,7 @@ OrderID -d[hidden]- CustomerID
 </ul>
 </li>
 <li>
-<p>Microservices communicate either:</p>
+<p>Microservices <strong>communicate</strong> either:</p>
 <ul>
 <li><strong>synchronously</strong>, via ReST calls
 <ul>
@@ -1601,7 +1601,7 @@ OrderID -d[hidden]- CustomerID
 <ul>
 <li>e.g. <a href="https://www.rabbitmq.com/">RabbitMQ</a>, <a href="https://kafka.apache.org/">Apache Kafka</a>, <a href="https://mqtt.org/">MQTT</a> brokers</li>
 <li>producers <em>publish</em> domain events on topics/queues, consumers <em>subscribe</em> to them</li>
-<li>it is the observer pattern, at the system level: publishers know nothing about subscribers</li>
+<li>it is the <em>observer pattern</em>, at the system level: publishers know <em>nothing</em> about subscribers</li>
 </ul>
 </li>
 </ul>
@@ -1661,7 +1661,7 @@ OrderID -d[hidden]- CustomerID
 </ul>
 </li>
 <li>
-<p>Event sources &amp; listeners shall be identified too</p>
+<p>Event <strong>sources</strong> &amp; <strong>listeners</strong> shall be <em>identified</em> too</p>
 <ul>
 <li>who is <em>generating</em> the event?</li>
 <li>who is <em>consuming</em> the event?</li>
@@ -1812,7 +1812,7 @@ note left of OrderEventListener: listener (observer)
 <li>Events are published to <em>unknown</em> consumers $\rightarrow$ their schema is a <strong>public contract</strong>
 <ul>
 <li>prefer <em>additive</em> changes (new optional fields)</li>
-<li>never remove/rename fields, nor change their meaning</li>
+<li><em>never</em> remove/rename fields, nor change their meaning</li>
 <li><em>version</em> the schema otherwise</li>
 <li>consumers should ignore unknown fields (cf. <a href="https://martinfowler.com/bliki/TolerantReader.html"><em>tolerant reader</em></a>)</li>
 </ul>
@@ -1844,7 +1844,7 @@ note left of OrderEventListener: listener (observer)
 <li>
 <p>Factories encapsulate the <em>creation logic</em> for <em>complex objects</em></p>
 <ul>
-<li>making it evolvable, interchangeable, replaceable</li>
+<li>making it <em>evolvable</em>, <em>interchangeable</em>, <em>replaceable</em></li>
 </ul>
 </li>
 <li>
@@ -1859,7 +1859,7 @@ note left of OrderEventListener: listener (observer)
 </ul>
 <h3 id="remarks">Remarks</h3>
 <ul>
-<li>DDD’s notion of factory is quite loose
+<li>DDD’s notion of factory is quite <strong>loose</strong>
 <ul>
 <li>DDD’s Factories $\supset$ GOF’s Factories $\cup$ Builders $\cup$ …</li>
 </ul>
@@ -2036,7 +2036,7 @@ CustomerFactory -u-&gt; Customer: creates
 <li><strong>Who creates</strong> these dependencies?
 <ul>
 <li>if the service calls <code>new SqlOrderStore()</code> itself, it is <em>bound</em> to that implementation</li>
-<li>… and it can hardly be tested without a real database</li>
+<li>… and it can hardly be <em>tested</em> without a <em>real database</em></li>
 </ul>
 </li>
 </ul>
@@ -2072,13 +2072,13 @@ CustomerFactory -u-&gt; Customer: creates
 <ol>
 <li><strong>Design &amp; segregate interfaces</strong>
 <ul>
-<li>interface members only expose interface (or built-in) types: natural after DDD</li>
+<li>interface members only expose <em>interface</em> (or built-in) <em>types</em>: natural after DDD</li>
 <li>interfaces and implementations in <em>separate</em> modules (e.g. <code>:domain</code> vs. <code>:storage</code>)</li>
 </ul>
 </li>
 <li><strong>Implement classes relying on interfaces only</strong>
 <ul>
-<li>fields, parameters, return types: interfaces (private members too)</li>
+<li>fields, parameters, return types: <em>interfaces</em> (private members too)</li>
 <li>expose a mechanism to <em>inject</em> the actual implementations:
 <ul>
 <li><em>constructor injection</em>: dependencies are constructor parameters
@@ -2097,7 +2097,7 @@ CustomerFactory -u-&gt; Customer: creates
 </li>
 <li><strong>Wire interfaces and classes</strong> at runtime
 <ul>
-<li>choosing the most adequate implementation for the situation at hand (production, test, etc.)</li>
+<li>choosing the most <em>adequate implementation</em> for the situation at hand (production, test, etc.)</li>
 </ul>
 </li>
 </ol>
@@ -2173,7 +2173,7 @@ CustomerFactory -u-&gt; Customer: creates
 </span></span></span></code></pre></div><ul>
 <li>The factory is the <em>only</em> class mentioning <em>implementation</em> classes
 <ul>
-<li>which can stay package-private (not leaked into the API)</li>
+<li>which can stay <em>package-private</em> (not leaked into the API)</li>
 </ul>
 </li>
 <li><strong>A hand-written factory is a minimal DI container</strong>
@@ -2188,7 +2188,7 @@ CustomerFactory -u-&gt; Customer: creates
 <ul>
 <li>The class under test does not create its dependencies $\rightarrow$ the <em>test</em> decides what to pass in
 <ul>
-<li>no need to edit production code, nor to patch it with static mocking tricks</li>
+<li><em>no need</em> to edit production code, nor to patch it with static mocking tricks</li>
 </ul>
 </li>
 </ul>
@@ -2243,7 +2243,7 @@ CustomerFactory -u-&gt; Customer: creates
 </section><section>
 <h2 id="di-technologies">DI technologies</h2>
 <ul>
-<li>Hand-written factories become tedious as the dependency graph grows</li>
+<li><em>Hand-written</em> factories become <strong>tedious</strong> as the dependency graph grows</li>
 <li><em>DI containers</em> automate the wiring. They let developers:
 <ol>
 <li><em>register</em> the chosen implementation for each interface (a.k.a. <em>binding</em>)</li>
@@ -2374,19 +2374,19 @@ This is helpful from several perspectives:</p>
 <li>
 <p><em>Avoid</em> <strong>responsibility diffusion</strong> over a single context</p>
 <ul>
-<li>one responsible person / team for each context</li>
+<li><em>one</em> responsible person / team for <em>each</em> context</li>
 </ul>
 </li>
 <li>
 <p><em>Avoid changes</em> in the model for <strong>problems</strong> arising <strong>outside</strong> the context</p>
 <ul>
-<li>rather, extend the domain by creating new contexts</li>
+<li>rather, <em>extend</em> the domain by creating <em>new contexts</em></li>
 </ul>
 </li>
 <li>
 <p>Enforce context’s <strong>cohesion</strong> via automated unit and integration <strong>testing</strong></p>
 <ul>
-<li>to be (re)executed as frequently as possible</li>
+<li>to be (re)executed as <em>frequently</em> as possible</li>
 </ul>
 </li>
 </ul>
@@ -2397,11 +2397,11 @@ This is helpful from several perspectives:</p>
 <li>
 <p>As the <strong>domain evolves</strong>, the software <em>model should evolve</em> with it</p>
 <ul>
-<li>in order to maintain the coupling</li>
+<li>in order to maintain the <em>coupling</em></li>
 </ul>
 </li>
 <li>
-<p>Yet, the domain rarely changes as a whole</p>
+<p>Yet, the domain <em>rarely</em> changes <strong>as a whole</strong></p>
 <ul>
 <li>more commonly, it changes in a <strong>context-specific</strong> way</li>
 </ul>
@@ -2435,8 +2435,8 @@ This is helpful from several perspectives:</p>
 <li>
 <p><em>Minimise</em> the potential <em>impact</em> / <em>reach</em> of changes</p>
 <ul>
-<li>each context should be as independent as possible</li>
-<li>each change affects as few contexts as possible</li>
+<li>each context should be as <em>independent</em> as possible</li>
+<li>each change affects as <em>few contexts</em> as possible</li>
 </ul>
 </li>
 </ul>
@@ -2444,7 +2444,7 @@ This is helpful from several perspectives:</p>
 <h2 id="model-integrity-patterns-background-pt-1">Model integrity patterns (background, pt. 1)</h2>
 <p><img src="./context-map.svg" alt="Three contexts, A, B, and Legacy, each enclosing one or more models; lines between models of different contexts mark contact points between contexts"></p>
 <ul>
-<li>Context maps highlight relations among contexts
+<li><em>Context maps</em> highlight <strong>relations</strong> among contexts
 <ul>
 <li>yet, <em>not</em> <strong>all relations are equal</strong>, nor symmetric</li>
 </ul>
@@ -2452,7 +2452,7 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="model-integrity-patterns-background-pt-2">Model integrity patterns (background, pt. 2)</h2>
-<p><img src="./provider-consumer.svg" alt="A downstream Search Page Context and an upstream Search API Context connected by a line, marked D and U at the two ends"></p>
+<p><img src="./provider-consumer.svg" alt="A downstream Frontend context and an upstream Backend context connected by a line, marked D and U at the two ends"></p>
 <p>Each relation among 2 contexts usually involves 2 ends/roles:</p>
 <ul>
 <li><strong>upstream</strong> end, i.e. the one <em>providing</em> functionalities</li>
@@ -2465,7 +2465,7 @@ This is helpful from several perspectives:</p>
 <br>
 <p><strong>Integration</strong> among <em>contexts</em> $\leftrightarrow$ <strong>interaction</strong> among <em>teams</em></p>
 <ul>
-<li>several strategies may be employed, depending on
+<li>several <em>strategies</em> may be employed, depending on
 <ul>
 <li>mutual <em>trust</em>* among teams</li>
 <li>ease of <em>communication</em>/cooperation among teams</li>
@@ -2477,7 +2477,7 @@ This is helpful from several perspectives:</p>
 <p>*trust $\approx$ willingness to collaborate + seek stability</p>
 </section><section>
 <h2 id="shared-kernel">Shared Kernel</h2>
-<p><img src="./shared-kernel.svg" alt="Catalog and Inventory contexts overlap around a shared supplier model used by both contexts"></p>
+<p><img src="./shared-kernel.svg" alt="Order and Inventory contexts overlap around a shared kernel, the Product context, whose model is used by both"></p>
 <ul>
 <li>
 <p>Best when: multiple contexts <em>share</em> the <strong>same team</strong> / organization / product</p>
@@ -2497,23 +2497,23 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="customersupplier">Customer–Supplier</h2>
-<p><img src="./customer-supplier.svg" alt="A downstream Search Page Context and upstream Search API Context connected by a customer-supplier relationship"></p>
+<p><img src="./customer-supplier.svg" alt="A downstream Frontend context and an upstream Backend context connected by a customer-supplier relationship"></p>
 <ul>
 <li>
-<p>Best when:</p>
+<p><strong>Best when</strong>:</p>
 <ul>
-<li>multiple teams</li>
+<li><em>multiple</em> teams</li>
 <li><strong>mutual trust</strong></li>
-<li>good communication</li>
+<li><em>good</em> communication</li>
 </ul>
 </li>
 <li>
-<p>Key idea:</p>
+<p><strong>Key idea</strong>:</p>
 <ul>
 <li><strong>upstream</strong> acts as <em>supplier</em>, <strong>downstream</strong> acts as <em>customer</em></li>
 <li>both sides collaborate to <strong>maximise integration</strong> among their models
 <ul>
-<li>and interoperability among their software</li>
+<li>and <em>interoperability</em> among their software</li>
 </ul>
 </li>
 </ul>
@@ -2527,49 +2527,49 @@ This is helpful from several perspectives:</p>
 </ul>
 </section><section>
 <h2 id="conformist">Conformist</h2>
-<p><img src="./conformist.svg" alt="A Search Page Context downstream of a Search API Context, while an External Context conforms downstream to the Search API Context"></p>
+<p><img src="./conformist.svg" alt="Your project, downstream, conforms to an upstream fancy Google library; an administrative domain border cuts the line between them"></p>
 <ul>
 <li>
-<p>Best when:</p>
+<p><strong>Best when</strong>:</p>
 <ul>
-<li>multiple teams</li>
-<li>poor communication / different pace</li>
-<li>some trust</li>
+<li><em>multiple</em> teams</li>
+<li><em>poor</em> communication / <em>different pace</em></li>
+<li><em>some</em> trust</li>
 </ul>
 </li>
 <li>
-<p>Key idea: downstream must conform to the upstream, reactively</p>
+<p><strong>Key idea</strong>: downstream must <strong>conform</strong> to the upstream, <em>reactively</em></p>
 <ul>
-<li>adapting their model accordingly</li>
-<li>whenever the upstream’s one changes</li>
+<li><em>adapting</em> their model accordingly</li>
+<li><em>whenever</em> the upstream’s one <em>changes</em></li>
 </ul>
 </li>
 </ul>
 </section><section>
 <h2 id="anti-corruption-layer">Anti-corruption layer</h2>
-<p><img src="./anti-corruption-layer.svg" alt="A Search Context isolates its model from an upstream Catalog Context through an anti-corruption translation layer with no business logic"></p>
+<p><img src="./anti-corruption-layer.svg" alt="Your project isolates its model from an upstream random library from GitHub through an anti-corruption translation layer with no business logic"></p>
 <ul>
 <li>
-<p>Best when:</p>
+<p><strong>Best when</strong>:</p>
 <ul>
-<li>multiple teams</li>
-<li>poor communication</li>
-<li>poor trust</li>
+<li><em>multiple</em> teams</li>
+<li><em>poor</em> communication</li>
+<li><strong>poor trust</strong></li>
 </ul>
 </li>
 <li>
-<p>If upstream cannot be trusted, and interaction is pointless…</p>
+<p>If upstream <strong>cannot be trusted</strong>, and interaction is <em>pointless</em>…</p>
 <ul>
-<li>e.g. legacy code, poorly maintained library, etc.</li>
+<li>e.g. <em>legacy</em> code, <em>poorly maintained</em> library, etc.</li>
 </ul>
 </li>
 <li>
-<p>… downstream must defend itself against unexpected / unanticipated change</p>
+<p>… downstream must <strong>defend itself</strong> against <em>unexpected</em> / <em>unanticipated</em> change</p>
 </li>
 <li>
 <p>The upstream’s model is then reverse engineered &amp; <strong>adapted</strong></p>
 <ul>
-<li>e.g. often, repository types are anti-corruption layers for DB technologies</li>
+<li>e.g. often, <em>repository</em> types are <em>anti-corruption layers</em> for DB technologies</li>
 </ul>
 </li>
 </ul>
@@ -2582,13 +2582,13 @@ This is helpful from several perspectives:</p>
 <h2 id="layered-architecture-disclaimer">Layered Architecture (disclaimer)</h2>
 <ul>
 <li>
-<p>DDD does not enforce a particular architecture</p>
+<p>DDD does <strong>not enforce</strong> a particular architecture</p>
 </li>
 <li>
-<p>Any is fine as long as the model keeps its integrity</p>
+<p>Any is fine as long as the model keeps its <em>integrity</em></p>
 </li>
 <li>
-<p>Layered architectures are well suited to preserve models’ integrity</p>
+<p><strong>Layered architectures</strong> are <em>well suited</em> to preserve models’ integrity</p>
 </li>
 <li>
 <p>The same dependency rule (outer depends on inner, never the converse) underlies <em>hexagonal</em> (ports &amp; adapters, cf. <a href="https://alistair.cockburn.us/hexagonal-architecture/">Cockburn, 2005</a>), <em>onion</em>, and <em>clean</em> architectures</p>
@@ -2601,9 +2601,9 @@ This is helpful from several perspectives:</p>
 <h2 id="layered-onion-architecture-concept">Layered (onion) architecture (concept)</h2>
 <p><img src="./layered-architecture.svg" alt="Concentric layers: Domain at the centre, Application and Presentation around it, and Messages, REST API, and Storage as outer adapters"></p>
 <ul>
-<li>outer layers depend on inner ones
+<li><em>outer</em> layers <strong>depend</strong> on <em>inner</em> ones
 <ul>
-<li>the converse is not true</li>
+<li>the converse is <strong>not</strong> true</li>
 </ul>
 </li>
 </ul>
@@ -2613,15 +2613,15 @@ This is helpful from several perspectives:</p>
 <li>
 <p><strong>Domain layer</strong>: contains the domain model (entities, values, events, aggregates, etc.)</p>
 <ul>
-<li>must support a wide range of applications</li>
-<li>has no dependency on any other layer</li>
+<li>must support a <em>wide range</em> of applications</li>
+<li>has <strong>no dependency</strong> on any other layer</li>
 </ul>
 </li>
 <li>
 <p><strong>Application layer</strong>: contains services providing business logic</p>
 <ul>
-<li>supports a particular use case via services</li>
-<li>depends on the domain layer</li>
+<li>supports a particular <em>use case</em> via <em>services</em></li>
+<li><em>depends</em> on the domain layer</li>
 </ul>
 </li>
 <li>
@@ -2629,7 +2629,7 @@ This is helpful from several perspectives:</p>
 <ul>
 <li>e.g. JSON, BSON, XML, YAML, XDR, Avro, HTML, etc.
 <ul>
-<li>depends on the domain layer (and, possibly, on the application layer)</li>
+<li><em>depends</em> on the domain layer (and, possibly, on the application layer)</li>
 </ul>
 </li>
 </ul>
@@ -2637,15 +2637,15 @@ This is helpful from several perspectives:</p>
 <li>
 <p><strong>Storage layer</strong>: supports persistent storage/retrieval of domain data</p>
 <ul>
-<li>this is where repositories are implemented</li>
-<li>may involve some DB technology</li>
-<li>depends on the domain layer (and, possibly, on the application layer)</li>
+<li>this is where <em>repositories</em> are implemented</li>
+<li>may involve some <em>DB technology</em></li>
+<li><em>depends</em> on the domain layer (and, possibly, on the application layer)</li>
 </ul>
 </li>
 <li>
 <p><strong>Interface layers</strong> (e.g. ReST API, MOM, View): let external entities access the software</p>
 <ul>
-<li>via a GUI, or via some remote interface such as HTTP</li>
+<li>via a <em>GUI</em>, or via some <em>remote interface</em> such as HTTP</li>
 </ul>
 </li>
 </ol>
@@ -2656,17 +2656,17 @@ This is helpful from several perspectives:</p>
 <h2 id="enforcing-the-architecture-in-the-code">Enforcing the architecture in the code</h2>
 <ul>
 <li>
-<p>Layering may be enforced in the code</p>
+<p>Layering may be <strong>enforced</strong> in the code</p>
 </li>
 <li>
-<p>By mapping layers into modules</p>
+<p>By <em>mapping</em> layers into <strong>modules</strong></p>
 <ul>
-<li>module $\approx$ packaging unit
+<li>module $\approx$ <em>packaging unit</em>
 <ul>
 <li>e.g. Gradle sub-projects, Maven modules, .NET assemblies, etc.</li>
 </ul>
 </li>
-<li>each module having its own build dependencies</li>
+<li>each module having its own <em>build dependencies</em></li>
 </ul>
 </li>
 </ul>
@@ -2714,8 +2714,8 @@ product ..&gt; mq
 <h2 id="event-sourcing-preliminaries">Event sourcing (preliminaries)</h2>
 <ul>
 <li>Whenever there is a <em>mutable</em> entity …</li>
-<li>… whose state evolution over time must be tracked …</li>
-<li>… state transitions can be memorised in 2 ways:
+<li>… whose <em>state evolution</em> over time must be <em>tracked</em> …</li>
+<li>… state transitions can be <em>memorised</em> in 2 ways:
 <ul>
 <li>one may track the <strong>current state</strong></li>
 <li>or the <strong>flow</strong> of <strong>variations</strong></li>
@@ -2729,7 +2729,7 @@ product ..&gt; mq
 <p>A pattern where <em>domain events</em> are reified into <em>time-stamped data</em> and the whole <em>evolution</em> of a system is persistently <em>stored</em></p>
 </blockquote>
 <ul>
-<li>perfect match with DDD as domain events are first-class citizens</li>
+<li><em>perfect match</em> with DDD as <em>domain events</em> are <strong>first-class citizens</strong></li>
 </ul>
 <p>(cf. <a href="https://martinfowler.com/eaaDev/EventSourcing.html">Fowler, Event Sourcing</a>)</p>
 </section><section>
@@ -2737,22 +2737,22 @@ product ..&gt; mq
 <h3 id="benefits">Benefits</h3>
 <ul>
 <li>
-<p>Historical data can be analysed, to serve several purposes</p>
+<p><em>Historical data</em> can be <strong>analysed</strong>, to serve several purposes</p>
 <ul>
 <li>e.g. predictive maintenance, optimisation, analysing &amp; anticipating faults</li>
 </ul>
 </li>
 <li>
-<p>Past situations can be replayed</p>
+<p><em>Past situations</em> can be <strong>replayed</strong></p>
 <ul>
-<li>it improves debugging and enables measurements</li>
+<li>it improves <em>debugging</em> and enables <em>measurements</em></li>
 </ul>
 </li>
 <li>
-<p>Enables complex event detection &amp; reaction</p>
+<p>Enables <strong>complex event</strong> detection &amp; reaction</p>
 </li>
 <li>
-<p>Enables CQRS (described later)</p>
+<p>Enables <strong>CQRS</strong> (described later)</p>
 </li>
 </ul>
 <h3 id="limitations">Limitations</h3>
@@ -2772,8 +2772,8 @@ product ..&gt; mq
 <li>
 <p>It can deliver <strong>reactive</strong>, <strong>eventually consistent</strong> solutions where:</p>
 <ul>
-<li>context boundaries can be easily enforced</li>
-<li>single responsibility principle is applied extensively</li>
+<li><em>context boundaries</em> can be easily enforced</li>
+<li><em>single responsibility principle</em> is applied extensively</li>
 </ul>
 </li>
 </ul>
@@ -2832,7 +2832,7 @@ product ..&gt; mq
 <ol start="2">
 <li>the read model is a <em>projection</em> built from the events up to time $t$
 <ul>
-<li>it returns a read-optimised representation of the system state at time $t$</li>
+<li>it returns a <em>read-optimised</em> representation of the system state at time $t$</li>
 </ul>
 </li>
 </ol>
@@ -2843,15 +2843,15 @@ product ..&gt; mq
 </blockquote>
 <ul>
 <li>
-<p>If read and write data are stored on different databases</p>
+<p>If <em>read</em> and <em>write</em> data are stored on <strong>different databases</strong></p>
 <ul>
-<li>projecting events updates the query database</li>
+<li><em>projecting</em> events updates the <em>query database</em></li>
 <li>the query database should be <strong>read-efficient</strong></li>
 <li>the event store should be <strong>write-efficient</strong></li>
 </ul>
 </li>
 <li>
-<p>Several, non-mutually-exclusive strategies:</p>
+<p>Several, <em>non-mutually-exclusive</em> <strong>strategies</strong>:</p>
 <ul>
 <li><strong>eager</strong>: events are projected as soon as they are received</li>
 <li><strong>on read</strong>: events are projected when a query is read</li>
@@ -3067,7 +3067,7 @@ product ..&gt; mq
 <li>Extend the model of our domain with new <strong>interfaces</strong> supporting <strong>CSV parsing / writing functionalities</strong></li>
 <li>Design the interfaces so that they are <strong>agnostic</strong> of the third-party libraries
 <ul>
-<li>without corrupting the domain model with library-specific types</li>
+<li>without <em>corrupting</em> the domain model with <em>library-specific</em> types</li>
 </ul>
 </li>
 <li>Provide <strong>implementations</strong> for the interfaces, using <strong>one of the two</strong> libraries</li>
