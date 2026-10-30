@@ -3503,8 +3503,153 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </ol>
 </li>
 </ul>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="swarm-dind">
+  
+<h2 id="a-local-swarm-via-docker-in-docker">A local Swarm via Docker-in-Docker</h2>
+<blockquote>
+<p><strong>Disclaimer</strong>: in this lecture, the Swarm cluster is made of <a href="#/networks">Docker-in-Docker</a> (DinD) containers, all running on <em>your own</em> machine</p>
+</blockquote>
+<ul>
+<li>
+<p>Each <strong>node</strong> is a <code>docker:dind</code> container, i.e. a <em>full</em> Docker daemon, with its own images, containers, volumes, and networks</p>
+<ul>
+<li>nodes see each other via a Compose network, and they are reachable by <em>symbolic</em> hostname (<code>master</code>, <code>worker-1</code>, …)</li>
+</ul>
+</li>
+<li>
+<p>Why? DinD is the <strong>smoother</strong> way to obtain a <strong>reproducible</strong> and <strong>stable</strong> <em>didactical</em> environment:</p>
+<ul>
+<li><em>same</em> cluster for everybody, regardless of OS (Linux, Mac, Windows) and of Docker flavour (Engine, Desktop)</li>
+<li><em>no</em> firewalls, VMs, or port forwarding in the way (cf. <a href="#/swarm-troubleshooting">troubleshooting</a> for real machines)</li>
+<li><em>no</em> need for several machines, nor for a working LAN in the classroom</li>
+<li><em>disposable</em>: the cluster is created and destroyed with one command, your own Docker daemon is left untouched</li>
+</ul>
+</li>
+<li>
+<p>Caveats:</p>
+<ul>
+<li>nodes are <strong>privileged</strong> containers $\Rightarrow$ fine for a playground, <em>not</em> for production</li>
+<li>all nodes share the <em>same</em> hardware $\Rightarrow$ no real scalability or fault-tolerance (but the <em>semantics</em> is the same)</li>
+<li>each node has its <em>own</em> image cache $\Rightarrow$ images are pulled once <em>per node</em></li>
+</ul>
+</li>
+</ul>
 </section><section>
-<h2 id="building-the-cluster-practice">Building the cluster (practice)</h2>
+<h2 id="a-local-swarm-via-docker-in-docker-pt-2">A local Swarm via Docker-in-Docker (pt. 2)</h2>
+
+<div class="multiCol">
+    
+
+<div class="col col-5 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">x-node</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">&amp;node</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>docker:dind<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">privileged</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">DOCKER_TLS_CERTDIR</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">""</span><span style="color:#bbb"> </span><span style="color:#888"># plain TCP on port 2375</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">master</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">&lt;&lt;</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">*node</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">hostname</span>:<span style="color:#bbb"> </span>master<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"127.0.0.1:2375:2375"</span><span style="color:#bbb"> </span><span style="color:#888"># Docker API</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">worker-1</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">&lt;&lt;</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">*node</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">hostname</span>:<span style="color:#bbb"> </span>worker-1<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">worker-2</span>:<span style="color:#bbb"> </span>...               <span style="color:#bbb"> </span><span style="color:#888"># same as worker-1</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">worker-3</span>:<span style="color:#bbb"> </span>...               <span style="color:#bbb"> </span><span style="color:#888"># same as worker-1</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">gateway</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>alpine/socat<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">entrypoint</span>:<span style="color:#bbb"> </span>[<span style="color:#d20;background-color:#fff0f0">"sh"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"-c"</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">command</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- |<span style="color:#d20;background-color:#fff0f0">
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">        for port in 9443 8890; do
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          socat TCP-LISTEN:$$port,fork,reuseaddr \
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                TCP:master:$$port &amp;
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">        done
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">        wait</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"9443:9443"</span><span style="color:#bbb">           </span><span style="color:#888"># Portainer</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"8890:8890"</span><span style="color:#bbb">           </span><span style="color:#888"># later examples</span><span style="color:#bbb">
+</span></span></span></code></pre></div><p>(full file <a href="./swarm-dind.yaml">here</a>)</p>
+
+</div>
+
+<div class="col col-7 ">
+    <ul>
+<li>
+<p>A <strong>Compose</strong> file describing a cluster of <em>4 nodes</em>: <code>master</code> + 3 <em>workers</em></p>
+<ul>
+<li><code>x-node</code> is a YAML <em>anchor</em>, i.e. the settings shared by all nodes, merged into each service via <code>&lt;&lt;: *node</code></li>
+<li><code>hostname</code> gives each node its <em>symbolic</em> name in the cluster</li>
+</ul>
+</li>
+<li>
+<p><code>master</code> publishes port <code>2375</code>, i.e. its <strong>Docker API</strong>, so that the CLI on your machine can act as a <em>client of the manager</em></p>
+<ul>
+<li>bound to <code>127.0.0.1</code> only, as it is unauthenticated!</li>
+</ul>
+</li>
+<li>
+<p><code>gateway</code> publishes the ports of the <em>services</em> deployed later on the Swarm</p>
+<ul>
+<li>it simply <em>relays</em> each TCP connection to the same port of <code>master</code> (via <a href="https://linux.die.net/man/1/socat"><code>socat</code></a>)</li>
+<li>then the <a href="#/routing-mesh">routing mesh</a> forwards it to the node actually running the service</li>
+<li>why not publishing them on <code>master</code> directly? Docker Desktop’s port forwarding produces packets that the routing mesh of a <em>nested</em> daemon drops, when the service runs on another node
+<ul>
+<li><code>gateway</code> opens <em>fresh</em> connections, which are handled correctly</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+</section><section>
+<h2 id="a-local-swarm-via-docker-in-docker-pt-3">A local Swarm via Docker-in-Docker (pt. 3)</h2>
+<ol>
+<li>
+<p>Save the file of the previous slide as <code>compose.yaml</code>, in an empty directory, and start the nodes:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>docker compose up -d
+</span></span></code></pre></div><ul>
+<li>wait a few seconds for the daemons to start (<code>docker compose logs master</code> should say <code>API listen on [::]:2375</code>)</li>
+</ul>
+</li>
+<li>
+<p><strong>Initialise</strong> Swarm mode on <code>master</code>, and let the workers <strong>join</strong> the cluster:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>docker compose <span style="color:#038">exec</span> master docker swarm init
+</span></span><span style="display:flex;"><span><span style="color:#369">TOKEN</span>=<span style="color:#080;font-weight:bold">$(</span>docker compose <span style="color:#038">exec</span> master docker swarm join-token -q worker<span style="color:#080;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">for</span> i in <span style="color:#00d;font-weight:bold">1</span> <span style="color:#00d;font-weight:bold">2</span> 3; <span style="color:#080;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>    docker compose <span style="color:#038">exec</span> worker-<span style="color:#369">$i</span> docker swarm join --token <span style="color:#369">$TOKEN</span> master:2377
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">done</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Let your Docker CLI <strong>connect to <code>master</code></strong> (rather than to your local daemon), in the current shell:</p>
+<ul>
+<li><code>export DOCKER_HOST=tcp://localhost:2375</code> (Bash) or <code>$env:DOCKER_HOST="tcp://localhost:2375"</code> (PowerShell)</li>
+<li>from now on, <em>all</em> <code>docker</code> commands (e.g. <code>docker node ls</code>, <code>docker stack deploy</code>) are executed by <code>master</code>:
+<pre tabindex="0"><code>ID                            HOSTNAME   STATUS    AVAILABILITY   MANAGER STATUS   ENGINE VERSION
+h7kxqxjgxqnr5bc4zp4pxfsgc *   master     Ready     Active         Leader           29.9.2
+9ig5gfqmiwslf637gzidl9y6d     worker-1   Ready     Active                          29.9.2
+mlipjs2czcoapauecp1haswlf     worker-2   Ready     Active                          29.9.2
+7or20sft5peegyexrb1m9yuax     worker-3   Ready     Active                          29.9.2
+</code></pre></li>
+</ul>
+</li>
+<li>
+<p>Whenever done, <strong>destroy</strong> the cluster: <code>unset DOCKER_HOST</code> (or <code>Remove-Item Env:DOCKER_HOST</code>), then <code>docker compose down -v</code></p>
+</li>
+</ol>
+</section><section>
+<h2 id="building-the-cluster-on-real-machines">Building the cluster on real machines</h2>
+<blockquote>
+<p>Not needed for this lecture (cf. <a href="#/swarm-dind">DinD Swarm</a>), but this is how a <em>real</em> cluster is built</p>
+</blockquote>
 <ol>
 <li>
 <p>On one node running the Docker daemon (say, the teacher’s machine), initialise Swarm mode as follows:</p>
@@ -3546,13 +3691,16 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </ul>
 </li>
 <li>
-<p>Whenever done with this lecture, one may leave the Swarm via <code>docker swarm leave --force</code></p>
+<p>Whenever done, one may leave the Swarm via <code>docker swarm leave --force</code></p>
 <ul>
-<li><em>remember to do this after the lecture</em>, otherwise you won’t be able to use Swarm at home!</li>
+<li><em>remember to do this</em>, otherwise you won’t be able to use Swarm elsewhere!</li>
 </ul>
 </li>
 </ol>
-</section><section>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="swarm-troubleshooting">
+  
 <h2 id="building-the-cluster-troubleshooting">Building the cluster (troubleshooting)</h2>
 <h3 id="things-that-may-go-wrong">Things that may go wrong</h3>
 <ol>
@@ -3720,9 +3868,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>portainer/portainer-ce:lts<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">command</span>:<span style="color:#bbb"> </span>-H tcp://tasks.agent:9001 --tlsskipverify<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"443:9443"</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"9000:9000"</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"8000:8000"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"9443:9443"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- portainer_data:/data<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
@@ -3766,10 +3912,13 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <p>Let’s save the code on the left in a file named <code>portainer.yml</code></p>
 </li>
 <li>
-<p>Let’s deploy the stack via <code>docker stack deploy -c portainer.yml portainer</code></p>
+<p>Let’s deploy the stack on the <a href="#/swarm-dind">DinD Swarm</a> (i.e. with <code>DOCKER_HOST</code> pointing to <code>master</code>) via <code>docker stack deploy -c portainer.yml portainer</code></p>
 </li>
 <li>
-<p>Let’s then browse to <a href="https://localhost">https://localhost</a> on some manager node</p>
+<p>Let’s then browse to <a href="https://localhost:9443">https://localhost:9443</a> (via <code>gateway</code>)</p>
+<ul>
+<li>the certificate is <em>self-signed</em>: accept it</li>
+</ul>
 </li>
 </ol>
 
@@ -3779,10 +3928,40 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 
 </section><section>
 <h2 id="portainers-initial-configuration">Portainer’s Initial Configuration</h2>
-<figure><img src="/09-containerization/portainer-setup.png" alt="Portainer initial setup page, asking for the admin password" width="50%">
+
+<div class="multiCol">
+    
+
+<div class="col col-5 ">
+    <figure><img src="/09-containerization/portainer-setup.png" alt="Portainer initial setup page, asking for the admin username, password, and setup token" width="100%">
 </figure>
 
+</div>
+
+<div class="col col-7 ">
+    <ul>
+<li>
 <p>let’s use <code>software-process-engineering</code> as the password for the <code>admin</code> user</p>
+</li>
+<li>
+<p>the <strong>setup token</strong> is printed in the logs of the dashboard:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>docker service logs portainer_webservice | grep setup_token
+</span></span></code></pre></div></li>
+<li>
+<p>this page must be filled within <em>5 minutes</em> from the deployment, otherwise Portainer locks itself</p>
+<ul>
+<li>if so, restart it via <code>docker service update --force portainer_webservice</code></li>
+</ul>
+</li>
+<li>
+<p>upon creation of the user, Portainer proposes to set up <em>Edge Compute</em>: let’s just <strong>skip</strong> it</p>
+</li>
+</ul>
+
+</div>
+
+</div>
+
 </section><section>
 <h2 id="portainers-home-page">Portainer’s Home Page</h2>
 <p>Upon login, you are presented with the <em>home page</em>, which asks you to select one <strong>environment</strong></p>
@@ -3805,11 +3984,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <li>
 <p>which and how many <strong>nodes</strong> compose the cluster (<em>Dashboard</em> section)</p>
 <ul>
-<li>you may use the <em>cluster visualiser</em> to spot your machine in the cluster
-<ul>
-<li>(assuming that you managed to join the cluster)</li>
-</ul>
-</li>
+<li>you may use the <em>cluster visualiser</em> to spot <code>master</code>, <code>worker-1</code>, <code>worker-2</code>, and <code>worker-3</code></li>
 </ul>
 </li>
 <li>
@@ -3827,14 +4002,14 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <li>
 <p>which <strong>containers</strong> are running on the cluster (<em>Containers</em> section)</p>
 <ul>
-<li>you may observe that the <code>portainer_agent</code> service is composed of <em>one container per node</em></li>
-<li>you may observe that the <code>portainer_webservice</code> service is composed of <em>one container</em> which is <em>running on some manager node</em></li>
+<li>you may observe that the <code>portainer_agent</code> service is composed of <em>one container per node</em> (i.e. 4 containers)</li>
+<li>you may observe that the <code>portainer_webservice</code> service is composed of <em>one container</em> which is <em>running on</em> <code>master</code> (the only manager)</li>
 </ul>
 </li>
 <li>
 <p>which <strong>volumes</strong> are present on the cluster (<em>Volumes</em> section)</p>
 <ul>
-<li>you may observe that the <code>portainer_portainer_data</code> volume is present <em>on the same manager node</em> of <code>portainer_webservice</code></li>
+<li>you may observe that the <code>portainer_portainer_data</code> volume is present <em>on the same node</em> of <code>portainer_webservice</code>, i.e. <code>master</code></li>
 </ul>
 </li>
 <li>
@@ -3868,12 +4043,15 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <li>
 <p>This can be done <em>programmatically</em>….</p>
 <ul>
-<li>e.g. via <code>docker node update --label-add KEY=VALUE NODE_ID</code></li>
+<li>e.g. via <code>docker node update --label-add KEY=VALUE NODE</code> (where <code>NODE</code> is the node’s ID or hostname)</li>
+<li>e.g. let’s mark all workers of the <a href="#/swarm-dind">DinD Swarm</a> as CPU-capable, for the next examples:
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">for</span> i in <span style="color:#00d;font-weight:bold">1</span> <span style="color:#00d;font-weight:bold">2</span> 3; <span style="color:#080;font-weight:bold">do</span> docker node update --label-add capabilities.cpu=yes worker-<span style="color:#369">$i</span>; <span style="color:#080;font-weight:bold">done</span>
+</span></span></code></pre></div></li>
 </ul>
 </li>
 <li>
 <p>… or via <strong>Portainer</strong>:</p>
-<figure><img src="/09-containerization/portainer-node-labels.png" alt="Portainer node details page, where labels can be added to a node" width="50%">
+<figure><img src="/09-containerization/portainer-node-labels.png" alt="Portainer node details page, where labels can be added to a node" width="35%">
     </figure>
 
 </li>
@@ -3943,7 +4121,10 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 
 </div>
 
-</section><section>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="routing-mesh">
+  
 <h2 id="exposing-ports-on-the-swarm">Exposing ports on the Swarm</h2>
 <p>When a service <em>exposes a port</em>, and that’s deployed on a <em>Swarm</em>:</p>
 <ul>
@@ -4034,7 +4215,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <li>
 <p>Try to query it multiple times:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">while</span> true; <span style="color:#080;font-weight:bold">do</span>
-</span></span><span style="display:flex;"><span>    curl http://&lt;ANY_NODE_ADDRESS&gt;:8890; 
+</span></span><span style="display:flex;"><span>    curl http://localhost:8890; <span style="color:#888"># published by master</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#038">echo</span> 
 </span></span><span style="display:flex;"><span>    sleep <span style="color:#00d;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">done</span>
@@ -4063,7 +4244,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <div class="col  ">
     <ol>
 <li>
-<p>Several replicas of the same service are created:</p>
+<p>Several replicas of the same service are created, spread over the CPU-capable nodes (i.e. the 3 workers):</p>
 <p><img src="./portainer-replicated-service.png" alt="Portainer services view: 10 replicas of service ws spread over the nodes"></p>
 </li>
 </ol>
@@ -4117,7 +4298,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <p>… as well as several volumes!</p>
 <p><img src="./portainer-fake-simulation-volumes.png" alt="Portainer volumes view: one shared_volume per node hosting a replica"></p>
 <ul>
-<li>one per replica, on the same node as the replica</li>
+<li>one per replica, on the same node as the replica (i.e. one on each worker of the <a href="#/swarm-dind">DinD Swarm</a>)</li>
 </ul>
 </li>
 <li>
