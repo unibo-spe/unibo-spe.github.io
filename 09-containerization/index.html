@@ -38,7 +38,7 @@
 <br>
 <h3 id="giovanni-ciatto--giovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2026-10-27
+<p>Compiled on: 2026-10-30
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -597,7 +597,9 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 <h2 id="interaction-with-the-outside-world">Interaction with the outside world</h2>
 
 <div class="multiCol">
-    <div class="col col-6 ">
+    
+
+<div class="col col-6 ">
     <p>A docker container runs <em>in isolation</em>, w.r.t. the host and other containers.</p>
 <p>Environment variables, network ports, and file system folders are <strong>not</strong> shared.</p>
 <p>Sharing must be explicit and requires options to be specified after <code>docker run</code>:</p>
@@ -617,9 +619,12 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </ul>
 </li>
 </ul>
+
 </div>
+
 <div class="col col-6 ">
     <p><img src="./outside-world.svg" alt="Interaction with the outside world: environment variables (-e), volumes (-v) and published ports (-p) are the only channels between container my-service and its host"></p>
+
 </div>
 
 </div>
@@ -2241,9 +2246,9 @@ b304d1ae5404   bridge               bridge    local
 </ul>
 </section><section>
 <h2 id="docker-compose-for-testing-the-workflow">Docker Compose for testing: the workflow</h2>
-<p><img src="./compose-testing.svg" alt="Testing with Docker Compose: before all tests, the JUnit class runs docker compose up –wait, which starts MariaDB and waits for its healthcheck; each test then queries the database; after all tests, docker compose down stops and removes it"></p>
+<p><img src="./compose-testing-workflow.svg" alt="Testing with Docker Compose, in general: before all tests, the test suite asks Docker Compose to start the infrastructural component and waits until it is ready; for each test, the test suite exercises the system under test, which uses the component, then checks the result; after all tests, the test suite asks Docker Compose to stop and remove the component"></p>
 </section><section>
-<h2 id="example-docker-compose-for-testing--junit-pt-1">Example: Docker Compose for testing + JUnit (pt. 1)</h2>
+<h2 id="exercise-docker-compose-for-testing--junit-pt-1">Exercise: Docker Compose for testing + JUnit (pt. 1)</h2>
 <h3 id="domain-model">Domain model</h3>
 
 <figure id="plantuml-figure-3d5fc2846ebf1ad7980671cab2bc92e3" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
@@ -2297,7 +2302,7 @@ CustomerRepository o-r- Customer
 </script>
 
 </section><section>
-<h2 id="example-docker-compose-for-testing--junit-pt-2">Example: Docker Compose for testing + JUnit (pt. 2)</h2>
+<h2 id="exercise-docker-compose-for-testing--junit-pt-2">Exercise: Docker Compose for testing + JUnit (pt. 2)</h2>
 <h3 id="implementation-details">Implementation details</h3>
 
 <figure id="plantuml-figure-6648ac7d7632b407ff0537c7335edd2a" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
@@ -2350,7 +2355,7 @@ package "java sql" {
 </script>
 
 </section><section>
-<h2 id="example-docker-compose-for-testing--junit-pt-3">Example: Docker Compose for testing + JUnit (pt. 3)</h2>
+<h2 id="exercise-docker-compose-for-testing--junit-pt-3">Exercise: Docker Compose for testing + JUnit (pt. 3)</h2>
 
 <div class="multiCol">
     
@@ -2438,7 +2443,7 @@ package "java sql" {
 <li>
 <p>Code for the exercise:</p>
 <ul>
-<li><a href="https://github.com/unibo-spe/docker-compose-testing">https://github.com/unibo-spe/docker-compose-testing</a></li>
+<li><a href="https://github.com/unibo-spe/docker-compose-testing">https://github.com/unibo-spe/docker-compose-testing</a> (branch <code>exercise</code>)</li>
 </ul>
 </li>
 <li>
@@ -2450,6 +2455,372 @@ package "java sql" {
 
 </div>
 
+</section><section>
+<h2 id="exercise-docker-compose-for-testing--junit-expected-workflow">Exercise: Docker Compose for testing + JUnit (expected workflow)</h2>
+<p><img src="./compose-testing.svg" alt="Testing with Docker Compose: before all tests, the JUnit class runs docker compose up –wait, which starts MariaDB and waits for its healthcheck; each test then queries the database; after all tests, docker compose down stops and removes it"></p>
+</section>
+
+
+<section data-shortcode-section="">
+<section data-noprocess="" data-shortcode-slide="" id="compose-testing-walkthrough">
+<h2 id="walkthrough-docker-compose-for-testing--junit">Walkthrough: Docker Compose for testing + JUnit</h2>
+<blockquote>
+<p><strong>Goal</strong>: make <code>TestMariaDBCustomerRepository</code> start MariaDB <em>before</em> the tests, and stop it <em>after</em> them, via <code>docker compose</code></p>
+</blockquote>
+<ol>
+<li>
+<p>Get the code, on the <code>exercise</code> branch (<code>master</code> contains the solution):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>git clone --branch exercise https://github.com/unibo-spe/docker-compose-testing
+</span></span><span style="display:flex;"><span><span style="color:#038">cd</span> docker-compose-testing
+</span></span></code></pre></div></li>
+<li>
+<p>Ensure Docker is running (<code>docker info</code> should not fail)</p>
+</li>
+<li>
+<p>Run the tests: <code>./gradlew test</code></p>
+<ul>
+<li>they fail with a <code>NotImplementedError</code>: the <code>TODO()</code>s in the <code>companion object</code> of <code>TestMariaDBCustomerRepository</code> are our job</li>
+</ul>
+</li>
+<li>
+<p>Steps (one per slide, below):</p>
+<ol>
+<li>understand the <em>template</em> (and why there is a template at all)</li>
+<li>generate the actual Docker Compose file from the template</li>
+<li>call <code>docker compose</code> from Kotlin</li>
+<li>start / stop the stack around the tests</li>
+<li>run the tests, and fix the template</li>
+</ol>
+</li>
+</ol>
+</section><section>
+<h2 id="walkthrough-step-1-the-template">Walkthrough: step 1, the template</h2>
+<div class="multiCol">
+<div class="col col-6 ">
+    <p><code>src/test/resources/it/unibo/spe/compose/docker-compose.yml.template</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#888"># Template for the Docker Compose file used by TestMariaDBCustomerRepository.</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># Each __NAME__ placeholder is replaced by the test code, before calling `docker compose`,</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888"># so that each run of the test suite gets its own port and credentials.</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># We use a mariadb image which supports both amd64 &amp; arm64 architecture</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>mariadb:__VERSION__<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db_data:/var/lib/mysql<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">restart</span>:<span style="color:#bbb"> </span>always<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- MYSQL_ROOT_PASSWORD=__ROOT_PASSWORD__<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- MYSQL_DATABASE=__DB_NAME__<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- MYSQL_USER=__USER__<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- MYSQL_PASSWORD=__PASSWORD__<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># host ports are global to the machine: never hard-code them, or parallel runs will clash</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"__PORT__:3306"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># TODO: once the test code is complete, run the tests: do they pass reliably?</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888">#  `docker compose up --wait` waits for services to be "running" or "healthy": which one applies here?</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888">#  is MariaDB ready to accept connections as soon as its container is running?</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888">#   healthcheck:</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888">#     test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888">#     start_period: 1m</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888">#     start_interval: 10s</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888">#     interval: 1m</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888">#     timeout: 5s</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#888">#     retries: 3</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_data</span>:<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+<div class="col col-6 ">
+    <ul>
+<li>
+<p>One service, <code>db</code>, running the <code>mariadb</code> image</p>
+</li>
+<li>
+<p><code>__NAME__</code> strings are <em>placeholders</em>, not Docker Compose syntax</p>
+<ul>
+<li>the test code chooses image version, credentials, and port…</li>
+<li>… so they must be <em>substituted</em> before calling <code>docker compose</code></li>
+</ul>
+</li>
+<li>
+<p>The test already lists the substitutions, in <code>setUpMariaDb</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">"VERSION"</span> to <span style="color:#d20;background-color:#fff0f0">"11"</span>,
+</span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">"ROOT_PASSWORD"</span> to <span style="color:#b06;font-weight:bold">UUID</span>.randomUUID().toString(),
+</span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">"DB_NAME"</span> to DATABASE,
+</span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">"USER"</span> to USER,
+</span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">"PASSWORD"</span> to PASSWORD,
+</span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">"PORT"</span> to <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$PORT</span><span style="color:#d20;background-color:#fff0f0">"</span>,
+</span></span></code></pre></div><ul>
+<li><code>PORT</code> is also the port the <code>MariaDBConnectionFactory</code> connects to</li>
+</ul>
+</li>
+<li>
+<p>The <code>db_data</code> <em>named volume</em> keeps the DB files</p>
+<ul>
+<li>it survives <code>docker compose down</code>, unless explicitly removed (cf. <a href="#/volumes">volumes</a>)</li>
+</ul>
+</li>
+<li>
+<p>The <code>healthcheck</code> is commented out: keep it in mind for step 5</p>
+</li>
+</ul>
+</div>
+</div>
+</section><section>
+<h2 id="walkthrough-step-1-bis-why-a-template-in-a-temporary-directory">Walkthrough: step 1 (bis), why a template in a temporary directory?</h2>
+<ul>
+<li>
+<p>Why not a <em>static</em> <code>docker-compose.yml</code>, used in place?</p>
+<ul>
+<li>because we want to allow <strong>parallel runs</strong> of the test suite on the same machine
+<ul>
+<li>e.g. two CI jobs on the same runner, two developers on the same server, two test classes run concurrently by Gradle</li>
+</ul>
+</li>
+<li>and to prevent a run from <strong>polluting</strong> another one (e.g. data left in the DB, containers left running)</li>
+</ul>
+</li>
+<li>
+<p>What would clash between two runs, with a static file?</p>
+<ul>
+<li><em>host ports</em>: they are global to the machine, so two stacks cannot both bind <code>3306</code>
+<ul>
+<li>hence <code>__PORT__</code> is a <em>parameter</em>, and each run picks a <em>free</em> port: <code>ServerSocket(0).use { it.localPort }</code></li>
+<li>no other port is published by the template, for the same reason</li>
+</ul>
+</li>
+<li><em>containers</em>, <em>networks</em>, <em>volumes</em>: Compose names them after the <strong>project name</strong> (e.g. <code>&lt;project&gt;-db-1</code>, <code>&lt;project&gt;_db_data</code>)
+<ul>
+<li>the default project name is the <strong>name of the directory</strong> containing the Compose file</li>
+<li>one directory for both runs $\rightarrow$ same project $\rightarrow$ the second <code>up</code> <em>reuses</em> the containers of the first, and the first <code>down</code> removes them under the feet of the second</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Hence: generate the Compose file from the template, into a <em>fresh temporary directory</em> per run</p>
+<ul>
+<li>each run gets its own project, so its own containers, network, and volume</li>
+<li>credentials, too, can be chosen per run (e.g. the random <code>ROOT_PASSWORD</code>)</li>
+<li>the template in the resources stays untouched</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="walkthrough-step-2-from-template-to-compose-file">Walkthrough: step 2, from template to Compose file</h2>
+<div class="multiCol">
+<div class="col col-7 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">createComposeFile</span>(<span style="color:#080;font-weight:bold">vararg</span> assignments: Pair&lt;String, String&gt;): File {
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">directory</span> = <span style="color:#b06;font-weight:bold">Files</span>.createTempDirectory(<span style="color:#d20;background-color:#fff0f0">"docker-compose-testing"</span>).toFile()
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">path</span> = directory.resolve(<span style="color:#d20;background-color:#fff0f0">"docker-compose.yml"</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">template</span> = TestMariaDBCustomerRepository::<span style="color:#080;font-weight:bold">class</span>.java
+</span></span><span style="display:flex;"><span>                .getResource(<span style="color:#d20;background-color:#fff0f0">"docker-compose.yml.template"</span>)
+</span></span><span style="display:flex;"><span>                ?.readText()
+</span></span><span style="display:flex;"><span>                ?: error(<span style="color:#d20;background-color:#fff0f0">"docker-compose.yml.template resource not found"</span>)
+</span></span><span style="display:flex;"><span>            path.writeText(
+</span></span><span style="display:flex;"><span>                assignments.fold(template) { acc, (key, <span style="color:#080;font-weight:bold">value</span>) -&gt; acc.replace(<span style="color:#d20;background-color:#fff0f0">"__</span><span style="color:#33b;background-color:#fff0f0">${key}</span><span style="color:#d20;background-color:#fff0f0">__"</span>, <span style="color:#080;font-weight:bold">value</span>) },
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">return</span> path
+</span></span><span style="display:flex;"><span>        }</span></span></code></pre></div>
+</div>
+<div class="col col-5 ">
+    <ul>
+<li><code>createComposeFile(assignments)</code> must:
+<ol>
+<li>create a fresh temporary <em>directory</em> (<code>Files.createTempDirectory</code>)
+<ul>
+<li><strong>not</strong> just a temporary file: <code>File.createTempFile</code> puts every file in the <em>same</em> system temp directory, i.e. the same project for all runs</li>
+</ul>
+</li>
+<li>read the template <em>from the classpath</em>
+<ul>
+<li>test resources are packed next to the test classes, in the same package</li>
+<li>hence <code>getResource(...)</code> on the test class</li>
+<li>fail loudly (<code>error(...)</code>) if the resource is missing</li>
+</ul>
+</li>
+<li>replace each <code>__KEY__</code> with its value</li>
+<li>write the result into <code>docker-compose.yml</code>, inside the temporary directory, and return it</li>
+</ol>
+</li>
+</ul>
+</div>
+</div>
+</section><section>
+<h2 id="walkthrough-step-3-calling-docker-compose-from-kotlin">Walkthrough: step 3, calling <code>docker compose</code> from Kotlin</h2>
+<div class="multiCol">
+<div class="col col-7 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>        <span style="color:#888">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#888">         * Calls `docker compose -f $composeFile $arguments`, waits for its completion,
+</span></span></span><span style="display:flex;"><span><span style="color:#888">         * and makes the test fail if the exit value is not 0.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">         */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">executeDockerCompose</span>(<span style="color:#080;font-weight:bold">vararg</span> arguments: String) {
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">command</span> = listOf(<span style="color:#d20;background-color:#fff0f0">"docker"</span>, <span style="color:#d20;background-color:#fff0f0">"compose"</span>, <span style="color:#d20;background-color:#fff0f0">"-f"</span>, composeFile.absolutePath) + arguments
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-weight:bold">val</span> <span style="color:#369;font-weight:bold">exitValue</span> = ProcessBuilder(command).inheritIO().start().waitFor()
+</span></span><span style="display:flex;"><span>            assertEquals(
+</span></span><span style="display:flex;"><span>                expected = <span style="color:#00d;font-weight:bold">0</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#080;font-weight:bold">actual</span> = exitValue,
+</span></span><span style="display:flex;"><span>                message = <span style="color:#d20;background-color:#fff0f0">"Command `</span><span style="color:#33b;background-color:#fff0f0">${command.joinToString(" ")}</span><span style="color:#d20;background-color:#fff0f0">` returned non-zero exit code: </span><span style="color:#33b;background-color:#fff0f0">$exitValue</span><span style="color:#d20;background-color:#fff0f0">"</span>,
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>        }</span></span></code></pre></div>
+</div>
+<div class="col col-5 ">
+    <ul>
+<li>
+<p>Command line: <code>docker compose -f &lt;composeFile&gt; &lt;arguments&gt;</code></p>
+<ul>
+<li><code>-f</code> is needed, as the file is <em>not</em> in the working directory, and <em>not</em> named <code>compose.yaml</code></li>
+</ul>
+</li>
+<li>
+<p><code>ProcessBuilder(command).start()</code> spawns the process</p>
+<ul>
+<li><code>inheritIO()</code> forwards its output to the test’s output, i.e. Docker’s logs end up in Gradle’s test report</li>
+</ul>
+</li>
+<li>
+<p><code>waitFor()</code> blocks until the process terminates, and returns its <em>exit value</em></p>
+</li>
+<li>
+<p>The exit value must be <code>0</code>, otherwise the test must <strong>fail</strong></p>
+<ul>
+<li><code>assertEquals(0, exitValue, ...)</code>, with an informative message</li>
+<li>otherwise a broken stack shows up as an obscure connection error, later</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</section><section>
+<h2 id="walkthrough-step-4-starting-and-stopping-the-stack">Walkthrough: step 4, starting and stopping the stack</h2>
+<div class="multiCol">
+<div class="col col-6 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>        <span style="color:#555">@BeforeClass</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#555">@JvmStatic</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">setUpMariaDb</span>() {
+</span></span><span style="display:flex;"><span>            composeFile = createComposeFile(
+</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"VERSION"</span> to <span style="color:#d20;background-color:#fff0f0">"11"</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"ROOT_PASSWORD"</span> to <span style="color:#b06;font-weight:bold">UUID</span>.randomUUID().toString(),
+</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"DB_NAME"</span> to DATABASE,
+</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"USER"</span> to USER,
+</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"PASSWORD"</span> to PASSWORD,
+</span></span><span style="display:flex;"><span>                <span style="color:#d20;background-color:#fff0f0">"PORT"</span> to <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#33b;background-color:#fff0f0">$PORT</span><span style="color:#d20;background-color:#fff0f0">"</span>,
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>            executeDockerCompose(<span style="color:#d20;background-color:#fff0f0">"up"</span>, <span style="color:#d20;background-color:#fff0f0">"--wait"</span>)
+</span></span><span style="display:flex;"><span>            executeDockerCompose(<span style="color:#d20;background-color:#fff0f0">"logs"</span>, <span style="color:#d20;background-color:#fff0f0">"db"</span>, <span style="color:#d20;background-color:#fff0f0">"--tail"</span>, <span style="color:#d20;background-color:#fff0f0">"1"</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#555">@AfterClass</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#555">@JvmStatic</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">fun</span> <span style="color:#06b;font-weight:bold">tearDownMariaDb</span>() {
+</span></span><span style="display:flex;"><span>            executeDockerCompose(<span style="color:#d20;background-color:#fff0f0">"logs"</span>, <span style="color:#d20;background-color:#fff0f0">"db"</span>)
+</span></span><span style="display:flex;"><span>            executeDockerCompose(<span style="color:#d20;background-color:#fff0f0">"down"</span>, <span style="color:#d20;background-color:#fff0f0">"--volumes"</span>)
+</span></span><span style="display:flex;"><span>            composeFile.parentFile.deleteRecursively()
+</span></span><span style="display:flex;"><span>        }</span></span></code></pre></div>
+</div>
+<div class="col col-6 ">
+    <ul>
+<li>
+<p><code>@BeforeClass</code> / <code>@AfterClass</code> (JUnit 4): run <em>once</em>, before / after all tests of the class</p>
+<ul>
+<li>they must be <code>@JvmStatic</code> functions in the <code>companion object</code></li>
+<li>one DB for all tests: starting MariaDB takes seconds</li>
+<li>isolation among tests is achieved by <code>@Before</code>, which re-creates the table</li>
+</ul>
+</li>
+<li>
+<p><code>up --wait</code>: starts the stack (detached), and returns only when services are <em>running</em> / <em>healthy</em></p>
+<ul>
+<li>no <code>--wait</code> $\rightarrow$ <code>up</code> would block forever, attached to the containers’ logs</li>
+</ul>
+</li>
+<li>
+<p><code>down --volumes</code>: stops and removes containers, networks, <strong>and</strong> named volumes</p>
+<ul>
+<li>no <code>--volumes</code> $\rightarrow$ <code>db_data</code> is left on the machine, at each run</li>
+</ul>
+</li>
+<li>
+<p>Then, delete the temporary directory</p>
+</li>
+<li>
+<p><code>logs db</code>: not mandatory, but very useful to debug failures</p>
+</li>
+</ul>
+</div>
+</div>
+</section><section>
+<h2 id="walkthrough-step-5-running-the-tests-and-fixing-the-template">Walkthrough: step 5, running the tests (and fixing the template)</h2>
+<div class="multiCol">
+<div class="col col-6 ">
+    <ul>
+<li>
+<p><code>./gradlew test</code> with the template <em>as is</em> $\rightarrow$ likely <strong>failure</strong> of <code>createFreshTable</code>, with a connection error:</p>
+<ul>
+<li>without a <em>healthcheck</em>, <code>up --wait</code> returns as soon as the container is <em>running</em>…</li>
+<li>… but MariaDB needs a few more seconds to initialise and accept connections</li>
+</ul>
+</li>
+<li>
+<p>Answer to “<em>does the template require edits? why?</em>”: <strong>yes</strong>, un-comment the <code>healthcheck</code></p>
+<ul>
+<li>Docker runs the <code>test</code> command periodically, inside the container</li>
+<li><a href="https://mariadb.com/kb/en/using-healthcheck-sh/"><code>healthcheck.sh</code></a> ships with the official MariaDB image</li>
+<li>the container becomes <em>healthy</em> once MariaDB accepts connections and InnoDB is initialised</li>
+<li><code>up --wait</code> now waits for <em>healthy</em> (cf. <a href="https://docs.docker.com/reference/compose-file/services/#healthcheck"><code>healthcheck</code> docs</a>)</li>
+</ul>
+</li>
+<li>
+<p>Afterwards, <code>docker ps -a</code> and <code>docker volume ls</code> should show no leftovers</p>
+</li>
+<li>
+<p>Try running the test suite twice, in parallel (e.g. from two clones of the repository)</p>
+</li>
+</ul>
+</div>
+<div class="col col-6 ">
+    <p>Template, as in the solution:</p>
+<pre tabindex="0"><code class="nohighlight" data-noescape="">    ports:
+      # host ports are global to the machine: never hard-code them, or parallel runs will clash
+      - "__PORT__:3306"
+    # lets `docker compose up --wait` return only once MariaDB actually accepts connections
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
+      start_period: 1m
+      start_interval: 10s
+      interval: 1m
+      timeout: 5s
+      retries: 3</code></pre>
+</div>
+</div>
+</section><section>
+<h2 id="walkthrough-wrap-up">Walkthrough: wrap-up</h2>
+<ul>
+<li>
+<p>Possible failures, and their causes:</p>
+<ul>
+<li><code>Cannot connect to the Docker daemon</code> $\rightarrow$ Docker is not running</li>
+<li><code>NotImplementedError</code> $\rightarrow$ some <code>TODO()</code> is still there</li>
+<li>connection errors in <code>createFreshTable</code> $\rightarrow$ MariaDB not ready yet (see step 5)</li>
+<li><code>port is already allocated</code> $\rightarrow$ another process took the free port, between its choice and <code>docker compose up</code>: just re-run</li>
+</ul>
+</li>
+<li>
+<p>Possible improvements:</p>
+<ul>
+<li>avoid the (small) race on the port: publish just <code>"3306"</code>, so that Docker picks a free host port, then ask which one (<code>docker compose port db 3306</code>)</li>
+<li>split <code>complexTestWhichShouldActuallyBeDecomposedInSmallerTests</code> into smaller tests</li>
+</ul>
+</li>
+<li>
+<p>Full solution on the <code>master</code> branch of <a href="https://github.com/unibo-spe/docker-compose-testing">unibo-spe/docker-compose-testing</a></p>
+</li>
+<li>
+<p><a href="https://testcontainers.com/">Testcontainers</a> provides the same pattern as a library (also <a href="https://java.testcontainers.org/modules/docker_compose/">for Docker Compose</a>)</p>
+</li>
+</ul>
+
+</section>
 </section>
 
 <section data-noprocess="" data-shortcode-slide="" id="experiments">
@@ -2508,9 +2879,13 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <h2 id="where-experiments-are-born-jupyter-notebooks">Where experiments are born: Jupyter notebooks</h2>
 
 <div class="multiCol">
-    <div class="col col-7 ">
+    
+
+<div class="col col-7 ">
     <p><img src="./notebook.svg" alt="A Jupyter notebook (experiment.ipynb): code cells run on demand by a kernel, with execution counters, text cells, hard-coded parameters, and outputs (text and plots) stored inside the file itself"></p>
+
 </div>
+
 <div class="col col-5 ">
     <ul>
 <li>A <a href="https://jupyter.org/">Jupyter</a> <strong>notebook</strong> is a document mixing <em>code</em>, <em>text</em>, and <em>outputs</em>
@@ -2531,6 +2906,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </ul>
 </li>
 </ul>
+
 </div>
 
 </div>
@@ -2612,7 +2988,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <h2 id="step-1-from-notebook-to-script">Step 1: from notebook to script</h2>
 
 <div class="multiCol">
-    <div class="col col-6 ">
+    
+
+<div class="col col-6 ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>DATASET_ID = <span style="color:#038">int</span>(os.getenv(<span style="color:#d20;background-color:#fff0f0">'DATASET_ID'</span>, <span style="color:#d20;background-color:#fff0f0">"61"</span>))
 </span></span><span style="display:flex;"><span>TEST_SIZE = <span style="color:#038">float</span>(os.getenv(<span style="color:#d20;background-color:#fff0f0">'TEST_SIZE'</span>, <span style="color:#d20;background-color:#fff0f0">"0.2"</span>))
 </span></span><span style="display:flex;"><span>RANDOM_STATE = <span style="color:#038">int</span>(os.getenv(<span style="color:#d20;background-color:#fff0f0">'RANDOM_STATE'</span>, <span style="color:#d20;background-color:#fff0f0">"42"</span>))
@@ -2622,7 +3000,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </span></span><span style="display:flex;"><span>OUTPUT_DIR = Path(os.getenv(<span style="color:#d20;background-color:#fff0f0">'OUTPUT_DIR'</span>, <span style="color:#d20;background-color:#fff0f0">'.'</span>))
 </span></span><span style="display:flex;"><span>OUTPUT_DIR.mkdir(parents=<span style="color:#080;font-weight:bold">True</span>, exist_ok=<span style="color:#080;font-weight:bold">True</span>)</span></span></code></pre></div>
 <p>full script <a href="https://github.com/unibo-spe/containerized-experiment/blob/84d3822c777b8105e8dce1fa8736429399952a38/experiment.py">here</a></p>
+
 </div>
+
 <div class="col col-6 ">
     <ul>
 <li><code>jupyter nbconvert --to script experiment.ipynb</code> gives a <em>starting point</em>: the code of all cells, in order</li>
@@ -2636,6 +3016,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <li>The script runs top to bottom, with no human in the loop: <code>python experiment.py</code></li>
 <li>The notebook is <em>deleted</em>: one source of truth</li>
 </ul>
+
 </div>
 
 </div>
@@ -2644,7 +3025,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <h2 id="step-2-dockerise">Step 2: dockerise</h2>
 
 <div class="multiCol">
-    <div class="col col-6 ">
+    
+
+<div class="col col-6 ">
     <p><code>Dockerfile</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">ARG</span> <span style="color:#369">PYTHON_VERSION</span>=<span style="color:#00d;font-weight:bold">3</span>.12<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">python:${PYTHON_VERSION</span>}<span style="color:#a61717;background-color:#e3d2d2">
@@ -2675,7 +3058,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># SCORING: accuracy</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># PICTURE_SIZE: 10, 6</span><span style="color:#bbb">
 </span></span></span></code></pre></div>
+
 </div>
+
 <div class="col col-6 ">
     <ul>
 <li>The <strong>environment</strong> becomes <em>explicit</em>: Python version (<code>ARG</code>), <em>pinned</em> dependencies (<code>requirements.txt</code>)</li>
@@ -2684,6 +3069,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <li>Parameters can be overridden in the Compose file (<code>environment</code>)</li>
 <li>Running the experiment, on any machine with Docker: <code>docker compose up</code></li>
 </ul>
+
 </div>
 
 </div>
@@ -2695,7 +3081,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </blockquote>
 
 <div class="multiCol">
-    <div class="col col-6 ">
+    
+
+<div class="col col-6 ">
     <p>First attempt (<a href="https://github.com/unibo-spe/containerized-experiment/tree/9e78fce8e24ddcb7fcf4dea8ed72be6c96eb100a"><code>9e78fce</code></a>): <code>chown</code> at the end of the run</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">ENV</span> <span style="color:#369">OWNER</span>=<span style="color:#00d;font-weight:bold">1000</span>:1000<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">CMD</span> python experiment.py | tee <span style="color:#33b;background-color:#fff0f0">${</span><span style="color:#369">OUTPUT_DIR</span><span style="color:#33b;background-color:#fff0f0">}</span>/output.log &amp;&amp; <span style="color:#04d;background-color:#fff0f0">\
@@ -2703,7 +3091,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <p>Final solution (<a href="https://github.com/unibo-spe/containerized-experiment/commit/b6823d3"><code>b6823d3</code></a>): run as the host user</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># run as the host user, so that results in ./data are owned by them (cf. README)</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">user</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">&amp;user</span><span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"${HOST_UID:-1000}:${HOST_GID:-1000}"</span></span></span></code></pre></div>
+
 </div>
+
 <div class="col col-6 ">
     <ul>
 <li><code>chown</code> at the <em>end</em> is fragile: if the experiment fails, files stay owned by <code>root</code></li>
@@ -2720,6 +3110,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </ul>
 </li>
 </ul>
+
 </div>
 
 </div>
@@ -2762,7 +3153,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <h2 id="step-5-parameters-out-of-the-code">Step 5: parameters out of the code</h2>
 
 <div class="multiCol">
-    <div class="col col-6 ">
+    
+
+<div class="col col-6 ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MODEL_DecisionTree</span>:<span style="color:#bbb"> </span>|<span style="color:#d20;background-color:#fff0f0">
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          sklearn.tree.DecisionTreeClassifier: 
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">              max_depth: [null, 10, 20]
@@ -2783,7 +3176,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          sklearn.svm.SVC: 
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">              C: [0.1, 1, 10]
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">              kernel: ['linear', 'rbf']</span></span></span></code></pre></div>
+
 </div>
+
 <div class="col col-6 ">
     <ul>
 <li>In the notebook, the grids of hyper-parameters were <em>hard-coded</em> in a Python dictionary</li>
@@ -2796,6 +3191,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <li>Changing the experiments means changing the <em>Compose file</em>, not the code</li>
 <li>Still, a <em>single</em> container trains all models, <em>one after the other</em></li>
 </ul>
+
 </div>
 
 </div>
@@ -2804,7 +3200,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <h2 id="step-6-one-service-per-configuration-pt-1">Step 6: one service per configuration (pt. 1)</h2>
 
 <div class="multiCol">
-    <div class="col col-6 ">
+    
+
+<div class="col col-6 ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">experiment-dt</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">build</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">&amp;experiment_build</span><span style="color:#bbb">
@@ -2843,7 +3241,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                - [100,]
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                - [50, 50]
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">              activation: ['tanh', 'relu']</span></span></span></code></pre></div>
+
 </div>
+
 <div class="col col-6 ">
     <ul>
 <li><strong>One service per configuration</strong> (here, per model and grid of hyper-parameters)
@@ -2863,6 +3263,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </li>
 </ul>
 <p>shown in its <em>final</em> version (after step 7), full file <a href="https://github.com/unibo-spe/containerized-experiment/blob/master/compose.yaml">here</a></p>
+
 </div>
 
 </div>
@@ -2879,7 +3280,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <h2 id="step-7-polishing">Step 7: polishing</h2>
 
 <div class="multiCol">
-    <div class="col col-6 ">
+    
+
+<div class="col col-6 ">
     <p><code>Dockerfile</code></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">ARG</span> <span style="color:#369">PYTHON_VERSION</span>=<span style="color:#00d;font-weight:bold">3</span>.14<span style="color:#a61717;background-color:#e3d2d2">
 </span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">FROM</span><span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">python:${PYTHON_VERSION</span>}<span style="color:#a61717;background-color:#e3d2d2">
@@ -2907,7 +3310,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </span></span><span style="display:flex;"><span>    rm -r <span style="color:#d20;background-color:#fff0f0">"</span><span style="color:#369">$OUTPUT_DIR</span><span style="color:#d20;background-color:#fff0f0">"</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">fi</span>
 </span></span></code></pre></div>
+
 </div>
+
 <div class="col col-6 ">
     <ul>
 <li>Only the dependencies actually needed by the script (no Jupyter), updated, on Python 3.14</li>
@@ -2920,6 +3325,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </li>
 <li><code>CMD</code> in <em>exec</em> form, <code>HOME=/tmp</code> for the host user (cf. step 3)</li>
 </ul>
+
 </div>
 
 </div>
@@ -2928,14 +3334,18 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <h2 id="step-7-not-overloading-the-machine">Step 7: not overloading the machine</h2>
 
 <div class="multiCol">
-    <div class="col col-5 ">
+    
+
+<div class="col col-5 ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># cap the resources of each experiment, so that parallel ones do not starve each other</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">&amp;deploy</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">resources</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">limits</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">cpus</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"1"</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span><span style="color:#b06;font-weight:bold">memory</span>:<span style="color:#bbb"> </span>2G</span></span></code></pre></div>
+
 </div>
+
 <div class="col col-7 ">
     <ul>
 <li>Parallel containers compete for the <em>same</em> CPUs and memory
@@ -2956,6 +3366,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </li>
 <li><code>docker stats</code> shows the actual usage of running containers</li>
 </ul>
+
 </div>
 
 </div>
@@ -2964,7 +3375,9 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <h2 id="scaling-out-experiments-on-a-swarm">Scaling out: experiments on a Swarm</h2>
 
 <div class="multiCol">
-    <div class="col col-6 ">
+    
+
+<div class="col col-6 ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">experiment-svm</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>&lt;username&gt;/containerized-experiment:1.0.0<span style="color:#bbb">
@@ -2993,6 +3406,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">device</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">":/path/to/results/"</span><span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>
+
 <div class="col col-6 ">
     <ul>
 <li>The same stack can be deployed on a <a href="#/swarm">Swarm</a>, to run experiments on <em>several</em> nodes</li>
@@ -3006,6 +3420,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </li>
 <li><code>docker service ls</code> reports progress, e.g. <code>0/1 (1/1 completed)</code></li>
 </ul>
+
 </div>
 
 </div>
@@ -3721,7 +4136,9 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <h2 id="sharing-data-among-nodes">Sharing data among nodes</h2>
 
 <div class="multiCol">
-    <div class="col col-6 ">
+    
+
+<div class="col col-6 ">
     <ul>
 <li>
 <p>Since volumes are <em>local</em> to nodes, replicas on different nodes do <strong>not</strong> see each other’s data</p>
@@ -3753,9 +4170,12 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </ul>
 </li>
 </ul>
+
 </div>
+
 <div class="col col-6 ">
     <p><img src="./nfs-volumes.svg" alt="Sharing data among nodes: each node creates its own local shared_volume, but all of them are backed by the same folder exported by an NFS server, so all replicas see the same data"></p>
+
 </div>
 
 </div>
@@ -3763,7 +4183,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </section><section>
 <h1 id="lecture-is-over">Lecture is Over</h1>
 <br>
-<p>Compiled on: 2026-10-27
+<p>Compiled on: 2026-10-30
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href="../#/toc"><i class="fa fa-undo" aria-hidden="true"></i> back to ToC</a></p>
 </section>
