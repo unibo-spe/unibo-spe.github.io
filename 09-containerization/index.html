@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/css/custom-theme.min.6a44d86464a459488af8a1a0352e2b78c31bfc6ab27751ac1ebc2f5881bf95d0.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
+  <link rel="stylesheet" href="/css/custom-theme.min.13454c2907d913eacd3e883472beba0148fa131a12aba8990e531e42e4997fa1.css" id="theme"><link rel="stylesheet" href="/highlight-js/default.min.css">
 <link rel="stylesheet" href="https://raw.githubusercontent.com/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
@@ -38,7 +38,7 @@
 <br>
 <h3 id="giovanni-ciatto--giovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2026-10-30
+<p>Compiled on: 2026-11-02
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -742,12 +742,12 @@ Encapsulated components have a clear <strong>interface</strong> which is the onl
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> server = express()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">let</span> counter = <span style="color:#00d;font-weight:bold">0</span>
-</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>server.get(<span style="color:#d20;background-color:#fff0f0">'/'</span>, <span style="color:#080;font-weight:bold">function</span> (req, res) {
 </span></span><span style="display:flex;"><span>  counter++
 </span></span><span style="display:flex;"><span>  res.send(<span style="color:#d20;background-color:#fff0f0">`[</span><span style="color:#33b;background-color:#fff0f0">${</span>serverID<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">@</span><span style="color:#33b;background-color:#fff0f0">${</span>hostname<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">:</span><span style="color:#33b;background-color:#fff0f0">${</span>port<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">] Hit </span><span style="color:#33b;background-color:#fff0f0">${</span>counter<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0"> times`</span>)
 </span></span><span style="display:flex;"><span>})
-</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>console.log(<span style="color:#d20;background-color:#fff0f0">`Service </span><span style="color:#33b;background-color:#fff0f0">${</span>serverID<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0"> listening on </span><span style="color:#33b;background-color:#fff0f0">${</span>hostname<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">:</span><span style="color:#33b;background-color:#fff0f0">${</span>port<span style="color:#33b;background-color:#fff0f0">}</span><span style="color:#d20;background-color:#fff0f0">`</span>)
 </span></span><span style="display:flex;"><span>server.listen(port)
 </span></span></code></pre></div><p>i.e. a Web service listening on the port indicated by the <code>SERVICE_PORT</code> env var, showing Web pages of the form</p>
@@ -1024,7 +1024,7 @@ drwxr-xr-x    1 root     root          4096 Nov  2 09:28 ..
 </span></span></code></pre></div></li>
 <li>
 <p>Let’s have a look at the shared directory: <code>ls -la ./shared</code></p>
-<pre tabindex="0"><code>ls -la ./shared 
+<pre tabindex="0"><code>ls -la ./shared
 totale 56
 drwxr-xr-x  2 user    user     4096  2 nov 10.51 .
 drwxr-xr-x 79 user    user    12288  2 nov 10.56 ..
@@ -1669,7 +1669,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">                    </span><span style="color:#888"># section for secrets to be injected</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- server-certificate     <span style="color:#bbb"> </span><span style="color:#888"># reference to the secret (by name)</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db-credentials         <span style="color:#bbb"> </span><span style="color:#888"># reference to the secret (by name)</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># assumption: image example/webapp is programmed to load secrets</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#888"># from /run/secrets/&lt;secret_name&gt;</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
@@ -1683,7 +1683,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">retries</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">start_period</span>:<span style="color:#bbb"> </span>40s<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">                    </span><span style="color:#888"># section for volumes to be attached to the container</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db-data:/etc/data      <span style="color:#bbb"> </span><span style="color:#888"># the volume db-data (reference by name) will be mounted </span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db-data:/etc/data      <span style="color:#bbb"> </span><span style="color:#888"># the volume db-data (reference by name) will be mounted</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">                                </span><span style="color:#888"># as read-write in /etc/data</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- back-tier              <span style="color:#bbb"> </span><span style="color:#888"># attach to back-tier network (by name)</span><span style="color:#bbb">
@@ -1709,7 +1709,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">file</span>:<span style="color:#bbb"> </span>path/to/certificate/file/on/the/host<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db-credentials</span>:<span style="color:#bbb">          </span><span style="color:#888"># name of the secret, to be referenced by services</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">external</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">         </span><span style="color:#888"># not created by the stack, but expected to exist</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>my-db-creds     <span style="color:#bbb"> </span><span style="color:#888"># name of the secret, as created by the user </span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">name</span>:<span style="color:#bbb"> </span>my-db-creds     <span style="color:#bbb"> </span><span style="color:#888"># name of the secret, as created by the user</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#888"># The presence of these objects is sufficient to define them</span><span style="color:#bbb">
@@ -1942,7 +1942,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">network_name</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver</span>:<span style="color:#bbb"> </span>overlay<span style="color:#bbb"> </span><span style="color:#888"># default choice in swarm</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver_opts</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">driver_opts</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#888"># many options, covering many advanced use cases for network engineering</span><span style="color:#bbb">
 </span></span></span></code></pre></div></li>
 <li>
@@ -2040,7 +2040,7 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">interval</span>:<span style="color:#bbb"> </span>1m<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">timeout</span>:<span style="color:#bbb"> </span>5s<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">retries</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">depends_on</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">db</span>:<span style="color:#bbb">
@@ -2112,11 +2112,11 @@ f034da93c476   my-service   "/bin/sh -c 'npm run…"   4 seconds ago   Up 3 seco
 <pre tabindex="0"><code>docker compose up
 [+] Building 0.0s (0/0) docker:default
 [+] Running 5/5
-✔ Network your-dir_back-tier        Created  0.1s 
-✔ Volume "your-dir_wordpress_data"  Created  0.1s 
-✔ Volume "your-dir_db_data"         Created  0.0s 
-✔ Container your-dir-db-1           Created  0.8s 
-✔ Container your-dir-wordpress-1    Created  0.9s 
+✔ Network your-dir_back-tier        Created  0.1s
+✔ Volume "your-dir_wordpress_data"  Created  0.1s
+✔ Volume "your-dir_db_data"         Created  0.0s
+✔ Container your-dir-db-1           Created  0.8s
+✔ Container your-dir-wordpress-1    Created  0.9s
 Attaching to db-1, wordpress-1
 db-1         | 2023-11-23 14:24:57+00:00 [Note] [Entrypoint]: Entrypoint script for MariaDB Server 1:11.2.2+maria~ubu2204 started.
 db-1         | 2023-11-23 14:24:57+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
@@ -2189,11 +2189,11 @@ b304d1ae5404   bridge               bridge    local
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>...<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_ROOT_PASSWORD_FILE</span>:<span style="color:#bbb"> </span>/run/secrets/db_root_password<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_PASSWORD_FILE</span>:<span style="color:#bbb"> </span>/run/secrets/db_password<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...    <span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">secrets</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db_root_password<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db_password<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb">
@@ -2251,10 +2251,10 @@ b304d1ae5404   bridge               bridge    local
 <h2 id="exercise-docker-compose-for-testing--junit-pt-1">Exercise: Docker Compose for testing + JUnit (pt. 1)</h2>
 <h3 id="domain-model">Domain model</h3>
 
-<figure id="plantuml-figure-3d5fc2846ebf1ad7980671cab2bc92e3" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
+<figure id="plantuml-figure-2b4f3975683904130b78383ca114f239" class="plantuml" alt="" style="width: 100%;max-width: 95vw;max-height: 80vh;">
 <pre>interface Customer {
     + id: CustomerID
-    + firstName: String 
+    + firstName: String
     + lastName: String
     + birthDate: LocalDate
     ...
@@ -2298,7 +2298,7 @@ CustomerRepository o-r- Customer
 </pre>
 </figure>
 <script>
-    handlePlantumlFigureByID("plantuml-figure-3d5fc2846ebf1ad7980671cab2bc92e3");
+    handlePlantumlFigureByID("plantuml-figure-2b4f3975683904130b78383ca114f239");
 </script>
 
 </section><section>
@@ -3336,7 +3336,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <div class="multiCol">
     
 
-<div class="col col-5 ">
+<div class="col col-6 ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#888"># cap the resources of each experiment, so that parallel ones do not starve each other</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">&amp;deploy</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">resources</span>:<span style="color:#bbb">
@@ -3346,7 +3346,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 
 </div>
 
-<div class="col col-7 ">
+<div class="col col-6 ">
     <ul>
 <li>Parallel containers compete for the <em>same</em> CPUs and memory
 <ul>
@@ -3458,14 +3458,6 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 <h1 id="orchestration-1">Orchestration</h1>
 <h2 id="with-docker-swarm">With Docker Swarm</h2>
 </section><section>
-<h2 id="swarm-architecture">Swarm architecture</h2>
-<p><img src="./swarm-architecture.svg" alt="Docker Swarm architecture: the CLI sends the stack to a manager; managers agree on the cluster state via Raft and dispatch tasks (containers) to workers, possibly running tasks themselves"></p>
-<ul>
-<li>Docker Compose deploys a stack on a <em>single</em> host, Docker Swarm deploys it on a <strong>cluster</strong> of hosts (<em>nodes</em>)</li>
-<li>Users submit stacks to <strong>managers</strong> (e.g. via <code>docker stack deploy</code>), which keep the cluster state <em>consistent</em> via Raft</li>
-<li>Managers turn services into <strong>tasks</strong> (i.e. containers), and dispatch them onto nodes, workers or managers alike</li>
-</ul>
-</section><section>
 <h2 id="building-the-cluster-theory">Building the cluster (theory)</h2>
 <ul>
 <li>In a Docker Swarm cluster, there are two kinds of nodes:
@@ -3503,6 +3495,14 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </ol>
 </li>
 </ul>
+</section><section>
+<h2 id="swarm-architecture">Swarm architecture</h2>
+<p><img src="./swarm-architecture.svg" alt="Docker Swarm architecture: the CLI sends the stack to a manager; managers agree on the cluster state via Raft and dispatch tasks (containers) to workers, possibly running tasks themselves"></p>
+<ul>
+<li>Docker Compose deploys a stack on a <em>single</em> host, Docker Swarm deploys it on a <strong>cluster</strong> of hosts (<em>nodes</em>)</li>
+<li>Users submit stacks to <strong>managers</strong> (e.g. via <code>docker stack deploy</code>), which keep the cluster state <em>consistent</em> via Raft</li>
+<li>Managers turn services into <strong>tasks</strong> (i.e. containers), and dispatch them onto nodes, workers or managers alike</li>
+</ul>
 </section>
 
 <section data-noprocess="" data-shortcode-slide="" id="swarm-dind">
@@ -3536,13 +3536,25 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </ul>
 </li>
 </ul>
-</section><section>
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="swarm-dind-figure">
+  
 <h2 id="a-local-swarm-via-docker-in-docker-pt-2">A local Swarm via Docker-in-Docker (pt. 2)</h2>
+<figure><img src="/09-containerization/swarm-dind.svg" alt="Local Swarm via Docker-in-Docker: on your machine, the local Docker daemon runs five containers attached to one Compose network: master, worker-1, worker-2 and worker-3 are privileged docker:dind containers, each running its own Docker daemon and its own containers (tasks), with the workers joining the Swarm via master:2377; the docker CLI on your machine reaches the Docker API of master via localhost:2375 (DOCKER_HOST), while the browser reaches the services of the Swarm via the gateway container (alpine/socat), which relays ports 9443, 8889 and 8890 to master" width="60%">
+</figure>
+
+<ul>
+<li>Your <em>local</em> daemon runs the nodes as containers, each node’s daemon runs the <em>tasks</em> of the Swarm</li>
+<li>Your CLI talks to <code>master</code> (the only manager) via <code>DOCKER_HOST</code>, your browser reaches the Swarm’s services via <code>gateway</code></li>
+</ul>
+</section><section>
+<h2 id="a-local-swarm-via-docker-in-docker-pt-3">A local Swarm via Docker-in-Docker (pt. 3)</h2>
 
 <div class="multiCol">
     
 
-<div class="col col-5 ">
+<div class="col col-4 ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">x-node</span>:<span style="color:#bbb"> </span><span style="color:#c00;font-weight:bold">&amp;node</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>docker:dind<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">privileged</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">true</span><span style="color:#bbb">
@@ -3565,19 +3577,20 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">entrypoint</span>:<span style="color:#bbb"> </span>[<span style="color:#d20;background-color:#fff0f0">"sh"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"-c"</span>]<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">command</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- |<span style="color:#d20;background-color:#fff0f0">
-</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">        for port in 9443 8890; do
+</span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">        for port in 9443 8889 8890; do
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">          socat TCP-LISTEN:$$port,fork,reuseaddr \
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">                TCP:master:$$port &amp;
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">        done
 </span></span></span><span style="display:flex;"><span><span style="color:#d20;background-color:#fff0f0">        wait</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"9443:9443"</span><span style="color:#bbb">           </span><span style="color:#888"># Portainer</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"8890:8890"</span><span style="color:#bbb">           </span><span style="color:#888"># later examples</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"8889:8889"</span><span style="color:#bbb">           </span><span style="color:#888"># later examples</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"8890:8890"</span><span style="color:#bbb">
 </span></span></span></code></pre></div><p>(full file <a href="./swarm-dind.yaml">here</a>)</p>
 
 </div>
 
-<div class="col col-7 ">
+<div class="col col-8 ">
     <ul>
 <li>
 <p>A <strong>Compose</strong> file describing a cluster of <em>4 nodes</em>: <code>master</code> + 3 <em>workers</em></p>
@@ -3611,7 +3624,7 @@ from a Jupyter notebook to parallel, containerised experiments</p>
 </div>
 
 </section><section>
-<h2 id="a-local-swarm-via-docker-in-docker-pt-3">A local Swarm via Docker-in-Docker (pt. 3)</h2>
+<h2 id="a-local-swarm-via-docker-in-docker-pt-4">A local Swarm via Docker-in-Docker (pt. 4)</h2>
 <ol>
 <li>
 <p>Save the file of the previous slide as <code>compose.yaml</code>, in an empty directory, and start the nodes:</p>
@@ -3852,7 +3865,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <div class="multiCol">
     
 
-<div class="col  ">
+<div class="col col-4 ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">agent</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>portainer/agent:lts<span style="color:#bbb">
@@ -3877,7 +3890,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">mode</span>:<span style="color:#bbb"> </span>replicated<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">replicas</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">1</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.role == manager<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
@@ -3890,7 +3903,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span></code></pre></div>
 </div>
 
-<div class="col  ">
+<div class="col col-8 ">
     <ul>
 <li>
 <p>Portainer is a Web-based dashboard for cluster administration</p>
@@ -3926,6 +3939,18 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 
 </div>
 
+</section>
+
+<section data-noprocess="" data-shortcode-slide="" id="portainer-allocation">
+  
+<h2 id="portainers-allocation-onto-the-swarm">Portainer’s allocation onto the Swarm</h2>
+<figure><img src="/09-containerization/portainer-allocation.svg" alt="Allocation of the portainer stack onto the DinD Swarm: service agent is global, so one agent container runs on each of master, worker-1, worker-2 and worker-3; service webservice has one replica, constrained to manager nodes, hence it runs on master, together with volume portainer_data and published port 9443; all containers are attached to the overlay network agents_network, through which webservice contacts the agents at tasks.agent:9001" width="75%">
+</figure>
+
+<ul>
+<li><code>deploy.mode: global</code> $\rightarrow$ <em>one</em> <code>agent</code> per node, <code>placement.constraints</code> $\rightarrow$ <code>webservice</code> on the <em>only</em> manager (<code>master</code>)</li>
+<li>Volumes are created <em>where</em> the containers mounting them run, overlay networks <em>span</em> all the nodes hosting their containers</li>
+</ul>
 </section><section>
 <h2 id="portainers-initial-configuration">Portainer’s Initial Configuration</h2>
 
@@ -4069,14 +4094,14 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <div class="multiCol">
     
 
-<div class="col  ">
+<div class="col col-4 ">
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>mariadb:latest<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.capabilities.storage==yes<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>wordpress:latest <span style="color:#bbb"> </span><span style="color:#888"># depends_on is ignored by Swarm</span><span style="color:#bbb">
@@ -4085,7 +4110,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.capabilities.web==yes<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
@@ -4095,7 +4120,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span></code></pre></div>
 </div>
 
-<div class="col  ">
+<div class="col col-8 ">
     <ul>
 <li>
 <p>Let’s define a stack for Wordpress, with <strong>placement constraints</strong></p>
@@ -4105,17 +4130,17 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </ul>
 </li>
 <li>
-<p>E.g., on a cluster with nodes <code>storage1</code>, <code>inference1</code>, <code>inference2</code>, and <code>inference4</code>:</p>
+<p>E.g., on the <a href="#/swarm-dind">DinD Swarm</a> (nodes <code>master</code>, <code>worker-N</code>):</p>
 <ul>
-<li>node <code>storage1</code> has <em>storage</em> capabilities</li>
-<li>node <code>inference2</code> has <em>web</em> capabilities</li>
+<li>node <code>worker-1</code> has <em>storage</em> capabilities (<code>docker node update --label-add capabilities.storage=yes worker-1</code>)</li>
+<li>node <code>worker-2</code> has <em>web</em> capabilities (<code>docker node update --label-add capabilities.web=yes worker-2</code>)</li>
 </ul>
 </li>
 <li>
 <p>The deployment is as follows:</p>
 </li>
 </ul>
-<p><img src="./placement-constraints.svg" alt="Placement constraints: service db can only run on nodes labelled capabilities.storage=yes (storage1), service wordpress only on nodes labelled capabilities.web=yes (inference2)"></p>
+<p><img src="./placement-constraints.svg" alt="Placement constraints: service db can only run on nodes labelled capabilities.storage=yes (worker-1), service wordpress only on nodes labelled capabilities.web=yes (worker-2)"></p>
 
 </div>
 
@@ -4138,13 +4163,13 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <li>
 <p>so, the <code>wordpress</code> service above could be visited via <em>any</em> node of the cluster, e.g.:</p>
 <ul>
-<li><code>http://storage1:8889</code></li>
-<li><code>http://inference1:8889</code></li>
-<li><code>http://inference2:8889</code> (the node actually hosting the service)</li>
+<li><code>http://master:8889</code> (i.e. <a href="http://localhost:8889">http://localhost:8889</a> on your machine, via <code>gateway</code>)</li>
+<li><code>http://worker-1:8889</code></li>
+<li><code>http://worker-2:8889</code> (the node actually hosting the service)</li>
 </ul>
 </li>
 </ul>
-<p><img src="./routing-mesh.svg" alt="Swarm routing mesh: port 8889 is published on every node; a request to storage1:8889 enters the ingress network, which forwards it to the only wordpress replica, running on inference2"></p>
+<p><img src="./routing-mesh.svg" alt="Swarm routing mesh: port 8889 is published on every node; a request to master:8889 enters the ingress network, which forwards it to the only wordpress replica, running on worker-2"></p>
 </section><section>
 <h2 id="service-replication-pt-1">Service replication (pt. 1)</h2>
 <ul>
@@ -4167,7 +4192,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">mode</span>:<span style="color:#bbb"> </span>replicated<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">replicas</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">N</span><span style="color:#bbb">                  </span><span style="color:#888"># this should be a number!</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.role == manager<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.mylabel==myvalue<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">preferences</span>:<span style="color:#bbb">
@@ -4206,7 +4231,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">replicas</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">10</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.capabilities.cpu==yes<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">preferences</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- <span style="color:#b06;font-weight:bold">spread</span>:<span style="color:#bbb"> </span>node.labels.capabilities.cpu<span style="color:#bbb">
@@ -4216,7 +4241,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <p>Try to query it multiple times:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">while</span> true; <span style="color:#080;font-weight:bold">do</span>
 </span></span><span style="display:flex;"><span>    curl http://localhost:8890; <span style="color:#888"># published by master</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#038">echo</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#038">echo</span>
 </span></span><span style="display:flex;"><span>    sleep <span style="color:#00d;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">done</span>
 </span></span></code></pre></div><p>expected outcome:</p>
@@ -4276,7 +4301,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">condition</span>:<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">on</span>-failure<span style="color:#bbb"> </span><span style="color:#888"># restart is ignored by Swarm</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">replicas</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.capabilities.cpu==yes<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">max_replicas_per_node</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">1</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
@@ -4364,7 +4389,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </section><section>
 <h1 id="lecture-is-over">Lecture is Over</h1>
 <br>
-<p>Compiled on: 2026-10-30
+<p>Compiled on: 2026-11-02
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href="../#/toc"><i class="fa fa-undo" aria-hidden="true"></i> back to ToC</a></p>
 </section>
