@@ -32,6 +32,12 @@
 .reveal blockquote::after{
     content: "";
 }
+.reveal .platform-code pre {
+    font-size: .70em;
+}
+.reveal .platform-tree {
+    font-size: .65em;
+}
 </style>
 <h1 id="multi-platform-programming">Multi-platform programming</h1>
 <h2 id="hahahugoshortcode1s0hbhb">Software Process Engineering</h2>
@@ -310,125 +316,144 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <section data-shortcode-section="">
 <h1 id="example-the-jvm-platform">Example: the JVM platform</h1>
 </section><section>
-<h2 id="standard-libraries">Standard libraries</h2>
+<h2 id="standard-and-community-libraries-jvm">Standard and community libraries: JVM</h2>
+<figure><img src="/12-multiplatform/jvm-libraries.svg" alt="A JVM application uses JDK collections, file and networking APIs, threads and numbers, plus separately installed Jackson, Apache Commons CSV and Spring libraries." width="92%">
+</figure>
 <ul>
-<li>
-<p>Types from the <code>java.*</code> and <code>javax.*</code> packages are usable from <em>any</em> JVM language</p>
-</li>
-<li>
-<p>Many nice <em>functionalities</em> covering:</p>
-<ul>
-<li>multi-threading, non-blocking IO, asynchronous programming</li>
-<li>OS-independent GUI, or IO management</li>
-<li>data structures and algorithms for collections and streams</li>
-<li>unlimited precision arithmetic</li>
-</ul>
-</li>
-<li>
-<p>Many functionalities are provided by <em>community-driven</em> <strong>third party</strong> <em>libraries</em></p>
-<ul>
-<li>e.g. YAML/JSON parsing / generation, CSV parsing, complex numbers</li>
-</ul>
-</li>
+<li><strong>JDK APIs</strong> are shared across JVM languages: Java, Kotlin, Scala, etc.</li>
+<li><strong>Community libraries</strong> add domain-specific abstractions (e.g. <a href="https://commons.apache.org/proper/commons-csv/">Commons CSV</a>), resolved by Maven / Gradle</li>
 </ul>
 </section><section>
-<h2 id="predefined-design-decisions">Predefined design decisions</h2>
+<h2 id="predefined-design-decisions-jvm">Predefined design decisions: JVM</h2>
+<div class="multiCol">
+    <div class="col col-5 ">
+    <ul>
+<li>Every class extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html"><code>Object</code></a>
 <ul>
-<li>
-<p>Everything is (indirectly) a <em>subclass/instance</em> of <code>Object</code></p>
-<ul>
-<li>except a fixed set of primitive types, and static stuff</li>
+<li>primitives are distinct; <em>boxing</em> wraps them</li>
 </ul>
 </li>
-<li>
-<p>Every object is potentially a <em>lock</em></p>
+<li>Every object has a <strong>monitor</strong>
 <ul>
-<li>useful for concurrency</li>
+<li><code>synchronized</code> instance methods lock the receiver</li>
 </ul>
 </li>
-<li>
-<p>Default methods inherited from the <code>Object</code> class</p>
+<li>Java instance methods are <strong>virtual</strong> by default
 <ul>
-<li>e.g. <code>toString</code>, <code>equals</code>, <code>hashCode</code></li>
+<li><code>toString()</code> dispatches to the runtime class</li>
+<li>Kotlin methods are <code>final</code> by default</li>
 </ul>
 </li>
-<li>
-<p>In Java, instance methods are <em>virtual by default</em> (whereas in Kotlin they are <code>final</code> by default)</p>
-</li>
-<li>
-<p>…</p>
-</li>
 </ul>
+<p>Run the <a href="platform-examples/jvm/DesignDecisions.java">full example</a>:</p>
+<p><code>java -ea DesignDecisions.java</code></p>
+</div>
+<div class="col col-7 platform-code ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">DesignDecisions</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Counter</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">int</span><span style="color:#bbb"> </span>value;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">synchronized</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">increment</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span>value++;<span style="color:#bbb"> </span><span style="color:#888">// the receiver's monitor protects this update</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#555">@Override</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span>String<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">toString</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">            </span><span style="color:#080;font-weight:bold">return</span><span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"Counter("</span><span style="color:#bbb"> </span>+<span style="color:#bbb"> </span>value<span style="color:#bbb"> </span>+<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">")"</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">main</span>(String[]<span style="color:#bbb"> </span>args)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>Counter<span style="color:#bbb"> </span>counter<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>Counter();<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>counter.<span style="color:#369">increment</span>();<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>Object<span style="color:#bbb"> </span>object<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>counter;<span style="color:#bbb"> </span><span style="color:#888">// every class extends Object</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(object);<span style="color:#bbb"> </span><span style="color:#888">// virtual call: Counter(1)</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#888;font-weight:bold">int</span><span style="color:#bbb"> </span>primitive<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>1;<span style="color:#bbb"> </span><span style="color:#888">// not an Object</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>Object<span style="color:#bbb"> </span>boxed<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>primitive;<span style="color:#bbb"> </span><span style="color:#888">// autoboxed to Integer</span><span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+</div>
 </section><section>
-<h2 id="organizational-stylistic-technical-conventions">Organizational, stylistic, technical conventions</h2>
+<h2 id="organizational-stylistic-technical-conventions-jvm">Organizational, stylistic, technical conventions: JVM</h2>
+<div class="multiCol">
+    <div class="col col-5 ">
+    <p><strong>Organization</strong>: <a href="https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html">Maven directory layout</a></p>
+<pre class="platform-tree">project/
+├── pom.xml (or build.gradle.kts)
+└── src/
+    ├── main/java/it/unibo/spe/
+    │   └── CsvRow.java
+    └── test/java/it/unibo/spe/
+        └── CsvRowTest.java</pre>
 <ul>
-<li>
-<p><em>Project</em> should be organized according to the Maven’s <a href="https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html">standard directory layout</a></p>
-</li>
-<li>
-<p>Official <em>stylistic conventions</em> for most JVM languages</p>
-<ul>
-<li>e.g. type names in <code>PascalCase</code>, member names in <code>camelCase</code></li>
-<li>e.g. getters/setters in Java vs. Kotlin’s or Scala’s properties</li>
+<li><strong>Style</strong>: <code>CsvRow</code>, <code>getValues</code>, <code>values</code></li>
+<li><strong>Technical protocols</strong>: <code>Iterable</code> enables the enhanced <code>for</code> loop</li>
+<li>Collections accept <code>Collection</code>; variadic <code>String...</code> is a <code>String[]</code></li>
 </ul>
-</li>
-<li>
-<p>Many technical conventions:</p>
-<ul>
-<li><em>iterable</em> data structures should implement the <code>Iterable</code> interface</li>
-<li><em>variadic</em> arguments are considered <em>arrays</em></li>
-<li><em>constructors</em> for collection subclasses accept <code>Collection</code>s as input</li>
-<li>…</li>
-</ul>
-</li>
-</ul>
+<p><a href="platform-examples/jvm/CsvRow.java">Full code</a>, including a <code>main</code> and assertions</p>
+</div>
+<div class="col col-7 platform-code ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">package</span><span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">it.unibo.spe</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span><span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">java.util.Collection</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span><span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">java.util.Iterator</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">import</span><span style="color:#bbb"> </span><span style="color:#b06;font-weight:bold">java.util.List</span>;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">CsvRow</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">implements</span><span style="color:#bbb"> </span>Iterable&lt;String&gt;<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">private</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">final</span><span style="color:#bbb"> </span>List&lt;String&gt;<span style="color:#bbb"> </span>values;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">CsvRow</span>(Collection&lt;String&gt;<span style="color:#bbb"> </span>values)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">this</span>.<span style="color:#369">values</span><span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>List.<span style="color:#369">copyOf</span>(values);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span>List&lt;String&gt;<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">getValues</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#888">// JavaBean getter</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">return</span><span style="color:#bbb"> </span>values;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#555">@Override</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span>Iterator&lt;String&gt;<span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">iterator</span>()<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">return</span><span style="color:#bbb"> </span>values.<span style="color:#369">iterator</span>();<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#080;font-weight:bold">public</span><span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">static</span><span style="color:#bbb"> </span><span style="color:#888;font-weight:bold">void</span><span style="color:#bbb"> </span><span style="color:#06b;font-weight:bold">main</span>(String...<span style="color:#bbb"> </span>args)<span style="color:#bbb"> </span>{<span style="color:#bbb"> </span><span style="color:#888">// String[]</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">var</span><span style="color:#bbb"> </span>row<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#080;font-weight:bold">new</span><span style="color:#bbb"> </span>CsvRow(List.<span style="color:#369">of</span>(<span style="color:#d20;background-color:#fff0f0">"Ada"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"42"</span>));<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">for</span><span style="color:#bbb"> </span>(String<span style="color:#bbb"> </span>value<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span>row)<span style="color:#bbb"> </span>System.<span style="color:#369">out</span>.<span style="color:#369">println</span>(value);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#080;font-weight:bold">assert</span><span style="color:#bbb"> </span>row.<span style="color:#369">getValues</span>().<span style="color:#369">equals</span>(List.<span style="color:#369">of</span>(<span style="color:#d20;background-color:#fff0f0">"Ada"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"42"</span>));<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span>}<span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+</div>
 </section><section>
-<h2 id="packaging-conventions-import-mechanisms-and-software-repositories">Packaging conventions, import mechanisms, and software repositories</h2>
-<ul>
-<li>
-<p><em>Project files</em> are organized into <em>packages</em></p>
-<ul>
-<li>packages should correspond to <em>directory structures</em> (mandatory in Java, recommended in Kotlin)</li>
+<h2 id="packaging-imports-repositories-jvm">Packaging, imports, repositories: JVM</h2>
+<figure><img src="/12-multiplatform/jvm-packaging.svg" alt="Maven Central supplies dependency coordinates to Gradle or Maven, which place JAR files on the class path so Java can resolve imported classes." width="96%">
+</figure>
+<div class="multiCol">
+    <div class="col col-6 ">
+    <ul>
+<li><strong>Package</strong> → namespace, e.g. <code>org.apache.commons.csv</code></li>
+<li><strong>JAR</strong> → ZIP archive of compiled classes and resources</li>
+<li><strong>Dependency coordinates</strong> → <code>org.apache.commons:commons-csv:1.14.1</code></li>
 </ul>
-</li>
-<li>
-<p>Code <em>archives</em> (<code>.jar</code>) are <em>Zip files</em> containing compiled classes</p>
-</li>
-<li>
-<p>Basic <em>import mechanism</em>: the <strong>class path</strong></p>
-<ul>
-<li>i.e. the path where classes are looked for</li>
-<li>commonly set at application startup</li>
-<li>since Java 9, also the <strong>module path</strong> (<a href="https://openjdk.org/projects/jigsaw/spec/">JPMS</a>)</li>
+</div>
+<div class="col col-6 ">
+    <ul>
+<li><strong>Import</strong> → <code>import org.apache.commons.csv.CSVFormat;</code></li>
+<li><strong>Class path</strong> → where the JVM finds classes (<code>java -cp ...</code>)</li>
+<li><strong>Module path</strong> → also available for <a href="https://openjdk.org/projects/jigsaw/spec/">JPMS</a> modules since Java 9</li>
 </ul>
-</li>
-<li>
-<p>Many <em>third-party repositories</em> for JVM libraries</p>
-<ul>
-<li><a href="https://central.sonatype.com">Maven central repository</a> is the most relevant one</li>
-<li>many tools for dependency management (e.g. Maven, Gradle, cf. <a href="../04-build-automation/">build automation</a>)</li>
-</ul>
-</li>
-</ul>
+</div>
+</div>
+<blockquote>
+<p>Resolve <strong>dependencies</strong> first; <strong>import</strong> classes in source code</p>
+</blockquote>
 </section><section>
-<h2 id="user-communities">User communities</h2>
-<ul>
-<li>
-<p><em>Android</em> developers</p>
-</li>
-<li>
-<p><em>Back-end</em> Web developers</p>
-</li>
-<li>
-<p><em>Desktop applications</em> developers</p>
-</li>
-<li>
-<p>Researchers in the fields of: <em>Semantic Web</em>, <em>multi-agent systems</em>, etc.</p>
-</li>
-<li>
-<p>…</p>
-</li>
-</ul>
+<h2 id="user-communities-jvm">User communities: JVM</h2>
+<figure><img src="/12-multiplatform/jvm-communities.svg" alt="Four example JVM user communities, represented by phone, server, desktop and laboratory icons: Android developers, back-end Web developers, desktop application developers, and researchers working on Semantic Web or multi-agent systems." width="96%">
+</figure>
+<blockquote>
+<p>The same JVM library can reach <strong>several communities</strong> through their preferred JVM language</p>
+</blockquote>
 
 </section>
 </section><section>
@@ -437,135 +462,127 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <section data-shortcode-section="">
 <h1 id="example-the-python-platform">Example: the Python platform</h1>
 </section><section>
-<h2 id="standard-libraries">Standard libraries</h2>
+<h2 id="standard-and-community-libraries-python">Standard and community libraries: Python</h2>
+<figure><img src="/12-multiplatform/python-libraries.svg" alt="Python supplies JSON and CSV handling, file and concurrency APIs, complex numbers and SQLite; NumPy, pandas, scikit-learn, PyTorch, Django and FastAPI are separately installed community libraries." width="92%">
+</figure>
 <ul>
-<li>
-<p>Notably, one of the <em>richest</em> <strong>standard libraries</strong> ever</p>
-</li>
-<li>
-<p>Many nice <em>functionalities</em> covering:</p>
-<ul>
-<li>all the stuff covered by Java</li>
-<li>plus many more, e.g. complex numbers, JSON and CSV parsing, etc.</li>
-</ul>
-</li>
-<li>
-<p>Many functionalities are provided by community-driven <em>third party libraries</em></p>
-<ul>
-<li>e.g. <em>scientific</em> or <em>ML</em> libraries</li>
-</ul>
-</li>
+<li>The <a href="https://docs.python.org/3.13/library/"><strong>standard library</strong></a> already covers CSV / JSON, complex numbers, etc.</li>
+<li><strong>Community packages</strong> add arrays, tables, ML models and Web frameworks</li>
 </ul>
 </section><section>
-<h2 id="predefined-design-decisions">Predefined design decisions</h2>
+<h2 id="predefined-design-decisions-python">Predefined design decisions: Python</h2>
+<div class="multiCol">
+    <div class="col col-5 ">
+    <ul>
+<li><strong>Everything is an object</strong>, including numbers</li>
+<li><strong>Magic methods</strong> connect objects to language features
 <ul>
-<li>
-<p>Everything is (indirectly) a <em>subclass/instance</em> of <code>object</code></p>
-<ul>
-<li>no exceptions</li>
+<li><code>str(row)</code> → <code>row.__str__()</code></li>
+<li><code>len(row)</code> → <code>row.__len__()</code></li>
 </ul>
 </li>
-<li>
-<p><a href="https://realpython.com/python-gil/">Global Interpreter Lock</a> (GIL) in the default CPython build</p>
+<li>No signature-based method overloading
 <ul>
-<li>an optional <a href="https://docs.python.org/3/howto/free-threading-python.html">free-threaded build</a> exists since Python 3.13</li>
+<li>a later <code>def</code> with the same name replaces the earlier binding</li>
 </ul>
 </li>
-<li>
-<p><em>Magic methods</em> supporting various language features</p>
+<li>Default CPython builds have a <strong>GIL</strong>
 <ul>
-<li>e.g. <code>__str__</code>, <code>__eq__</code>, <code>__iter__</code></li>
+<li>optional <a href="https://docs.python.org/3/howto/free-threading-python.html">free-threaded builds</a> exist since Python 3.13</li>
 </ul>
 </li>
-<li>
-<p>No signature-based <em>method overloading</em></p>
-<ul>
-<li>operators can be overloaded via magic methods</li>
 </ul>
-</li>
-<li>
-<p><em>Variadic</em> and <em>keywords</em> <strong>arguments</strong></p>
-</li>
-<li>
-<p>…</p>
-</li>
-</ul>
+<p>Run the <a href="platform-examples/python/design_decisions.py">full example</a>:</p>
+<p><code>python3 design_decisions.py</code></p>
+</div>
+<div class="col col-7 platform-code ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Row</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__init__</span>(<span style="color:#038">self</span>, *values):
+</span></span><span style="display:flex;"><span>        <span style="color:#038">self</span>.values = values
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__str__</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#d20;background-color:#fff0f0">","</span>.join(<span style="color:#038">self</span>.values)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__len__</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">len</span>(<span style="color:#038">self</span>.values)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>row = Row(<span style="color:#d20;background-color:#fff0f0">"Ada"</span>, <span style="color:#d20;background-color:#fff0f0">"42"</span>)
+</span></span><span style="display:flex;"><span><span style="color:#038">print</span>(<span style="color:#038">str</span>(row))  <span style="color:#888"># Ada,42: dispatches to __str__</span>
+</span></span><span style="display:flex;"><span><span style="color:#038">print</span>(<span style="color:#038">len</span>(row))  <span style="color:#888"># 2: dispatches to __len__</span>
+</span></span><span style="display:flex;"><span><span style="color:#038">print</span>(<span style="color:#038">isinstance</span>(<span style="color:#00d;font-weight:bold">42</span>, <span style="color:#038">object</span>))  <span style="color:#888"># True, even for integers</span>
+</span></span></code></pre></div>
+</div>
+</div>
 </section><section>
-<h2 id="organizational-stylistic-technical-conventions">Organizational, stylistic, technical conventions</h2>
+<h2 id="organizational-stylistic-technical-conventions-python">Organizational, stylistic, technical conventions: Python</h2>
+<div class="multiCol">
+    <div class="col col-5 ">
+    <p><strong>Organization</strong>: <a href="https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/">src layout</a> (flat layout is also common)</p>
+<pre class="platform-tree">project/
+├── pyproject.toml
+├── src/csv_demo/
+│   ├── __init__.py
+│   └── csv_row.py
+└── tests/
+    └── test_csv_row.py</pre>
 <ul>
-<li>
-<p><em>Project files</em> are described by a <a href="https://packaging.python.org/en/latest/guides/writing-pyproject-toml/"><code>pyproject.toml</code></a> file, and organized according to either the <em>flat</em> or the <a href="https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/"><em>src</em> layout</a></p>
-</li>
-<li>
-<p>Official <em>stylistic conventions</em> for Python (<a href="https://peps.python.org/pep-0008/">PEP 8</a>)</p>
-<ul>
-<li>e.g. type names in <code>PascalCase</code>, member names in <code>snake_case</code></li>
-<li>e.g. 4-space indentation, blank line conventions, etc.</li>
-<li>…</li>
+<li><strong>Style</strong>: <a href="https://peps.python.org/pep-0008/">PEP 8</a>, <code>CsvRow</code>, <code>join_values</code>, four spaces</li>
+<li><strong>Duck typing</strong>: same function accepts our object or a built-in list</li>
+<li><code>*values</code> → tuple; <code>**metadata</code> → dictionary</li>
 </ul>
-</li>
-<li>
-<p>Many <em>technical conventions</em>:</p>
-<ul>
-<li><a href="https://realpython.com/lessons/duck-typing/">duck typing</a></li>
-<li>iterable data structures should implement the <code>__iter__</code> method</li>
-<li><em>variadic</em> arguments are considered <em>tuples</em></li>
-<li><em>keyword</em> arguments are considered <em>dictionaries</em></li>
-<li>…</li>
-</ul>
-</li>
-</ul>
+<p><a href="platform-examples/python/csv_row.py">Full code</a>, including assertions</p>
+</div>
+<div class="col col-7 platform-code ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">CsvRow</span>:  <span style="color:#888"># PascalCase type name</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__init__</span>(<span style="color:#038">self</span>, *values, **metadata):
+</span></span><span style="display:flex;"><span>        <span style="color:#038">self</span>.values = values       <span style="color:#888"># tuple</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#038">self</span>.metadata = metadata   <span style="color:#888"># dict</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">__iter__</span>(<span style="color:#038">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">return</span> <span style="color:#038">iter</span>(<span style="color:#038">self</span>.values)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">join_values</span>(row):  <span style="color:#888"># snake_case; duck typing</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">return</span> <span style="color:#d20;background-color:#fff0f0">","</span>.join(row)  <span style="color:#888"># any iterable of strings</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>row = CsvRow(<span style="color:#d20;background-color:#fff0f0">"Ada"</span>, <span style="color:#d20;background-color:#fff0f0">"42"</span>, source=<span style="color:#d20;background-color:#fff0f0">"demo"</span>)
+</span></span><span style="display:flex;"><span><span style="color:#038">print</span>(join_values(row))  <span style="color:#888"># Ada,42</span>
+</span></span><span style="display:flex;"><span><span style="color:#038">print</span>(join_values([<span style="color:#d20;background-color:#fff0f0">"Ada"</span>, <span style="color:#d20;background-color:#fff0f0">"42"</span>]))  <span style="color:#888"># same protocol</span>
+</span></span></code></pre></div>
+</div>
+</div>
 </section><section>
-<h2 id="packaging-conventions-import-mechanisms-and-software-repositories">Packaging conventions, import mechanisms, and software repositories</h2>
-<ul>
-<li>
-<p><em>Project files</em> are organized into <strong>packages</strong> and <strong>modules</strong></p>
-<ul>
-<li>packages $\leftrightarrow$ <em>directories</em></li>
-<li>modules $\leftrightarrow$ <em>files</em></li>
+<h2 id="packaging-imports-repositories-python">Packaging, imports, repositories: Python</h2>
+<figure><img src="/12-multiplatform/python-packaging.svg" alt="PyPI hosts distributions; pip installs the requests wheel into a virtual environment's site-packages directory; Python resolves import requests from its module search path." width="96%">
+</figure>
+<div class="multiCol">
+    <div class="col col-6 ">
+    <ul>
+<li><strong>Module</strong> → <code>.py</code> file; regular <strong>package</strong> → directory with <code>__init__.py</code></li>
+<li><strong>Wheel</strong> (<code>.whl</code>) → installable ZIP (sources, optional native extensions, metadata)</li>
+<li><strong>Source distribution</strong> (<code>.tar.gz</code>) → must first be built</li>
 </ul>
-</li>
-<li>
-<p>Code <em>archives</em>:</p>
-<ul>
-<li><em>wheels</em> (<code>.whl</code>): <em>Zip files</em> containing a ready-to-install package (Python sources, possibly compiled extensions, metadata)</li>
-<li><em>source distributions</em> (<code>.tar.gz</code>), to be built upon installation</li>
+</div>
+<div class="col col-6 ">
+    <ul>
+<li><a href="https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/"><strong>pip</strong></a> installs distributions from <strong>PyPI</strong> into an environment</li>
+<li><code>import</code> searches <code>sys.path</code>, including <code>site-packages</code></li>
+<li>Distribution and import names can differ: <code>pip install scikit-learn</code> → <code>import sklearn</code></li>
 </ul>
-</li>
-<li>
-<p>Each Python <em>environment</em> has an <em>internal folder</em> where <strong>installed libraries</strong> are stored</p>
-<ul>
-<li><code>pip</code> simply <em>unzips</em> wheels in there</li>
-<li><code>import</code> statements <em>look for</em> packages/modules in there</li>
-</ul>
-</li>
-<li>
-<p><a href="https://pypi.org/">PyPI</a> as the <em>official repository</em> for Python libraries</p>
-<ul>
-<li><code>pip</code> as the reference <em>installer</em></li>
-<li>project / dependency management via tools such as <a href="https://docs.astral.sh/uv/">uv</a> or <a href="https://python-poetry.org/">Poetry</a> (cf. <a href="../04-build-automation/">build automation</a>)</li>
-</ul>
-</li>
-</ul>
+</div>
+</div>
+<blockquote>
+<p><strong>pip</strong> installs a distribution; <strong>import</strong> loads a module</p>
+</blockquote>
 </section><section>
-<h2 id="user-communities">User communities</h2>
-<ul>
-<li>
-<p><em>Data-science</em> community</p>
-</li>
-<li>
-<p><em>Back-end</em> Web developers</p>
-</li>
-<li>
-<p><em>Desktop applications</em> developers</p>
-</li>
-<li>
-<p><em>System administrators</em></p>
-</li>
-<li>
-<p>…</p>
-</li>
-</ul>
+<h2 id="user-communities-python">User communities: Python</h2>
+<figure><img src="/12-multiplatform/python-communities.svg" alt="Chart, server, desktop and gear icons represent Python communities in data science and machine learning, back-end Web, desktop applications, and system administration." width="96%">
+</figure>
+<blockquote>
+<p>Scientific libraries reach users who expect <strong>Python objects and protocols</strong>, even when implemented in C / C++</p>
+</blockquote>
 
 </section>
 </section><section>
@@ -574,115 +591,130 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <section data-shortcode-section="">
 <h1 id="example-the-nodejs-platform">Example: the NodeJS platform</h1>
 </section><section>
-<h2 id="standard-library">Standard library</h2>
+<h2 id="standard-and-community-libraries-nodejs">Standard and community libraries: NodeJS</h2>
+<figure><img src="/12-multiplatform/node-libraries.svg" alt="NodeJS combines JavaScript built-ins with Node file, HTTP, process and crypto APIs; Express, csv-parse, React tooling and Electron come from the community ecosystem." width="92%">
+</figure>
 <ul>
-<li>
-<p>Very <strong>limited</strong> <em>standard library</em> from JavaScript</p>
-<ul>
-<li>enriched with many <em>Node modules</em></li>
-</ul>
-</li>
-<li>
-<p>Many nice <em>functionalities</em> covering:</p>
-<ul>
-<li>networking and IPC</li>
-<li>OS, multiprocess, and cryptographic utilities</li>
-</ul>
-</li>
-<li>
-<p>Many functionalities are provided by <em>community-driven</em> <strong>third party</strong> <em>libraries</em></p>
-<ul>
-<li>you can find virtually anything on <a href="https://www.npmjs.com/">npmjs.com</a></li>
-</ul>
-</li>
+<li><strong>JavaScript built-ins</strong> + <a href="https://nodejs.org/api/"><strong>Node APIs</strong></a> form the platform’s standard facilities</li>
+<li><strong>Community packages</strong> add higher-level abstractions; browser DOM APIs are not part of Node</li>
 </ul>
 </section><section>
-<h2 id="predefined-design-decisions">Predefined design decisions</h2>
+<h2 id="predefined-design-decisions-nodejs">Predefined design decisions: NodeJS</h2>
+<div class="multiCol">
+    <div class="col col-5 ">
+    <ul>
+<li><strong>Prototype-based</strong> object orientation
 <ul>
-<li>
-<p><em>Object orientation</em> based on <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Advanced_JavaScript_objects/Object_prototypes">prototypes</a></p>
-</li>
-<li>
-<p><em>Single-threaded</em> <a href="https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick">event loop</a></p>
-<ul>
-<li>parallelism via <a href="https://nodejs.org/api/worker_threads.html">worker threads</a> or child processes</li>
+<li><code>row</code> inherits <code>toString</code> from its prototype</li>
 </ul>
 </li>
-<li>
-<p><em>Asynchronous programming</em> via <em>promises</em> and <code>async</code>/<code>await</code></p>
+<li>JavaScript callbacks run on the <a href="https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick"><strong>event loop</strong></a>
 <ul>
-<li>historically, via callbacks, i.e. <a href="https://matt.might.net/articles/by-example-continuation-passing-style/">continuation-passing style</a></li>
+<li>CPU-heavy work blocks other callbacks</li>
+<li>worker threads / processes enable parallelism</li>
+</ul>
+</li>
+<li><strong>Promises</strong> and <code>async</code> / <code>await</code>
+<ul>
+<li><code>await</code> suspends this async function</li>
+<li>the caller continues before it resumes</li>
 </ul>
 </li>
 </ul>
+<p>Run the <a href="platform-examples/node/design-decisions.mjs">full example</a>:</p>
+<p><code>node design-decisions.mjs</code></p>
+</div>
+<div class="col col-7 platform-code ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> rowPrototype = {
+</span></span><span style="display:flex;"><span>  toString() { <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">this</span>.values.join(<span style="color:#d20;background-color:#fff0f0">','</span>); }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> row = <span style="color:#038">Object</span>.create(rowPrototype);
+</span></span><span style="display:flex;"><span>row.values = [<span style="color:#d20;background-color:#fff0f0">'Ada'</span>, <span style="color:#d20;background-color:#fff0f0">'42'</span>];
+</span></span><span style="display:flex;"><span>console.log(row.toString()); <span style="color:#888">// inherited: Ada,42
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> order = [];
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">async</span> <span style="color:#080;font-weight:bold">function</span> readRow() {
+</span></span><span style="display:flex;"><span>  order.push(<span style="color:#d20;background-color:#fff0f0">'start'</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">await</span> <span style="color:#038">Promise</span>.resolve(row); <span style="color:#888">// continuation runs later
+</span></span></span><span style="display:flex;"><span>  order.push(<span style="color:#d20;background-color:#fff0f0">'resumed'</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> pending = readRow();
+</span></span><span style="display:flex;"><span>order.push(<span style="color:#d20;background-color:#fff0f0">'caller'</span>); <span style="color:#888">// await did not block the caller
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">await</span> pending;
+</span></span><span style="display:flex;"><span>console.log(order); <span style="color:#888">// ['start', 'caller', 'resumed']
+</span></span></span></code></pre></div>
+</div>
+</div>
 </section><section>
-<h2 id="organizational-stylistic-technical-conventions">Organizational, stylistic, technical conventions</h2>
+<h2 id="organizational-stylistic-technical-conventions-nodejs">Organizational, stylistic, technical conventions: NodeJS</h2>
+<div class="multiCol">
+    <div class="col col-5 ">
+    <p><strong>Organization</strong>: one possible layout</p>
+<pre class="platform-tree">project/
+├── package.json
+├── src/
+│   └── csv-row.mjs
+└── test/
+    └── csv-row.test.mjs</pre>
 <ul>
-<li>
-<p><em>Project structure</em> is somewhat <strong>arbitrary</strong> (no established convention)</p>
-<ul>
-<li>the project must contain a <code>package.json</code> file in the <em>root</em> directory</li>
-<li>declaring the entry point of the project</li>
+<li>No mandatory source-directory layout</li>
+<li><strong>Style</strong>: <code>CsvRow</code>, <code>joinValues</code>; teams choose a linter / formatter</li>
+<li><strong>Duck typing</strong> and the iterable protocol (<code>Symbol.iterator</code>)</li>
+<li>Rest parameters → arrays; <code>.mjs</code> explicitly selects ES modules</li>
 </ul>
-</li>
-<li>
-<p>Many <em>style conventions</em> co-exist</p>
-<ul>
-<li>e.g. <a href="https://www.w3schools.com/js/js_conventions.asp">W3Schools’ one</a></li>
-</ul>
-</li>
-<li>
-<p>Many <em>technical conventions</em>:</p>
-<ul>
-<li>duck typing</li>
-<li>magic variables, e.g. for prototype</li>
-<li>…</li>
-</ul>
-</li>
-</ul>
+<p><a href="platform-examples/node/csv-row.mjs">Full code</a>, including assertions</p>
+</div>
+<div class="col col-7 platform-code ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">export</span> <span style="color:#080;font-weight:bold">class</span> CsvRow { <span style="color:#888">// PascalCase type name
+</span></span></span><span style="display:flex;"><span>  constructor(...values) { <span style="color:#888">// rest arguments: Array
+</span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">this</span>.values = values;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  [Symbol.iterator]() { <span style="color:#888">// iterable protocol
+</span></span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">this</span>.values[Symbol.iterator]();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">function</span> joinValues(row) { <span style="color:#888">// camelCase; duck typing
+</span></span></span><span style="display:flex;"><span>  <span style="color:#080;font-weight:bold">return</span> [...row].join(<span style="color:#d20;background-color:#fff0f0">','</span>); <span style="color:#888">// any iterable
+</span></span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">const</span> row = <span style="color:#080;font-weight:bold">new</span> CsvRow(<span style="color:#d20;background-color:#fff0f0">'Ada'</span>, <span style="color:#d20;background-color:#fff0f0">'42'</span>);
+</span></span><span style="display:flex;"><span>console.log(joinValues(row)); <span style="color:#888">// Ada,42
+</span></span></span><span style="display:flex;"><span>console.log(joinValues([<span style="color:#d20;background-color:#fff0f0">'Ada'</span>, <span style="color:#d20;background-color:#fff0f0">'42'</span>])); <span style="color:#888">// same protocol
+</span></span></span></code></pre></div>
+</div>
+</div>
 </section><section>
-<h2 id="packaging-conventions-import-mechanisms-and-software-repositories">Packaging conventions, import mechanisms, and software repositories</h2>
-<ul>
-<li>
-<p><em>Project files</em> are organized into <strong>modules</strong></p>
-<ul>
-<li>modules are files containing anything</li>
-<li>and declaring what to export</li>
-<li>two module systems: <em>CommonJS</em> (<code>require</code>) and <em>ES modules</em> (<code>import</code>/<code>export</code>), the latter being the standard one</li>
+<h2 id="packaging-imports-repositories-nodejs">Packaging, imports, repositories: NodeJS</h2>
+<figure><img src="/12-multiplatform/node-packaging.svg" alt="The npm registry hosts packages; npm installs a tarball into node_modules; Node resolves ES module imports using the installed package and its package.json metadata." width="96%">
+</figure>
+<div class="multiCol">
+    <div class="col col-6 ">
+    <ul>
+<li><strong>Package</strong> → <code>package.json</code> + sources / assets, distributed as <code>.tgz</code></li>
+<li><strong>npm registry</strong> → repository; <code>npm</code> → dependency tool (also <code>yarn</code>, <code>pnpm</code>)</li>
+<li><code>npm install csv-parse</code> → local dependency in <code>node_modules</code></li>
 </ul>
-</li>
-<li>
-<p>Code <em>archives</em> (<code>.tgz</code>) are compressed <em>tarball files</em> containing JS sources</p>
-</li>
-<li>
-<p>Third-party <em>libraries</em> can be <strong>installed</strong> via <code>npm</code></p>
-<ul>
-<li>locally (per project), or globally (<code>npm install -g</code>)</li>
+</div>
+<div class="col col-6 ">
+    <ul>
+<li><strong>ES modules</strong>: <code>import { parse } from 'csv-parse';</code></li>
+<li><strong>CommonJS</strong>: <code>const { parse } = require('csv-parse');</code></li>
+<li><a href="https://nodejs.org/api/packages.html"><strong>Resolution</strong></a>: package entry points via <code>exports</code> / <code>main</code>; relative ESM imports include the extension, e.g. <code>./csv-row.mjs</code></li>
 </ul>
-</li>
-<li>
-<p>The <a href="https://www.npmjs.com/">npm registry</a> as the official <em>repository</em> for JS libraries</p>
-<ul>
-<li><code>npm</code> as the reference tool for dependency management (alternatives: <code>yarn</code>, <code>pnpm</code>)</li>
-</ul>
-</li>
-</ul>
+</div>
+</div>
+<blockquote>
+<p><strong>npm</strong> installs packages; <code>import</code> / <code>require</code> loads their exported modules</p>
+</blockquote>
 </section><section>
-<h2 id="user-communities">User communities</h2>
-<ul>
-<li>
-<p><em>Front-end</em> Web developers</p>
-</li>
-<li>
-<p><em>Back-end</em> Web developers</p>
-</li>
-<li>
-<p><em>GUI</em> developers</p>
-</li>
-<li>
-<p>…</p>
-</li>
-</ul>
+<h2 id="user-communities-nodejs">User communities: NodeJS</h2>
+<figure><img src="/12-multiplatform/node-communities.svg" alt="Browser, server, desktop and gear icons represent front-end developers using Node build tooling and server-side rendering, back-end developers, Electron desktop developers, and CLI or automation authors." width="96%">
+</figure>
+<blockquote>
+<p>Front-end code runs in the <strong>browser</strong>; Node often runs its <strong>build tools</strong> or server-side rendering</p>
+</blockquote>
 
 </section>
 </section><section>
