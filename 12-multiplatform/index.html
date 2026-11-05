@@ -488,20 +488,23 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 </li>
 <li><strong>Properties</strong> expose accessors with field-like syntax: <code>counter.Value</code></li>
 </ul>
-<p><a href="platform-examples/dotnet/PlatformExamples.csproj">Runnable project</a> (.NET 10 SDK): save it beside <a href="platform-examples/dotnet/DesignDecisions.cs">DesignDecisions.cs</a> and <a href="platform-examples/dotnet/CsvRow.cs">CsvRow.cs</a>, then run <code>dotnet run</code></p>
+<p><a href="https://github.com/unibo-spe/spe-slides/tree/master/content/12-multiplatform/platform-examples/dotnet/PlatformExamples">Complete solution</a> (.NET 10 SDK): from <code>PlatformExamples/</code>, run <code>dotnet run --project CsvDemo</code></p>
 </div>
 <div class="col col-7 platform-code ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>Point first = <span style="color:#080;font-weight:bold">new</span> Point { X = <span style="color:#00d;font-weight:bold">1</span> };
-</span></span><span style="display:flex;"><span>Point copy = first; <span style="color:#888">// struct assignment copies the value</span>
-</span></span><span style="display:flex;"><span>copy.X = <span style="color:#00d;font-weight:bold">2</span>;
-</span></span><span style="display:flex;"><span><span style="color:#888;font-weight:bold">var</span> counter = <span style="color:#080;font-weight:bold">new</span> Counter();
-</span></span><span style="display:flex;"><span><span style="color:#888;font-weight:bold">var</span> <span style="color:#080;font-weight:bold">alias</span> = counter; <span style="color:#888">// class assignment copies the reference</span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">alias</span>.Value = <span style="color:#00d;font-weight:bold">2</span>;
-</span></span><span style="display:flex;"><span><span style="color:#888;font-weight:bold">object</span> boxed = first; <span style="color:#888">// boxing copies the struct into an object</span>
-</span></span><span style="display:flex;"><span>Console.WriteLine(<span style="color:#d20;background-color:#fff0f0">$"{first.X}, {copy.X}"</span>); <span style="color:#888">// 1, 2</span>
-</span></span><span style="display:flex;"><span>Console.WriteLine(counter); <span style="color:#888">// virtual ToString(): Counter(2)</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">struct</span> <span style="color:#b06;font-weight:bold">Point</span> { <span style="color:#080;font-weight:bold">public</span> <span style="color:#888;font-weight:bold">int</span> X; }
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Counter</span>
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span>        Point first = <span style="color:#080;font-weight:bold">new</span> Point { X = <span style="color:#00d;font-weight:bold">1</span> };
+</span></span><span style="display:flex;"><span>        Point copy = first; <span style="color:#888">// struct: copy the value</span>
+</span></span><span style="display:flex;"><span>        copy.X = <span style="color:#00d;font-weight:bold">2</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#888;font-weight:bold">var</span> counter = <span style="color:#080;font-weight:bold">new</span> Counter();
+</span></span><span style="display:flex;"><span>        <span style="color:#888;font-weight:bold">var</span> <span style="color:#080;font-weight:bold">alias</span> = counter; <span style="color:#888">// class: copy the reference</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-weight:bold">alias</span>.Value = <span style="color:#00d;font-weight:bold">2</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#888;font-weight:bold">object</span> boxed = first; <span style="color:#888">// box a copy of the struct</span>
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#d20;background-color:#fff0f0">$"{first.X}, {copy.X}"</span>); <span style="color:#888">// 1, 2</span>
+</span></span><span style="display:flex;"><span>        Console.WriteLine(counter); <span style="color:#888">// Counter(2)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">struct</span> <span style="color:#b06;font-weight:bold">Point</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#888;font-weight:bold">int</span> X;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Counter</span>
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#888;font-weight:bold">int</span> Value { <span style="color:#080;font-weight:bold">get</span>; <span style="color:#080;font-weight:bold">set</span>; }
 </span></span><span style="display:flex;"><span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">override</span> <span style="color:#888;font-weight:bold">string</span> ToString() =&gt; <span style="color:#d20;background-color:#fff0f0">$"Counter({Value})"</span>;
@@ -513,17 +516,22 @@ and the <strong>runtime</strong> supporting the execution of those applications<
 <h2 id="organizational-stylistic-technical-conventions-net">Organizational, stylistic, technical conventions: .NET</h2>
 <div class="multiCol">
     <div class="col col-5 ">
-    <p><strong>Organization</strong>: one possible solution layout</p>
-<pre class="platform-tree">project/
-├── CsvDemo.sln
-├── src/CsvDemo/
-│   ├── CsvDemo.csproj
-│   └── CsvRow.cs
-└── tests/CsvDemo.Tests/
-    └── CsvRowTests.cs</pre>
+    <p><strong>Organization</strong>: solution → projects → namespaces</p>
+<pre class="platform-tree">PlatformExamples/
+├── PlatformExamples.sln
+└── CsvDemo/
+    ├── CsvDemo.csproj
+    ├── Program.cs
+    ├── Point.cs
+    ├── Counter.cs
+    ├── Models/
+    │   └── CsvRow.cs
+    ├── bin/  (generated assemblies)
+    └── obj/  (generated build files)</pre>
 <ul>
-<li><a href="https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/naming-guidelines"><strong>Naming</strong></a>: <code>CsvRow</code>, <code>Count</code>, <code>GetEnumerator</code>; interface names start with <code>I</code></li>
-<li><strong>Properties</strong>: <code>row.Count</code>, rather than a getter method</li>
+<li>Each project builds an <strong>assembly</strong>; directories reflect <strong>namespaces</strong>: <code>Models/</code> → <code>CsvDemo.Models</code></li>
+<li><strong>One type per file</strong>, named after it; <code>Program.Main</code> is the entry point</li>
+<li><a href="https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/naming-guidelines"><strong>Naming</strong></a>: <code>CsvRow</code>, <code>Count</code>, <code>GetEnumerator</code>; interfaces start with <code>I</code></li>
 <li><strong>Protocols</strong>: <code>IEnumerable&lt;T&gt;</code> enables <code>foreach</code>; <code>params</code> accepts variadic arguments</li>
 </ul>
 </div>
@@ -531,7 +539,7 @@ and the <strong>runtime</strong> supporting the execution of those applications<
     <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#080;font-weight:bold">using</span> <span style="color:#b06;font-weight:bold">System.Collections</span>;
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">using</span> <span style="color:#b06;font-weight:bold">System.Collections.Generic</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">namespace</span> <span style="color:#b06;font-weight:bold">Unibo.Spe</span>;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">namespace</span> <span style="color:#b06;font-weight:bold">CsvDemo.Models</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">CsvRow</span> : IEnumerable&lt;<span style="color:#888;font-weight:bold">string</span>&gt;
 </span></span><span style="display:flex;"><span>{
