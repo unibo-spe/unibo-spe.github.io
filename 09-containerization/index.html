@@ -38,7 +38,7 @@
 <br>
 <h3 id="giovanni-ciatto--giovanniciattouniboit"><a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto — <code>giovanni.ciatto@unibo.it</code></a></h3>
 <br>
-<p>Compiled on: 2026-11-02
+<p>Compiled on: 2026-11-05
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href=".."><i class="fa fa-undo" aria-hidden="true"></i> back</a></p>
 </section><section>
@@ -4090,25 +4090,59 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </ul>
 </section><section>
 <h2 id="example-of-placement-constraints">Example of placement constraints</h2>
+<p>Full stack: <a href="./wordpress-swarm.yaml">wordpress-swarm.yaml</a> (continued in the right column).</p>
 
 <div class="multiCol">
     
 
-<div class="col col-4 ">
-    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
+<div class="col col-6 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"3.8"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">services</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>mariadb:latest<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- db_data:/var/lib/mysql<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- back-tier<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_ROOT_PASSWORD</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"..Password1.."</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_DATABASE</span>:<span style="color:#bbb"> </span>wordpress_db<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_USER</span>:<span style="color:#bbb"> </span>wordpress_user<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">MYSQL_PASSWORD</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">",,Password2,,"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">healthcheck</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">test</span>:<span style="color:#bbb"> </span>[<span style="color:#d20;background-color:#fff0f0">"CMD"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"healthcheck.sh"</span>,<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#d20;background-color:#fff0f0">"--su-mysql"</span>,<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">"--connect"</span>,<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#d20;background-color:#fff0f0">"--innodb_initialized"</span>]<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">start_period</span>:<span style="color:#bbb"> </span>1m<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">interval</span>:<span style="color:#bbb"> </span>1m<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">timeout</span>:<span style="color:#bbb"> </span>5s<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">retries</span>:<span style="color:#bbb"> </span><span style="color:#00d;font-weight:bold">3</span><span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">restart_policy</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">condition</span>:<span style="color:#bbb"> </span>any<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.capabilities.storage==yes<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>wordpress:latest <span style="color:#bbb"> </span><span style="color:#888"># depends_on is ignored by Swarm</span><span style="color:#bbb">
+</span></span></span></code></pre></div>
+</div>
+
+<div class="col col-6 ">
+    <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">image</span>:<span style="color:#bbb"> </span>wordpress:latest<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">volumes</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- wordpress_data:/var/www/html<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">ports</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- <span style="color:#d20;background-color:#fff0f0">"8889:80"</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span>- back-tier<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">environment</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_HOST</span>:<span style="color:#bbb"> </span>db:3306<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_USER</span>:<span style="color:#bbb"> </span>wordpress_user<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_PASSWORD</span>:<span style="color:#bbb"> </span><span style="color:#d20;background-color:#fff0f0">",,Password2,,"</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">WORDPRESS_DB_NAME</span>:<span style="color:#bbb"> </span>wordpress_db<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">deploy</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">restart_policy</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">condition</span>:<span style="color:#bbb"> </span>any<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#b06;font-weight:bold">placement</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#b06;font-weight:bold">constraints</span>:<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">          </span>- node.labels.capabilities.web==yes<span style="color:#bbb">
@@ -4116,17 +4150,33 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">db_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">wordpress_data</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
 </span></span></span><span style="display:flex;"><span><span style="color:#b06;font-weight:bold">networks</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">back-tier</span>:<span style="color:#bbb"> </span>{}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#b06;font-weight:bold">back-tier</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#b06;font-weight:bold">driver</span>:<span style="color:#bbb"> </span>overlay<span style="color:#bbb">
 </span></span></span></code></pre></div>
 </div>
 
-<div class="col col-8 ">
+</div>
+
+</section><section>
+<h2 id="example-of-placement-constraints-pt-2">Example of placement constraints (pt. 2)</h2>
+
+<div class="multiCol">
+    
+
+<div class="col col-6 ">
     <ul>
 <li>
 <p>Let’s define a stack for Wordpress, with <strong>placement constraints</strong></p>
 <ul>
 <li><code>db</code> service on a node with <em>storage</em> capabilities</li>
 <li><code>wordpress</code> service on a node with <em>web</em> capabilities</li>
+</ul>
+</li>
+<li>
+<p>Full file: <a href="./wordpress-swarm.yaml">wordpress-swarm.yaml</a></p>
+<ul>
+<li>deploy from a manager: <code>docker stack deploy -c wordpress-swarm.yaml wordpress</code></li>
+<li><code>depends_on</code> is ignored by Swarm</li>
 </ul>
 </li>
 <li>
@@ -4140,7 +4190,11 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 <p>The deployment is as follows:</p>
 </li>
 </ul>
-<p><img src="./placement-constraints.svg" alt="Placement constraints: service db can only run on nodes labelled capabilities.storage=yes (worker-1), service wordpress only on nodes labelled capabilities.web=yes (worker-2)"></p>
+
+</div>
+
+<div class="col col-6 ">
+    <p><img src="./placement-constraints.svg" alt="Placement constraints: service db can only run on nodes labelled capabilities.storage=yes (worker-1), service wordpress only on nodes labelled capabilities.web=yes (worker-2)"></p>
 
 </div>
 
@@ -4389,7 +4443,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 </section><section>
 <h1 id="lecture-is-over">Lecture is Over</h1>
 <br>
-<p>Compiled on: 2026-11-02
+<p>Compiled on: 2026-11-05
  — <a href="?print-pdf&amp;pdfSeparateFragments=false"><i class="fa fa-print" aria-hidden="true"></i> printable version</a></p>
 <p><a href="../#/toc"><i class="fa fa-undo" aria-hidden="true"></i> back to ToC</a></p>
 </section>
