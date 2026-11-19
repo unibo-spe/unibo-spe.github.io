@@ -5654,16 +5654,44 @@ package "io github gciatto csv impl" {
       textarea.innerHTML = html;
       return textarea.value;
     };
+    
+    
+    
+    
+    let createSandbox = (mermaidElem) => {
+      let style = getComputedStyle(mermaidElem);
+      let sandbox = document.createElement('div');
+      
+      sandbox.className = mermaidElem.className;
+      sandbox.style.cssText = 'position: absolute; top: 0; left: 0; visibility: hidden;';
+      for (let property of ['font-family', 'font-size', 'font-weight', 'letter-spacing']) {
+        sandbox.style.setProperty(property, style.getPropertyValue(property));
+      }
+      
+      let lineHeight = parseFloat(style.lineHeight) / parseFloat(style.fontSize);
+      if (lineHeight) {
+        sandbox.style.lineHeight = lineHeight;
+      }
+      (document.querySelector('.reveal') || document.body).appendChild(sandbox);
+      return sandbox;
+    };
     let renderDiagram = async (mermaidElem) => {
       let source = decodeEntities(mermaidElem.innerHTML).trim().replace(/<br\s*\/?>/gi, '<br/>');
+      let sandbox = createSandbox(mermaidElem);
       try {
-        let { svg, bindFunctions } = await mermaid.render(`mermaid-diagram-${mermaidCounter++}`, source);
+        
+        
+        let font = getComputedStyle(sandbox);
+        await document.fonts.load(`${font.fontStyle} ${font.fontWeight} ${font.fontSize} ${font.fontFamily}`).catch(() => {});
+        let { svg, bindFunctions } = await mermaid.render(`mermaid-diagram-${mermaidCounter++}`, source, sandbox);
         mermaidElem.innerHTML = svg;
         if (bindFunctions) {
           bindFunctions(mermaidElem);
         }
       } catch (error) {
         console.error('Mermaid rendering failed', error, mermaidElem);
+      } finally {
+        sandbox.remove();
       }
     };
     let render = (event) => {
